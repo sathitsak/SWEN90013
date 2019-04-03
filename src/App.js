@@ -17,7 +17,7 @@ class App extends Component {
             target="_blank"
             rel="noopener noreferrer"
           >
-            Learn React mod
+            Learn React and connect to git
           </a>
         </header>
       </div>
