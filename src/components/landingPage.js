@@ -1,5 +1,4 @@
 import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 var unimelb = require('../images/idea1.jpg');
 
@@ -22,9 +21,13 @@ class LandingPage extends React.Component {
                     <ul className="pathfinder-3">
                         <li>
                             <a>
-                                <strong>
-                                    <FontAwesomeIcon icon="lightbulb"/>
-                                    <span>Research</span>
+                                <strong style={{height: '12em'}}>
+                                    <span style={{top:'50%'}}>
+                                        <i className="material-icons md-48" style={ { marginTop: '0%', fontSize: '70px'}}>
+                                            youtube_searched_for</i>
+                                        <br></br>
+                                        Research
+                                    </span>
                                 </strong>
                                 <p>Students will work closely with you to analyse the problem domain and formulate
                                     your requirements.</p>
@@ -32,8 +35,13 @@ class LandingPage extends React.Component {
                         </li>
                         <li>
                             <a>
-                                <strong>
-                                    <span>Design</span>
+                                <strong style={{height: '12em'}}>
+                                    <span style={{top:'50%'}}>
+                                        <i className="material-icons md-48" style={ { marginTop: '0%', fontSize: '70px'}}>
+                                            palette</i>
+                                        <br></br>
+                                        Design
+                                    </span>
                                 </strong>
                                 <p>Using the insights gained, you will work with our students to design your software
                                     system and determine the look and feel of your product.</p>
@@ -41,8 +49,13 @@ class LandingPage extends React.Component {
                         </li>
                         <li>
                             <a>
-                                <strong>
-                                    <span>Build</span>
+                                <strong style={{height: '12em'}}>
+                                    <span style={{top:'50%'}}>
+                                        <i className="material-icons md-48" style={ { marginTop: '0%', fontSize: '70px'}}>
+                                            build</i>
+                                        <br></br>
+                                        Build
+                                    </span>
                                 </strong>
                                 <p>Our scrum-based agile methodology will provide you with iterative builds, which will
                                 give you confidence in your final product.</p>
@@ -50,8 +63,13 @@ class LandingPage extends React.Component {
                         </li>
                         <li>
                             <a>
-                                <strong>
-                                    <span>Mentored</span>
+                                <strong style={{height: '12em'}}>
+                                    <span style={{top:'50%'}}>
+                                        <i className="material-icons md-48" style={ { marginTop: '0%', fontSize: '70px'}}>
+                                            supervisor_account</i>
+                                        <br></br>
+                                        Mentored
+                                    </span>
                                 </strong>
                                 <p>Students are guided by leading software experts in developing the technical expertise
                                  and skills required to implement your product vision.</p>
@@ -75,7 +93,7 @@ class LandingPage extends React.Component {
                             video of a past project completed by our students in 2018.</p></section>
                     </div>
                 </section>
-                <section className="fulltwidth short">
+                <section className="full-width short">
                     <h1>Interested?</h1>
                     <p>Submit a project proposal for our software engineering master students to undertake as part of
                         their coursework. Once submitted, a staff member will be in touch with you shortly.
