@@ -11,5 +11,9 @@
     <orderEntry type="library" name="@types/enzyme" level="application" />
     <orderEntry type="library" name="@types/jest" level="application" />
     <orderEntry type="library" name="@types/react-router-dom" level="application" />
+    <orderEntry type="library" name="@types/react" level="application" />
+    <orderEntry type="library" name="@types/react-dom" level="application" />
+    <orderEntry type="library" name="@types/material-ui" level="application" />
+    <orderEntry type="library" name="@types/prop-types" level="application" />
   </component>
 </module>
