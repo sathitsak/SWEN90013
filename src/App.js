@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import logo from './logo.svg';
 import './css/uom.css';
 
-import LandingPage from './components/landingPage'
+import LandingPage from './components/LandingPage'
 
 class App extends Component {
   render() {

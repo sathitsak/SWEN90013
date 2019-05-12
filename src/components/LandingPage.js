@@ -97,10 +97,10 @@ class LandingPage extends React.Component {
                     <h1>Interested?</h1>
                     <p>Submit a project proposal for our software engineering master students to undertake as part of
                         their coursework. Once submitted, a staff member will be in touch with you shortly.
+                        <br></br><br></br>
+                        <a className="button-hero" href="" style={{marginLeft: '0%'}}>Submit a proposal now</a>
+                        <a className="button-hero" href="" style={{marginLeft: '28%'}}>Staff Log In</a>
                     </p>
-                    <div className="mid-align">
-                        <a className="button-hero" href="">Submit a proposal now</a>
-                    </div>
                 </section>
             </div>
         )
