@@ -15,5 +15,6 @@
     <orderEntry type="library" name="@types/react-dom" level="application" />
     <orderEntry type="library" name="@types/material-ui" level="application" />
     <orderEntry type="library" name="@types/prop-types" level="application" />
+    <orderEntry type="library" name="@types/classnames" level="application" />
   </component>
 </module>

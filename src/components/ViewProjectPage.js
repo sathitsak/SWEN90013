@@ -4,6 +4,7 @@ import {withStyles} from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Paper from "@material-ui/core/Paper";
+import lightBlue from '@material-ui/core/colors/lightBlue';
 
 import ProjectCard from './ProjectCard';
 
@@ -11,7 +12,7 @@ const styles = ({
     paper: {
         padding: 10,
         margin: 40,
-        backgroundColor: 'skyblue',
+        backgroundColor: lightBlue[200],
     },
 });
 
@@ -72,25 +73,28 @@ class ViewProjectPage extends React.Component {
                 <Grid item sm>
                     <Paper className={classes.paper}>
                         <Typography variant='h6'>New</Typography>
-                        {this._filterProjects(status.new).map((project, index) => (
-                            <ProjectCard project={project} key={index}/>
-                        ))}
+                        {this._filterProjects(status.new).map(
+                            (project, index) => (
+                                <ProjectCard project={project} key={index}/>
+                            ))}
                     </Paper>
                 </Grid>
                 <Grid item sm>
                     <Paper className={classes.paper}>
                         <Typography variant='h6'>In Progress</Typography>
-                        {this._filterProjects(status.inProgress).map((project, index) => (
-                            <ProjectCard project={project} key={index}/>
-                        ))}
+                        {this._filterProjects(status.inProgress).map(
+                            (project, index) => (
+                                <ProjectCard project={project} key={index}/>
+                            ))}
                     </Paper>
                 </Grid>
                 <Grid item sm>
                     <Paper className={classes.paper}>
                         <Typography variant='h6'>Completed</Typography>
-                        {this._filterProjects(status.completed).map((project, index) => (
-                            <ProjectCard project={project} key={index}/>
-                        ))}
+                        {this._filterProjects(status.completed).map(
+                            (project, index) => (
+                                <ProjectCard project={project} key={index}/>
+                            ))}
                     </Paper>
                 </Grid>
             </Grid>
