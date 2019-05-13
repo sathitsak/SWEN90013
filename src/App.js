@@ -1,13 +1,17 @@
+
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import logo from './logo.svg';
 import './css/uom.css';
 
-import LandingPage from './components/LandingPage'
+import LandingPage from './components/LandingPage' 
+import submitPage from './components/submitPage'
 
-class App extends Component {
+import Home from './components/home'
+class App extends React.Component {
   render() {
     return (
+
         <Router>
             <div className="uomcontent">
                 <div className="page-inner">
@@ -20,6 +24,7 @@ class App extends Component {
             </div>
 
         </Router>
+
     );
   }
 }
