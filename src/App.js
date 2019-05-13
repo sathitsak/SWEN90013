@@ -1,32 +1,35 @@
-
-import React, { Component } from 'react';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
-import logo from './logo.svg';
+import React from 'react';
+import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import './css/uom.css';
 
-import LandingPage from './components/LandingPage' 
-import submitPage from './components/submitPage'
+import LandingPage from './components/landing/LandingPage'
+import SubmitPage from './components/landing/SubmitPage'
+import Login from './components/landing/Login';
+import Home from './components/home/Home'
 
-import Home from './components/home'
 class App extends React.Component {
-  render() {
-    return (
-
-        <Router>
-            <div className="uomcontent">
-                <div className="page-inner">
-                    <div role="main">
-                        <Switch>
-                            <Route exact path='/' component={LandingPage} />
-                        </Switch>
+    render() {
+        return (
+            <Router>
+                <div className="uomcontent">
+                    <div className="page-inner">
+                        <div role="main">
+                            <Switch>
+                                <Route exact path='/'
+                                       component={LandingPage}/>
+                                <Route exact path='/submit'
+                                       component={SubmitPage}/>
+                                <Route exact path='/home'
+                                       component={Home}/>
+                                <Route exact path='/login'
+                                       component={Login}/>
+                            </Switch>
+                        </div>
                     </div>
                 </div>
-            </div>
-
-        </Router>
-
-    );
-  }
+            </Router>
+        );
+    }
 }
 
 export default App;
