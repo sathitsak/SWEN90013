@@ -1,13 +1,28 @@
 import React from "react";
 import { Column, Row } from "simple-flexbox";
 import "../../css/uom.css";
-
+let styles = {
+  width: "400px"
+};
 class SubmitPage extends React.Component {
   //Check if the input email is valide or not
   //If it is email then do this.handleClick();
   //this.handleClick(); will call the server, when the backend is ready
+
   ValidateEmail = email => {
     if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  ValidateContactInfo = number => {
+    if (
+      /^\({0,1}((0|\+61)(2|4|3|7|8)){0,1}\){0,1}(\ |-){0,1}[0-9]{2}(\ |-){0,1}[0-9]{2}(\ |-){0,1}[0-9]{1}(\ |-){0,1}[0-9]{3}$/.test(
+        number
+      )
+    ) {
       return true;
     } else {
       return false;
@@ -28,7 +43,6 @@ class SubmitPage extends React.Component {
     var benefits = document.getElementById("benefits").value;
     var original = document.getElementById("original").value;
     var used = document.getElementById("used").value;
-    var hear = document.getElementById("hear").value;
     var technical = document.getElementById("technical").value;
     var organizationName = document.getElementById("organizationName").value;
     var idustryType = document.getElementById("idustryType").value;
@@ -52,8 +66,7 @@ class SubmitPage extends React.Component {
       beneficiaries,
       benefits,
       original,
-      used,
-      hear
+      used
     );
     if (
       (name ||
@@ -69,12 +82,14 @@ class SubmitPage extends React.Component {
         beneficiaries ||
         benefits ||
         original) === "" ||
-      (technical || idustryType || size || hear) == -1
+      (technical || idustryType || size) == -1
     ) {
-      console.log("please fill every form");
+      alert("please fill every form");
+    } else if (!this.ValidateContactInfo(officeNumber)) {
+      alert("please enter valid phone number");
+    } else if (!this.ValidateEmail(email)) {
+      alert("please enter valid email");
     }
-
-    console.log(this.ValidateEmail(email));
   };
 
   render() {
@@ -82,11 +97,35 @@ class SubmitPage extends React.Component {
       <div className="uomcontent">
         <div className="page-inner">
           <div role="main">
+            <Row horizontal="center" onExtraLarge="row">
+              <div>
+                <h1>
+                  <bold>
+                    University of Melbourne: Software Engineering Project
+                    Proposal
+                  </bold>
+                </h1>
+              </div>
+            </Row>
+            <Row horizontal="center">
+              <div>
+                <h2>
+                  Please use this form to propose a project for our software
+                  engineering masters students to undertake as part of their
+                  coursework. We are not expecting a lot of detail from you at
+                  this stage, just enough for an initial assessment. No
+                  information (including contact details) in your proposal will
+                  be provided to students without your prior permission. We
+                  suggest you read all questions before answering to avoid
+                  duplicating parts of your response.
+                </h2>
+              </div>
+            </Row>
             <fieldset>
               <Row horizontal="center">
                 <Column flexGrow={1} horizontal="center">
                   <div>
-                    <h1> Your Details </h1>
+                    <h2> ABOUT YOU</h2>
                   </div>
 
                   <div>
@@ -131,10 +170,10 @@ class SubmitPage extends React.Component {
                     <input id="officeNumber" type="text" />
                   </div>
 
-                  <div>
+                  <div className="styled-select" style={styles}>
                     <select id="technical">
                       <option value="-1">
-                        Rate your level of technical ability/understanding&emsp;
+                        Rate your level of technical ability/understanding
                       </option>
                       <option value="1">1(non-technical)</option>
                       <option value="2">2</option>
@@ -150,13 +189,17 @@ class SubmitPage extends React.Component {
                   </div>
 
                   <div>
+                    <h2> ABOUT YOUR ORGANISATION </h2>
+                  </div>
+                  <div>
                     <label>Organisation name:</label>
                   </div>
+
                   <div>
                     <input id="organizationName" type="text" />
                   </div>
 
-                  <div>
+                  <div className="styled-select" style={styles}>
                     <select id="idustryType">
                       <option value="-1">
                         Please select your industry&emsp;
@@ -213,12 +256,9 @@ class SubmitPage extends React.Component {
                     </select>
                   </div>
 
-                  <div>
+                  <div className="styled-select" style={styles}>
                     <select id="size">
-                      <option value="-1">
-                        Size of organisation &emsp;&emsp;&emsp;&emsp;
-                        &emsp;&emsp;&emsp;&emsp; &emsp;&emsp;&emsp;&emsp; &emsp;
-                      </option>
+                      <option value="-1">Size of organisation</option>
                       <option value="more than 250 employees">
                         more than 250 employees
                       </option>
@@ -239,6 +279,10 @@ class SubmitPage extends React.Component {
                   </div>
                   <div>
                     <textarea id="organisationBrief" type="text" />
+                  </div>
+
+                  <div>
+                    <h2> ABOUT YOUR PROJECT PROPOSAL</h2>
                   </div>
 
                   <div>
@@ -287,25 +331,7 @@ class SubmitPage extends React.Component {
                   <div>
                     <textarea id="used" type="text" />
                   </div>
-                  <div>
-                    <select id="hear">
-                      <option value="-1">
-                        How did you hear about us?&emsp;&emsp;&emsp;&emsp;
-                      </option>
-                      <option value="Referred by a friend">
-                        Referred by a friend
-                      </option>
-                      <option value="Philip Dart">
-                        Referred by a Unimelb staff member(Philip Dart)
-                      </option>
-                      <option value="duardo Oliveira">
-                        Referred by a Unimelb staff member(Eduardo Oliveira)
-                      </option>
-                      <option value="Leon Sterling">
-                        Referred by a Unimelb staff member(Leon Sterling)
-                      </option>
-                    </select>
-                  </div>
+
                   <a className="button" onClick={this.handleClick}>
                     Submit
                   </a>
