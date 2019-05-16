@@ -1,6 +1,8 @@
 import React from "react";
 import { Column, Row } from "simple-flexbox";
 import "../../css/uom.css";
+import { Link } from "react-router-dom";
+
 let styles = {
   width: "400px"
 };
@@ -331,10 +333,23 @@ class SubmitPage extends React.Component {
                   <div>
                     <textarea id="used" type="text" />
                   </div>
-
+                  <Column>
+                  <Row>
                   <a className="button" onClick={this.handleClick}>
                     Submit
                   </a>
+                  </Row>
+                  <Row>
+                  <Link
+                    to={"/"}
+                    className="button-hero"
+                    
+                  >
+                   Return
+                  </Link>
+                  </Row>
+                 </Column>
+                 
                 </Column>
               </Row>
             </fieldset>
