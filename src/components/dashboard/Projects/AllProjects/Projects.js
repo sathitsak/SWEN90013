@@ -12,7 +12,7 @@ const styles = {
   paper: {
     padding: 10,
     margin: 40,
-    backgroundColor: lightBlue[200]
+    backgroundColor: "#8BBAEE"
   }
 };
 
@@ -132,7 +132,10 @@ class ViewProjects extends React.Component {
       <Grid container justify="flex-end" direction="row" alignContent="center">
         <Grid item sm>
           <Paper className={classes.paper}>
-            <Typography variant="h5" style={{ textAlign: "center" }}>
+            <Typography
+              variant="h5"
+              style={{ textAlign: "center", color: "#FFFFFF" }}
+            >
               New
             </Typography>
             {this._filterProjectsByStatus(status.new).map((project, index) => (
@@ -142,7 +145,10 @@ class ViewProjects extends React.Component {
         </Grid>
         <Grid item sm>
           <Paper className={classes.paper}>
-            <Typography variant="h5" style={{ textAlign: "center" }}>
+            <Typography
+              variant="h5"
+              style={{ textAlign: "center", color: "#FFFFFF" }}
+            >
               In Progress
             </Typography>
             {this._filterProjectsByStatus(status.inProgress).map(
@@ -154,7 +160,10 @@ class ViewProjects extends React.Component {
         </Grid>
         <Grid item sm>
           <Paper className={classes.paper}>
-            <Typography variant="h5" style={{ textAlign: "center" }}>
+            <Typography
+              variant="h5"
+              style={{ textAlign: "center", color: "#FFFFFF" }}
+            >
               Completed
             </Typography>
             {this._filterProjectsByStatus(status.completed).map(

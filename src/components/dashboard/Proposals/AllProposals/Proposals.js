@@ -6,11 +6,23 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import Typography from "@material-ui/core/Typography";
 import { ProposalContext } from "../../state/Proposal";
+import Paper from "@material-ui/core/Paper";
+import { withStyles } from "@material-ui/core/styles";
 
 // {title: 'test'}
 // new proposals works, just going to new proposal array
 
-const Proposals = () => {
+const styles = theme => ({
+  paper: {
+    padding: 10,
+    margin: 40,
+    backgroundColor: "#8BBAEE",
+    width: 390
+  }
+});
+
+const Proposals = props => {
+  const { classes } = props;
   const [state, setState] = useContext(ProposalContext);
 
   if (state === undefined) {
@@ -34,6 +46,14 @@ const Proposals = () => {
             organisation: "FBE",
             status: "new",
             supervisor: "Eduardo"
+          },
+          {
+            id: 2,
+            title: "PMS",
+            client: "Philip Dart",
+            organisation: "UoM",
+            status: "approved",
+            supervisor: "Pick"
           }
         ])
       );
@@ -58,42 +78,56 @@ const Proposals = () => {
       justify="flex-end"
       direction="row"
     >
-      <Grid item xs={6} md={6}>
-        <Typography variant="h6">New</Typography>
-        <div>
-          <List dense={true}>
-            {newProposals.map(p => (
-              <ProposalCard
-                key={p.id}
-                id={p.id}
-                title={p.title}
-                organisation={p.organisation}
-                client={p.client}
-                supervisor={p.supervisor}
-              />
-            ))}
-          </List>
-        </div>
+      <Grid item sm>
+        <Paper className={classes.paper}>
+          <Typography
+            variant="h5"
+            style={{ textAlign: "center", color: "#FFFFFF" }}
+          >
+            New
+          </Typography>
+          <div>
+            <List dense={true}>
+              {newProposals.map(p => (
+                <ProposalCard
+                  key={p.id}
+                  id={p.id}
+                  title={p.title}
+                  organisation={p.organisation}
+                  client={p.client}
+                  supervisor={p.supervisor}
+                />
+              ))}
+            </List>
+          </div>
+        </Paper>
       </Grid>
-      <Grid item xs={6} md={6}>
-        <Typography variant="h6">Accepted</Typography>
-        <div>
-          <List dense={true}>
-            {approvedProposals.map(p => (
-              <ProposalCard
-                key={p.id}
-                id={p.id}
-                title={p.title}
-                organisation={p.organisation}
-                client={p.client}
-                supervisor={p.supervisor}
-              />
-            ))}
-          </List>
-        </div>
+      <Grid item sm>
+        <Paper className={classes.paper}>
+          <Typography
+            variant="h5"
+            style={{ textAlign: "center", color: "#FFFFFF" }}
+          >
+            Approved
+          </Typography>
+          <div>
+            <List dense={true}>
+              {approvedProposals.map(p => (
+                <ProposalCard
+                  key={p.id}
+                  id={p.id}
+                  title={p.title}
+                  organisation={p.organisation}
+                  client={p.client}
+                  supervisor={p.supervisor}
+                />
+              ))}
+            </List>
+          </div>
+        </Paper>
       </Grid>
     </Grid>
   );
 };
 
-export default Proposals;
+export default withStyles(styles)(Proposals);
