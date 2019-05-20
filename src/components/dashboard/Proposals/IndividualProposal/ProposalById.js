@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
-import { ProposalContext } from "../state/Proposal";
+import { ProposalContext } from "../../state/Proposal";
 
 // import ProposalInfo from "./components/ProposalInfo";
 // import ProposalResponses from "./components/ProposalResponses";

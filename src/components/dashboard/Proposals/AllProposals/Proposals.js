@@ -5,7 +5,7 @@ import Grid from "@material-ui/core/Grid";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import Typography from "@material-ui/core/Typography";
-import { ProposalContext } from "../state/Proposal";
+import { ProposalContext } from "../../state/Proposal";
 
 // {title: 'test'}
 // new proposals works, just going to new proposal array
