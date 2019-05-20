@@ -1,13 +1,15 @@
 import React from "react";
-import Card from "@material-ui/core/Card";
-import CardHeader from "@material-ui/core/CardHeader";
-import CardContent from "@material-ui/core/CardContent";
-import Avatar from "@material-ui/core/Avatar";
-import Typography from "@material-ui/core/Typography";
-import red from "@material-ui/core/colors/red";
 import { withStyles } from "@material-ui/core/styles";
-import ClientChip from "./ClientChip";
+import Avatar from "@material-ui/core/Avatar";
+import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
+import CardHeader from "@material-ui/core/CardHeader";
+import Button from "@material-ui/core/Button";
+import ClientChip from "../ClientChip";
 import Divider from "@material-ui/core/Divider";
+import red from "@material-ui/core/colors/red";
+import Typography from "@material-ui/core/Typography";
+import { Link } from "react-router-dom";
 
 const styles = theme => ({
   card: {
@@ -23,7 +25,7 @@ const styles = theme => ({
 
 class ProposalCard extends React.Component {
   render() {
-    const { classes } = this.props;
+    const { classes, id } = this.props;
     return (
       <div>
         <Card className={classes.card}>
@@ -43,6 +45,9 @@ class ProposalCard extends React.Component {
             <Typography component="p" variant="overline">
               Supervisor: {this.props.supervisor}
             </Typography>
+            <Link to={`/dashboard/proposals/${id}`}>
+              <Button>View</Button>
+            </Link>
           </CardContent>
         </Card>
       </div>
