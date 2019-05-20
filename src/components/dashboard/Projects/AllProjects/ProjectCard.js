@@ -20,7 +20,7 @@ const styles = {
     width: "100%",
     textDecoration: "none",
     "&:hover": {
-      backgroundColor: teal[200]
+      backgroundColor: "#f5f5f5"
     },
     "&:active": {
       backgroundColor: teal[300]

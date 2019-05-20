@@ -11,12 +11,12 @@ import SubmitPage from "./components/landing/SubmitPage";
 import Login from "./components/landing/Login";
 import Home from "./components/home/Home";
 import AppContainer from "./components/dashboard/AppContainer/AppContainer";
-import Proposals from "./components/dashboard/Proposals/Proposals";
-import Projects from "./components/dashboard/Projects/Projects";
-import ProposalById from "./components/dashboard/Proposals/ProposalById";
-import ProjectById from "./components/dashboard/Projects/ProjectById";
+import Proposals from "./components/dashboard/Proposals/AllProposals/Proposals";
+import Projects from "./components/dashboard/Projects/AllProjects/Projects";
+import ProposalById from "./components/dashboard/Proposals/IndividualProposal/ProposalById";
+import ProjectById from "./components/dashboard/Projects/IndividualProject/ProjectById";
 import { ProposalProvider } from "./components/dashboard/state/Proposal";
-import ProjectDetail from "./components/dashboard/Projects/ProjectDetail";
+import ProjectDetail from "./components/dashboard/Projects/IndividualProject/ProjectDetail";
 
 class App extends React.Component {
   render() {

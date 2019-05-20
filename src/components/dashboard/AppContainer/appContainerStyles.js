@@ -26,5 +26,16 @@ export default theme => ({
     margin: 20,
     width: 60,
     height: 60
+  },
+  link: {
+    float: "left",
+    width: "100%",
+    textDecoration: "none",
+    "&:active": {
+      backgroundColor: "#ADB8C1"
+    }
+  },
+  userTitle: {
+    marginTop: 40
   }
 });

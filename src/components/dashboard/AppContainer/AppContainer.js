@@ -53,7 +53,11 @@ class AppContainer extends React.Component {
                 />
               </Grid>
               <Grid item xs={5}>
-                <Typography variant="h6" gutterBottom>
+                <Typography
+                  variant="h6"
+                  gutterBottom
+                  className={classes.userTitle}
+                >
                   User
                 </Typography>
               </Grid>
@@ -66,7 +70,7 @@ class AppContainer extends React.Component {
               <ListItemIcon>
                 <AssignmentIcon />
               </ListItemIcon>
-              <Link to="/dashboard">
+              <Link to="/dashboard" className={classes.link}>
                 <ListItemText primary="View Proposals" />
               </Link>
             </ListItem>
@@ -75,7 +79,7 @@ class AppContainer extends React.Component {
               <ListItemIcon>
                 <GavelIcon />
               </ListItemIcon>
-              <Link to="/dashboard/projects">
+              <Link to="/dashboard/projects" className={classes.link}>
                 <ListItemText primary="View Projects" />
               </Link>
             </ListItem>
