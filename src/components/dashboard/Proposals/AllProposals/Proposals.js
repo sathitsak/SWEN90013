@@ -21,113 +21,109 @@ const styles = theme => ({
   }
 });
 
-const Proposals = props => {
-  const { classes } = props;
-  const [state, setState] = useContext(ProposalContext);
-
-  if (state === undefined) {
-    axios
-      .get(`http://swapi.co/api/people`)
-      .then(({ results }) => setState(results))
-      .catch(() =>
-        setState([
-          {
-            id: 1,
-            title: "Hampers for the Homeless",
-            client: "Stephanie Armther",
-            organisation: "Food4Poor",
-            status: "new",
-            supervisor: "Eduardo"
-          },
-          {
-            id: 2,
-            title: "Fire Quiz App",
-            client: "Mike Poloni",
-            organisation: "FBE",
-            status: "new",
-            supervisor: "Eduardo"
-          },
-          {
-            id: 2,
-            title: "PMS",
-            client: "Philip Dart",
-            organisation: "UoM",
-            status: "approved",
-            supervisor: "Pick"
-          }
-        ])
-      );
-    return <p>Loading...</p>;
-  }
-
-  if (state.length === 0) {
-    return <p>No proposals found.</p>;
-  }
-
-  const newProposals = state.filter(p => p.status === "new");
-
-  const approvedProposals = state.filter(p => p.status === "approved");
-
-  //enables changing of the user and the coordinator to determine what they see
-
-  return (
-    <Grid
-      container
-      spacing={16}
-      alignContent="center"
-      justify="flex-end"
-      direction="row"
-    >
-      <Grid item sm>
-        <Paper className={classes.paper}>
-          <Typography
-            variant="h5"
-            style={{ textAlign: "center", color: "#FFFFFF" }}
-          >
-            New
-          </Typography>
-          <div>
-            <List dense={true}>
-              {newProposals.map(p => (
-                <ProposalCard
-                  key={p.id}
-                  id={p.id}
-                  title={p.title}
-                  organisation={p.organisation}
-                  client={p.client}
-                  supervisor={p.supervisor}
-                />
-              ))}
-            </List>
-          </div>
-        </Paper>
-      </Grid>
-      <Grid item sm>
-        <Paper className={classes.paper}>
-          <Typography
-            variant="h5"
-            style={{ textAlign: "center", color: "#FFFFFF" }}
-          >
-            Approved
-          </Typography>
-          <div>
-            <List dense={true}>
-              {approvedProposals.map(p => (
-                <ProposalCard
-                  key={p.id}
-                  id={p.id}
-                  title={p.title}
-                  organisation={p.organisation}
-                  client={p.client}
-                  supervisor={p.supervisor}
-                />
-              ))}
-            </List>
-          </div>
-        </Paper>
-      </Grid>
-    </Grid>
-  );
+const status = {
+  new: "new",
+  approved: "approved"
 };
+
+class Proposals extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      proposals: []
+    };
+  }
+
+  componentDidMount() {
+    axios
+      .get(`https://5ce79b719f2c390014dba00f.mockapi.io/proposal/`)
+      .then(results => {
+        this.setState({ proposals: results.data });
+      });
+  }
+
+  _filterProposalsByStatus = status => {
+    const { proposals } = this.state;
+    let targetProposals = [];
+
+    proposals.forEach(p => {
+      if (p.status === status) {
+        targetProposals.push(p);
+      }
+    });
+    console.log(proposals);
+    return targetProposals;
+  };
+
+  _getFirstCharacter = title => {
+    var string = title;
+    return string.charAt(0);
+  };
+
+  render() {
+    const { classes } = this.props;
+
+    return (
+      <Grid
+        container
+        spacing={16}
+        alignContent="center"
+        justify="flex-end"
+        direction="row"
+      >
+        <Grid item sm>
+          <Paper className={classes.paper}>
+            <Typography
+              variant="h5"
+              style={{ textAlign: "center", color: "#FFFFFF" }}
+            >
+              New
+            </Typography>
+            <div>
+              <List dense={true}>
+                {this._filterProposalsByStatus(status.new).map(p => (
+                  <ProposalCard
+                    key={p.id}
+                    id={p.id}
+                    title={p.name}
+                    organisation={p.organisation}
+                    client={p.client}
+                    supervisor={p.supervisor}
+                    initial={this._getFirstCharacter(p.name)}
+                  />
+                ))}
+              </List>
+            </div>
+          </Paper>
+        </Grid>
+        <Grid item sm>
+          <Paper className={classes.paper}>
+            <Typography
+              variant="h5"
+              style={{ textAlign: "center", color: "#FFFFFF" }}
+            >
+              Approved
+            </Typography>
+            <div>
+              <List dense={true}>
+                {this._filterProposalsByStatus(status.approved).map(p => (
+                  <ProposalCard
+                    key={p.id}
+                    id={p.id}
+                    title={p.name}
+                    organisation={p.organisation}
+                    client={p.client}
+                    supervisor={p.supervisor}
+                    initial={this._getFirstCharacter(p.name)}
+                  />
+                ))}
+              </List>
+            </div>
+          </Paper>
+        </Grid>
+      </Grid>
+    );
+  }
+}
 
 export default withStyles(styles)(Proposals);

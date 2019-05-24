@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import { ProposalContext } from "../../state/Proposal";
+import axios from "axios";
 
 import ProposalInfo from "./ProposalInfo";
 import ProposalResponses from "./ProposalResponses";
@@ -28,36 +29,51 @@ const styles = theme => ({
   }
 });
 
-const ProposalById = props => {
-  const { classes, match } = props;
+class ProposalById extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      proposal: []
+    };
+  }
 
-  const [state] = useContext(ProposalContext);
-  const proposal = state.filter(p => p.id === parseInt(match.params.id))[0];
+  componentDidMount() {
+    //PASSING THE ID
+    const propID = this.props.match.params.id;
+    axios
+      .get(`https://5ce79b719f2c390014dba00f.mockapi.io/proposal/` + propID)
+      .then(results => {
+        this.setState({ proposal: results.data });
+      });
+  }
 
-  return (
-    <div className={classes.root}>
-      <Grid container spacing={24}>
-        <Grid item xs={12} sm={6}>
-          <h1>{proposal.title}</h1>
-          {
-            <ProposalResponses
-              q1={sampleProposal.q1}
-              q2={sampleProposal.q2}
-              q3={sampleProposal.q3}
-              q4={sampleProposal.q4}
+  render() {
+    const { classes } = this.props;
+
+    return (
+      <div className={classes.root}>
+        <Grid container spacing={24}>
+          <Grid item xs={12} sm={6}>
+            {
+              <ProposalResponses
+                q1={this.state.proposal.outlineOfProject}
+                q2={this.state.proposal.endProductBenefits}
+                q3={this.state.proposal.endProductUse}
+                q4={this.state.proposal.beneficiaries}
+              />
+            }
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <ProposalInfo
+              client={this.state.proposal.client}
+              organisation={this.state.proposal.organisation}
+              status={this.state.proposal.status}
             />
-          }
+          </Grid>
         </Grid>
-        <Grid item xs={12} sm={6}>
-          <ProposalInfo
-            client={sampleProposal.client}
-            organisation={sampleProposal.organisation}
-            status={sampleProposal.status}
-          />
-        </Grid>
-      </Grid>
-    </div>
-  );
-};
+      </div>
+    );
+  }
+}
 
 export default withStyles(styles)(ProposalById);
