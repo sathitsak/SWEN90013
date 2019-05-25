@@ -68,6 +68,7 @@ class ProposalById extends React.Component {
               client={this.state.proposal.client}
               organisation={this.state.proposal.organisation}
               status={this.state.proposal.status}
+              id={this.state.proposal.id}
             />
           </Grid>
         </Grid>
