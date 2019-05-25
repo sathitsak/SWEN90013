@@ -17,6 +17,7 @@ import ProposalById from "./components/dashboard/Proposals/IndividualProposal/Pr
 import ProjectById from "./components/dashboard/Projects/IndividualProject/ProjectById";
 import { ProposalProvider } from "./components/dashboard/state/Proposal";
 import ProjectDetail from "./components/dashboard/Projects/IndividualProject/ProjectDetail";
+import RejectedProposals from "./components/dashboard/Proposals/AllProposals/RejectedProposals";
 
 class App extends React.Component {
   render() {
@@ -28,6 +29,7 @@ class App extends React.Component {
             <Route exact path="/submit" component={SubmitPage} />
             <Route exact path="/home" component={Home} />
             <Route exact path="/login" component={Login} />
+            <Route exact path="/rejectedProposals" component={RejectedProposals} />
             <Route
               path="/dashboard"
               render={({ match: { path } }) => (

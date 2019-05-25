@@ -28,7 +28,7 @@ const styles = theme => ({
   }
 });
 
-const ProposalById = props => {
+const RejectedProposals = props => {
   const { classes, match } = props;
 
   const [state] = useContext(ProposalContext);
@@ -60,4 +60,4 @@ const ProposalById = props => {
   );
 };
 
-export default withStyles(styles)(ProposalById);
+export default withStyles(styles)(RejectedProposals);
