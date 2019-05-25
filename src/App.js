@@ -29,7 +29,7 @@ class App extends React.Component {
             <Route exact path="/submit" component={SubmitPage} />
             <Route exact path="/home" component={Home} />
             <Route exact path="/login" component={Login} />
-            <Route exact path="/rejectedProposals" component={RejectedProposals} />
+
             <Route
               path="/dashboard"
               render={({ match: { path } }) => (
@@ -50,6 +50,10 @@ class App extends React.Component {
                         <Route path={`${path}/:id`} component={ProjectDetail} />
                       </Fragment>
                     )}
+                  />
+                  <Route
+                    path={`${path}/rejectedProposals`}
+                    component={RejectedProposals}
                   />
                 </AppContainer>
               )}
