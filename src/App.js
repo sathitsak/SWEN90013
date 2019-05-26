@@ -18,6 +18,7 @@ import ProjectById from "./components/dashboard/Projects/IndividualProject/Proje
 import { ProposalProvider } from "./components/dashboard/state/Proposal";
 import ProjectDetail from "./components/dashboard/Projects/IndividualProject/ProjectDetail";
 import RejectedProposals from "./components/dashboard/Proposals/AllProposals/RejectedProposals";
+import CustomPaginationActionsTable from "./components/dashboard/Proposals/AllProposals/RejectedProposals";
 
 class App extends React.Component {
   render() {

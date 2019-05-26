@@ -20,6 +20,9 @@ const styles = theme => ({
     margin: 40,
     backgroundColor: "#8BBAEE",
     width: 390
+  },
+  link: {
+    textDecoration: "none"
   }
 });
 
@@ -136,7 +139,7 @@ const Proposals = props => {
           color="primary"
           className={classes.margin}
         >
-          View Rejected Proposal
+          View Rejected Proposals
         </Button>
       </Link>
     </Grid>
