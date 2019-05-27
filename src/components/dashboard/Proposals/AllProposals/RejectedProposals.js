@@ -17,6 +17,7 @@ import {withStyles} from "@material-ui/core/styles";
 import axios from "axios";
 import ProposalCard from "./ProposalCard";
 import TableHead from "@material-ui/core/TableHead/TableHead";
+import {Link} from "react-router-dom";
 
 const useStyles1 = makeStyles(theme => ({
     root: {
@@ -24,6 +25,9 @@ const useStyles1 = makeStyles(theme => ({
         color: "#232FFD",
         marginLeft: 100,
     },
+    link: {
+        textDecoration: "none"
+    }
 }));
 
 
@@ -153,6 +157,10 @@ class RejectedProposals extends React.Component {
             this.setRowsPerPage(parseInt(event.target.value, 10));
         }
 
+        function handleClick(event, id) {
+            window.location.href=`/dashboard/proposals/${id}`;
+        }
+
         return (
             <Paper className={classes.root}>
                 <div className={classes.tableWrapper}>
@@ -166,9 +174,11 @@ class RejectedProposals extends React.Component {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {rejected.
-                                map(p => (
-                                <TableRow key={p.id}>
+                            {rejected.map(p => (
+                                <TableRow
+                                    hover
+                                    onClick={event => handleClick(event, p.id)}
+                                    key={p.id}>
                                     <TableCell component="th" scope="row">
                                         {p.name}
                                     </TableCell>

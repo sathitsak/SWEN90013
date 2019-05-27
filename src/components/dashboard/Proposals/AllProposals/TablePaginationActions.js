@@ -26,49 +26,49 @@ class TablePaginationActions extends React.Component {
         super(props);
     }
 
+    _handleFirstPageButtonClick(event) {
+        onChangePage(event, 0);
+    }
+
+    _handleBackButtonClick(event) {
+        onChangePage(event, page - 1);
+    }
+
+    _handleNextButtonClick(event) {
+        onChangePage(event, page + 1);
+    }
+
+    _handleLastPageButtonClick(event) {
+        onChangePage(event, Math.max(0, Math.ceil(count / rowsPerPage) - 1));
+    }
+
     render() {
         const classes = useStyles1();
         const theme = useTheme();
 
         const {count, page, rowsPerPage, onChangePage} = this.props;
 
-        function handleFirstPageButtonClick(event) {
-            onChangePage(event, 0);
-        }
-
-        function handleBackButtonClick(event) {
-            onChangePage(event, page - 1);
-        }
-
-        function handleNextButtonClick(event) {
-            onChangePage(event, page + 1);
-        }
-
-        function handleLastPageButtonClick(event) {
-            onChangePage(event, Math.max(0, Math.ceil(count / rowsPerPage) - 1));
-        }
-
         return (
             <div className={classes.root}>
                 <IconButton
-                    onClick={handleFirstPageButtonClick}
+                    onClick={this._handleFirstPageButtonClick}
                     disabled={page === 0}
                     aria-label="First Page"
                 >
                     <FirstPageIcon/>
                 </IconButton>
-                <IconButton onClick={handleBackButtonClick} disabled={page === 0} aria-label="Previous Page">
+                <IconButton onClick={this._handleBackButtonClick} disabled={page === 0} aria-label="Previous Page">
                     <KeyboardArrowLeft/>
                 </IconButton>
                 <IconButton
-                    onClick={handleNextButtonClick}
+                    onClick={this._handleNextButtonClick}
                     disabled={page >= Math.ceil(count / rowsPerPage) - 1}
                     aria-label="Next Page"
                 >
                     <KeyboardArrowRight/>
                 </IconButton>
                 <IconButton
-                    onClick={handleLastPageButtonClick}
+                    onClick={this._handleLastPageButtonClick}
                     disabled={page >= Math.ceil(count / rowsPerPage) - 1}
                     aria-label="Last Page"
                 >
