@@ -8,6 +8,8 @@ import Typography from "@material-ui/core/Typography";
 import {ProposalContext} from "../../state/Proposal";
 import Paper from "@material-ui/core/Paper";
 import {withStyles} from "@material-ui/core/styles";
+import Button from "@material-ui/core/Button/Button";
+import {Link} from "react-router-dom";
 
 // {title: 'test'}
 // new proposals works, just going to new proposal array
@@ -18,6 +20,10 @@ const styles = theme => ({
         margin: 40,
         backgroundColor: "#8BBAEE",
         width: 390
+    },
+    link: {
+        textDecoration: "none",
+        textColor: "white"
     }
 });
 
@@ -121,6 +127,15 @@ class Proposals extends React.Component {
                         </div>
                     </Paper>
                 </Grid>
+
+                <Link
+                    to={`/dashboard/rejectedProposals`}
+                    className={classes.link}
+                >
+                    <Button variant="contained" size="medium" color="primary" className={classes.margin}>
+                        View Rejected Proposals
+                    </Button>
+                </Link>
             </Grid>
         );
     }
