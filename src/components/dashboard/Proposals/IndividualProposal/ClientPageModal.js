@@ -86,7 +86,7 @@ class ClientPageModal extends React.Component {
             <DialogContentText>
               <Grid container spacing={24}>
                 <Grid item xs={6}>
-                  <ClientDetails />
+                  <ClientDetails client={this.props.client} />
                 </Grid>
                 <Grid item xs={6}>
                   <ClientOrgAndContact />

@@ -22,7 +22,7 @@ class ClientDetails extends React.Component {
       <div>
         <Grid container spacing={24}>
           <Grid item xs={12}>
-            <h1>Stephanie Armther</h1>
+            <h1>{this.props.client}</h1>
             <Button variant="contained">Client</Button>
           </Grid>
           <Grid item xs={6}>

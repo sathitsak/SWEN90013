@@ -40,9 +40,15 @@ class ProposalCard extends React.Component {
     const { classes, id } = this.props;
     return (
       <Card className={classes.card}>
-        <Link to={`/dashboard/proposals/${id}`} className={classes.link}>
+        <Link
+          to={`/dashboard/proposals/${id}`}
+          id={this.props.id}
+          className={classes.link}
+        >
           <CardHeader
-            avatar={<Avatar className={classes.avatar}>R</Avatar>}
+            avatar={
+              <Avatar className={classes.avatar}>{this.props.initial}</Avatar>
+            }
             title={this.props.title}
             subheader={this.props.organisation}
           />

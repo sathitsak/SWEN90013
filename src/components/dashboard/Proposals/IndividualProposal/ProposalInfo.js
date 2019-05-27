@@ -10,6 +10,7 @@ import lightGreen from "@material-ui/core/colors/lightGreen";
 import { blue, amber } from "@material-ui/core/colors";
 import ClientPageModal from "./ClientPageModal";
 import Divider from "@material-ui/core/Divider";
+import StatusChangeModal from "./StatusChangeModal";
 
 class ProposalInfo extends React.Component {
   constructor(props) {
@@ -74,25 +75,7 @@ class ProposalInfo extends React.Component {
               {this.props.organisation}
             </Typography>
           </Grid>
-          <Grid item xs={6} style={{ marginTop: 30 }} align="center">
-            <Button
-              variant="contained"
-              color="primary"
-              style={{ backgroundColor: lightGreen[500] }}
-            >
-              Accept
-            </Button>
-          </Grid>
-          <Grid item xs={6} style={{ marginTop: 30 }} align="center">
-            <Button
-              variant="contained"
-              color="secondary"
-              style={{ backgroundColor: red[500] }}
-              align="center"
-            >
-              Reject
-            </Button>
-          </Grid>
+          <StatusChangeModal id={this.props.id} />
         </Grid>
       </div>
     );
