@@ -1,9 +1,9 @@
-import React, { Fragment } from "react";
+import React, {Fragment} from "react";
 import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  withRouter
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    withRouter
 } from "react-router-dom";
 
 import LandingPage from "./components/landing/LandingPage";
@@ -12,13 +12,15 @@ import Login from "./components/landing/Login";
 import Home from "./components/home/Home";
 import AppContainer from "./components/dashboard/AppContainer/AppContainer";
 import Proposals from "./components/dashboard/Proposals/AllProposals/Proposals";
+import ProposalById
+    from "./components/dashboard/Proposals/IndividualProposal/ProposalById";
+import {ProposalProvider} from "./components/dashboard/state/Proposal";
 import Projects from "./components/dashboard/Projects/AllProjects/Projects";
 import ProposalById from "./components/dashboard/Proposals/IndividualProposal/ProposalById";
 import ProjectById from "./components/dashboard/Projects/IndividualProject/ProjectById";
 import { ProposalProvider } from "./components/dashboard/state/Proposal";
-import ProjectDetail from "./components/dashboard/Projects/IndividualProject/ProjectDetail";
 import RejectedProposals from "./components/dashboard/Proposals/AllProposals/RejectedProposals";
-import CustomPaginationActionsTable from "./components/dashboard/Proposals/AllProposals/RejectedProposals";
+import ProjectById from "./components/dashboard/Projects/IndividualProject/ProjectById";
 
 class App extends React.Component {
   render() {
@@ -48,7 +50,7 @@ class App extends React.Component {
                     render={({ match: { path } }) => (
                       <Fragment>
                         <Route exact path={`${path}/`} component={Projects} />
-                        <Route path={`${path}/:id`} component={ProjectDetail} />
+                        <Route path={`${path}/:id`} component={ProjectById} />
                       </Fragment>
                     )}
                   />
@@ -69,15 +71,15 @@ class App extends React.Component {
 export default App;
 
 class ScrollToTop extends React.Component {
-  componentDidUpdate(prevProps) {
-    if (this.props.location.pathname !== prevProps.location.pathname) {
-      window.scrollTo(0, 0);
+    componentDidUpdate(prevProps) {
+        if (this.props.location.pathname !== prevProps.location.pathname) {
+            window.scrollTo(0, 0);
+        }
     }
-  }
 
-  render() {
-    return this.props.children;
-  }
+    render() {
+        return this.props.children;
+    }
 }
 
 const ScrollToTopWithRouter = withRouter(ScrollToTop);
