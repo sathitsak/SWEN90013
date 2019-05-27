@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { makeStyles, useTheme } from '@material-ui/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -13,18 +13,21 @@ import FirstPageIcon from '@material-ui/icons/FirstPage';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import LastPageIcon from '@material-ui/icons/LastPage';
+import {withStyles} from "@material-ui/core/styles";
 
 const useStyles1 = makeStyles(theme => ({
     root: {
         flexShrink: 0,
-        color: theme.palette.text.secondary,
-        marginLeft: theme.spacing(2.5),
+        color: "#232FFD",
+        marginLeft: 100,
     },
 }));
+
 
 function TablePaginationActions(props) {
     const classes = useStyles1();
     const theme = useTheme();
+
     const { count, page, rowsPerPage, onChangePage } = props;
 
     function handleFirstPageButtonClick(event) {
@@ -50,24 +53,24 @@ function TablePaginationActions(props) {
                 disabled={page === 0}
                 aria-label="First Page"
             >
-                {theme.direction === 'rtl' ? <LastPageIcon /> : <FirstPageIcon />}
+                <FirstPageIcon />
             </IconButton>
             <IconButton onClick={handleBackButtonClick} disabled={page === 0} aria-label="Previous Page">
-                {theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
+                <KeyboardArrowLeft />
             </IconButton>
             <IconButton
                 onClick={handleNextButtonClick}
                 disabled={page >= Math.ceil(count / rowsPerPage) - 1}
                 aria-label="Next Page"
             >
-                {theme.direction === 'rtl' ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
+                <KeyboardArrowRight />
             </IconButton>
             <IconButton
                 onClick={handleLastPageButtonClick}
                 disabled={page >= Math.ceil(count / rowsPerPage) - 1}
                 aria-label="Last Page"
             >
-                {theme.direction === 'rtl' ? <FirstPageIcon /> : <LastPageIcon />}
+                <LastPageIcon />
             </IconButton>
         </div>
     );
@@ -100,10 +103,10 @@ const rows = [
     createData('Oreo', 437, 18.0),
 ].sort((a, b) => (a.calories < b.calories ? -1 : 1));
 
-const useStyles2 = makeStyles(theme => ({
+const useStyles2 = theme => ({
     root: {
         width: '100%',
-        marginTop: theme.spacing(3),
+        marginTop: 100,
     },
     table: {
         minWidth: 500,
@@ -111,7 +114,7 @@ const useStyles2 = makeStyles(theme => ({
     tableWrapper: {
         overflowX: 'auto',
     },
-}));
+});
 
 function RejectedProposals() {
     const classes = useStyles2();
@@ -172,4 +175,4 @@ function RejectedProposals() {
     );
 }
 
-export default RejectedProposals;
+export default withStyles(useStyles2)(RejectedProposals);

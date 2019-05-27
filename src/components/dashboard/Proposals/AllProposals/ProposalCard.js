@@ -43,7 +43,7 @@ class ProposalCard extends React.Component {
         <Link to={`/dashboard/proposals/${id}`} className={classes.link}>
           <CardHeader
             avatar={<Avatar className={classes.avatar}>R</Avatar>}
-            title={this.props.title}
+            name={this.props.name}
             subheader={this.props.organisation}
           />
           <CardContent>

@@ -32,13 +32,13 @@ const Proposals = props => {
 
   if (state === undefined) {
     axios
-      .get(`http://swapi.co/api/people`)
+      .get(`https://5ce79b719f2c390014dba00f.mockapi.io/proposal`)
       .then(({ results }) => setState(results))
       .catch(() =>
         setState([
           {
             id: 1,
-            title: "Hampers for the Homeless",
+            name: "Hampers for the Homeless",
             client: "Stephanie Armther",
             organisation: "Food4Poor",
             status: "new",
@@ -46,7 +46,7 @@ const Proposals = props => {
           },
           {
             id: 2,
-            title: "Fire Quiz App",
+            name: "Fire Quiz App",
             client: "Mike Poloni",
             organisation: "FBE",
             status: "new",
@@ -54,7 +54,7 @@ const Proposals = props => {
           },
           {
             id: 2,
-            title: "PMS",
+            name: "PMS",
             client: "Philip Dart",
             organisation: "UoM",
             status: "approved",
@@ -97,7 +97,7 @@ const Proposals = props => {
                 <ProposalCard
                   key={p.id}
                   id={p.id}
-                  title={p.title}
+                  name={p.name}
                   organisation={p.organisation}
                   client={p.client}
                   supervisor={p.supervisor}
@@ -121,7 +121,7 @@ const Proposals = props => {
                 <ProposalCard
                   key={p.id}
                   id={p.id}
-                  title={p.title}
+                  name={p.name}
                   organisation={p.organisation}
                   client={p.client}
                   supervisor={p.supervisor}
