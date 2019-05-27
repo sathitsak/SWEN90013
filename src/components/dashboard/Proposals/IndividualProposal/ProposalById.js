@@ -7,16 +7,6 @@ import axios from "axios";
 import ProposalInfo from "./ProposalInfo";
 import ProposalResponses from "./ProposalResponses";
 
-const sampleProposal = {
-    status: "new",
-    q1: "response 1",
-    q2: "response 2",
-    q3: "response 3",
-    q4:
-        "Lorem ipsum dolor sit amet, in sea animal facilis, cu reque aeque noster per, vim et expetendis percipitur. Te vel nisl posse maiestatis, sea quot reque ei. Per iisque facilisis hendrerit eu, vix no legere utroque. Ut aliquip tibique eam, alia appetere antiopam vel eu",
-    organisation: "Hampers for the homeless",
-    client: "Philip Dart"
-};
 
 const styles = theme => ({
     root: {

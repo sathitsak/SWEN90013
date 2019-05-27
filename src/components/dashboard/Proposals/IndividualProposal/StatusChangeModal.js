@@ -9,6 +9,14 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import TextField from "@material-ui/core/TextField";
+import Input from "@material-ui/core/Input";
+import OutlinedInput from "@material-ui/core/OutlinedInput";
+import FilledInput from "@material-ui/core/FilledInput";
+import InputLabel from "@material-ui/core/InputLabel";
+import MenuItem from "@material-ui/core/MenuItem";
+import FormHelperText from "@material-ui/core/FormHelperText";
+import FormControl from "@material-ui/core/FormControl";
+import Select from "@material-ui/core/Select";
 import axios from "axios";
 
 class StatusChangeModal extends React.Component {
@@ -19,7 +27,8 @@ class StatusChangeModal extends React.Component {
       fullWidth: true,
       maxWidth: "md",
       option: "",
-      rerender: ""
+      rerender: "",
+      supervisor: ""
     };
   }
 
@@ -32,13 +41,24 @@ class StatusChangeModal extends React.Component {
   };
 
   _handleUpdate = () => {
-    this.setState({ open: false });
-    axios.put(
-      "https://5ce79b719f2c390014dba00f.mockapi.io/proposal/" + this.props.id,
-      {
-        status: this.state.option
-      }
-    );
+    var response = document.getElementById("reason").value;
+    if ((response = -1)) {
+      alert("Please fill all fields");
+    } else {
+      this.setState({ open: false });
+      axios.put(
+        "https://5ce79b719f2c390014dba00f.mockapi.io/proposal/" + this.props.id,
+        {
+          status: this.state.option,
+          supervisor: this.state.supervisor
+        }
+      );
+    }
+  };
+
+  _handleChange = event => {
+    this.setState({ supervisor: [event.target.value] });
+    console.log(this.state.coordinator);
   };
 
   render() {
@@ -83,7 +103,7 @@ class StatusChangeModal extends React.Component {
                     </DialogContentText>
                   </DialogContent>
                   <TextField
-                    id="filled-multiline-static"
+                    id="reason"
                     multiline
                     rows="4"
                     margin="normal"
@@ -92,8 +112,26 @@ class StatusChangeModal extends React.Component {
                   />
                 </Grid>
                 <Grid item xs={6} style={{ marginTop: 30 }} align="center">
-                  "assign to coordinator goes here"{this.state.option}
-                  {this.props.id}
+                  <FormControl style={{ minWidth: 200, marginTop: 50 }}>
+                    <InputLabel htmlFor="age-simple">
+                      Select supervisor
+                    </InputLabel>
+                    <Select
+                      value={this.state.supervisor}
+                      inputProps={{
+                        name: "age",
+                        id: "age-simple"
+                      }}
+                      onChange={this._handleChange}
+                    >
+                      <MenuItem value="">
+                        <em>None</em>
+                      </MenuItem>
+                      <MenuItem value={"None"}>None</MenuItem>
+                      <MenuItem value={"Eduardo"}>Eduardo</MenuItem>
+                      <MenuItem value={"Doc"}>Doc</MenuItem>
+                    </Select>
+                  </FormControl>
                 </Grid>
               </Grid>
 

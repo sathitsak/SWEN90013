@@ -63,51 +63,54 @@ class ClientPageModal extends React.Component {
         this.setState({open: false});
     };
 
-    render() {
-        const {classes} = this.props;
-        return (
-            <div>
-                <Typography gutterBottom/>
-                <Chip
-                    onClick={this.handleClickOpen}
-                    icon={<FaceIcon/>}
-                    label={this.props.client}
-                    variant="outlined"
-                    align="center"
-                />
-                <Dialog
-                    fullWidth={this.state.fullWidth}
-                    maxWidth={this.state.maxWidth}
-                    open={this.state.open}
-                    onClose={this.handleClose}
-                    aria-labelledby="max-width-dialog-title"
-                >
-                    <DialogContent>
-                        <DialogContentText>
-                            <Grid container spacing={24}>
-                                <Grid item xs={6}>
-                                    <ClientDetails/>
-                                </Grid>
-                                <Grid item xs={6}>
-                                    <ClientOrgAndContact/>
-                                </Grid>
-                                <br/>
-                                <Grid item xs={12}>
-                                    <h1>Notes</h1>
-                                    <ClientNotes/>
-                                </Grid>
-                            </Grid>
-                        </DialogContentText>
-                    </DialogContent>
-                    <DialogActions>
-                        <Button onClick={this.handleClose} color="primary">
-                            Close
-                        </Button>
-                    </DialogActions>
-                </Dialog>
-            </div>
-        );
-    }
+
+
+  render() {
+    const { classes } = this.props;
+    return (
+      <div>
+        <Typography gutterBottom />
+        <Chip
+          onClick={this.handleClickOpen}
+          icon={<FaceIcon />}
+          label={this.props.client}
+          variant="outlined"
+          align="center"
+        />
+        <Dialog
+          fullWidth={this.state.fullWidth}
+          maxWidth={this.state.maxWidth}
+          open={this.state.open}
+          onClose={this.handleClose}
+          aria-labelledby="max-width-dialog-title"
+        >
+          <DialogContent>
+            <DialogContentText>
+              <Grid container spacing={24}>
+                <Grid item xs={6}>
+                  <ClientDetails client={this.props.client} />
+                </Grid>
+                <Grid item xs={6}>
+                  <ClientOrgAndContact />
+                </Grid>
+                <br />
+                <Grid item xs={12}>
+                  <h1>Notes</h1>
+                  <ClientNotes />
+                </Grid>
+              </Grid>
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={this.handleClose} color="primary">
+              Close
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </div>
+    );
+  }
+
 }
 
 export default withStyles(styles)(ClientPageModal);
