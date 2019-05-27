@@ -14,6 +14,9 @@ import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import LastPageIcon from '@material-ui/icons/LastPage';
 import {withStyles} from "@material-ui/core/styles";
+import axios from "axios";
+import ProposalCard from "./ProposalCard";
+import TableHead from "@material-ui/core/TableHead/TableHead";
 
 const useStyles1 = makeStyles(theme => ({
     root: {
@@ -83,26 +86,6 @@ TablePaginationActions.propTypes = {
     rowsPerPage: PropTypes.number.isRequired,
 };
 
-function createData(name, calories, fat) {
-    return { name, calories, fat };
-}
-
-const rows = [
-    createData('Cupcake', 305, 3.7),
-    createData('Donut', 452, 25.0),
-    createData('Eclair', 262, 16.0),
-    createData('Frozen yoghurt', 159, 6.0),
-    createData('Gingerbread', 356, 16.0),
-    createData('Honeycomb', 408, 3.2),
-    createData('Ice cream sandwich', 237, 9.0),
-    createData('Jelly Bean', 375, 0.0),
-    createData('KitKat', 518, 26.0),
-    createData('Lollipop', 392, 0.2),
-    createData('Marshmallow', 318, 0),
-    createData('Nougat', 360, 19.0),
-    createData('Oreo', 437, 18.0),
-].sort((a, b) => (a.calories < b.calories ? -1 : 1));
-
 const useStyles2 = theme => ({
     root: {
         width: '100%',
@@ -116,63 +99,91 @@ const useStyles2 = theme => ({
     },
 });
 
-function RejectedProposals() {
-    const classes = useStyles2();
-    const [page, setPage] = React.useState(0);
-    const [rowsPerPage, setRowsPerPage] = React.useState(5);
+const status = {
+    new: "new",
+    approved: "approved",
+    rejected: "rejected"
+};
 
-    const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
-
-    function handleChangePage(event, newPage) {
-        setPage(newPage);
+class RejectedProposals extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            proposals: [],
+            page: 0,
+            setPage: 0,
+            rowsPerPage: 5,
+            setRowsPerPage: 5
+        };
     }
 
-    function handleChangeRowsPerPage(event) {
-        setRowsPerPage(parseInt(event.target.value, 10));
+    componentDidMount() {
+        axios
+            .get(`https://5ce79b719f2c390014dba00f.mockapi.io/proposal/`)
+            .then(results => {
+                this.setState({proposals: results.data});
+            });
     }
 
-    return (
-        <Paper className={classes.root}>
-            <div className={classes.tableWrapper}>
-                <Table className={classes.table}>
-                    <TableBody>
-                        {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(row => (
-                            <TableRow key={row.name}>
-                                <TableCell component="th" scope="row">
-                                    {row.name}
-                                </TableCell>
-                                <TableCell align="right">{row.calories}</TableCell>
-                                <TableCell align="right">{row.fat}</TableCell>
-                            </TableRow>
-                        ))}
+    _filterProposalsByStatus = status => {
+        const {proposals} = this.state;
+        let targetProposals = [];
 
-                        {emptyRows > 0 && (
-                            <TableRow style={{ height: 48 * emptyRows }}>
-                                <TableCell colSpan={6} />
+        proposals.forEach(p => {
+            if (p.status === status) {
+                targetProposals.push(p);
+            }
+        });
+        console.log(proposals);
+        return targetProposals;
+    };
+
+    render() {
+        const classes = useStyles2();
+
+        const rejected = this._filterProposalsByStatus(status.rejected);
+
+        const emptyRows = this.rowsPerPage - Math.min(this.rowsPerPage, rejected.length - this.page * this.rowsPerPage);
+
+        function handleChangePage(event, newPage) {
+            this.setPage(newPage);
+        }
+
+        function handleChangeRowsPerPage(event) {
+            this.setRowsPerPage(parseInt(event.target.value, 10));
+        }
+
+        return (
+            <Paper className={classes.root}>
+                <div className={classes.tableWrapper}>
+                    <Table className={classes.table}>
+                        <TableHead>
+                            <TableRow>
+                                <TableCell>Project Name</TableCell>
+                                <TableCell align="left">Client</TableCell>
+                                <TableCell align="left">Organisation</TableCell>
+                                <TableCell align="left">Project Description</TableCell>
                             </TableRow>
-                        )}
-                    </TableBody>
-                    <TableFooter>
-                        <TableRow>
-                            <TablePagination
-                                rowsPerPageOptions={[5, 10, 25]}
-                                colSpan={3}
-                                count={rows.length}
-                                rowsPerPage={rowsPerPage}
-                                page={page}
-                                SelectProps={{
-                                    native: true,
-                                }}
-                                onChangePage={handleChangePage}
-                                onChangeRowsPerPage={handleChangeRowsPerPage}
-                                ActionsComponent={TablePaginationActions}
-                            />
-                        </TableRow>
-                    </TableFooter>
-                </Table>
-            </div>
-        </Paper>
-    );
+                        </TableHead>
+                        <TableBody>
+                            {rejected.
+                                map(p => (
+                                <TableRow key={p.id}>
+                                    <TableCell component="th" scope="row">
+                                        {p.name}
+                                    </TableCell>
+                                    <TableCell align="left">{p.client}</TableCell>
+                                    <TableCell align="left">{p.organisation}</TableCell>
+                                    <TableCell align="left">{p.outlineOfProject}</TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+
+                    </Table>
+                </div>
+            </Paper>
+        );
+    }
 }
 
 export default withStyles(useStyles2)(RejectedProposals);
