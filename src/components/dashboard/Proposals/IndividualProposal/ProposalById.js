@@ -67,4 +67,4 @@ class ProposalById extends React.Component {
     }
 }
 
-export default withStyles(styles)(RejectedProposals);
+export default withStyles(styles)(ProposalById);
