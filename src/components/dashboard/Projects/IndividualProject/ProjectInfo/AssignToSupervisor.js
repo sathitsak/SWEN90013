@@ -134,13 +134,16 @@ class AssignToSupervisor extends React.Component {
 
     _handleOK = () => {
         const {selectedSupervisor} = this.state;
-
         this.setState({
             currentSupervisor: selectedSupervisor,
             open: false
-        })
+        });
+        if (selectedSupervisor !== '') {
+            alert('This project is assigned to:\n' + selectedSupervisor);
+        } else {
+            alert('This project doesn\'t have responsible supervisor now.')
+        }
     };
-
 }
 
 AssignToSupervisor.propTypes = {

@@ -2,13 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import {withStyles} from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
-import Paper from "@material-ui/core/Paper";
-import Typography from "@material-ui/core/Typography";
-import lightBlue from "@material-ui/core/colors/lightBlue";
 import axios from "axios";
 
 import ProjectInfo from './ProjectInfo/ProjectInfo';
@@ -53,7 +46,7 @@ const styles = {
     }
 };
 
-class ProjectDetail extends React.Component {
+class ProjectById extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -109,8 +102,8 @@ class ProjectDetail extends React.Component {
     }
 }
 
-ProjectDetail.propTypes = {
+ProjectById.propTypes = {
     classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(ProjectDetail);
+export default withStyles(styles)(ProjectById);
