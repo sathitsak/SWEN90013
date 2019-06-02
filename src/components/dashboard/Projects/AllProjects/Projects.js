@@ -45,13 +45,14 @@ class ViewProjects extends React.Component {
     }
 
     render() {
-        const {classes} = this.props;
+        // const {classes} = this.props;
 
         return (
             <Grid container justify="flex-end" direction="row"
                   alignContent="center">
                 <Grid item sm>
-                    <Paper className={classes.paper}>
+                    {/*<Paper className={classes.paper}>*/}
+                    <Paper>
                         <Typography
                             variant="h5"
                             style={{textAlign: "center", color: "#FFFFFF"}}
@@ -65,7 +66,8 @@ class ViewProjects extends React.Component {
                     </Paper>
                 </Grid>
                 <Grid item sm>
-                    <Paper className={classes.paper}>
+                    {/*<Paper className={classes.paper}>*/}
+                    <Paper>
                         <Typography
                             variant="h5"
                             style={{textAlign: "center", color: "#FFFFFF"}}
@@ -81,7 +83,8 @@ class ViewProjects extends React.Component {
                     </Paper>
                 </Grid>
                 <Grid item sm>
-                    <Paper className={classes.paper}>
+                    {/*<Paper className={classes.paper}>*/}
+                    <Paper>
                         <Typography
                             variant="h5"
                             style={{textAlign: "center", color: "#FFFFFF"}}
@@ -128,8 +131,10 @@ class ViewProjects extends React.Component {
     };
 }
 
-ViewProjects.propTypes = {
-    classes: PropTypes.object.isRequired
-};
+// ViewProjects.propTypes = {
+//     classes: PropTypes.object.isRequired
+// };
 
-export default withStyles(styles)(ViewProjects);
+// export default withStyles(styles)(ViewProjects);
+
+export default ViewProjects;

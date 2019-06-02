@@ -136,6 +136,7 @@ class AssignToSupervisor extends React.Component {
         const {selectedSupervisor} = this.state;
         this.setState({
             currentSupervisor: selectedSupervisor,
+            selectedSupervisor: '',
             open: false
         });
         if (selectedSupervisor !== '') {
