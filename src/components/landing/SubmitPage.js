@@ -2,6 +2,7 @@ import React from "react";
 import { Column, Row } from "simple-flexbox";
 import { Link } from "react-router-dom";
 import UniMelbWrapper from "../uniMelbWrapper/UniMelbWrapper";
+import axios from 'axios';
 
 let styles = {
   width: "400px"
@@ -35,7 +36,7 @@ class SubmitPage extends React.Component {
   // right now it is just console.log data
   // will be change to POST data to the server once it is ready
   handleClick = () => {
-    var name = document.getElementById("name").value;
+    var firstname = document.getElementById("name").value;
     var lastname = document.getElementById("lastname").value;
     var email = document.getElementById("email").value;
     var contactInfo1 = document.getElementById("ci1").value;
@@ -52,47 +53,64 @@ class SubmitPage extends React.Component {
     var size = document.getElementById("size").value;
     var organisationBrief = document.getElementById("organisationBrief").value;
     var projectName = document.getElementById("projectName").value;
-    console.log(
-      name,
-      lastname,
-      email,
-      contactInfo1,
-      contactInfo2,
-      officeNumber,
-      technical,
-      organizationName,
-      idustryType,
-      size,
-      organisationBrief,
-      projectName,
-      outline,
-      beneficiaries,
-      benefits,
-      original,
-      used
-    );
-    if (
-      (name ||
-        lastname ||
-        email ||
-        contactInfo1 ||
-        contactInfo2 ||
-        officeNumber ||
-        organizationName ||
-        organisationBrief ||
-        projectName ||
-        outline ||
-        beneficiaries ||
-        benefits ||
-        original) === "" ||
-      (technical || idustryType || size) == -1
-    ) {
-      alert("please fill every form");
-    } else if (!this.ValidateContactInfo(officeNumber)) {
-      alert("please enter valid phone number");
-    } else if (!this.ValidateEmail(email)) {
-      alert("please enter valid email");
-    }
+    // console.log(
+    //   firstname,
+    //   lastname,
+    //   email,
+    //   contactInfo1,
+    //   contactInfo2,
+    //   officeNumber,
+    //   technical,
+    //   organizationName,
+    //   idustryType,
+    //   size,
+    //   organisationBrief,
+    //   projectName,
+    //   outline,
+    //   beneficiaries,
+    //   benefits,
+    //   original,
+    //   used
+    // );
+    // if (
+    //   (firstname ||
+    //     lastname ||
+    //     email ||
+    //     contactInfo1 ||
+    //     contactInfo2 ||
+    //     officeNumber ||
+    //     organizationName ||
+    //     organisationBrief ||
+    //     projectName ||
+    //     outline ||
+    //     beneficiaries ||
+    //     benefits ||
+    //     original) === "" ||
+    //   (technical || idustryType || size) == -1
+    // ) {
+    //   alert("please fill every form");
+    // } else if (!this.ValidateContactInfo(officeNumber)) {
+    //   alert("please enter valid phone number");
+    // } else if (!this.ValidateEmail(email)) {
+    //   alert("please enter valid email");
+    // }else{
+    //   //success
+    //   obj = {
+    //     name: firstname + lastname,
+
+    //   }
+    //   axios.post(`https://35.247.151.11/api/proposal`, { name: firstname + lastname })
+    //   .then(res => {
+    //     console.log(res);
+    //     console.log(res.data);
+    //   })
+    // }
+    console.log('sike!')
+    axios.post(`http://localhost:13000/api/proposal`, { name: firstname + lastname })
+       .then(res => {
+         console.log(res);
+         console.log(res.data);
+       })
   };
 
   render() {
