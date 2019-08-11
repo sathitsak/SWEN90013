@@ -11,8 +11,7 @@ const styles = {
     textAlign: "justify",
     paddingLeft: 10,
     marginLeft: 20,
-    height: 170,
-    width: 370
+    height: 170
   }
 };
 
@@ -22,13 +21,13 @@ class Description extends React.Component {
 
     return (
       <div>
-        <Grid container direction="column">
-          <Grid item xs={2}>
+        <Grid container spacing={24}>
+          <Grid item xs={12}>
             <Typography align="left" variant="h6">
               Description:
             </Typography>
           </Grid>
-          <Grid item xs={3} style={{ marginTop: 10 }} align="center">
+          <Grid item xs={12} sm={10}>
             <Paper className={classes.description}>{description}</Paper>
           </Grid>
         </Grid>
