@@ -13,6 +13,14 @@ import {Link} from "react-router-dom";
 
 // {title: 'test'}
 // new proposals works, just going to new proposal array
+//Proposal card structure
+// key={p.id}
+// id={p.id}
+// title={p.name}
+// organisation={p.organisation}
+// client={p.client}
+// supervisor={p.supervisor}
+// initial={this._getFirstCharacter(p.name)}
 
 const styles = theme => ({
     paper: {
@@ -42,7 +50,7 @@ class Proposals extends React.Component {
 
     componentDidMount() {
         axios
-            .get(`https://5ce79b719f2c390014dba00f.mockapi.io/proposal/`)
+            .get(`http://localhost:13000/api/proposal`)
             .then(results => {
                 this.setState({proposals: results.data});
             });
@@ -89,12 +97,12 @@ class Proposals extends React.Component {
                             <List dense={true}>
                                 {this._filterProposalsByStatus(status.new).map(p => (
                                     <ProposalCard
-                                        key={p.id}
-                                        id={p.id}
+                                        key={p.clientId}
+                                        id={p.clientId}
                                         title={p.name}
-                                        organisation={p.organisation}
-                                        client={p.client}
-                                        supervisor={p.supervisor}
+                                        organisation={p.name}
+                                        client={p.name}
+                                        supervisor={p.name}
                                         initial={this._getFirstCharacter(p.name)}
                                     />
                                 ))}

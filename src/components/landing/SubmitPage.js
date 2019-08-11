@@ -2,7 +2,7 @@ import React from "react";
 import { Column, Row } from "simple-flexbox";
 import { Link } from "react-router-dom";
 import UniMelbWrapper from "../uniMelbWrapper/UniMelbWrapper";
-import axios from 'axios';
+import axios from "axios";
 
 let styles = {
   width: "400px"
@@ -105,12 +105,33 @@ class SubmitPage extends React.Component {
     //     console.log(res.data);
     //   })
     // }
-    console.log('sike!')
-    axios.post(`http://localhost:13000/api/proposal`, { name: firstname + lastname })
-       .then(res => {
-         console.log(res);
-         console.log(res.data);
-       })
+    console.log("request sent!");
+
+    axios
+      .post(`http://localhost:13000/api/proposal`, {
+        // name: firstname + lastname,
+        // outlineOfProject: outline,
+        // endProductBenefits: benefits,
+        // beneficiaries: beneficiaries,
+        // originality: original,
+        // clientId: '007',
+        // subjectName: 'SWEN90013',
+        // organisationId: '001'
+        status: "approved",
+        name: "Emily",
+        outlineOfProject: "good",
+        endProductBenefits: "good",
+        beneficiaries: "good",
+        originality: "1",
+        clientId: "SUM"
+      })
+      .then(function(response) {
+        console.log(response);
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+   
   };
 
   render() {
