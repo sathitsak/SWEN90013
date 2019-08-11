@@ -52,6 +52,7 @@ class Proposals extends React.Component {
         axios
             .get(`http://localhost:13000/api/proposal`)
             .then(results => {
+                console.log(results.data)
                 this.setState({proposals: results.data});
             });
     }
@@ -65,7 +66,7 @@ class Proposals extends React.Component {
                 targetProposals.push(p);
             }
         });
-        console.log(proposals);
+        console.log('Filtered propsal'+proposals);
         return targetProposals;
     };
 
