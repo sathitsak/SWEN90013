@@ -4,9 +4,11 @@ import {withStyles} from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
-import axios from "axios";
+
 
 import ProjectCard from "./ProjectCard";
+
+import store from "../../../../store";
 
 const styles = {
     paper: {
@@ -31,17 +33,14 @@ class ViewProjects extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = {
-            projects: [],
-        };
+        this.state = store.getState();
+
+        this._handleStoreChange = this._handleStoreChange.bind(this);
+        store.subscribe(this._handleStoreChange);
     }
 
-    componentDidMount() {
-        axios
-            .get(`https://5ce928eda8c1ee0014c7045b.mockapi.io/projects`)
-            .then(results => {
-                this.setState({projects: results.data});
-            });
+    _handleStoreChange() {
+        this.setState(store.getState());
     }
 
     render() {

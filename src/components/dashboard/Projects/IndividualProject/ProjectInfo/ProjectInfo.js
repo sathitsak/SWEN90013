@@ -66,6 +66,7 @@ class ProjectInfo extends React.Component {
                     <Grid item className={classes.basic}>
                         <AssignToSupervisor
                             supervisorID={project.supervisorID}/>
+                            {project.supervisorID}
                     </Grid>
                 </Grid>
             </div>

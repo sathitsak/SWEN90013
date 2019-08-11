@@ -25,7 +25,7 @@ class ViewProposal extends React.Component {
                             variant="contained"
                             color="secondary"
                             href={`/dashboard/proposals/${proposalID}`}
-                            style={{width:140}}
+                            style={{width: 140}}
                         >
                             View Proposal
                         </Button>

@@ -21,6 +21,10 @@ import ProjectById
 import RejectedProposals
     from "./components/dashboard/Proposals/AllProposals/RejectedProposals";
 
+import {getGetAllProjectAction} from "./store/actionCreators";
+import {getProjectList} from "./api";
+import store from "./store";
+
 class App extends React.Component {
     render() {
         return (
@@ -68,6 +72,18 @@ class App extends React.Component {
             </Router>
         );
     }
+
+    async _reqTodoList() {
+        const result = await getProjectList();
+        // console.log(result);
+        const action = getGetAllProjectAction(result);
+        store.dispatch(action);
+    }
+
+    componentDidMount() {
+        this._reqTodoList();
+    }
+
 }
 
 export default App;
