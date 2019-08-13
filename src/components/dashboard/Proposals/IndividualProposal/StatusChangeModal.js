@@ -28,7 +28,8 @@ class StatusChangeModal extends React.Component {
       maxWidth: "md",
       option: "",
       rerender: "",
-      supervisor: ""
+      supervisor: "",
+      status: ""
     };
   }
 
@@ -41,9 +42,10 @@ class StatusChangeModal extends React.Component {
   };
 
   _handleUpdate = () => {
-    var response = document.getElementById("reason").value;
-    if ((response = -1)) {
-      alert("Please fill all fields");
+    var responseText = document.getElementById("reason").value;
+
+    if (responseText == "" || this.state.supervisor == "") {
+      alert("Please complete all fields");
     } else {
       this.setState({ open: false });
       axios.put(
@@ -118,6 +120,7 @@ class StatusChangeModal extends React.Component {
                     </InputLabel>
                     <Select
                       value={this.state.supervisor}
+                      id="supervisor"
                       inputProps={{
                         name: "age",
                         id: "age-simple"

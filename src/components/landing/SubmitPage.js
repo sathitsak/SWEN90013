@@ -105,6 +105,17 @@ class SubmitPage extends React.Component {
     //     console.log(res.data);
     //   })
     // }
+
+    console.log("sike!");
+    axios
+      .post(`http://localhost:13000/api/proposal`, {
+        name: firstname + lastname
+      })
+      .then(res => {
+        console.log(res);
+        console.log(res.data);
+      });
+
     console.log("request sent!");
 
     axios
@@ -132,6 +143,7 @@ class SubmitPage extends React.Component {
         console.log(error);
       });
    
+
   };
 
   render() {
@@ -164,70 +176,6 @@ class SubmitPage extends React.Component {
           <Row horizontal="center">
             <Column flexGrow={1} horizontal="center">
               <div>
-                <h2> ABOUT YOU</h2>
-              </div>
-
-              <div>
-                <label>Name: </label>
-              </div>
-              <div>
-                <input id="name" type="text" />
-              </div>
-
-              <div>
-                <label>Lastname: </label>
-              </div>
-              <div>
-                <input id="lastname" type="text" />
-              </div>
-
-              <div>
-                <label>Email: </label>
-              </div>
-              <div>
-                <input id="email" type="email" />
-              </div>
-
-              <div>
-                <label>Contact informaion 1: </label>
-              </div>
-              <div>
-                <input id="ci1" type="text" />
-              </div>
-
-              <div>
-                <label>Contact informaion 2: </label>
-              </div>
-              <div>
-                <input id="ci2" type="text" />
-              </div>
-
-              <div>
-                <label>Office number: </label>
-              </div>
-              <div>
-                <input id="officeNumber" type="text" />
-              </div>
-
-              <div className="styled-select" style={styles}>
-                <select id="technical">
-                  <option value="-1">
-                    Rate your level of technical ability/understanding
-                  </option>
-                  <option value="1">1(non-technical)</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                  <option value="4">4</option>
-                  <option value="5">5</option>
-                  <option value="6">6</option>
-                  <option value="7">7</option>
-                  <option value="8">8</option>
-                  <option value="9">9</option>
-                  <option value="10">10(highly technical)</option>
-                </select>
-              </div>
-
-              <div>
                 <h2> ABOUT YOUR ORGANISATION </h2>
               </div>
               <div>
@@ -237,10 +185,13 @@ class SubmitPage extends React.Component {
               <div>
                 <input id="organizationName" type="text" />
               </div>
+              <div>
+                <label>Industry</label>
+              </div>
 
               <div className="styled-select" style={styles}>
                 <select id="idustryType">
-                  <option value="-1">Please select your industry&emsp;</option>
+                  <option value="-1">Please select&emsp;</option>
                   <option value="Aged care">Aged care</option>
                   <option value="Agriculture">Agriculture</option>
                   <option value="Amusement, evens and recreation">
@@ -288,10 +239,12 @@ class SubmitPage extends React.Component {
                   <option value="Tourism">Tourism</option>
                 </select>
               </div>
-
+              <div>
+                <label>Size of organisation</label>
+              </div>
               <div className="styled-select" style={styles}>
                 <select id="size">
-                  <option value="-1">Size of organisation</option>
+                  <option value="-1">Please select</option>
                   <option value="more than 250 employees">
                     more than 250 employees
                   </option>
@@ -319,7 +272,7 @@ class SubmitPage extends React.Component {
               </div>
 
               <div>
-                <label>Provide a short name for your project:</label>
+                <label>Provide a short title for your project:</label>
               </div>
               <div>
                 <textarea id="projectName" type="text" />
@@ -364,6 +317,74 @@ class SubmitPage extends React.Component {
               <div>
                 <textarea id="used" type="text" />
               </div>
+
+              <div>
+                <h2> ABOUT YOU</h2>
+              </div>
+
+              <div>
+                <label>Name: </label>
+              </div>
+              <div>
+                <input id="name" type="text" />
+              </div>
+
+              <div>
+                <label>Lastname: </label>
+              </div>
+              <div>
+                <input id="lastname" type="text" />
+              </div>
+
+              <div>
+                <label>Email: </label>
+              </div>
+              <div>
+                <input id="email" type="email" />
+              </div>
+
+              <div>
+                <label>Contact information 1: </label>
+              </div>
+              <div>
+                <input id="ci1" type="text" />
+              </div>
+
+              <div>
+                <label>Contact information 2: </label>
+              </div>
+              <div>
+                <input id="ci2" type="text" />
+              </div>
+
+              <div>
+                <label>Office number: </label>
+              </div>
+              <div>
+                <input id="officeNumber" type="text" />
+              </div>
+
+              <div>
+                <label>
+                  Rate your level of technical ability / understanding:{" "}
+                </label>
+              </div>
+              <div className="styled-select" style={styles}>
+                <select id="technical">
+                  <option value="-1">Please select</option>
+                  <option value="1">1(non-technical)</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="10">10(highly technical)</option>
+                </select>
+              </div>
+
               <Column>
                 <Row>
                   <a className="button" onClick={this.handleClick}>

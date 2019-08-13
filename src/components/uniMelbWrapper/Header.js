@@ -42,7 +42,14 @@ export const Header = () => {
           <a className="page-header-icon" href="#sitemap" title="Menu">
             <svg role="img" focusable="false">
               {/* In Header.js and Footer.js replace all <use xlinkHref.../> with the actual rendered SVG from Chrome Dev TOOLS. See the icon-search above: make sure you get the SVG (with the viewBox attribute) and the Path attribute. */}
-              <use xlinkHref="#icon-menu" />
+              <svg
+                id="icon-menu"
+                viewBox="0 0 49 48"
+                width="100%"
+                height="100%"
+              >
+                <path d="M6 36h36v-4H6v4zm0-10h36v-4H6v4zm0-14v4h36v-4H6z" />
+              </svg>
             </svg>
             Menu
           </a>
