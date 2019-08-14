@@ -106,15 +106,6 @@ class SubmitPage extends React.Component {
     //   })
     // }
 
-    console.log("sike!");
-    axios
-      .post(`http://localhost:13000/api/proposal`, {
-        name: firstname + lastname
-      })
-      .then(res => {
-        console.log(res);
-        console.log(res.data);
-      });
 
     console.log("request sent!");
 
