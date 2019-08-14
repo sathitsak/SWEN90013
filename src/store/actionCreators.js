@@ -7,5 +7,5 @@ export const getGetAllProjectAction = (projects) => ({
 
 export const getGetProjectByIdAction = (project) => ({
     type: GET_PROJECT_BY_ID,
-    projects: project,
+    project: project,
 });
