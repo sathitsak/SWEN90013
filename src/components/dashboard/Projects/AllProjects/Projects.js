@@ -9,6 +9,8 @@ import Paper from "@material-ui/core/Paper";
 import ProjectCard from "./ProjectCard";
 
 import store from "../../../../store";
+import {getProjectList} from "../../../../api";
+import {getGetAllProjectAction} from "../../../../store/actionCreators";
 
 const styles = {
     paper: {
@@ -41,6 +43,17 @@ class ViewProjects extends React.Component {
 
     _handleStoreChange() {
         this.setState(store.getState());
+    }
+
+    async _reqTodoList() {
+        const result = await getProjectList();
+        // console.log(result);
+        const action = getGetAllProjectAction(result);
+        store.dispatch(action);
+    }
+
+    componentDidMount() {
+        this._reqTodoList();
     }
 
     render() {

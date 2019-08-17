@@ -6,6 +6,9 @@ import axios from "axios";
 
 import ProposalInfo from "./ProposalInfo";
 import ProposalResponses from "./ProposalResponses";
+import {getProposalById} from "../../../../api";
+import {getGetProposalByIdAction} from "../../../../store/actionCreators";
+import store from "../../../../store";
 
 
 const styles = theme => ({
@@ -22,19 +25,22 @@ const styles = theme => ({
 class ProposalById extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            proposal: []
-        };
+
+        this.state = store.getState();
+    }
+
+
+    async _reqTodoList(propID) {
+        const result = await getProposalById(propID);
+        // console.log(result);
+        const action = getGetProposalByIdAction(result);
+        store.dispatch(action);
     }
 
     componentDidMount() {
         //PASSING THE ID
         const propID = this.props.match.params.id;
-        axios
-            .get(`https://5ce79b719f2c390014dba00f.mockapi.io/proposal/` + propID)
-            .then(results => {
-                this.setState({proposal: results.data});
-            });
+        this._reqTodoList(propID);
     }
 
     render() {

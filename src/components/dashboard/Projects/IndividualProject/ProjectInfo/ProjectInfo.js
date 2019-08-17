@@ -11,6 +11,12 @@ import Description from './Description';
 import ViewProposal from './ViewProposal';
 import ViewClient from './ViewClient';
 import Organization from './Organization';
+import store from "../../../../../store";
+import {getSupervisors} from "../../../../../api";
+import {
+    getGetSupervisorsAction,
+    getSetCurrentSupervisorAction
+} from "../../../../../store/actionCreators";
 
 const styles = {
     basic: {
@@ -23,19 +29,43 @@ class ProjectInfo extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = {
-            project: {}
-        }
+        this.state = store.getState();
+
+        this._handleStoreChange = this._handleStoreChange.bind(this);
+        store.subscribe(this._handleStoreChange);
+    }
+
+    _handleStoreChange() {
+        this.setState(store.getState());
+    }
+
+    async _reqTodoList() {
+        const result = await getSupervisors();
+        // console.log(result);
+        const action = getGetSupervisorsAction(result);
+        store.dispatch(action);
     }
 
     componentDidMount() {
-        const {project} = this.props;
-        this.setState({project: project});
+        this._reqTodoList();
+
+        const {supervisors, project} = this.state;
+        const supervisorID = project.supervisorID;
+        let currentSupervisor = "";
+
+        supervisors.forEach((supervisor) => {
+            if (supervisor.id === supervisorID) {
+                currentSupervisor = supervisor.firstName + " " + supervisor.lastName;
+
+                const action = getSetCurrentSupervisorAction(currentSupervisor);
+                store.dispatch(action);
+            }
+        })
     }
 
     render() {
         const {classes} = this.props;
-        const {project} = this.state;
+        const {project, supervisors, currentSupervisor} = this.state;
 
         return (
             <div>
@@ -65,8 +95,10 @@ class ProjectInfo extends React.Component {
 
                     <Grid item className={classes.basic}>
                         <AssignToSupervisor
-                            supervisorID={project.supervisorID}/>
-                            {project.supervisorID}
+                            supervisorID={project.supervisorID}
+                            supervisors={supervisors}
+                            currentSupervisor={currentSupervisor}
+                        />
                     </Grid>
                 </Grid>
             </div>
@@ -76,7 +108,6 @@ class ProjectInfo extends React.Component {
 
 ProjectInfo.propTypes = {
     classes: PropTypes.object.isRequired,
-    project: PropTypes.object.isRequired,
 };
 
 export default withStyles(styles)(ProjectInfo);

@@ -29,7 +29,7 @@ class Description extends React.Component {
                             Description:
                         </Typography>
                     </Grid>
-                    <Grid item xs={3} style={{marginTop: 10,}} align="center">
+                    <Grid item xs={3} style={{marginTop: 10}} align="center">
                         <Paper className={classes.description}>
                             {description}
                         </Paper>
