@@ -16,6 +16,14 @@ import {getGetAllProposalsAction} from "../../../../store/actionCreators";
 
 // {title: 'test'}
 // new proposals works, just going to new proposal array
+//Proposal card structure
+// key={p.id}
+// id={p.id}
+// title={p.name}
+// organisation={p.organisation}
+// client={p.client}
+// supervisor={p.supervisor}
+// initial={this._getFirstCharacter(p.name)}
 
 const styles = theme => ({
     paper: {
@@ -57,6 +65,8 @@ class Proposals extends React.Component {
 
     componentDidMount() {
         this._reqTodoList();
+      //http://localhost:13000/api/proposal
+
     }
 
     _filterProposalsByStatus = status => {
@@ -68,7 +78,7 @@ class Proposals extends React.Component {
                 targetProposals.push(p);
             }
         });
-        console.log(proposals);
+        console.log('Filtered propsal'+proposals);
         return targetProposals;
     };
 
@@ -100,12 +110,12 @@ class Proposals extends React.Component {
                             <List dense={true}>
                                 {this._filterProposalsByStatus(status.new).map(p => (
                                     <ProposalCard
-                                        key={p.id}
-                                        id={p.id}
+                                        key={p.clientId}
+                                        id={p.clientId}
                                         title={p.name}
-                                        organisation={p.organisation}
-                                        client={p.client}
-                                        supervisor={p.supervisor}
+                                        organisation={p.name}
+                                        client={p.name}
+                                        supervisor={p.name}
                                         initial={this._getFirstCharacter(p.name)}
                                     />
                                 ))}

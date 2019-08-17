@@ -1,22 +1,23 @@
-import React from 'react';
+import React from "react";
 import PropTypes from "prop-types";
-import {withStyles} from "@material-ui/core/styles";
+import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
-import Paper from '@material-ui/core/Paper';
+import Paper from "@material-ui/core/Paper";
 
 const styles = {
-    description: {
-        overflow: 'auto',
-        textAlign: 'justify',
-        paddingLeft: 10,
-        marginLeft: 20,
-        height: 170,
-        width: 670,
-    }
+  description: {
+    overflow: "auto",
+    textAlign: "justify",
+    paddingLeft: 10,
+    marginLeft: 20,
+    height: 170
+  }
 };
 
 class Description extends React.Component {
+  render() {
+    const { classes, description } = this.props;
 
     render() {
         const {classes, description} = this.props;
@@ -38,11 +39,12 @@ class Description extends React.Component {
             </div>
         );
     }
+
 }
 
 Description.propTypes = {
-    classes: PropTypes.object.isRequired,
-    description: PropTypes.string.isRequired,
+  classes: PropTypes.object.isRequired,
+  description: PropTypes.string.isRequired
 };
 
 export default withStyles(styles)(Description);
