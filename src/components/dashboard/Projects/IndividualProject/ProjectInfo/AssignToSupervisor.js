@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from "prop-types";
 import {withStyles} from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-import axios from "axios";
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
@@ -14,6 +13,8 @@ import Input from '@material-ui/core/Input';
 import DialogActions from '@material-ui/core/DialogActions';
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
+import {getSetCurrentSupervisorAction} from "../../../../../store/actionCreators";
+import store from "../../../../../store";
 
 const styles = {
     container: {
@@ -39,24 +40,14 @@ class AssignToSupervisor extends React.Component {
         super(props);
 
         this.state = {
-            supervisors: [],
-            currentSupervisor: "Kathryn Jesus",
             selectedSupervisor: "",
             open: false,
         };
     }
 
-    componentDidMount() {
-        axios
-            .get(`https://5ce928eda8c1ee0014c7045b.mockapi.io/supervisors`)
-            .then(results => {
-                this.setState({supervisors: results.data});
-            });
-    }
-
     render() {
-        const {classes} = this.props;
-        const {open, currentSupervisor, supervisors} = this.state;
+        const {classes, currentSupervisor, supervisors} = this.props;
+        const {open} = this.state;
 
         return (
             <div>
@@ -134,8 +125,11 @@ class AssignToSupervisor extends React.Component {
 
     _handleOK = () => {
         const {selectedSupervisor} = this.state;
+
+        const action = getSetCurrentSupervisorAction(selectedSupervisor);
+        store.dispatch(action);
+
         this.setState({
-            currentSupervisor: selectedSupervisor,
             selectedSupervisor: '',
             open: false
         });
@@ -150,6 +144,8 @@ class AssignToSupervisor extends React.Component {
 AssignToSupervisor.propTypes = {
     classes: PropTypes.object.isRequired,
     supervisorID: PropTypes.string.isRequired,
+    supervisors: PropTypes.array.isRequired,
+    currentSupervisor: PropTypes.string.isRequired,
 };
 
 export default withStyles(styles)(AssignToSupervisor);

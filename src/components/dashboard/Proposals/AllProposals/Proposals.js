@@ -10,6 +10,9 @@ import Paper from "@material-ui/core/Paper";
 import {withStyles} from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button/Button";
 import {Link} from "react-router-dom";
+import store from "../../../../store";
+import {getProposalList} from "../../../../api";
+import {getGetAllProposalsAction} from "../../../../store/actionCreators";
 
 // {title: 'test'}
 // new proposals works, just going to new proposal array
@@ -43,18 +46,27 @@ const status = {
 class Proposals extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            proposals: []
-        };
+        this.state = store.getState();
+
+        this._handleStoreChange = this._handleStoreChange.bind(this);
+        store.subscribe(this._handleStoreChange);
+    }
+
+    _handleStoreChange() {
+        this.setState(store.getState());
+    }
+
+    async _reqTodoList() {
+        const result = await getProposalList();
+        // console.log(result);
+        const action = getGetAllProposalsAction(result);
+        store.dispatch(action);
     }
 
     componentDidMount() {
-        axios
-            .get(`http://localhost:13000/api/proposal`)
-            .then(results => {
-                console.log(results.data)
-                this.setState({proposals: results.data});
-            });
+        this._reqTodoList();
+      //http://localhost:13000/api/proposal
+
     }
 
     _filterProposalsByStatus = status => {
@@ -141,7 +153,8 @@ class Proposals extends React.Component {
                     to={`/dashboard/rejectedProposals`}
                     className={classes.link}
                 >
-                    <Button variant="contained" size="medium" color="primary" className={classes.margin}>
+                    <Button variant="contained" size="medium" color="primary"
+                            className={classes.margin}>
                         View Rejected Proposals
                     </Button>
                 </Link>
