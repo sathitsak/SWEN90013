@@ -127,10 +127,7 @@ class SubmitPage extends React.Component {
         used:original    
     
     })
-      .then(res => {
-        console.log(res);
-        console.log(res.data);
-      }) .then(function(response) {
+      .then(function(response) {
         console.log(response);
       })
       .catch(function(error) {

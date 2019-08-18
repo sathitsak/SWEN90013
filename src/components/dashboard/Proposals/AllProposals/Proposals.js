@@ -112,9 +112,9 @@ class Proposals extends React.Component {
                             <List dense={true}>
                                 {this._filterProposalsByStatus(status.new).map(p => (
                                     <ProposalCard
-                                        key={p.clientId}
-                                        id={p.clientId}
-                                        title={p.name}
+                                        key={p._id}
+                                        id={p._id}
+                                        title={p._id}
                                         organisation={p.name}
                                         client={p.name}
                                         supervisor={p.name}
@@ -137,8 +137,8 @@ class Proposals extends React.Component {
                             <List dense={true}>
                                 {this._filterProposalsByStatus(status.approved).map(p => (
                                     <ProposalCard
-                                        key={p.id}
-                                        id={p.id}
+                                        key={p._id}
+                                        id={p._id}
                                         title={p.name}
                                         organisation={p.organisation}
                                         client={p.client}

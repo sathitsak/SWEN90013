@@ -31,7 +31,8 @@ class ProposalById extends React.Component {
 
     async _reqTodoList(propID) {
         const result = await getProposalById(propID);
-        // console.log(result);
+         console.log('this page');
+         console.log(result)
         const action = getGetProposalByIdAction(result);
         store.dispatch(action);
     }
@@ -64,7 +65,7 @@ class ProposalById extends React.Component {
               client={this.state.proposal.client}
               organisation={this.state.proposal.organisation}
               status={this.state.proposal.status}
-              id={this.state.proposal.id}
+              id={this.state.proposal._id}
             />
           </Grid>
         </Grid>
