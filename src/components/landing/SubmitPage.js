@@ -39,9 +39,12 @@ class SubmitPage extends React.Component {
     var firstname = document.getElementById("name").value;
     var lastname = document.getElementById("lastname").value;
     var email = document.getElementById("email").value;
-    var contactInfo1 = document.getElementById("ci1").value;
-    var contactInfo2 = document.getElementById("ci2").value;
+    var number = document.getElementById("number").value;
     var officeNumber = document.getElementById("officeNumber").value;
+    var ci2firstname = document.getElementById("ci2firstname").value;
+    var ci2lastname = document.getElementById("ci2lastname").value;
+    var ci2email = document.getElementById("ci2email").value;
+    var ci2number = document.getElementById("ci2number").value;
     var outline = document.getElementById("outline").value;
     var beneficiaries = document.getElementById("beneficiaries").value;
     var benefits = document.getElementById("benefits").value;
@@ -53,86 +56,115 @@ class SubmitPage extends React.Component {
     var size = document.getElementById("size").value;
     var organisationBrief = document.getElementById("organisationBrief").value;
     var projectName = document.getElementById("projectName").value;
-    // console.log(
-    //   firstname,
-    //   lastname,
-    //   email,
-    //   contactInfo1,
-    //   contactInfo2,
-    //   officeNumber,
-    //   technical,
-    //   organizationName,
-    //   idustryType,
-    //   size,
-    //   organisationBrief,
-    //   projectName,
-    //   outline,
-    //   beneficiaries,
-    //   benefits,
-    //   original,
-    //   used
-    // );
-    // if (
-    //   (firstname ||
-    //     lastname ||
-    //     email ||
-    //     contactInfo1 ||
-    //     contactInfo2 ||
-    //     officeNumber ||
-    //     organizationName ||
-    //     organisationBrief ||
-    //     projectName ||
-    //     outline ||
-    //     beneficiaries ||
-    //     benefits ||
-    //     original) === "" ||
-    //   (technical || idustryType || size) == -1
-    // ) {
-    //   alert("please fill every form");
-    // } else if (!this.ValidateContactInfo(officeNumber)) {
-    //   alert("please enter valid phone number");
-    // } else if (!this.ValidateEmail(email)) {
-    //   alert("please enter valid email");
-    // }else{
-    //   //success
-    //   obj = {
-    //     name: firstname + lastname,
-
-    //   }
-    //   axios.post(`https://35.247.151.11/api/proposal`, { name: firstname + lastname })
-    //   .then(res => {
-    //     console.log(res);
-    //     console.log(res.data);
-    //   })
-    // }
-
-
-    console.log("request sent!");
-
-    axios
-      .post(`http://localhost:13000/api/proposal`, {
-        // name: firstname + lastname,
-        // outlineOfProject: outline,
-        // endProductBenefits: benefits,
-        // beneficiaries: beneficiaries,
-        // originality: original,
-        // clientId: '007',
-        // subjectName: 'SWEN90013',
-        // organisationId: '001'
-        status: "approved",
-        name: "Emily",
-        outlineOfProject: "good",
-        endProductBenefits: "good",
-        beneficiaries: "good",
-        originality: "1",
-        clientId: "SUM"
-      })
-      .then(function(response) {
+    console.log(
+      firstname,
+      lastname,
+      email,
+      number,
+      officeNumber,
+      ci2firstname,
+      ci2lastname,
+      ci2email,
+      ci2number,
+      technical,
+      organizationName,
+      idustryType,
+      size,
+      organisationBrief,
+      projectName,
+      outline,
+      beneficiaries,
+      benefits,
+      original,
+      used
+    );
+    if (
+      (firstname ||
+        lastname ||
+        email ||
+        number ||
+        officeNumber ||
+        ci2firstname ||
+        ci2lastname ||
+        ci2email ||
+        ci2number ||
+        organizationName ||
+        organisationBrief ||
+        projectName ||
+        outline ||
+        beneficiaries ||
+        benefits ||
+        original) === "" ||
+      (technical || idustryType || size) == -1
+    ) {
+      alert("please fill every form");
+    } else if (!this.ValidateContactInfo(officeNumber,number.ci2number)) {
+      alert("please enter valid phone number");
+    } else if (!this.ValidateEmail(email,ci2email)) {
+      alert("please enter valid email");
+    }else{
+     
+      axios.post(`http://localhost:13000/api/proposal`, { 
+        FirstName:firstname,
+        LastName:lastname,
+        Email:email,
+        ContactNumber:number,
+        SecondaryContactFirstName:ci2firstname,
+        SecondaryContactLastName:ci2lastname,
+        SecondaryContactEmail:ci2email,
+        SecondaryContactNumber:ci2number,
+        OrganisationNumber: officeNumber,
+        TechnicalAbility: technical,
+        organizationName:organizationName,
+        idustryType:idustryType,
+        size:size,
+        organisationBrief:organisationBrief,
+        projectName:projectName,
+        outline:outline,
+        beneficiaries:beneficiaries,
+        benefits:benefits,
+        original:original,
+        used:original    
+    
+    })
+      .then(res => {
+        console.log(res);
+        console.log(res.data);
+      }) .then(function(response) {
         console.log(response);
       })
       .catch(function(error) {
         console.log(error);
       });
+    }
+
+
+    console.log("request sent!");
+
+    // axios
+    //   .post(`http://localhost:13000/api/proposal`, {
+    //     // name: firstname + lastname,
+    //     // outlineOfProject: outline,
+    //     // endProductBenefits: benefits,
+    //     // beneficiaries: beneficiaries,
+    //     // originality: original,
+    //     // clientId: '007',
+    //     // subjectName: 'SWEN90013',
+    //     // organisationId: '001'
+    //     status: "approved",
+    //     name: "Emily",
+    //     outlineOfProject: "good",
+    //     endProductBenefits: "good",
+    //     beneficiaries: "good",
+    //     originality: "1",
+    //     clientId: "SUM"
+    //   })
+    //   .then(function(response) {
+    //     console.log(response);
+    //   })
+    //   .catch(function(error) {
+    //     console.log(error);
+    //   });
    
 
   };
@@ -335,17 +367,10 @@ class SubmitPage extends React.Component {
               </div>
 
               <div>
-                <label>Contact information 1: </label>
+                <label>Number: </label>
               </div>
               <div>
-                <input id="ci1" type="text" />
-              </div>
-
-              <div>
-                <label>Contact information 2: </label>
-              </div>
-              <div>
-                <input id="ci2" type="text" />
+                <input id="number" type="text" />
               </div>
 
               <div>
@@ -354,6 +379,35 @@ class SubmitPage extends React.Component {
               <div>
                 <input id="officeNumber" type="text" />
               </div>
+
+              <div>
+                <label>Contact information 2 First name: </label>
+              </div>
+              <div>
+                <input id="ci2firstname" type="text" />
+              </div>
+              <div>
+                <label>Contact information 2 Last name: </label>
+              </div>
+              <div>
+                <input id="ci2lastname" type="text" />
+              </div>
+
+              <div>
+                <label>Contact information 2 Email: </label>
+              </div>
+              <div>
+                <input id="ci2email" type="text" />
+              </div>
+
+              <div>
+                <label>Contact information 2 Number: </label>
+              </div>
+              <div>
+                <input id="ci2number" type="text" />
+              </div>
+
+             
 
               <div>
                 <label>

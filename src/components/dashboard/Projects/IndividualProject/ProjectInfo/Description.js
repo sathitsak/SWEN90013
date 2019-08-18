@@ -16,9 +16,7 @@ const styles = {
 };
 
 class Description extends React.Component {
-  render() {
-    const { classes, description } = this.props;
-
+ 
     render() {
         const {classes, description} = this.props;
 
