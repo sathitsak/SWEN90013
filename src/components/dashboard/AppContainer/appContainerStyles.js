@@ -5,13 +5,23 @@ export default theme => ({
         display: "flex"
     },
     appBar: {
-        width: `calc(100% - ${drawerWidth}px)`,
+        backgroundColor: "#004576",
         marginLeft: drawerWidth,
-        background: "#304E64"
+        [theme.breakpoints.up('md')]: {
+          width: `calc(100% - ${drawerWidth}px)`,
+        },
     },
     drawer: {
-        width: drawerWidth,
-        flexShrink: 0
+        [theme.breakpoints.up('md')]: {
+            width: drawerWidth,
+            flexShrink: 0,
+        },
+    },
+    menuButton: {
+        marginRight: 20,
+        [theme.breakpoints.up('md')]: {
+          display: 'none',
+        },
     },
     drawerPaper: {
         width: drawerWidth
