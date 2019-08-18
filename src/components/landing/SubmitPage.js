@@ -78,31 +78,31 @@ class SubmitPage extends React.Component {
       original,
       used
     );
-    if (
-      (firstname ||
-        lastname ||
-        email ||
-        number ||
-        officeNumber ||
-        ci2firstname ||
-        ci2lastname ||
-        ci2email ||
-        ci2number ||
-        organizationName ||
-        organisationBrief ||
-        projectName ||
-        outline ||
-        beneficiaries ||
-        benefits ||
-        original) === "" ||
-      (technical || idustryType || size) == -1
-    ) {
-      alert("please fill every form");
-    } else if (!this.ValidateContactInfo(officeNumber,number.ci2number)) {
-      alert("please enter valid phone number");
-    } else if (!this.ValidateEmail(email,ci2email)) {
-      alert("please enter valid email");
-    }else{
+    // if (
+    //   (firstname ||
+    //     lastname ||
+    //     email ||
+    //     number ||
+    //     officeNumber ||
+    //     ci2firstname ||
+    //     ci2lastname ||
+    //     ci2email ||
+    //     ci2number ||
+    //     organizationName ||
+    //     organisationBrief ||
+    //     projectName ||
+    //     outline ||
+    //     beneficiaries ||
+    //     benefits ||
+    //     original) === "" ||
+    //   (technical || idustryType || size) == -1
+    // ) {
+    //   alert("please fill every form");
+    // } else if (!this.ValidateContactInfo(officeNumber,number.ci2number)) {
+    //   alert("please enter valid phone number");
+    // } else if (!this.ValidateEmail(email,ci2email)) {
+    //   alert("please enter valid email");
+    // }else{
      
       axios.post(`http://localhost:13000/api/proposal`, { 
         FirstName:firstname,
@@ -136,7 +136,7 @@ class SubmitPage extends React.Component {
       .catch(function(error) {
         console.log(error);
       });
-    }
+   // }
 
 
     console.log("request sent!");

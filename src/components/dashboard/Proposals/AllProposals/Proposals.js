@@ -59,6 +59,7 @@ class Proposals extends React.Component {
     async _reqTodoList() {
         const result = await getProposalList();
         // console.log(result);
+        console.log(result)
         const action = getGetAllProposalsAction(result);
         store.dispatch(action);
     }
@@ -81,10 +82,11 @@ class Proposals extends React.Component {
         console.log('Filtered propsal'+proposals);
         return targetProposals;
     };
-
+    //Buggy: can't handle null item
     _getFirstCharacter = title => {
         var string = title;
-        return string.charAt(0);
+       // return string.charAt(0);
+       return "A"
     };
 
     render() {
