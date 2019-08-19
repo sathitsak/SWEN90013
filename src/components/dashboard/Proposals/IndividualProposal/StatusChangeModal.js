@@ -51,12 +51,12 @@ class StatusChangeModal extends React.Component {
         this.setState({ open: false });
         console.log('the proposal id is ' +this.props.id)
         console.log('the supervisor for this project is ' +this.state.supervisor)
-        axios.put(
+        axios.post(
           'http://localhost:13000/api/proposal/'+this.props.id+'/accept',
           {
             
             supervisor: this.state.supervisor,
-            newProposalNote: responseText
+            acceptReason: responseText
           }
         ).then(function(response) {
           console.log(response);
@@ -69,7 +69,7 @@ class StatusChangeModal extends React.Component {
         console.log('the proposal id is' +this.props.id)
         console.log('the reason to reject is ' +responseText)
 
-        axios.put(
+        axios.post(
           'http://localhost:13000/api/proposal/'+ this.props.id +' /reject',
           {
             
