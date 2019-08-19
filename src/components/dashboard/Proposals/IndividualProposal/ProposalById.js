@@ -6,9 +6,11 @@ import axios from "axios";
 
 import ProposalInfo from "./ProposalInfo";
 import ProposalResponses from "./ProposalResponses";
-import {getProposalById} from "../../../../api";
-import {getGetProposalByIdAction} from "../../../../store/actionCreators";
+import { getProposalById } from "../../../../api";
+import { getGetProposalByIdAction } from "../../../../store/actionCreators";
 import store from "../../../../store";
+
+import Paper from "@material-ui/core/Paper";
 
 const styles = theme => ({
   root: {
@@ -17,31 +19,30 @@ const styles = theme => ({
   paper: {
     padding: theme.spacing.unit * 2,
     textAlign: "center",
-    color: theme.palette.text.secondary
+    color: theme.palette.text.secondary,
+    height: "400px"
   }
 });
 
 class ProposalById extends React.Component {
-    constructor(props) {
-        super(props);
+  constructor(props) {
+    super(props);
 
-        this.state = store.getState();
-    }
+    this.state = store.getState();
+  }
 
+  async _reqTodoList(propID) {
+    const result = await getProposalById(propID);
+    // console.log(result);
+    const action = getGetProposalByIdAction(result);
+    store.dispatch(action);
+  }
 
-    async _reqTodoList(propID) {
-        const result = await getProposalById(propID);
-        // console.log(result);
-        const action = getGetProposalByIdAction(result);
-        store.dispatch(action);
-    }
-
-    componentDidMount() {
-        //PASSING THE ID
-        const propID = this.props.match.params.id;
-        this._reqTodoList(propID);
-    }
-
+  componentDidMount() {
+    //PASSING THE ID
+    const propID = this.props.match.params.id;
+    this._reqTodoList(propID);
+  }
 
   render() {
     const { classes } = this.props;
@@ -59,13 +60,16 @@ class ProposalById extends React.Component {
               />
             }
           </Grid>
+
           <Grid item xs={12} sm={6}>
-            <ProposalInfo
-              client={this.state.proposal.client}
-              organisation={this.state.proposal.organisation}
-              status={this.state.proposal.status}
-              id={this.state.proposal.id}
-            />
+            <Paper className={classes.paper} style={{ marginTop: "20px" }}>
+              <ProposalInfo
+                client={this.state.proposal.client}
+                organisation={this.state.proposal.organisation}
+                status={this.state.proposal.status}
+                id={this.state.proposal.id}
+              />
+            </Paper>
           </Grid>
         </Grid>
       </div>

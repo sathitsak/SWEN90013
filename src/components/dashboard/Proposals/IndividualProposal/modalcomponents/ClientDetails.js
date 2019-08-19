@@ -9,14 +9,13 @@ import grey from "@material-ui/core/colors/grey";
 import PersonIcon from "@material-ui/icons/Person";
 
 const styles = {
-    root: {
-        maxWidth: 400,
-        flexGrow: 1
-    }
+  root: {
+    maxWidth: 400,
+    flexGrow: 1
+  }
 };
 
 class ClientDetails extends React.Component {
-
   render() {
     const { classes, theme } = this.props;
     return (
@@ -55,7 +54,6 @@ class ClientDetails extends React.Component {
       </div>
     );
   }
-
 }
 
 export default ClientDetails;
