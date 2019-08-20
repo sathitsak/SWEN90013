@@ -4,7 +4,7 @@ import {withStyles} from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
-
+import List from "@material-ui/core/List";
 
 import ProjectCard from "./ProjectCard";
 
@@ -59,66 +59,7 @@ class ViewProjects extends React.Component {
     componentWillReceiveProps(nextProps) {
         console.log(nextProps.currentPage)
     }
-
-    render() {
-        // const {classes} = this.props;
-
-        return (
-            <Grid container justify="flex-end" direction="row"
-                  alignContent="center">
-                <Grid item sm>
-                    {/*<Paper className={classes.paper}>*/}
-                    <Paper>
-                        <Typography
-                            variant="h5"
-                            style={{textAlign: "center", color: "#FFFFFF"}}
-                        >
-                            New
-                        </Typography>
-                        {this._filterProjectsByStatus(status.new).map((project, index) => (
-                            <ProjectCard id={project.id} key={index}
-                                         project={project}/>
-                        ))}
-                    </Paper>
-                </Grid>
-                <Grid item sm>
-                    {/*<Paper className={classes.paper}>*/}
-                    <Paper>
-                        <Typography
-                            variant="h5"
-                            style={{textAlign: "center", color: "#FFFFFF"}}
-                        >
-                            In Progress
-                        </Typography>
-                        {this._filterProjectsByStatus(status.inProgress).map(
-                            (project, index) => (
-                                <ProjectCard key={index} id={project.id}
-                                             project={project}/>
-                            )
-                        )}
-                    </Paper>
-                </Grid>
-                <Grid item sm>
-                    {/*<Paper className={classes.paper}>*/}
-                    <Paper>
-                        <Typography
-                            variant="h5"
-                            style={{textAlign: "center", color: "#FFFFFF"}}
-                        >
-                            Completed
-                        </Typography>
-                        {this._filterProjectsByStatus(status.completed).map(
-                            (project, index) => (
-                                <ProjectCard id={project.id} key={index}
-                                             project={project}/>
-                            )
-                        )}
-                    </Paper>
-                </Grid>
-            </Grid>
-        );
-    }
-
+    
     _filterProjectsByStatus = status => {
         const projects = this._filterProjectsForUser();
         let targetProjects = [];
@@ -145,12 +86,76 @@ class ViewProjects extends React.Component {
         });
         return targetProjects;
     };
+
+    render() {
+        const {classes} = this.props;
+
+        return (
+            <Grid container justify="flex-end" direction="row"
+                  alignContent="center">
+                <Grid item sm>
+                    <Paper className={classes.paper} style={{backgroundColor: "#f3f3f3"}}>
+                        <Typography
+                            variant="h5"
+                            style={{textAlign: "left", paddingLeft: "3%", paddingBottom: "3%", fontWeight: "bold", color: "#094183"}}
+                        >
+                            New
+                        </Typography>
+                        <div>
+                            <List dense={true}>
+                                {this._filterProjectsByStatus(status.new).map((project, index) => (
+                                    <ProjectCard id={project.id} key={index}
+                                    project={project}/>
+                                ))}
+                            </List>
+                        </div>
+                    </Paper>
+                </Grid>
+                <Grid item sm>
+                    <Paper className={classes.paper} style={{backgroundColor: "#f3f3f3"}}>
+                        <Typography
+                            variant="h5"
+                            style={{textAlign: "left", paddingLeft: "3%", paddingBottom: "3%", fontWeight: "bold", color: "#094183"}}
+                        >
+                            In Progress
+                        </Typography>
+                        <div>
+                            <List dense={true}>
+                                {this._filterProjectsByStatus(status.inProgress).map((project, index) => (
+                                    <ProjectCard id={project.id} key={index}
+                                    project={project}/>
+                                ))}
+                            </List>
+                        </div>
+                    </Paper>
+                </Grid>
+                <Grid item sm>
+                    <Paper className={classes.paper} style={{backgroundColor: "#f3f3f3"}}>
+                        <Typography
+                            variant="h5"
+                            style={{textAlign: "left", paddingLeft: "3%", paddingBottom: "3%", fontWeight: "bold", color: "#094183"}}
+                        >
+                            Completed
+                        </Typography>
+                        <div>
+                            <List dense={true}>
+                                {this._filterProjectsByStatus(status.completed).map((project, index) => (
+                                    <ProjectCard id={project.id} key={index}
+                                    project={project}/>
+                                ))}
+                            </List>
+                        </div>
+                    </Paper>
+                </Grid>
+            </Grid>
+        );
+    }
 }
 
-// ViewProjects.propTypes = {
-//     classes: PropTypes.object.isRequired
-// };
+ViewProjects.propTypes = {
+    classes: PropTypes.object.isRequired
+};
 
-// export default withStyles(styles)(ViewProjects);
+export default withStyles(styles)(ViewProjects);
 
-export default ViewProjects;
+// export default ViewProjects;

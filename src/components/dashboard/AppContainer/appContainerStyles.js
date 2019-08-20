@@ -5,7 +5,7 @@ export default theme => ({
         display: "flex"
     },
     appBar: {
-        backgroundColor: "#004576",
+        backgroundColor: "#094183",
         marginLeft: drawerWidth,
         [theme.breakpoints.up('md')]: {
           width: `calc(100% - ${drawerWidth}px)`,
