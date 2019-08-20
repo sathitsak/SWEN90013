@@ -19,7 +19,8 @@ const styles = theme => ({
         marginRight: 10
     },
     avatar: {
-        backgroundColor: red[500]
+        backgroundColor: "#4074B2"
+        // backgroundColor: red[500]
     },
     link: {
         float: "left",
