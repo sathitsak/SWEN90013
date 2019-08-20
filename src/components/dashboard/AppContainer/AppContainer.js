@@ -31,6 +31,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Button from "@material-ui/core/Button";
+import store from "../../../store";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -42,7 +43,12 @@ class AppContainer extends React.Component {
   state = {
     mobileOpen: false,
     open: false,
+    page_title: "",
   };
+
+  componentWillReceiveProps(nextProps) {
+    console.log(nextProps.currentPage)
+  }
 
   _handleDrawerToggle = () => {
     this.setState(state => ({ mobileOpen: !state.mobileOpen }));
@@ -59,6 +65,14 @@ class AppContainer extends React.Component {
   _handleLogOut = () => {
     // <Link to="/dashboard/proposals" className={classes.link} />;
   };
+
+  _handleChange = () => {
+    console.log("handle change");
+    console.log(store.getState().page_title);
+    this.setState({ page_title: store.getState().page_title})
+  };
+
+  unsubscribe = store.subscribe(this._handleChange);
 
   render() {
     const { classes, theme } = this.props;
@@ -114,7 +128,7 @@ class AppContainer extends React.Component {
               <MenuIcon />
             </IconButton>
             <Typography variant="h6" color="inherit" noWrap>
-              Responsive drawer
+              {this.state.page_title}
             </Typography>
           </Toolbar>
         </AppBar>

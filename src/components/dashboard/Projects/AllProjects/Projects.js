@@ -56,6 +56,10 @@ class ViewProjects extends React.Component {
         this._reqTodoList();
     }
 
+    componentWillReceiveProps(nextProps) {
+        console.log(nextProps.currentPage)
+    }
+
     render() {
         // const {classes} = this.props;
 

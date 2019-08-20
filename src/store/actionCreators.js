@@ -10,11 +10,13 @@ import {
 export const getGetAllProjectAction = (projects) => ({
     type: GET_ALL_PROJECTS,
     projects: projects,
+    page_title: "View Projects",
 });
 
 export const getGetProjectByIdAction = (project) => ({
     type: GET_PROJECT_BY_ID,
     project: project,
+    page_title: project.projectname,
 });
 
 export const getGetSupervisorsAction = (supervisors) => ({
@@ -30,9 +32,11 @@ export const getSetCurrentSupervisorAction = (currentSupervisor) => ({
 export const getGetAllProposalsAction = (proposals) => ({
     type: GET_ALL_PROPOSALS,
     proposals: proposals,
+    page_title: "View Proposals",
 });
 
 export const getGetProposalByIdAction = (proposal) => ({
     type: GET_PROPOSAL_BY_ID,
     proposal: proposal,
+    page_title: proposal.title,
 });

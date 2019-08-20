@@ -36,6 +36,8 @@ const styles = {
 };
 
 class ProjectById extends React.Component {
+_isMounted = false;
+
     async _reqTodoList(projID) {
         const result = await getProjectById(projID);
         // console.log(result);
@@ -44,8 +46,13 @@ class ProjectById extends React.Component {
     }
 
     componentDidMount() {
+        this._isMounted = true;
+
         const projID = this.props.match.params.id;
-        this._reqTodoList(projID);
+        if (this._isMounted) {
+            this._reqTodoList(projID);
+
+        }
     }
 
     render() {
