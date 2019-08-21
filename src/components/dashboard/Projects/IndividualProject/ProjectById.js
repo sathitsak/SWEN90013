@@ -4,8 +4,10 @@ import {withStyles} from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import ProjectInfo from './ProjectInfo/ProjectInfo';
 import Notes from './Notes/Notes';
-import {getProjectById} from "../../../../api";
-import {getGetProjectByIdAction} from "../../../../store/actionCreators";
+import {getProjectById,} from "../../../../api";
+import {
+    getGetProjectByIdAction,
+} from "../../../../store/actionCreators";
 import store from "../../../../store";
 import {Paper} from "@material-ui/core";
 
@@ -27,10 +29,10 @@ const styles = {
 class ProjectById extends React.Component {
 
     async _reqTodoList(projID) {
-        const result = await getProjectById(projID);
+        const project = await getProjectById(projID);
         // console.log(result);
-        const action = getGetProjectByIdAction(result);
-        store.dispatch(action);
+        const getProAction = getGetProjectByIdAction(project);
+        store.dispatch(getProAction);
     }
 
     componentDidMount() {

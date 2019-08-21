@@ -6,6 +6,8 @@ import {
     GET_ALL_PROPOSALS,
     GET_PROPOSAL_BY_ID
 } from "./actionTypes";
+import {getSetCurrentSupervisorAction} from "./actionCreators";
+import store from "./index";
 
 const defaultState = {
     projects: [],
@@ -75,9 +77,19 @@ function getAllProjects(state, action) {
 function getProjectById(state, action) {
     const newState = JSON.parse(JSON.stringify(state));
     newState.project = action.project;
-    // console.log(action.project);
     newState.page_title = action.page_title;
+
+    const supervisorID = newState.project.supervisorID;
+
+    let currentSupervisor = "";
+    newState.supervisors.forEach((supervisor) => {
+        if (supervisor.id === supervisorID) {
+            currentSupervisor = supervisor.firstName + " " + supervisor.lastName;
+            newState.currentSupervisor = currentSupervisor;
+        }
+    });
     return newState;
+
 }
 
 function getSupervisors(state, action) {

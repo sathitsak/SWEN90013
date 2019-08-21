@@ -12,11 +12,6 @@ import ViewProposal from './ViewProposal';
 import ViewClient from './ViewClient';
 import Organization from './Organization';
 import store from "../../../../../store";
-import {getSupervisors} from "../../../../../api";
-import {
-    getGetSupervisorsAction,
-    getSetCurrentSupervisorAction
-} from "../../../../../store/actionCreators";
 
 const styles = {
     basic: {
@@ -37,28 +32,31 @@ class ProjectInfo extends React.Component {
         this.setState(store.getState());
     }
 
-    async _reqTodoList() {
-        const result = await getSupervisors();
-        // console.log(result);
-        const action = getGetSupervisorsAction(result);
-        store.dispatch(action);
-    }
+    // async _reqTodoList() {
+    //     const result = await getSupervisors();
+    //     // console.log(result);
+    //     const action = getGetSupervisorsAction(result);
+    //     store.dispatch(action);
+    // }
 
-    componentDidMount() {
-        this._reqTodoList();
-
-        const {supervisors, project} = this.state;
-        const supervisorID = project.supervisorID;
-        let currentSupervisor = "";
-
-        supervisors.forEach((supervisor) => {
-            if (supervisor.id === supervisorID) {
-                currentSupervisor = supervisor.firstName + " " + supervisor.lastName;
-                const action = getSetCurrentSupervisorAction(currentSupervisor);
-                store.dispatch(action);
-            }
-        })
-    }
+    // componentWillMount() {
+    //     // this._reqTodoList();
+    //     const {supervisors, project} = this.state;
+    //     const supervisorID = project.supervisorID;
+    //     alert(supervisorID);
+    //     // console.log(project);
+    //
+    //     let currentSupervisor = "";
+    //     supervisors.forEach((supervisor) => {
+    //         // alert(supervisor.id);
+    //         // alert(supervisorID);
+    //         if (supervisor.id === supervisorID) {
+    //             currentSupervisor = supervisor.firstName + " " + supervisor.lastName;
+    //             const action = getSetCurrentSupervisorAction(currentSupervisor);
+    //             store.dispatch(action);
+    //         }
+    //     })
+    // }
 
     render() {
         const {classes} = this.props;

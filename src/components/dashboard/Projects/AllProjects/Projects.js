@@ -7,8 +7,11 @@ import Paper from "@material-ui/core/Paper";
 import List from "@material-ui/core/List";
 import ProjectCard from "./ProjectCard";
 import store from "../../../../store";
-import {getProjectList} from "../../../../api";
-import {getGetAllProjectAction} from "../../../../store/actionCreators";
+import {getProjectList, getSupervisors} from "../../../../api";
+import {
+    getGetAllProjectAction,
+    getGetSupervisorsAction
+} from "../../../../store/actionCreators";
 
 const styles = {
     paper: {
@@ -55,6 +58,11 @@ class ViewProjects extends React.Component {
         // console.log(result);
         const action = getGetAllProjectAction(result);
         store.dispatch(action);
+
+        const supervisors = await getSupervisors();
+        // console.log(result);
+        const getSupsAction = getGetSupervisorsAction(supervisors);
+        store.dispatch(getSupsAction);
     }
 
     componentDidMount() {

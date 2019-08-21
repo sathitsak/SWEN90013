@@ -61,13 +61,15 @@ class ProposalCard extends React.Component {
                         className={classes.cardHeader}
                     />
                     <CardContent className={classes.cardContent}>
-                        <Typography variant="overline" align="left" style={{marginBottom: 5}}>
+                        <Typography variant="overline" align="left"
+                                    style={{marginBottom: 5}}>
                             Client: {this.props.client}
                         </Typography>
 
                         <Divider component="li" paddingTop="20"/>
 
-                        <Typography component="p" variant="overline" style={{marginTop: 5}}>
+                        <Typography component="p" variant="overline"
+                                    style={{marginTop: 5}}>
                             Supervisor: {this.props.supervisor}
                         </Typography>
                     </CardContent>
