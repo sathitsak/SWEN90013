@@ -59,6 +59,7 @@ class Proposals extends React.Component {
     async _reqTodoList() {
         const result = await getProposalList();
         // console.log(result);
+        console.log(result)
         const action = getGetAllProposalsAction(result);
         store.dispatch(action);
     }
@@ -81,10 +82,11 @@ class Proposals extends React.Component {
         console.log('Filtered propsal'+proposals);
         return targetProposals;
     };
-
+    //Buggy: can't handle null item
     _getFirstCharacter = title => {
         var string = title;
-        return string.charAt(0);
+       // return string.charAt(0);
+       return "A"
     };
 
     render() {
@@ -110,9 +112,9 @@ class Proposals extends React.Component {
                             <List dense={true}>
                                 {this._filterProposalsByStatus(status.new).map(p => (
                                     <ProposalCard
-                                        key={p.clientId}
-                                        id={p.clientId}
-                                        title={p.name}
+                                        key={p._id}
+                                        id={p._id}
+                                        title={p._id}
                                         organisation={p.name}
                                         client={p.name}
                                         supervisor={p.name}
@@ -135,8 +137,8 @@ class Proposals extends React.Component {
                             <List dense={true}>
                                 {this._filterProposalsByStatus(status.approved).map(p => (
                                     <ProposalCard
-                                        key={p.id}
-                                        id={p.id}
+                                        key={p._id}
+                                        id={p._id}
                                         title={p.name}
                                         organisation={p.organisation}
                                         client={p.client}

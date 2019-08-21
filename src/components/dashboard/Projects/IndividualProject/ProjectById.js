@@ -40,6 +40,7 @@ class ProjectById extends React.Component {
         const result = await getProjectById(projID);
         // console.log(result);
         const action = getGetProjectByIdAction(result);
+        console.log(action)
         store.dispatch(action);
     }
 

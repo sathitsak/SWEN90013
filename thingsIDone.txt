@@ -1,0 +1,3 @@
+ProposalByID parameter id is not get dispatch properly, it dispatch the older one,which mean that it did not update store every time
+accept endpoint need to accept reason as well
+Get first character is not working

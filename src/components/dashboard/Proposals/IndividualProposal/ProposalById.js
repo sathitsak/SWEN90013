@@ -38,6 +38,7 @@ class ProposalById extends React.Component {
     store.dispatch(action);
   }
 
+
   componentDidMount() {
     //PASSING THE ID
     const propID = this.props.match.params.id;
