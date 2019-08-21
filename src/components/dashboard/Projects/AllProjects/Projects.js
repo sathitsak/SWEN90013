@@ -5,18 +5,26 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
 import List from "@material-ui/core/List";
-
 import ProjectCard from "./ProjectCard";
-
 import store from "../../../../store";
-import {getProjectList} from "../../../../api";
-import {getGetAllProjectAction} from "../../../../store/actionCreators";
+import {getProjectList, getSupervisors} from "../../../../api";
+import {
+    getGetAllProjectAction,
+    getGetSupervisorsAction
+} from "../../../../store/actionCreators";
 
 const styles = {
     paper: {
         padding: 10,
         margin: 40,
-        backgroundColor: "#8BBAEE"
+        backgroundColor: "#f3f3f3",
+    },
+    swimTitle: {
+        textAlign: "center",
+        paddingLeft: "3%",
+        paddingBottom: "3%",
+        fontWeight: "bold",
+        color: "#094183"
     }
 };
 
@@ -50,6 +58,11 @@ class ViewProjects extends React.Component {
         // console.log(result);
         const action = getGetAllProjectAction(result);
         store.dispatch(action);
+
+        const supervisors = await getSupervisors();
+        // console.log(result);
+        const getSupsAction = getGetSupervisorsAction(supervisors);
+        store.dispatch(getSupsAction);
     }
 
     componentDidMount() {
@@ -59,7 +72,7 @@ class ViewProjects extends React.Component {
     componentWillReceiveProps(nextProps) {
         console.log(nextProps.currentPage)
     }
-    
+
     _filterProjectsByStatus = status => {
         const projects = this._filterProjectsForUser();
         let targetProjects = [];
@@ -94,10 +107,10 @@ class ViewProjects extends React.Component {
             <Grid container justify="flex-end" direction="row"
                   alignContent="center">
                 <Grid item sm>
-                    <Paper className={classes.paper} style={{backgroundColor: "#f3f3f3"}}>
+                    <Paper className={classes.paper}>
                         <Typography
                             variant="h5"
-                            style={{textAlign: "left", paddingLeft: "3%", paddingBottom: "3%", fontWeight: "bold", color: "#094183"}}
+                            className={classes.swimTitle}
                         >
                             New
                         </Typography>
@@ -105,17 +118,17 @@ class ViewProjects extends React.Component {
                             <List dense={true}>
                                 {this._filterProjectsByStatus(status.new).map((project, index) => (
                                     <ProjectCard id={project.id} key={index}
-                                    project={project}/>
+                                                 project={project}/>
                                 ))}
                             </List>
                         </div>
                     </Paper>
                 </Grid>
                 <Grid item sm>
-                    <Paper className={classes.paper} style={{backgroundColor: "#f3f3f3"}}>
+                    <Paper className={classes.paper}>
                         <Typography
                             variant="h5"
-                            style={{textAlign: "left", paddingLeft: "3%", paddingBottom: "3%", fontWeight: "bold", color: "#094183"}}
+                            className={classes.swimTitle}
                         >
                             In Progress
                         </Typography>
@@ -123,17 +136,17 @@ class ViewProjects extends React.Component {
                             <List dense={true}>
                                 {this._filterProjectsByStatus(status.inProgress).map((project, index) => (
                                     <ProjectCard id={project.id} key={index}
-                                    project={project}/>
+                                                 project={project}/>
                                 ))}
                             </List>
                         </div>
                     </Paper>
                 </Grid>
                 <Grid item sm>
-                    <Paper className={classes.paper} style={{backgroundColor: "#f3f3f3"}}>
+                    <Paper className={classes.paper}>
                         <Typography
                             variant="h5"
-                            style={{textAlign: "left", paddingLeft: "3%", paddingBottom: "3%", fontWeight: "bold", color: "#094183"}}
+                            className={classes.swimTitle}
                         >
                             Completed
                         </Typography>
@@ -141,7 +154,7 @@ class ViewProjects extends React.Component {
                             <List dense={true}>
                                 {this._filterProjectsByStatus(status.completed).map((project, index) => (
                                     <ProjectCard id={project.id} key={index}
-                                    project={project}/>
+                                                 project={project}/>
                                 ))}
                             </List>
                         </div>
@@ -157,5 +170,3 @@ ViewProjects.propTypes = {
 };
 
 export default withStyles(styles)(ViewProjects);
-
-// export default ViewProjects;

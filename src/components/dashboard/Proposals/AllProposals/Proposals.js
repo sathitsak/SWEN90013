@@ -29,12 +29,19 @@ const styles = theme => ({
     paper: {
         padding: 10,
         margin: 40,
-        backgroundColor: "#8BBAEE",
+        backgroundColor: "#f3f3f3",
         width: 390
     },
     link: {
         textDecoration: "none",
         textColor: "white"
+    },
+    swimTitle: {
+        textAlign: "center",
+        paddingLeft: "3%",
+        paddingBottom: "3%",
+        fontWeight: "bold",
+        color: "#094183"
     }
 });
 
@@ -66,7 +73,7 @@ class Proposals extends React.Component {
 
     componentDidMount() {
         this._reqTodoList();
-      //http://localhost:13000/api/proposal
+        //http://localhost:13000/api/proposal
 
     }
 
@@ -79,7 +86,7 @@ class Proposals extends React.Component {
                 targetProposals.push(p);
             }
         });
-        console.log('Filtered propsal'+proposals);
+        console.log('Filtered propsal' + proposals);
         return targetProposals;
     };
     //Buggy: can't handle null item
@@ -101,10 +108,10 @@ class Proposals extends React.Component {
                 direction="row"
             >
                 <Grid item sm>
-                    <Paper className={classes.paper} style={{backgroundColor: "#f3f3f3"}}>
+                    <Paper className={classes.paper}>
                         <Typography
                             variant="h5"
-                            style={{textAlign: "left", paddingLeft: "3%", paddingBottom: "3%", fontWeight: "bold", color: "#094183"}}
+                            className={classes.swimTitle}
                         >
                             New
                         </Typography>
@@ -126,10 +133,10 @@ class Proposals extends React.Component {
                     </Paper>
                 </Grid>
                 <Grid item sm>
-                    <Paper className={classes.paper} style={{backgroundColor: "#f3f3f3"}}>
+                    <Paper className={classes.paper}>
                         <Typography
                             variant="h5"
-                            style={{textAlign: "left", paddingLeft: "3%",  paddingBottom: "3%", fontWeight: "bold", color: "#094183"}}
+                            className={classes.swimTitle}
                         >
                             Approved
                         </Typography>
@@ -155,7 +162,10 @@ class Proposals extends React.Component {
                     to={`/dashboard/rejectedProposals`}
                     className={classes.link}
                 >
-                    <Button variant="contained" size="medium" style={{backgroundColor: "#094183", color: "#ffffff"}}
+                    <Button variant="contained" size="medium" style={{
+                        backgroundColor: "#094183",
+                        color: "#ffffff"
+                    }}
                             className={classes.margin}>
                         View Rejected Proposals
                     </Button>
