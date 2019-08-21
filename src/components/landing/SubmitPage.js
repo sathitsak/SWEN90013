@@ -103,38 +103,37 @@ class SubmitPage extends React.Component {
     // } else if (!this.ValidateEmail(email,ci2email)) {
     //   alert("please enter valid email");
     // }else{
-     
-      axios.post(`http://localhost:13000/api/proposal`, { 
-        FirstName:firstname,
-        LastName:lastname,
-        Email:email,
-        ContactNumber:number,
-        SecondaryContactFirstName:ci2firstname,
-        SecondaryContactLastName:ci2lastname,
-        SecondaryContactEmail:ci2email,
-        SecondaryContactNumber:ci2number,
+
+    axios
+      .post(`http://localhost:13000/api/proposal`, {
+        FirstName: firstname,
+        LastName: lastname,
+        Email: email,
+        ContactNumber: number,
+        SecondaryContactFirstName: ci2firstname,
+        SecondaryContactLastName: ci2lastname,
+        SecondaryContactEmail: ci2email,
+        SecondaryContactNumber: ci2number,
         OrganisationNumber: officeNumber,
         TechnicalAbility: technical,
-        organizationName:organizationName,
-        idustryType:idustryType,
-        size:size,
-        organisationBrief:organisationBrief,
-        projectName:projectName,
-        outline:outline,
-        beneficiaries:beneficiaries,
-        benefits:benefits,
-        original:original,
-        used:original    
-    
-    })
+        organizationName: organizationName,
+        idustryType: idustryType,
+        size: size,
+        organisationBrief: organisationBrief,
+        projectName: projectName,
+        outline: outline,
+        beneficiaries: beneficiaries,
+        benefits: benefits,
+        original: original,
+        used: original
+      })
       .then(function(response) {
         console.log(response);
       })
       .catch(function(error) {
         console.log(error);
       });
-   // }
-
+    // }
 
     console.log("request sent!");
 
@@ -162,8 +161,6 @@ class SubmitPage extends React.Component {
     //   .catch(function(error) {
     //     console.log(error);
     //   });
-   
-
   };
 
   render() {
@@ -403,8 +400,6 @@ class SubmitPage extends React.Component {
               <div>
                 <input id="ci2number" type="text" />
               </div>
-
-             
 
               <div>
                 <label>

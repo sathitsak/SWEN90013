@@ -27,9 +27,11 @@ const styles = theme => ({
 class ProposalById extends React.Component {
   constructor(props) {
     super(props);
-
-    this.state = store.getState();
   }
+
+  state = {
+    proposal: ""
+  };
 
   async _reqTodoList(propID) {
     const result = await getProposalById(propID);
@@ -38,12 +40,17 @@ class ProposalById extends React.Component {
     store.dispatch(action);
   }
 
-
   componentDidMount() {
     //PASSING THE ID
     const propID = this.props.match.params.id;
     this._reqTodoList(propID);
   }
+
+  _handleChange = () => {
+    this.setState({ proposal: store.getState().proposal });
+  };
+
+  unsubscribe = store.subscribe(this._handleChange);
 
   render() {
     const { classes } = this.props;
@@ -68,7 +75,7 @@ class ProposalById extends React.Component {
                 client={this.state.proposal.client}
                 organisation={this.state.proposal.organisation}
                 status={this.state.proposal.status}
-                id={this.state.proposal.id}
+                id={this.state.proposal._id}
               />
             </Paper>
           </Grid>
