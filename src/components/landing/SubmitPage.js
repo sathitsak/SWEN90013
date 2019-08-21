@@ -133,9 +133,13 @@ class SubmitPage extends React.Component {
       .catch(function(error) {
         console.log(error);
       });
+
     // }
 
     console.log("request sent!");
+
+    alert("Your proposal has been submitted!");
+    window.location.href = "http://localhost:3000/";
 
     // axios
     //   .post(`http://localhost:13000/api/proposal`, {
