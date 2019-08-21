@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import {withStyles} from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
-import teal from "@material-ui/core/colors/teal";
 import {Link} from "react-router-dom";
 import Avatar from "@material-ui/core/Avatar";
 import red from "@material-ui/core/colors/red";
@@ -13,7 +12,7 @@ import CardContent from "@material-ui/core/CardContent";
 
 const styles = {
     card: {
-        margin: 10
+        margin: 10,
     },
     link: {
         float: "left",
@@ -30,6 +29,13 @@ const styles = {
     },
     avatar: {
         backgroundColor: red[500]
+    },
+    cardHeader: {
+        paddingBottom: 0
+    },
+    cardContent: {
+        paddingTop: 12,
+        paddingBottom: 0,
     }
 };
 
@@ -49,24 +55,24 @@ class ProjectCard extends React.Component {
                         title={project.projectName}
                         subheader={project.industry}
                         component="div"
-                        style={{paddingBottom: 0}}
+                        className={classes.cardHeader}
                     />
                     <CardContent
                         component="div"
-                        style={{paddingTop: 0, paddingBottom: 5}}
+                        className={classes.cardContent}
                     >
                         <Typography
                             variant="overline"
                             align="left"
-                            style={{fontSize: 15}}
+                            style={{marginBottom: 5}}
                         >
                             Client: {project.client}
                         </Typography>
-                        <Divider/>
+                        <Divider component="li" paddingTop="20"/>
                         <Typography
                             component="p"
                             variant="overline"
-                            style={{fontSize: 15}}
+                            style={{marginTop: 5}}
                         >
                             Supervisor: {project.supervisorID}
                         </Typography>

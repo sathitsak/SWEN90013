@@ -15,20 +15,15 @@ class ChangeStatus extends React.Component {
         return (
             <div>
                 <Grid container>
-                    <Grid item xs={2} style={{marginTop: 10}}>
+                    <Grid item style={{marginTop: 10, marginRight: 80}}>
                         <Typography align="left" variant="h6">
-                            Status
+                            Status:
                         </Typography>
                     </Grid>
-                    <Grid item xs={2} style={{marginTop: 10}} align="center">
+                    <Grid item style={{marginTop: 10}} align="center">
                         <Button
                             variant="contained"
                             color="primary"
-                            style={{
-                                // backgroundColor: this.determineStatusButtonColour(
-                                //     this.props.status
-                                // ),
-                            }}
                         >
                             {status}
                         </Button>

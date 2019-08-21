@@ -16,7 +16,7 @@ const styles = theme => ({
         height: 170,
         marginBottom: 10,
         marginLeft: 10,
-        marginRight: 10
+        marginRight: 10,
     },
     avatar: {
         backgroundColor: red[500]
@@ -31,6 +31,13 @@ const styles = theme => ({
         "&:active": {
             backgroundColor: "#ADB8C1"
         }
+    },
+    cardHeader: {
+        paddingBottom: 0
+    },
+    cardContent: {
+        paddingTop: 12,
+        paddingBottom: 0,
     }
 });
 
@@ -51,15 +58,16 @@ class ProposalCard extends React.Component {
                         }
                         title={this.props.title}
                         subheader={this.props.organisation}
+                        className={classes.cardHeader}
                     />
-                    <CardContent>
-                        <Typography variant="overline" align="left">
+                    <CardContent className={classes.cardContent}>
+                        <Typography variant="overline" align="left" style={{marginBottom: 5}}>
                             Client: {this.props.client}
                         </Typography>
 
                         <Divider component="li" paddingTop="20"/>
 
-                        <Typography component="p" variant="overline">
+                        <Typography component="p" variant="overline" style={{marginTop: 5}}>
                             Supervisor: {this.props.supervisor}
                         </Typography>
                     </CardContent>

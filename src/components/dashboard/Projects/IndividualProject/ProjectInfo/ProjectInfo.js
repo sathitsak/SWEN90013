@@ -28,9 +28,7 @@ const styles = {
 class ProjectInfo extends React.Component {
     constructor(props) {
         super(props);
-
         this.state = store.getState();
-
         this._handleStoreChange = this._handleStoreChange.bind(this);
         store.subscribe(this._handleStoreChange);
     }
@@ -56,7 +54,6 @@ class ProjectInfo extends React.Component {
         supervisors.forEach((supervisor) => {
             if (supervisor.id === supervisorID) {
                 currentSupervisor = supervisor.firstName + " " + supervisor.lastName;
-
                 const action = getSetCurrentSupervisorAction(currentSupervisor);
                 store.dispatch(action);
             }
