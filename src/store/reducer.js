@@ -14,6 +14,7 @@ const defaultState = {
     currentSupervisor: "",
     proposals: [],
     proposal: {},
+    page_title: "",
 };
 
 export default (state = defaultState, action) => {
@@ -47,12 +48,14 @@ export default (state = defaultState, action) => {
 function getProposalById(state, action) {
     const newState = JSON.parse(JSON.stringify(state));
     newState.proposal = action.proposal;
+    newState.page_title = action.page_title;
     return newState;
 }
 
 function getAllProposals(state, action) {
     const newState = JSON.parse(JSON.stringify(state));
     newState.proposals = action.proposals;
+    newState.page_title = action.page_title;
     return newState;
 }
 
@@ -65,6 +68,7 @@ function setCurrentSupervisor(state, action) {
 function getAllProjects(state, action) {
     const newState = JSON.parse(JSON.stringify(state));
     newState.projects = action.projects;
+    newState.page_title = action.page_title;
     return newState;
 }
 
@@ -72,6 +76,7 @@ function getProjectById(state, action) {
     const newState = JSON.parse(JSON.stringify(state));
     newState.project = action.project;
     // console.log(action.project);
+    newState.page_title = action.page_title;
     return newState;
 }
 

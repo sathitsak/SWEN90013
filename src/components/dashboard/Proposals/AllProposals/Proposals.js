@@ -101,10 +101,10 @@ class Proposals extends React.Component {
                 direction="row"
             >
                 <Grid item sm>
-                    <Paper className={classes.paper}>
+                    <Paper className={classes.paper} style={{backgroundColor: "#f3f3f3"}}>
                         <Typography
                             variant="h5"
-                            style={{textAlign: "center", color: "#FFFFFF"}}
+                            style={{textAlign: "left", paddingLeft: "3%", paddingBottom: "3%", fontWeight: "bold", color: "#094183"}}
                         >
                             New
                         </Typography>
@@ -126,10 +126,10 @@ class Proposals extends React.Component {
                     </Paper>
                 </Grid>
                 <Grid item sm>
-                    <Paper className={classes.paper}>
+                    <Paper className={classes.paper} style={{backgroundColor: "#f3f3f3"}}>
                         <Typography
                             variant="h5"
-                            style={{textAlign: "center", color: "#FFFFFF"}}
+                            style={{textAlign: "left", paddingLeft: "3%",  paddingBottom: "3%", fontWeight: "bold", color: "#094183"}}
                         >
                             Approved
                         </Typography>
@@ -155,7 +155,7 @@ class Proposals extends React.Component {
                     to={`/dashboard/rejectedProposals`}
                     className={classes.link}
                 >
-                    <Button variant="contained" size="medium" color="primary"
+                    <Button variant="contained" size="medium" style={{backgroundColor: "#094183", color: "#ffffff"}}
                             className={classes.margin}>
                         View Rejected Proposals
                     </Button>
