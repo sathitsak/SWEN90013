@@ -47,14 +47,44 @@ class StatusChangeModal extends React.Component {
     if (responseText == "" || this.state.supervisor == "") {
       alert("Please complete all fields");
     } else {
-      this.setState({ open: false });
-      axios.put(
-        "https://5ce79b719f2c390014dba00f.mockapi.io/proposal/" + this.props.id,
-        {
-          status: this.state.option,
-          supervisor: this.state.supervisor
-        }
-      );
+      if(this.state.option === 'approved'){
+        this.setState({ open: false });
+        console.log('the proposal id is ' +this.props.id)
+        console.log('the supervisor for this project is ' +this.state.supervisor)
+        axios.post(
+          'http://localhost:13000/api/proposal/'+this.props.id+'/accept',
+          {
+            
+            supervisor: this.state.supervisor,
+            acceptReason: responseText
+          }
+        ).then(function(response) {
+          console.log(response);
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+      }else if (this.state.option === 'reject'){
+        this.setState({ open: false });
+        console.log('the proposal id is' +this.props.id)
+        console.log('the reason to reject is ' +responseText)
+
+        axios.post(
+          'http://localhost:13000/api/proposal/'+ this.props.id +' /reject',
+          {
+            
+            supervisor: this.state.supervisor,
+            rejectReason: responseText
+          }
+        ).then(function(response) {
+          console.log(response);
+        })
+        .catch(function(error) {
+          console.log(error);
+
+        });
+      }
+     
     }
   };
 

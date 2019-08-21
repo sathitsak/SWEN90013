@@ -32,7 +32,9 @@ class ProjectById extends React.Component {
         const project = await getProjectById(projID);
         // console.log(result);
         const getProAction = getGetProjectByIdAction(project);
+      console.log(getProAction)
         store.dispatch(getProAction);
+
     }
 
     componentDidMount() {
