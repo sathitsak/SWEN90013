@@ -180,6 +180,11 @@ class EmailModal extends React.Component {
 
   unsubscribe = store.subscribe(this.handleChange);
 
+  _handleEmailContentChange(e) {
+    const email_message = e.target.value;
+    this.setState({email_message: email_message})
+  }
+
   render() {
     const { classes } = this.props;
 
@@ -308,7 +313,7 @@ class EmailModal extends React.Component {
                         multiline="true"
                         rows="10"
                         value={this.state.email_message}
-                        // onChange={this.handleChange.bind(this)}
+                        onChange={(e) => this._handleEmailContentChange(e)}
                     />
                 </form>
             </DialogContent>
