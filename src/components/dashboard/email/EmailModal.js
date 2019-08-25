@@ -338,20 +338,6 @@ class EmailModal extends React.Component {
                     />
                 </form>
             </DialogContent>
-
-              <Divider style={{ marginTop: "1%", marginBottom: "1%" }} />
-              <InputBase
-                fullWidth
-                id="message"
-                className={classes.margin}
-                multiline="true"
-                rows="10"
-                value={this.state.email_message}
-                // onChange={this.handleChange.bind(this)}
-              />
-            </form>
-          </DialogContent>
-
           <Divider />
 
           <DialogActions>
