@@ -29,8 +29,7 @@ const styles = theme => ({
   card: {
     width: 350,
     height: 170,
-    marginBottom: 10,
-    marginLeft: 90,
+    marginBottom: 20,
     marginRight: 10,
     raised: true
   },

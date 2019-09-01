@@ -6,6 +6,7 @@ import { withStyles } from "@material-ui/core/styles";
 import TeamCard from "./TeamCard";
 import Grid from "@material-ui/core/Grid";
 import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
 import { tsConstructorType } from "@babel/types";
 import axios from "axios";
 import Dialog from "@material-ui/core/Dialog";
@@ -15,6 +16,9 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Button from "@material-ui/core/Button";
 import Slide from "@material-ui/core/Slide";
+import Fab from "@material-ui/core/Fab";
+import EmailIcon from "@material-ui/icons/Email";
+//import AddCircleIcon from "@material-ui/icons/add_circle";
 
 import TeamEditor from "./TeamEditor";
 
@@ -32,7 +36,7 @@ const styles = theme => ({
     paddingBottom: "20px"
   },
   card: {
-    padding: "30px",
+    paddingBottom: "30px",
     marginBottom: "40px",
     width: "30px"
   },
@@ -119,23 +123,22 @@ class TeamPage extends React.Component {
             <Typography variant="h5" align="center">
               STUDENT TEAM
             </Typography>
-            <Button
-              variant="outlined"
+            <Fab
               color="primary"
-              style={styles.button}
+              aria-label="Email"
+              className={classes.fab}
               onClick={this._handleClickOpen}
-            >
-              Add new team
-            </Button>
+            ></Fab>
 
             <div>
-              <Paper style={{ maxHeight: 470, overflow: "auto" }}>
-                <List style={styles.list}>
-                  {this.state.teams.map(p => (
-                    <TeamCard name={p.name} students={p.students} />
-                  ))}
-                </List>
-              </Paper>
+              <List
+                style={{ height: 470, maxHeight: 470, overflow: "auto" }}
+                dense={true}
+              >
+                {this.state.teams.map(p => (
+                  <TeamCard name={p.name} students={p.students} />
+                ))}
+              </List>
             </div>
           </Grid>
         </Grid>
