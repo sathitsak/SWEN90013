@@ -19,6 +19,8 @@ const styles = theme => ({
   },
   icon: {
     verticalAlign: 'middle',
+    fontSize: 30,
+    paddingRight: 10,
   },
   iconFalse: {
     marginLeft: 50,
@@ -43,6 +45,12 @@ const styles = theme => ({
   infoHeading: {
     marginTop: 30,
     marginBottom: 5,
+  },
+  technicalAbility: {
+    '&:hover': {
+      backgroundColor: 'transparent',
+    },
+    disabled: true,
   }
 });
 
@@ -88,7 +96,17 @@ class ClientDetails extends React.Component {
                 steps={10}
                 position="static"
                 activeStep={2}
-                style={{ backgroundColor: grey[50] }}
+                style={{ backgroundColor: grey[50], width: 400 }}
+                nextButton={
+                  <Button className={classes.technicalAbility} size="small" >
+                    Strong
+                  </Button>
+                }
+                backButton={
+                  <Button className={classes.technicalAbility} size="small">
+                    Weak
+                  </Button>
+                }
               />
             </Grid>
 
