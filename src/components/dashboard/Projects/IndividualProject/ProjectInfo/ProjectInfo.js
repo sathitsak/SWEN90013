@@ -65,9 +65,9 @@ class ProjectInfo extends React.Component {
     return (
       <div>
         <Typography variant="h5" align="center">
-          PROJECT OUTLINE/Team
+          PROJECT OUTLINE
         </Typography>
-        <Grid container direction="column">
+        <Grid container>
           <Grid item className={classes.basic}>
             <ChangeStatus status={project.status} />
           </Grid>

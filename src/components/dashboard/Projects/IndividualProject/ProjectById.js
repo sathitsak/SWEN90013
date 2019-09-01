@@ -9,11 +9,9 @@ import { getGetProjectByIdAction } from "../../../../store/actionCreators";
 import store from "../../../../store";
 import { Paper } from "@material-ui/core";
 
+import TeamPage from "./StudentTeam/TeamPage";
+
 const styles = {
-  projectInfo: {
-    width: "100%",
-    height: 670
-  },
   notes: {
     width: "100%",
     height: 140
@@ -44,16 +42,22 @@ class ProjectById extends React.Component {
     return (
       <Grid
         container
-        direction="column"
-        alignContent="center"
-        justify="flex-end"
+        spacing={9}
+        // direction="column"
+        // alignContent="center"
+        //justify="flex-end"
       >
-        <Grid item className={classes.projectInfo}>
+        <Grid item xs={6} className={classes.projectInfo}>
           <Paper className={classes.paper}>
             <ProjectInfo />
           </Paper>
         </Grid>
-        <Grid item className={classes.notes}>
+        <Grid item item xs={6} className={classes.projectInfo}>
+          <Paper className={classes.paper}>
+            <TeamPage />
+          </Paper>
+        </Grid>
+        <Grid item xs={12} className={classes.notes}>
           <Paper className={classes.paper}>
             <Notes />
           </Paper>
