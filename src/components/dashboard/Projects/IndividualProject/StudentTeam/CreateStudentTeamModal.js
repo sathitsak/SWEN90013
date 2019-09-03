@@ -1,8 +1,13 @@
+/**
+ * This component contains the pop-up for creating a student team. 
+ * It sits within an individual project page under the student team module.
+ * Author: Reyna Tan
+ * Date: 01/09/2019
+ */
+
 import React from "react";
-import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-import Modal from "@material-ui/core/Modal";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
@@ -12,8 +17,6 @@ import Fab from "@material-ui/core/Fab";
 import GroupAddIcon from '@material-ui/icons/GroupAdd';
 import TextField from "@material-ui/core/TextField";
 import { Divider } from "@material-ui/core";
-import FormControl from "@material-ui/core/FormControl";
-import store from "../../../../../store";
 import Grid from "@material-ui/core/Grid";
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -23,22 +26,6 @@ import TableHead from "@material-ui/core/TableHead/TableHead";
 import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
 import Input from "@material-ui/core/Input";
-import CreateStudentRow from "./CreateStudentRow";
-
-function rand() {
-  return Math.round(Math.random() * 20) - 10;
-}
-
-function getModalStyle() {
-  const top = 50 + rand();
-  const left = 50 + rand();
-
-  return {
-    top: `${top}%`,
-    left: `${left}%`,
-    transform: `translate(-${top}%, -${left}%)`
-  };
-}
 
 const styles = theme => ({
   root: {
@@ -59,7 +46,10 @@ const styles = theme => ({
     maxWidth: 300
   },
   fab: {
-    backgroundColor: "#094183"
+    backgroundColor: "#094183",
+    '&:hover': {
+      backgroundColor: "#4074B2"
+    }
   },
   studentTeamHeader: {
     fontWeight: "bold",
@@ -76,6 +66,15 @@ const styles = theme => ({
   resize: {
     fontSize: 15,
     padding: 10
+  },
+  createButton: {
+    backgroundColor: "#094183",
+    '&:hover': {
+      backgroundColor:"#4074B2",
+    }
+  },
+  discardButton: {
+    color: "#094183",
   }
 });
 
@@ -99,14 +98,15 @@ const MenuProps = {
   dense: "true"
 };
 
-const teamSize = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+const TEAM_SIZE = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
+const INITIAL_NUM_STUDENTS = 4;
 
 class CreateStudentTeamModal extends React.Component {
   state = {
     open: false,
     fullWidth: true,
     maxWidth: "lg",
-    numStudents: 4,
+    numStudents: INITIAL_NUM_STUDENTS,
   };
 
   _handleClickOpen = () => {
@@ -135,11 +135,11 @@ class CreateStudentTeamModal extends React.Component {
 
   render() {
     const { classes } = this.props;
-    const { numStudents } = this.state.numStudents;
 
     return (
       <div>
         <Typography gutterBottom />
+
         <Fab
           color="primary"
           aria-label="Create Student Team"
@@ -148,6 +148,7 @@ class CreateStudentTeamModal extends React.Component {
         >
           <GroupAddIcon />
         </Fab>
+
         <Dialog
           fullWidth={this.state.fullWidth}
           maxWidth={this.state.maxWidth}
@@ -155,17 +156,25 @@ class CreateStudentTeamModal extends React.Component {
           onClose={this._handleClose}
           aria-labelledby="max-width-dialog-title"
         >
-          <DialogTitle onClose={this._handleClose}>Create a new student team</DialogTitle>
+          <DialogTitle onClose={this._handleClose}>
+            Create a new student team
+          </DialogTitle>
 
           <Divider />
 
           <DialogContent>
             <Grid container spacing={3}>
               <Grid item xs={2}>
-                <div className={classes.studentTeamHeader}>Team Name</div>
+                <div className={classes.studentTeamHeader}>
+                  Team Name
+                </div>
               </Grid>
               <Grid item xs={10}>
-                <form className={classes.container} noValidate autoComplete="off">
+                <form 
+                  className={classes.container} 
+                  noValidate 
+                  autoComplete="off"
+                >
                   <TextField
                     id="Team Name"
                     className={classes.textField}
@@ -179,7 +188,9 @@ class CreateStudentTeamModal extends React.Component {
 
             <Grid container spacing={3}>
               <Grid item xs={2}>
-                <div className={classes.studentTeamHeader}>Number of students</div>
+                <div className={classes.studentTeamHeader}>
+                  Number of students
+                </div>
               </Grid>
               <Grid item xs={10}>
                 <form className={classes.container} noValidate autoComplete="off">
@@ -191,11 +202,8 @@ class CreateStudentTeamModal extends React.Component {
                     input={<Input id="email_template" />}
                     MenuProps={MenuProps}
                   >
-                    {teamSize.map(size => (
-                      <MenuItem
-                        value={size}
-                        // style={{ width: "100%" }}
-                      >
+                    {TEAM_SIZE.map(size => (
+                      <MenuItem value={size}>
                         {size}
                       </MenuItem>
                     ))}
@@ -212,14 +220,18 @@ class CreateStudentTeamModal extends React.Component {
                         <TableCell align="left" >Email Address</TableCell>
                     </TableRow>
                 </TableHead>
+
                 <TableBody>
-                  {this._createStudentRows().map(
-                    
+                  {this._createStudentRows().map(   
                     (index) => (
                       <TableRow>
                            <TableCell component="th" scope="row">
-                            <form className={classes.container} noValidate autoComplete="off">
-                              <TextField
+                              <form 
+                                className={classes.container} 
+                                noValidate 
+                                autoComplete="off"
+                              >                              
+                                <TextField
                                   id={"firstName"+index}
                                   className={classes.textField}
                                   margin="dense"
@@ -235,7 +247,11 @@ class CreateStudentTeamModal extends React.Component {
                               </form>
                           </TableCell>
                           <TableCell align="left">
-                            <form className={classes.container} noValidate autoComplete="off">
+                            <form 
+                              className={classes.container} 
+                              noValidate 
+                              autoComplete="off"
+                            >
                               <TextField
                                 id={"lastName"+index}
                                 className={classes.textField}
@@ -252,7 +268,11 @@ class CreateStudentTeamModal extends React.Component {
                             </form>
                           </TableCell>
                           <TableCell align="left">
-                            <form className={classes.container} noValidate autoComplete="off">
+                            <form 
+                              className={classes.container} 
+                              noValidate 
+                              autoComplete="off"
+                            >
                               <TextField
                                 id={"emailAddress"+index}
                                 className={classes.textField}
@@ -279,16 +299,21 @@ class CreateStudentTeamModal extends React.Component {
 
           <DialogActions>
             <Button
+              className={classes.createButton}
               variant="contained"
               color="primary"
               onClick={this._handleCreateStudentTeam}
             >
               Create
             </Button>
-            <Button onClick={this._handleClose} color="primary">
+            <Button 
+              className={classes.discardButton}
+              onClick={this._handleClose} 
+              color="primary">
               Discard
             </Button>
           </DialogActions>
+
         </Dialog>
       </div>
     );
