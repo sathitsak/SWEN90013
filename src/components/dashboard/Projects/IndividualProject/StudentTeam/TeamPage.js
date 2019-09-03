@@ -20,8 +20,6 @@ import Fab from "@material-ui/core/Fab";
 import EmailIcon from "@material-ui/icons/Email";
 //import AddCircleIcon from "@material-ui/icons/add_circle";
 
-import TeamEditor from "./TeamEditor";
-
 const styles = theme => ({
   root: {
     flexGrow: 1
@@ -123,16 +121,18 @@ class TeamPage extends React.Component {
             <Typography variant="h5" align="center">
               STUDENT TEAM
             </Typography>
-            <Fab
-              color="primary"
-              aria-label="Email"
-              className={classes.fab}
-              onClick={this._handleClickOpen}
-            ></Fab>
+            <div align="right">
+              <Fab
+                color="primary"
+                aria-label="Email"
+                className={classes.fab}
+                onClick={this._handleClickOpen}
+              ></Fab>
+            </div>
 
             <div>
               <List
-                style={{ height: 470, maxHeight: 470, overflow: "auto" }}
+                style={{ height: 454, maxHeight: 470, overflow: "auto" }}
                 dense={true}
               >
                 {this.state.teams.map(p => (
@@ -142,27 +142,6 @@ class TeamPage extends React.Component {
             </div>
           </Grid>
         </Grid>
-
-        <Dialog
-          open={this.state.open}
-          maxWidth="xl"
-          fullWidth={true}
-          onClose={this._handleClose}
-          aria-labelledby="alert-dialog-slide-title"
-          aria-describedby="alert-dialog-slide-description"
-        >
-          <DialogTitle id="alert-dialog-slide-title">
-            {"Team Editor"}
-          </DialogTitle>
-          <DialogContent />
-          <DialogActions>
-            <TeamEditor />
-            <br />
-            <Button color="primary" onClick={this._handleClose}>
-              No
-            </Button>
-          </DialogActions>
-        </Dialog>
       </div>
     );
   }

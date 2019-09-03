@@ -15,13 +15,19 @@ import FavoriteIcon from "@material-ui/icons/Favorite";
 import ShareIcon from "@material-ui/icons/Share";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
-
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import PersonIcon from "@material-ui/icons/Person";
 import ListItemText from "@material-ui/core/ListItemText";
+import TabContainer from "react-bootstrap/TabContainer";
+import TabContent from "react-bootstrap/TabContent";
+import TabPane from "react-bootstrap/TabPane";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
+import Nav from "react-bootstrap/Nav";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 //npm install --save clsx
 
@@ -52,7 +58,7 @@ const styles = theme => ({
   }
 });
 
-const RecipeReviewCard = props => {
+const TeamCard = props => {
   const [expanded, setExpanded] = React.useState(false);
 
   function handleExpandClick() {
@@ -71,10 +77,10 @@ const RecipeReviewCard = props => {
       />
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
-          Supervisor name:
+          Supervisor
         </Typography>
       </CardContent>
-      <CardActions disableSpacing>
+      <CardActions>
         <IconButton
           className={clsx(styles.expand, {
             [styles.expandOpen]: expanded
@@ -88,20 +94,68 @@ const RecipeReviewCard = props => {
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-          <List dense={true}>
-            {props.students.map(p => (
-              <ListItem>
-                <ListItemIcon>
-                  <PersonIcon />
-                </ListItemIcon>
-                <ListItemText primary={p} />
-              </ListItem>
-            ))}
-          </List>
+          <TeamArtefacts students={props.students} />
         </CardContent>
       </Collapse>
     </Card>
   );
 };
 
-export default RecipeReviewCard;
+function TeamArtefacts(props) {
+  return (
+    <div>
+      <TabContainer id="right-tabs-example" defaultActiveKey="first">
+        <Row>
+          <Col xs>
+            <Nav variant="pills" className="flex-column">
+              <Nav.Item>
+                <Nav.Link eventKey="first">Students</Nav.Link>
+              </Nav.Item>
+            </Nav>
+          </Col>
+          <Col xs>
+            <Nav variant="pills" className="flex-column">
+              <Nav.Item>
+                <Nav.Link eventKey="second">Artefacts</Nav.Link>
+              </Nav.Item>
+            </Nav>
+          </Col>
+          <Col xs>
+            <Nav variant="pills" className="flex-column">
+              <Nav.Item>
+                <Nav.Link eventKey="third">Technologies</Nav.Link>
+              </Nav.Item>
+            </Nav>
+          </Col>
+        </Row>
+        <Row>
+          <Col sm={9}>
+            <TabContent>
+              <TabPane eventKey="first">
+                {" "}
+                <List dense={true}>
+                  {props.students.map(p => (
+                    <ListItem>
+                      <ListItemIcon>
+                        <PersonIcon />
+                      </ListItemIcon>
+                      <ListItemText primary={p} />
+                    </ListItem>
+                  ))}
+                </List>
+              </TabPane>
+            </TabContent>
+            <TabContent>
+              <TabPane eventKey="second">Artefacts go here </TabPane>
+            </TabContent>
+            <TabContent>
+              <TabPane eventKey="third">Technologies go here</TabPane>
+            </TabContent>
+          </Col>
+        </Row>
+      </TabContainer>
+    </div>
+  );
+}
+
+export default TeamCard;
