@@ -18,6 +18,9 @@ const styles = {
     basic: {
         marginTop: 10,
         paddingLeft: 10,
+    },
+    font: {
+        color: "#757575",
     }
 };
 
@@ -33,39 +36,13 @@ class ProjectInfo extends React.Component {
         this.setState(store.getState());
     }
 
-    // async _reqTodoList() {
-    //     const result = await getSupervisors();
-    //     // console.log(result);
-    //     const action = getGetSupervisorsAction(result);
-    //     store.dispatch(action);
-    // }
-
-    // componentWillMount() {
-    //     // this._reqTodoList();
-    //     const {supervisors, project} = this.state;
-    //     const supervisorID = project.supervisorID;
-    //     alert(supervisorID);
-    //     // console.log(project);
-    //
-    //     let currentSupervisor = "";
-    //     supervisors.forEach((supervisor) => {
-    //         // alert(supervisor.id);
-    //         // alert(supervisorID);
-    //         if (supervisor.id === supervisorID) {
-    //             currentSupervisor = supervisor.firstName + " " + supervisor.lastName;
-    //             const action = getSetCurrentSupervisorAction(currentSupervisor);
-    //             store.dispatch(action);
-    //         }
-    //     })
-    // }
-
     render() {
         const {classes} = this.props;
         const {project, supervisors, currentSupervisor} = this.state;
 
         return (
             <div>
-                <Typography variant="h5" align='center'>
+                <Typography variant="h5" align='center' className={classes.font}>
                     PROJECT OUTLINE
                 </Typography>
                 <Grid container direction='column'>

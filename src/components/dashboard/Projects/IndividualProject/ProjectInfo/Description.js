@@ -9,9 +9,9 @@ const styles = {
     description: {
         overflow: "auto",
         textAlign: "justify",
-        paddingLeft: 10,
+        padding: 10,
         marginLeft: 20,
-        height: 170
+        // height: 170
     }
 };
 
