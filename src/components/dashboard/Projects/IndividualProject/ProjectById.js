@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import {withStyles} from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import ProjectInfo from "./ProjectInfo/ProjectInfo";
-import ProjectNotes from "./Notes/ProjectNotes";
+import Notes from "./Notes/ProjectNotes";
 import {getProjectById} from "../../../../api";
 import {getGetProjectByIdAction} from "../../../../store/actionCreators";
 import store from "../../../../store";
