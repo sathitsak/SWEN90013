@@ -1,3 +1,9 @@
+/**
+ * This component contains all reject proposals. It is entered via a "View Rejected Proposals" button on the Proposals page.
+ * Author: Reyna Tan
+ * Date: 07/05/2019
+ */
+
 import React from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles, useTheme } from '@material-ui/styles';
@@ -15,9 +21,7 @@ import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import LastPageIcon from '@material-ui/icons/LastPage';
 import {withStyles} from "@material-ui/core/styles";
 import axios from "axios";
-import ProposalCard from "./ProposalCard";
 import TableHead from "@material-ui/core/TableHead/TableHead";
-import {Link} from "react-router-dom";
 
 const useStyles1 = makeStyles(theme => ({
     root: {

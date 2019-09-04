@@ -12,6 +12,7 @@ import ViewProposal from './ViewProposal';
 import ViewClient from './ViewClient';
 import Organization from './Organization';
 import store from "../../../../../store";
+import CreateStudentTeamModal from '../StudentTeam/CreateStudentTeamModal';
 
 const styles = {
     basic: {
@@ -73,6 +74,7 @@ class ProjectInfo extends React.Component {
                         />
                     </Grid>
                 </Grid>
+                <CreateStudentTeamModal/>
             </div>
         );
     }

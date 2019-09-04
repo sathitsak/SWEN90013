@@ -1,11 +1,17 @@
+/**
+ * This component contains all contact details for a specific client. It sits within a ClientPageModal. 
+ * Authors: Chamira Balasuriya, Reyna Tan
+ * Date: 01/05/2019
+ */
+
 import React from "react";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
+import MobileStepper from "@material-ui/core/MobileStepper";
+import grey from "@material-ui/core/colors/grey";
 import EmailIcon from "@material-ui/icons/Email";
 import PhoneIcon from "@material-ui/icons/Phone";
 import BusinessIcon from "@material-ui/icons/Business";
-import MobileStepper from "@material-ui/core/MobileStepper";
-import grey from "@material-ui/core/colors/grey";
 import PersonIcon from "@material-ui/icons/Person";
 import ErrorOutlinedIcon from '@material-ui/icons/ErrorOutlined';
 import ErrorOutlineOutlinedIcon from '@material-ui/icons/ErrorOutlineOutlined';
