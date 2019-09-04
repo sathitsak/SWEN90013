@@ -30,7 +30,7 @@ const styles = {
     marginLeft: 20,
     marginTop: 10,
     height: 30,
-    width: 670,
+    width: 570,
     fontSize: 17
   }
 };
