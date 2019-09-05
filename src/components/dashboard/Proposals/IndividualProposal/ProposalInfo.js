@@ -34,6 +34,8 @@ class ProposalInfo extends React.Component {
 
   render() {
     const { classes } = this.props;
+    console.log('proposalinfo')
+    console.log(this.props)
     return (
       <div>
         <Grid container spacing={24}>
@@ -67,7 +69,7 @@ class ProposalInfo extends React.Component {
           </Grid>
           <Grid item xs={6} style={{ marginTop: 30 }}>
             <Typography variant="h5" align="center">
-              Organisation
+              Organisation {this.props.name}
             </Typography>
           </Grid>
           <Grid item xs={6} style={{ marginTop: 30 }}>

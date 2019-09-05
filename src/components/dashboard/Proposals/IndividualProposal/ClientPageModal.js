@@ -59,6 +59,8 @@ class ClientPageModal extends React.Component {
     };
 
     render() {
+        console.log('modal')
+        console.log(this.state)
         const {classes} = this.props;
         return (
             <div>

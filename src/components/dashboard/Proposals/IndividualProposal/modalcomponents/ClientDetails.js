@@ -71,6 +71,7 @@ class ClientDetails extends React.Component {
     };
 
     render() {
+        console.log(this.prop)
         const {classes} = this.props;
         const hasFlag = this.state.hasFlag;
         let flagIcon;
