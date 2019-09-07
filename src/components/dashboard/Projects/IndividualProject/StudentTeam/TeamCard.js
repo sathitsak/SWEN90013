@@ -3,7 +3,6 @@ import clsx from "clsx";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
 import CardContent from "@material-ui/core/CardContent";
-import CardActions from "@material-ui/core/CardActions";
 import Collapse from "@material-ui/core/Collapse";
 import Avatar from "@material-ui/core/Avatar";
 import IconButton from "@material-ui/core/IconButton";
@@ -21,7 +20,6 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Nav from "react-bootstrap/Nav";
 import "bootstrap/dist/css/bootstrap.min.css";
-import classNames from 'classnames';
 
 //npm install --save clsx
 

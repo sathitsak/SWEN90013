@@ -8,8 +8,12 @@ import store from "../../../../../store";
 import SingleNote from "./SingleNote";
 
 const styles = {
-    font: {
-        color: "#757575",
+    notesTitle: {
+        textAlign: "center",
+        paddingLeft: "3%",
+        paddingBottom: "3%",
+        fontWeight: "bold",
+        color: "#094183"
     }
 };
 
@@ -35,7 +39,7 @@ class ProjectNotes extends React.Component {
 
         return (
             <div>
-                <Typography variant="h5" align='center' className={classes.font}>
+                <Typography variant="h5" className={classes.notesTitle}>
                     NOTES
                 </Typography>
                 <div>

@@ -75,6 +75,22 @@ const styles = theme => ({
     right: theme.spacing.unit,
     top: theme.spacing.unit,
     color: theme.palette.grey[500]
+  },
+  fab: {
+    backgroundColor: "#094183",
+    '&:hover': {
+      backgroundColor: "#4074B2"
+    },
+    boxShadow: "none",
+  },
+  sendButton: {
+    backgroundColor: "#094183",
+    '&:hover': {
+      backgroundColor:"#4074B2",
+    }
+  },
+  discardButton: {
+    color: "#094183",
   }
 });
 
@@ -345,10 +361,15 @@ class EmailModal extends React.Component {
               variant="contained"
               color="primary"
               onClick={this.handleSendEmail}
+              className={classes.sendButton}
             >
               Send
             </Button>
-            <Button onClick={this.handleClose} color="primary">
+            <Button 
+              onClick={this.handleClose} 
+              color="primary"
+              className={classes.discardButton}
+            >
               Discard
             </Button>
           </DialogActions>

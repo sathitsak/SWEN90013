@@ -32,6 +32,16 @@ const styles = theme => ({
     "&:hover": {
       backgroundColor: red[800]
     }
+  },
+  confirmButton: {
+    backgroundColor: "#094183",
+    color: "#FFFFFF",
+    '&:hover': {
+      backgroundColor:"#4074B2",
+    }
+  },
+  discardButton: {
+    color: "#094183",
   }
 })
 
@@ -188,11 +198,20 @@ class StatusChangeModal extends React.Component {
               </Grid>
 
               <DialogActions>
-                <Button onClick={this._handleClose} color="primary">
-                  Cancel
-                </Button>
-                <Button onClick={this._handleUpdate} color="primary" autoFocus>
+                <Button 
+                  onClick={this._handleUpdate} 
+                  color="primary" 
+                  className={classes.confirmButton}
+                >
                   Confirm Changes
+                </Button>
+
+                <Button 
+                  onClick={this._handleClose} 
+                  color="primary"
+                  className={classes.discardButton}
+                >
+                  Cancel
                 </Button>
               </DialogActions>
             </Dialog>
