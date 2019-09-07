@@ -4,6 +4,7 @@ import {withStyles} from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
+import grey from "@material-ui/core/colors/grey";
 import List from "@material-ui/core/List";
 import ProjectCard from "./ProjectCard";
 import store from "../../../../store";
@@ -16,8 +17,8 @@ import {
 const styles = {
     paper: {
         padding: 10,
-        margin: 40,
-        backgroundColor: "#f3f3f3"
+        margin: 10,
+        backgroundColor: grey[50]
     },
     swimTitle: {
         textAlign: "center",

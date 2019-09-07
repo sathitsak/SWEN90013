@@ -3,16 +3,16 @@ import axios from "axios";
 import ProposalCard from "./ProposalCard";
 import Grid from "@material-ui/core/Grid";
 import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
 import Typography from "@material-ui/core/Typography";
-import { ProposalContext } from "../../state/Proposal";
 import Paper from "@material-ui/core/Paper";
+import grey from "@material-ui/core/colors/grey";
 import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button/Button";
 import { Link } from "react-router-dom";
 import store from "../../../../store";
 import { getProposalList } from "../../../../api";
 import { getGetAllProposalsAction } from "../../../../store/actionCreators";
+import { endianness } from "os";
 
 // {title: 'test'}
 // new proposals works, just going to new proposal array
@@ -28,9 +28,11 @@ import { getGetAllProposalsAction } from "../../../../store/actionCreators";
 const styles = theme => ({
   paper: {
     padding: 10,
-    margin: 40,
-    backgroundColor: "#f3f3f3",
-    width: 390
+    margin: 10,
+    backgroundColor: grey[50],
+    [theme.breakpoints.up("lg")]: {
+      width: 600
+    },
   },
   link: {
     textDecoration: "none",
@@ -99,6 +101,7 @@ class Proposals extends React.Component {
     const { classes } = this.props;
 
     return (
+      <div style={{position: "relative"}}>
       <Grid
         container
         spacing={16}
@@ -149,22 +152,26 @@ class Proposals extends React.Component {
               </List>
             </div>
           </Paper>
-        </Grid>
-
-        <Link to={`/dashboard/rejectedProposals`} className={classes.link}>
-          <Button
-            variant="contained"
-            size="medium"
-            style={{
-              backgroundColor: "#094183",
-              color: "#ffffff"
-            }}
-            className={classes.margin}
-          >
-            View Rejected Proposals
-          </Button>
-        </Link>
+        </Grid>   
       </Grid>
+      <Link to={`/dashboard/rejectedProposals`} className={classes.link}>
+            <Button
+              variant="contained"
+              size="medium"
+              style={{
+                backgroundColor: "#094183",
+                color: "#ffffff",
+                position: "absolute",
+                right: 0,
+                bottom: 0
+
+              }}
+              className={classes.margin}
+            >
+              View Rejected Proposals
+            </Button>
+          </Link>
+      </div>
     );
   }
 }

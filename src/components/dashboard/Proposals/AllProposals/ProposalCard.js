@@ -8,15 +8,12 @@ import Divider from "@material-ui/core/Divider";
 import red from "@material-ui/core/colors/red";
 import Typography from "@material-ui/core/Typography";
 import {Link} from "react-router-dom";
+import grey from "@material-ui/core/colors/grey"
 
 const styles = theme => ({
     card: {
-        // maxWidth: 400,
-        width: 350,
-        height: 170,
-        marginBottom: 10,
-        marginLeft: 10,
-        marginRight: 10,
+        // width: 350,
+        margin: 10
     },
     avatar: {
         backgroundColor: red[500]
@@ -26,10 +23,11 @@ const styles = theme => ({
         width: "100%",
         textDecoration: "none",
         "&:hover": {
-            backgroundColor: "#f5f5f5"
+        backgroundColor: grey[200],
+        textDecoration: "none",
         },
         "&:active": {
-            backgroundColor: "#ADB8C1"
+        backgroundColor: grey[300]
         }
     },
     cardHeader: {
