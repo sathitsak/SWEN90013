@@ -1,11 +1,14 @@
+/**
+ * This component renders the view all proposals page which gathers all proposals and organises them based on status.
+ * This is the main view proposals page and thus sits within the dashboard.
+ * Author: Chamira Balasuriya
+ */
+
 import React, { useContext } from "react";
-import axios from "axios";
 import ProposalCard from "./ProposalCard";
 import Grid from "@material-ui/core/Grid";
 import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
 import Typography from "@material-ui/core/Typography";
-import { ProposalContext } from "../../state/Proposal";
 import Paper from "@material-ui/core/Paper";
 import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button/Button";
@@ -13,17 +16,6 @@ import { Link } from "react-router-dom";
 import store from "../../../../store";
 import { getProposalList } from "../../../../api";
 import { getGetAllProposalsAction } from "../../../../store/actionCreators";
-
-// {title: 'test'}
-// new proposals works, just going to new proposal array
-//Proposal card structure
-// key={p.id}
-// id={p.id}
-// title={p.name}
-// organisation={p.organisation}
-// client={p.client}
-// supervisor={p.supervisor}
-// initial={this._getFirstCharacter(p.name)}
 
 const styles = theme => ({
   paper: {
@@ -65,7 +57,6 @@ class Proposals extends React.Component {
 
   async _reqTodoList() {
     const result = await getProposalList();
-    // console.log(result);
     console.log(result);
     const action = getGetAllProposalsAction(result);
     store.dispatch(action);
@@ -88,7 +79,7 @@ class Proposals extends React.Component {
     console.log("Filtered propsal" + proposals);
     return targetProposals;
   };
-  //Buggy: can't handle null item
+
   _getFirstCharacter = title => {
     var string = title;
     // return string.charAt(0);

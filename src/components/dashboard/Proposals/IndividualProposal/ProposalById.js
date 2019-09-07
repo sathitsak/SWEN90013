@@ -1,15 +1,17 @@
+/**
+ * This component renders the individual proposal page.
+ * It is accessed via the view all proposals page after selecting a single proposal.
+ * Author: Chamira Balasuriya
+ */
+
 import React, { useContext } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
-import { ProposalContext } from "../../state/Proposal";
-import axios from "axios";
-
 import ProposalInfo from "./ProposalInfo";
 import ProposalResponses from "./ProposalResponses";
 import { getProposalById } from "../../../../api";
 import { getGetProposalByIdAction } from "../../../../store/actionCreators";
 import store from "../../../../store";
-
 import Paper from "@material-ui/core/Paper";
 
 const styles = theme => ({
@@ -54,8 +56,8 @@ class ProposalById extends React.Component {
 
   render() {
     const { classes } = this.props;
-    console.log('propsalbyID')
-    console.log(this.state)
+    console.log("propsalbyID");
+    console.log(this.state);
 
     return (
       <div className={classes.root}>

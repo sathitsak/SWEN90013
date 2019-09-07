@@ -1,7 +1,11 @@
+/**
+ * This component contains the client organisation and contact section of the client modal.
+ * It sits within the individual proposal page and is accessed via the client button which opens up the client modal.
+ * Author: Chamira Balasuriya
+ */
+
 import React from "react";
 import Grid from "@material-ui/core/Grid";
-import Button from "@material-ui/core/Button";
-import Chip from "@material-ui/core/Chip";
 import { withStyles } from "@material-ui/core/styles";
 
 const styles = theme => ({
@@ -17,7 +21,6 @@ const styles = theme => ({
 });
 
 class ClientOrgAndContact extends React.Component {
-
   render() {
     const { classes } = this.props;
 
@@ -55,7 +58,9 @@ class ClientOrgAndContact extends React.Component {
 
           <Grid container spacing={3}>
             <Grid item xs={12}>
-              <div className={classes.orgHeader} style={{marginBottom: 5}}>Description</div>
+              <div className={classes.orgHeader} style={{ marginBottom: 5 }}>
+                Description
+              </div>
             </Grid>
             <Grid item xs={12}>
               Hampers for the homeless is a charity organisation that gives out

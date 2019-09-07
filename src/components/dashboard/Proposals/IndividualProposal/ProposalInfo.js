@@ -1,15 +1,15 @@
+/**
+ * This component renders the information on the right hand side of the individual proposal page.
+ * It is accessed via the view all proposals page after selecting an individual proposal.
+ * Author: Chamira Balasuriya
+ */
+
 import React from "react";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
-import Fab from "@material-ui/core/Fab";
-import Chip from "@material-ui/core/Chip";
-import FaceIcon from "@material-ui/icons/Face";
-import red from "@material-ui/core/colors/red";
-import lightGreen from "@material-ui/core/colors/lightGreen";
 import { blue, amber } from "@material-ui/core/colors";
 import ClientPageModal from "./ClientPageModal";
-import Divider from "@material-ui/core/Divider";
 import StatusChangeModal from "./StatusChangeModal";
 
 class ProposalInfo extends React.Component {
@@ -34,8 +34,8 @@ class ProposalInfo extends React.Component {
 
   render() {
     const { classes } = this.props;
-    console.log('proposalinfo')
-    console.log(this.props)
+    console.log("proposalinfo");
+    console.log(this.props);
     return (
       <div>
         <Grid container spacing={24}>
