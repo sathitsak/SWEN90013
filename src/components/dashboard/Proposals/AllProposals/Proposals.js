@@ -49,6 +49,9 @@ const styles = theme => ({
     backgroundColor: "#094183",
     color: "#ffffff",
     position: "absolute",
+    "&:hover": {
+      backgroundColor: "#062d5c",
+    },
     [theme.breakpoints.up("xl")]: {
       marginRight: 198
     },
@@ -104,7 +107,6 @@ class Proposals extends React.Component {
   //Buggy: can't handle null item
   _getFirstCharacter = title => {
     var string = title;
-    // return string.charAt(0);
     return "A";
   };
 

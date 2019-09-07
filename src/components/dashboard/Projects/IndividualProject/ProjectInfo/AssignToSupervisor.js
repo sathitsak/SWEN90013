@@ -16,7 +16,48 @@ import Grid from "@material-ui/core/Grid";
 import { getSetCurrentSupervisorAction } from "../../../../../store/actionCreators";
 import store from "../../../../../store";
 
-const styles = {
+// const styles = {
+//   container: {
+//     display: "flex",
+//     flexWrap: "wrap"
+//   },
+//   formControl: {
+//     minWidth: 120
+//   },
+//   showSup: {
+//     textAlign: "left",
+//     paddingLeft: 10,
+//     marginLeft: 20,
+//     marginTop: 10,
+//     height: 30,
+//     width: 570,
+//     fontSize: 17
+//   },
+//   assignButton: {
+//      backgroundColor: "#094183",
+//         color: "#ffffff",
+//         "&:hover": {
+//           backgroundColor: "#062d5c",
+//           color: "#ffffff",
+//         },
+//   }
+// };
+const styles = theme => ({
+  showSup: {
+    overflow: "auto",
+    textAlign: "justify",
+    paddingLeft: 10,
+    paddingTop: 5,
+    paddingBottom: 5,
+    marginTop: "2%",
+    marginBottom: "1%",
+    height: 35,
+    marginRight: 10,
+    color: "#000000",
+    [theme.breakpoints.down("sm")]: {
+        marginRight: 30
+    },
+  },
   container: {
     display: "flex",
     flexWrap: "wrap"
@@ -24,16 +65,15 @@ const styles = {
   formControl: {
     minWidth: 120
   },
-  showSup: {
-    textAlign: "left",
-    paddingLeft: 10,
-    marginLeft: 20,
-    marginTop: 10,
-    height: 30,
-    width: 570,
-    fontSize: 17
-  }
-};
+  assignButton: {
+      backgroundColor: "#094183",
+      color: "#ffffff",
+      "&:hover": {
+        backgroundColor: "#062d5c",
+        color: "#ffffff",
+      },
+  },
+});
 
 class AssignToSupervisor extends React.Component {
   constructor(props) {
@@ -52,15 +92,15 @@ class AssignToSupervisor extends React.Component {
     return (
       <div>
         <Grid container>
-          <Grid item style={{ marginTop: 10, marginRight: 80 }}>
-            <Typography align="left" variant="h6">
+          <Grid item style={{ marginTop: 10, marginRight: 30 }}>
+            <Typography align="left" color="textSecondary" variant="h6" style={{ fontWeight: "bold"}}>
               Supervisor:
             </Typography>
           </Grid>
           <Grid item style={{ marginTop: 10 }} align="center">
             <Button
               onClick={this._handleClickOpen}
-              color="primary"
+              className={classes.assignButton}
               variant="contained"
             >
               (Re) Assign

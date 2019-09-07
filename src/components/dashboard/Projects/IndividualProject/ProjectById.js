@@ -8,24 +8,25 @@ import {getProjectById} from "../../../../api";
 import {getGetProjectByIdAction} from "../../../../store/actionCreators";
 import store from "../../../../store";
 import {Paper} from "@material-ui/core";
+import grey from "@material-ui/core/colors/grey";
 
 import TeamPage from "./StudentTeam/TeamPage";
 
-const styles = {
+const styles = theme => ({
   notes: {
     width: "100%",
     height: 140
   },
   paper: {
-    padding: 20,
-    backgroundColor: "#f3f3f3"
+    padding: theme.spacing.unit * 2,
+    color: theme.palette.text.secondary,
+    // height: "400px"
   }
-};
+});
 
 class ProjectById extends React.Component {
     async _reqTodoList(projID) {
         const project = await getProjectById(projID);
-        // console.log(result);
         const getProAction = getGetProjectByIdAction(project);
         console.log(getProAction);
         store.dispatch(getProAction);
@@ -42,17 +43,19 @@ class ProjectById extends React.Component {
     return (
       <Grid
         container
-        spacing={9}
+        spacing={16}
+        justify="flex-end"
+        direction="row"
         // direction="column"
         // alignContent="center"
         //justify="flex-end"
       >
-        <Grid item xs={6} className={classes.projectInfo}>
+        <Grid item xs={6}>
           <Paper className={classes.paper}>
             <ProjectInfo />
           </Paper>
         </Grid>
-        <Grid item item xs={6} className={classes.projectInfo}>
+        <Grid item xs={6}>
           <Paper className={classes.paper}>
             <TeamPage />
           </Paper>

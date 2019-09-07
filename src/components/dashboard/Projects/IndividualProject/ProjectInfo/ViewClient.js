@@ -17,8 +17,8 @@ class ViewClient extends React.Component {
         return (
             <div>
                 <Grid container>
-                    <Grid item style={{marginTop: 10, marginRight: 80}}>
-                        <Typography align="left" variant="h6">
+                    <Grid item style={{marginTop: "2%", marginRight: 80}}>
+                        <Typography align="left" color="textSecondary" variant="h6" style={{ fontWeight: "bold"}}>
                             Client:
                         </Typography>
                     </Grid>

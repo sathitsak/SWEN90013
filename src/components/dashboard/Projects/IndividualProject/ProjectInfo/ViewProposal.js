@@ -5,7 +5,16 @@ import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 
-const styles = {};
+const styles = {
+    viewProposalButton: {
+        backgroundColor: "#094183",
+        color: "#ffffff",
+        "&:hover": {
+          backgroundColor: "#062d5c",
+          color: "#ffffff",
+        },
+    }
+};
 
 class ViewProposal extends React.Component {
 
@@ -16,8 +25,8 @@ class ViewProposal extends React.Component {
             <div>
                 <Grid container>
                     <Grid item style={{marginTop: 10, marginRight: 80}}>
-                        <Typography
-                            variant="h6">Detail:
+                        <Typography align="left" color="textSecondary" variant="h6" style={{ fontWeight: "bold"}}>
+                            Detail:
                         </Typography>
                     </Grid>
                     <Grid item style={{marginTop: 10}} align="center">
@@ -25,7 +34,7 @@ class ViewProposal extends React.Component {
                             variant="contained"
                             color="primary"
                             href={`/dashboard/proposals/${proposalID}`}
-                            style={{width: 140}}
+                            className={classes.viewProposalButton}
                         >
                             View Proposal
                         </Button>

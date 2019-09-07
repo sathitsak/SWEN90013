@@ -24,13 +24,13 @@ const styles = theme => ({
   acceptButton: {
     backgroundColor: green[400],
     "&:hover": {
-      backgroundColor: green[500]
+      backgroundColor: green[800]
     }
   },
   rejectButton: {
     backgroundColor: red[400],
     "&:hover": {
-      backgroundColor: red[600]
+      backgroundColor: red[800]
     }
   }
 })
@@ -116,7 +116,7 @@ class StatusChangeModal extends React.Component {
     return (
       <div>
         <Grid container spacing={24}>
-          <Grid item xs={6} style={{ marginTop: 30 }} align="center">
+          <Grid item xs={6} align="center">
             <Button
               variant="contained"
               color="primary"
@@ -126,7 +126,7 @@ class StatusChangeModal extends React.Component {
               Accept
             </Button>
           </Grid>
-          <Grid item xs={6} style={{ marginTop: 30 }} align="center">
+          <Grid item xs={6} align="center">
             <Button
               variant="contained"
               color="secondary"

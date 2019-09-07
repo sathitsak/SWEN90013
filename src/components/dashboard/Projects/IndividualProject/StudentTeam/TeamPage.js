@@ -19,6 +19,7 @@ import Slide from "@material-ui/core/Slide";
 import Fab from "@material-ui/core/Fab";
 import EmailIcon from "@material-ui/icons/Email";
 //import AddCircleIcon from "@material-ui/icons/add_circle";
+import CreateStudentTeamModal from '../StudentTeam/CreateStudentTeamModal';
 
 const styles = theme => ({
   root: {
@@ -49,6 +50,13 @@ const styles = theme => ({
     position: "relative",
     overflow: "auto",
     maxHeight: 100
+  },
+  teamTitle: {
+    textAlign: "center",
+    paddingLeft: "3%",
+    paddingBottom: "3%",
+    fontWeight: "bold",
+    color: "#094183"
   }
 });
 
@@ -116,19 +124,11 @@ class TeamPage extends React.Component {
 
     return (
       <div>
+        <Typography variant="h5" className={classes.teamTitle}>
+          STUDENT TEAM        
+        </Typography>
         <Grid container spacing={24}>
           <Grid item xs={12}>
-            <Typography variant="h5" align="center">
-              STUDENT TEAM
-            </Typography>
-            <div align="right">
-              <Fab
-                color="primary"
-                aria-label="Email"
-                className={classes.fab}
-                onClick={this._handleClickOpen}
-              ></Fab>
-            </div>
 
             <div>
               <List
@@ -139,6 +139,10 @@ class TeamPage extends React.Component {
                   <TeamCard name={p.name} students={p.students} />
                 ))}
               </List>
+            </div>
+
+            <div align="right">
+              <CreateStudentTeamModal />
             </div>
           </Grid>
         </Grid>

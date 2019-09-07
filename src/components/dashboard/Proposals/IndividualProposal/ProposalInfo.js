@@ -2,6 +2,7 @@ import React from "react";
 import Grid from "@material-ui/core/Grid";
 import ClientPageModal from "./ClientPageModal";
 import StatusChangeModal from "./StatusChangeModal";
+import { green, amber, red }from "@material-ui/core/colors";
 import { withStyles } from "@material-ui/core/styles";
 
 const styles = theme => ({
@@ -44,9 +45,11 @@ class ProposalInfo extends React.Component {
 
   _determineStatusButtonColour(status) {
     if (status === "new") {
-      return "#7CBDCE";
+      return amber[500];
+    } else if (status === "accepted") {
+      return green[500];
     } else {
-      return "#98D6C3";
+      return red[500];
     }
   }
 
@@ -103,7 +106,7 @@ class ProposalInfo extends React.Component {
             
             <br/>
 
-            
+            <div className={classes.infoHeader}>Change Status</div>
                   
           </Grid>
         </Grid>
