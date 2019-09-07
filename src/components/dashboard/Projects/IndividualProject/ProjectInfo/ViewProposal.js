@@ -7,12 +7,12 @@ import Button from "@material-ui/core/Button";
 
 const styles = {
     viewProposalButton: {
-        backgroundColor: "#094183",
         color: "#ffffff",
-        "&:hover": {
-          backgroundColor: "#062d5c",
-          color: "#ffffff",
-        },
+        backgroundColor: "#094183",
+        '&:hover': {
+            backgroundColor: "#4074B2",
+            color: "#ffffff",
+        }
     }
 };
 

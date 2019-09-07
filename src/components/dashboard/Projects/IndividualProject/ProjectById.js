@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import {withStyles} from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import ProjectInfo from "./ProjectInfo/ProjectInfo";
+import CreateStudentTeamModal from "./StudentTeam/CreateStudentTeamModal"
 import Notes from "./Notes/ProjectNotes";
 import {getProjectById} from "../../../../api";
 import {getGetProjectByIdAction} from "../../../../store/actionCreators";
@@ -20,8 +21,8 @@ const styles = theme => ({
   paper: {
     padding: theme.spacing.unit * 2,
     color: theme.palette.text.secondary,
-    // height: "400px"
-  }
+    backgroundColor: grey[50]
+  },
 });
 
 class ProjectById extends React.Component {
@@ -51,12 +52,12 @@ class ProjectById extends React.Component {
         //justify="flex-end"
       >
         <Grid item xs={6}>
-          <Paper className={classes.paper}>
+          <Paper className={classes.paper} style={{ height: "100%" }}>
             <ProjectInfo />
           </Paper>
         </Grid>
         <Grid item xs={6}>
-          <Paper className={classes.paper}>
+          <Paper className={classes.paper} style={{ position: "relative" }}>
             <TeamPage />
           </Paper>
         </Grid>

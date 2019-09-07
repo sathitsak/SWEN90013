@@ -16,32 +16,6 @@ import Grid from "@material-ui/core/Grid";
 import { getSetCurrentSupervisorAction } from "../../../../../store/actionCreators";
 import store from "../../../../../store";
 
-// const styles = {
-//   container: {
-//     display: "flex",
-//     flexWrap: "wrap"
-//   },
-//   formControl: {
-//     minWidth: 120
-//   },
-//   showSup: {
-//     textAlign: "left",
-//     paddingLeft: 10,
-//     marginLeft: 20,
-//     marginTop: 10,
-//     height: 30,
-//     width: 570,
-//     fontSize: 17
-//   },
-//   assignButton: {
-//      backgroundColor: "#094183",
-//         color: "#ffffff",
-//         "&:hover": {
-//           backgroundColor: "#062d5c",
-//           color: "#ffffff",
-//         },
-//   }
-// };
 const styles = theme => ({
   showSup: {
     overflow: "auto",
@@ -50,7 +24,7 @@ const styles = theme => ({
     paddingTop: 5,
     paddingBottom: 5,
     marginTop: "2%",
-    marginBottom: "1%",
+    marginBottom: "3%",
     height: 35,
     marginRight: 10,
     color: "#000000",
@@ -66,12 +40,12 @@ const styles = theme => ({
     minWidth: 120
   },
   assignButton: {
-      backgroundColor: "#094183",
-      color: "#ffffff",
-      "&:hover": {
-        backgroundColor: "#062d5c",
+    color: "#ffffff",
+    backgroundColor: "#094183",
+    '&:hover': {
+        backgroundColor: "#4074B2",
         color: "#ffffff",
-      },
+    }
   },
 });
 

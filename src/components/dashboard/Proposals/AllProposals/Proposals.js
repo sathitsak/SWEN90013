@@ -46,11 +46,12 @@ const styles = theme => ({
     color: "#094183"
   },
   rejectedButton: {
-    backgroundColor: "#094183",
-    color: "#ffffff",
     position: "absolute",
-    "&:hover": {
-      backgroundColor: "#062d5c",
+    color: "#ffffff",
+    backgroundColor: "#094183",
+      '&:hover': {
+          backgroundColor: "#4074B2",
+          color: "#ffffff",
     },
     [theme.breakpoints.up("xl")]: {
       marginRight: 198
@@ -104,11 +105,6 @@ class Proposals extends React.Component {
     console.log("Filtered propsal" + proposals);
     return targetProposals;
   };
-  //Buggy: can't handle null item
-  _getFirstCharacter = title => {
-    var string = title;
-    return "A";
-  };
 
   render() {
     const { classes } = this.props;
@@ -137,7 +133,6 @@ class Proposals extends React.Component {
                     organisation={p.name}
                     client={p.name}
                     supervisor={p.name}
-                    initial={this._getFirstCharacter(p.name)}
                   />
                 ))}
               </List>

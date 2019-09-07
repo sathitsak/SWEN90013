@@ -51,8 +51,9 @@ class ProposalCard extends React.Component {
                 >
                     <CardHeader
                         avatar={
-                            <Avatar
-                                className={classes.avatar}>{this.props.initial}</Avatar>
+                            <Avatar className={classes.avatar}>
+                                {/* {this.props.title.slice(0, 1).toUpperCase()} */}
+                            </Avatar>
                         }
                         title={this.props.title}
                         subheader={this.props.organisation}

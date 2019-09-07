@@ -57,7 +57,7 @@ const styles = theme => ({
     paddingBottom: "3%",
     fontWeight: "bold",
     color: "#094183"
-  }
+  },
 });
 
 //dummy data --> now getting from axios
@@ -123,29 +123,16 @@ class TeamPage extends React.Component {
     const { classes } = this.props;
 
     return (
-      <div>
+      <div style={{ position: "relative", marginBottom: 10, overflow: "auto"}}>
         <Typography variant="h5" className={classes.teamTitle}>
-          STUDENT TEAM        
+          STUDENT TEAMS        
         </Typography>
-        <Grid container spacing={24}>
-          <Grid item xs={12}>
 
-            <div>
-              <List
-                style={{ height: 454, maxHeight: 470, overflow: "auto" }}
-                dense={true}
-              >
-                {this.state.teams.map(p => (
-                  <TeamCard name={p.name} students={p.students} />
-                ))}
-              </List>
-            </div>
+        {this.state.teams.map(p => (
+          <TeamCard name={p.name} students={p.students} />
+        ))}
 
-            <div align="right">
-              <CreateStudentTeamModal />
-            </div>
-          </Grid>
-        </Grid>
+        <CreateStudentTeamModal />
       </div>
     );
   }

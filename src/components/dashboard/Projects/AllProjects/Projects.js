@@ -18,7 +18,7 @@ const styles = {
     paper: {
         padding: 10,
         margin: 10,
-        // backgroundColor: grey[50]
+        backgroundColor: grey[50],
     },
     swimTitle: {
         textAlign: "center",
