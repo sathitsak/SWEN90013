@@ -18,7 +18,6 @@ const styles = theme => ({
   },
   paper: {
     padding: theme.spacing.unit * 2,
-    textAlign: "center",
     color: theme.palette.text.secondary,
     height: "400px"
   }
@@ -60,7 +59,7 @@ class ProposalById extends React.Component {
     return (
       <div className={classes.root}>
         <Grid container spacing={24}>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={8}>
             {
               <ProposalResponses
                 q1={this.state.proposal.outlineOfProject}
@@ -71,13 +70,19 @@ class ProposalById extends React.Component {
             }
           </Grid>
 
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={4}>
             <Paper className={classes.paper} style={{ marginTop: "20px" }}>
-              <ProposalInfo
+              {/* <ProposalInfo
                 client={this.state.proposal.client}
                 organisation={this.state.proposal.name}
                 status={this.state.proposal.status}
                 id={this.state.proposal._id}
+              /> */}
+              <ProposalInfo
+                client="Stephanie Armther"
+                organisation="Hampers for Homeless"
+                status="new"
+                id="123456"
               />
             </Paper>
           </Grid>

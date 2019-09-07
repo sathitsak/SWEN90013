@@ -30,7 +30,7 @@ const styles = theme => ({
     padding: 10,
     margin: 10,
     backgroundColor: grey[50],
-    [theme.breakpoints.up("lg")]: {
+    [theme.breakpoints.up("xl")]: {
       width: 600
     },
   },
@@ -44,6 +44,18 @@ const styles = theme => ({
     paddingBottom: "3%",
     fontWeight: "bold",
     color: "#094183"
+  },
+  rejectedButton: {
+    backgroundColor: "#094183",
+    color: "#ffffff",
+    position: "absolute",
+    [theme.breakpoints.up("xl")]: {
+      marginRight: 198
+    },
+    [theme.breakpoints.down("xl")]: {
+      right: 0
+    },
+    bottom: 0
   }
 });
 
@@ -67,7 +79,6 @@ class Proposals extends React.Component {
 
   async _reqTodoList() {
     const result = await getProposalList();
-    // console.log(result);
     console.log(result);
     const action = getGetAllProposalsAction(result);
     store.dispatch(action);
@@ -158,15 +169,7 @@ class Proposals extends React.Component {
             <Button
               variant="contained"
               size="medium"
-              style={{
-                backgroundColor: "#094183",
-                color: "#ffffff",
-                position: "absolute",
-                right: 0,
-                bottom: 0
-
-              }}
-              className={classes.margin}
+              className={classes.rejectedButton}
             >
               View Rejected Proposals
             </Button>
