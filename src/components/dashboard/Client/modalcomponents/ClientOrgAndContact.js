@@ -7,10 +7,13 @@ const styles = theme => ({
     marginRight: "20px"
   },
   orgHeader: {
-    fontWeight: "bold"
+    fontWeight: "bold",
+    color: "#094183"
   },
   orgInfo: {
-    marginBottom: 10
+    marginBottom: 10,
+    color: "#000000",
+    textAlign: "justify"
   }
 });
 
@@ -22,7 +25,7 @@ class ClientOrgAndContact extends React.Component {
     return (
       <Grid container spacing={24}>
         <Grid item xs={12}>
-          <h4>ORGANISATION</h4>
+          <h5 style={{ color: "#094183", fontWeight: "bold" }}>Organisation</h5>
 
           <Grid container spacing={3}>
             <Grid item xs={2}>
@@ -55,7 +58,7 @@ class ClientOrgAndContact extends React.Component {
             <Grid item xs={12}>
               <div className={classes.orgHeader} style={{marginBottom: 5}}>Description</div>
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={12} className={classes.orgInfo}>
               Hampers for the homeless is a charity organisation that gives out
               Hampershandouts during Christmas each year
             </Grid>

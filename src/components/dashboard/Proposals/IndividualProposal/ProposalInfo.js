@@ -1,6 +1,6 @@
 import React from "react";
 import Grid from "@material-ui/core/Grid";
-import ClientPageModal from "./ClientPageModal";
+import ClientPageModal from "../../Client/ClientPageModal";
 import StatusChangeModal from "./StatusChangeModal";
 import { green, amber, red }from "@material-ui/core/colors";
 import { withStyles } from "@material-ui/core/styles";

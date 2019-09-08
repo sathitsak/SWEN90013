@@ -8,14 +8,13 @@ import React from "react";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import MobileStepper from "@material-ui/core/MobileStepper";
-import grey from "@material-ui/core/colors/grey";
 import EmailIcon from "@material-ui/icons/Email";
 import PhoneIcon from "@material-ui/icons/Phone";
 import BusinessIcon from "@material-ui/icons/Business";
 import PersonIcon from "@material-ui/icons/Person";
 import ErrorOutlinedIcon from '@material-ui/icons/ErrorOutlined';
 import ErrorOutlineOutlinedIcon from '@material-ui/icons/ErrorOutlineOutlined';
-import {red} from "@material-ui/core/colors";
+import {red, grey} from "@material-ui/core/colors";
 import {withStyles} from "@material-ui/core/styles";
 
 const styles = theme => ({
@@ -27,9 +26,12 @@ const styles = theme => ({
         verticalAlign: 'middle',
         fontSize: 30,
         paddingRight: 10,
+        color: grey[500]
     },
     iconFalse: {
         marginLeft: 50,
+        marginBottom: 10,
+        color: grey[500],
         '&:hover': {
             color: red[500],
         },
@@ -47,10 +49,13 @@ const styles = theme => ({
     },
     infoRow: {
         marginBottom: 10,
+        color: "#000000"
     },
     infoHeading: {
         marginTop: 30,
         marginBottom: 5,
+        fontWeight: "bold",
+        color: "#094183"
     },
     technicalAbility: {
         '&:hover': {
@@ -87,7 +92,7 @@ class ClientDetails extends React.Component {
             <div>
                 <Grid container spacing={24}>
                     <Grid item xs={12}>
-                        <h1>{this.props.client} {flagIcon}</h1>
+                        <h1 style={{ color: "#094183" }}>{this.props.client} {flagIcon}</h1>
                         <Grid item xs={6} className={classes.infoRow}>
                             <EmailIcon
                                 className={classes.icon}/> s.armther@hamper.com.au
@@ -100,8 +105,7 @@ class ClientDetails extends React.Component {
                             6543
                         </Grid>
 
-                        <h4 className={classes.infoHeading}>TECHNICAL
-                            ABILITY</h4>
+                        <h5 className={classes.infoHeading}>Technical Ability</h5>
                         <Grid item xs={6} className={classes.infoRow}>
                             <MobileStepper
                                 variant="progress"
@@ -124,8 +128,7 @@ class ClientDetails extends React.Component {
                             />
                         </Grid>
 
-                        <h4 className={classes.infoHeading}>SECONDARY
-                            CONTACT</h4>
+                        <h5 className={classes.infoHeading}>Secondary Contact</h5>
                         <Grid item xs={6} className={classes.infoRow}>
                             <PersonIcon className={classes.icon}/> Bob Bobbins
                         </Grid>

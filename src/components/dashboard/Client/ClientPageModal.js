@@ -40,6 +40,9 @@ const styles = theme => ({
         padding: theme.spacing.unit * 4,
         paddingLeft: theme.spacing.unit * 4,
         outline: "none"
+    },
+    closeButton: {
+        color: "#094183",
     }
 });
 
@@ -97,7 +100,6 @@ class ClientPageModal extends React.Component {
 
                                 <Grid item xs={12}>
                                     <Paper className={classes.paper}>
-                                        <h1>Notes</h1>
                                         <ClientNotes/>
                                     </Paper>
                                 </Grid>
@@ -105,7 +107,7 @@ class ClientPageModal extends React.Component {
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={this.handleClose} color="primary">
+                        <Button onClick={this.handleClose} className={classes.closeButton}>
                             Close
                         </Button>
                     </DialogActions>
