@@ -12,8 +12,9 @@ import grey from "@material-ui/core/colors/grey"
 
 const styles = theme => ({
     card: {
-        // width: 350,
-        margin: 10
+        maxWidth: 426,
+        margin: 10,
+        overflow: "auto",
     },
     avatar: {
         backgroundColor: red[500]

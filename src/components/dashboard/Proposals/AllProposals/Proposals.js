@@ -154,7 +154,6 @@ class Proposals extends React.Component {
                     organisation={p.organisation}
                     client={p.client}
                     supervisor={p.supervisor}
-                    initial={this._getFirstCharacter(p.name)}
                   />
                 ))}
               </List>
