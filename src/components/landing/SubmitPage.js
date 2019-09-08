@@ -3,6 +3,8 @@ import { Column, Row } from "simple-flexbox";
 import { Link } from "react-router-dom";
 import UniMelbWrapper from "../uniMelbWrapper/UniMelbWrapper";
 import axios from "axios";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import Dialog from "@material-ui/core/Dialog";
 
 let styles = {
   width: "400px"
@@ -97,45 +99,45 @@ class SubmitPage extends React.Component {
         original) === "" ||
       (technical || idustryType || size) == -1
     ) {
-      alert("please fill every form");
-    } else if (!this.ValidateContactInfo(officeNumber,number.ci2number)) {
-      alert("please enter valid phone number");
-    } else if (!this.ValidateEmail(email,ci2email)) {
-      alert("please enter valid email");
-    }else{
-
-    axios
-      .post(`http://localhost:13000/api/proposal/submit`, {
-        firstName: firstname,
-        lastName: lastname,
-        email: email,
-        number: number,
-        secondaryContactFirstName: ci2firstname,
-        secondaryContactLastName: ci2lastname,
-        secondaryContactEmail: ci2email,
-        secondaryContactContactNumber: ci2number,
-        officeNumber: officeNumber,
-        technical: technical,
-        organizationName: organizationName,
-        idustryType: idustryType,
-        size: size,
-        organisationBrief: organisationBrief,
-        projectName: projectName,
-        outline: outline,
-        beneficiaries: beneficiaries,
-        benefits: benefits,
-        original: original,
-        used: original
-      })
-      .then(function(response) {
-        console.log(response);
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
+      alert("Please fill every field!");
+    } else if (!this.ValidateContactInfo(officeNumber, number.ci2number)) {
+      alert("Please enter a valid phone number");
+    } else if (!this.ValidateEmail(email, ci2email)) {
+      alert("Please enter a valid email");
+    } else {
+      axios
+        .post(`http://localhost:13000/api/proposal/submit`, {
+          firstName: firstname,
+          lastName: lastname,
+          email: email,
+          number: number,
+          secondaryContactFirstName: ci2firstname,
+          secondaryContactLastName: ci2lastname,
+          secondaryContactEmail: ci2email,
+          secondaryContactContactNumber: ci2number,
+          officeNumber: officeNumber,
+          technical: technical,
+          organizationName: organizationName,
+          idustryType: idustryType,
+          size: size,
+          organisationBrief: organisationBrief,
+          projectName: projectName,
+          outline: outline,
+          beneficiaries: beneficiaries,
+          benefits: benefits,
+          original: original,
+          used: original
+        })
+        .then(function(response) {
+          console.log(response);
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
     }
 
     console.log("request sent!");
+    alert("Successfully sent proposal");
 
     // axios
     //   .post(`http://localhost:13000/api/proposal`, {
