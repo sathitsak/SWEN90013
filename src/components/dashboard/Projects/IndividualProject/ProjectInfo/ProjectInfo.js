@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { withStyles } from "@material-ui/core/styles";
+import {withStyles} from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import ListItemText from "@material-ui/core/ListItemText";
 import Grid from "@material-ui/core/Grid";
@@ -15,23 +15,23 @@ import store from "../../../../../store";
 import CreateStudentTeamModal from '../StudentTeam/CreateStudentTeamModal';
 
 const styles = {
-  basic: {
-    marginTop: 10,
-    paddingLeft: 10
-  }
+    basic: {
+        marginTop: 10,
+        paddingLeft: 10
+    }
 };
 
 class ProjectInfo extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = store.getState();
-    this._handleStoreChange = this._handleStoreChange.bind(this);
-    store.subscribe(this._handleStoreChange);
-  }
+    constructor(props) {
+        super(props);
+        this.state = store.getState();
+        this._handleStoreChange = this._handleStoreChange.bind(this);
+        store.subscribe(this._handleStoreChange);
+    }
 
-  _handleStoreChange() {
-    this.setState(store.getState());
-  }
+    _handleStoreChange() {
+        this.setState(store.getState());
+    }
 
     render() {
         const {classes} = this.props;
@@ -39,7 +39,8 @@ class ProjectInfo extends React.Component {
 
         return (
             <div>
-                <Typography variant="h5" align='center' className={classes.font}>
+                <Typography variant="h5" align='center'
+                            className={classes.font}>
                     PROJECT OUTLINE
                 </Typography>
                 <Grid container direction='column'>
@@ -47,21 +48,21 @@ class ProjectInfo extends React.Component {
                         <ChangeStatus status={project.status}/>
                     </Grid>
 
-          <Grid item className={classes.basic}>
-            <Description description={project.description} />
-          </Grid>
+                    <Grid item className={classes.basic}>
+                        <Description description={project.description}/>
+                    </Grid>
 
-          <Grid item className={classes.basic}>
-            <ViewProposal proposalID={project.proposalID} />
-          </Grid>
+                    <Grid item className={classes.basic}>
+                        <ViewProposal proposalID={project.proposalID}/>
+                    </Grid>
 
-          <Grid item className={classes.basic}>
-            <ViewClient client={project.client} />
-          </Grid>
+                    <Grid item className={classes.basic}>
+                        <ViewClient client={project.client}/>
+                    </Grid>
 
-          <Grid item className={classes.basic}>
-            <Organization industry={project.industry} />
-          </Grid>
+                    <Grid item className={classes.basic}>
+                        <Organization industry={project.industry}/>
+                    </Grid>
 
                     <Grid item className={classes.basic}>
                         <AssignToSupervisor
@@ -78,7 +79,7 @@ class ProjectInfo extends React.Component {
 }
 
 ProjectInfo.propTypes = {
-  classes: PropTypes.object.isRequired
+    classes: PropTypes.object.isRequired
 };
 
 export default withStyles(styles)(ProjectInfo);

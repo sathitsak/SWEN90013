@@ -12,14 +12,14 @@ import {Paper} from "@material-ui/core";
 import TeamPage from "./StudentTeam/TeamPage";
 
 const styles = {
-  notes: {
-    width: "100%",
-    height: 140
-  },
-  paper: {
-    padding: 20,
-    backgroundColor: "#f3f3f3"
-  }
+    notes: {
+        width: "100%",
+        height: 140
+    },
+    paper: {
+        padding: 20,
+        backgroundColor: "#f3f3f3"
+    }
 };
 
 class ProjectById extends React.Component {
@@ -39,32 +39,32 @@ class ProjectById extends React.Component {
     render() {
         const {classes} = this.props;
 
-    return (
-      <Grid
-        container
-        spacing={9}
-        // direction="column"
-        // alignContent="center"
-        //justify="flex-end"
-      >
-        <Grid item xs={6} className={classes.projectInfo}>
-          <Paper className={classes.paper}>
-            <ProjectInfo />
-          </Paper>
-        </Grid>
-        <Grid item item xs={6} className={classes.projectInfo}>
-          <Paper className={classes.paper}>
-            <TeamPage />
-          </Paper>
-        </Grid>
-        <Grid item xs={12} className={classes.notes}>
-          <Paper className={classes.paper}>
-            <Notes />
-          </Paper>
-        </Grid>
-      </Grid>
-    );
-  }
+        return (
+            <Grid
+                container
+                spacing={9}
+                // direction="column"
+                // alignContent="center"
+                //justify="flex-end"
+            >
+                <Grid item xs={6} className={classes.projectInfo}>
+                    <Paper className={classes.paper}>
+                        <ProjectInfo/>
+                    </Paper>
+                </Grid>
+                <Grid item item xs={6} className={classes.projectInfo}>
+                    <Paper className={classes.paper}>
+                        <TeamPage/>
+                    </Paper>
+                </Grid>
+                <Grid item xs={12} className={classes.notes}>
+                    <Paper className={classes.paper}>
+                        <Notes/>
+                    </Paper>
+                </Grid>
+            </Grid>
+        );
+    }
 }
 
 ProjectById.propTypes = {

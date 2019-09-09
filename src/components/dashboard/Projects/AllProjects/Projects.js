@@ -29,8 +29,8 @@ const styles = {
 };
 
 const myIDs = {
-    supervisorID: "supervisor 1 me",
-    coordinatorID: "coordinator 1 me"
+    supervisorId: "1",
+    // coordinatorId: "1"
 };
 
 const status = {
@@ -91,8 +91,8 @@ class ViewProjects extends React.Component {
 
         projects.forEach(project => {
             if (
-                project.supervisorID === myIDs.supervisorID ||
-                project.coordinatorID === myIDs.coordinatorID
+                project.supervisorId === myIDs.supervisorId
+            // project.coordinatorID === myIDs.coordinatorID
             ) {
                 targetProjects.push(project);
             }
@@ -116,7 +116,7 @@ class ViewProjects extends React.Component {
                                 {this._filterProjectsByStatus(status.new).map(
                                     (project, index) => (
                                         <ProjectCard
-                                            id={project.id}
+                                            id={project._id}
                                             key={index}
                                             project={project}
                                         />
