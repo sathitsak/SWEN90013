@@ -30,7 +30,7 @@ class ProjectNotes extends React.Component {
     }
 
     _handleStoreChange() {
-        this.setState({notes: store.getState().project.notes,});
+        // this.setState({notes: store.getState().project.notes});
     }
 
     render() {
