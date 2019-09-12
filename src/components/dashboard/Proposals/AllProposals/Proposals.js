@@ -98,9 +98,18 @@ class Proposals extends React.Component {
     let targetProposals = [];
 
     proposals.forEach(p => {
-      if (p.status === status) {
-        targetProposals.push(p);
+      console.log(p._id)
+      // First check if valid before sending through
+      if ('client' in p ) {
+        console.log(p.client)
+        if ('organisation' in p.client) {
+          if (p.status === status) {
+            console.log(p.status)
+            targetProposals.push(p);
+          }
+        }
       }
+      
     });
     console.log("Filtered propsal" + proposals);
     return targetProposals;
@@ -129,10 +138,7 @@ class Proposals extends React.Component {
                   <ProposalCard
                     key={p._id}
                     id={p._id}
-                    title={p._id}
-                    organisation={p.name}
-                    client={p.name}
-                    supervisor={p.name}
+                    proposal={p}
                   />
                 ))}
               </List>
@@ -150,10 +156,11 @@ class Proposals extends React.Component {
                   <ProposalCard
                     key={p._id}
                     id={p._id}
-                    title={p.name}
-                    organisation={p.organisation}
-                    client={p.client}
-                    supervisor={p.supervisor}
+                    proposal={p}
+                    // title={p.name}
+                    // organisation={p.client.organisation}
+                    // client={p.client}
+                    // supervisor={p.supervisor}
                   />
                 ))}
               </List>
