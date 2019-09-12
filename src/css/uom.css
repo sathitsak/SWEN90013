@@ -12066,7 +12066,6 @@ input[type="radio"]:not(.unstyled)
     width: 100%;
     border-radius: 3px;
     padding: 0;
-    margin-bottom: 3%;
 
 @-moz-document url-prefix() {
     overflow: hidden
