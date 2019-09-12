@@ -93,11 +93,11 @@ class SubmitPage extends React.Component {
         original) === "" ||
       (technical || idustryType || size) === -1
     ) {
-      alert("please fill every form");
+      alert("Please fill in all required fields");
     } else if (!this.ValidateContactInfo(officeNumber,number.ci2number)) {
-      alert("please enter valid phone number");
+      alert("Please enter a valid phone number");
     } else if (!this.ValidateEmail(email,ci2email)) {
-      alert("please enter valid email");
+      alert("Please enter a valid email");
     }else{
 
     axios
