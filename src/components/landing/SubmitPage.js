@@ -47,8 +47,8 @@ class SubmitPage extends React.Component {
     var original = document.getElementById("original").value;
     var used = document.getElementById("used").value;
     var technical = document.getElementById("technical").value;
-    var organizationName = document.getElementById("organizationName").value;
-    var idustryType = document.getElementById("idustryType").value;
+    var organisationName = document.getElementById("organisationName").value;
+    var industryType = document.getElementById("industryType").value;
     var size = document.getElementById("size").value;
     var organisationBrief = document.getElementById("organisationBrief").value;
     var projectName = document.getElementById("projectName").value;
@@ -63,8 +63,8 @@ class SubmitPage extends React.Component {
       ci2email,
       ci2number,
       technical,
-      organizationName,
-      idustryType,
+      organisationName,
+      industryType,
       size,
       organisationBrief,
       projectName,
@@ -84,14 +84,14 @@ class SubmitPage extends React.Component {
         ci2lastname ||
         ci2email ||
         ci2number ||
-        organizationName ||
+        organisationName ||
         organisationBrief ||
         projectName ||
         outline ||
         beneficiaries ||
         benefits ||
         original) === "" ||
-      (technical || idustryType || size) === -1
+      (technical || industryType || size) === -1
     ) {
       alert("Please fill in all required fields");
     } else if (!this.ValidateContactInfo(officeNumber,number.ci2number)) {
@@ -112,8 +112,8 @@ class SubmitPage extends React.Component {
         secondaryContactContactNumber: ci2number,
         officeNumber: officeNumber,
         technical: technical,
-        organizationName: organizationName,
-        idustryType: idustryType,
+        organisationName: organisationName,
+        industryType: industryType,
         size: size,
         organisationBrief: organisationBrief,
         projectName: projectName,
@@ -189,13 +189,13 @@ class SubmitPage extends React.Component {
 
               <div>
                 <label className="required">Organisation name</label>
-                <input id="organizationName" type="text" />
+                <input id="organisationName" type="text" />
               </div>
 
               <div>
                 <label className="required">Industry</label>
                 <div className="styled-select"  style={{marginBottom:"3%"}}>
-                  <select id="idustryType">
+                  <select id="industryType">
                     <option value="-1">Please select&emsp;</option>
                     <option value="Aged care">Aged care</option>
                     <option value="Agriculture">Agriculture</option>

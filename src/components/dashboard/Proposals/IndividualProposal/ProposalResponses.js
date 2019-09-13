@@ -41,7 +41,7 @@ class ProposalResponses extends React.Component {
                         PROPOSAL
                     </Typography>
                     <div className={classes.response}>
-                        <Typography variant="h7" className={classes.question}>
+                        <Typography variant="h6" className={classes.question}>
                             Briefly outline your project
                         </Typography>
                         <Typography component="p" align='justify'>{this.props.q1}</Typography>
@@ -49,7 +49,7 @@ class ProposalResponses extends React.Component {
 
                     <Divider/>
                     <div className={classes.response}>
-                        <Typography variant="h7" className={classes.question}>
+                        <Typography variant="h6" className={classes.question}>
                             Beneficiaries of the end product
                         </Typography>
                         <Typography component="p" align='justify'>{this.props.q2}</Typography>
@@ -57,7 +57,7 @@ class ProposalResponses extends React.Component {
 
                     <Divider/>
                     <div className={classes.response}>
-                        <Typography variant="h7" className={classes.question}>
+                        <Typography variant="h6" className={classes.question}>
                             Benefits of the end product
                         </Typography>
                         <Typography component="p" align='justify'>{this.props.q3}</Typography>
@@ -65,7 +65,7 @@ class ProposalResponses extends React.Component {
 
                     <Divider/>
                     <div className={classes.response}>
-                        <Typography variant="h7" className={classes.question}>
+                        <Typography variant="h6" className={classes.question}>
                             Originality of the idea or concept underlying the end product
                         </Typography>
                         <Typography component="p" align='justify'>{this.props.q4}</Typography>
@@ -73,7 +73,7 @@ class ProposalResponses extends React.Component {
 
                     <Divider/>
                     <div className={classes.response}>
-                        <Typography variant="h7" className={classes.question}>
+                        <Typography variant="h6" className={classes.question}>
                             Use of the end product
                         </Typography>
                         <Typography component="p" align='justify'>{this.props.q5}</Typography>

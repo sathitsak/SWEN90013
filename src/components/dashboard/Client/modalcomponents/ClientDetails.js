@@ -12,10 +12,8 @@ import EmailIcon from "@material-ui/icons/Email";
 import PhoneIcon from "@material-ui/icons/Phone";
 import BusinessIcon from "@material-ui/icons/Business";
 import PersonIcon from "@material-ui/icons/Person";
-import ErrorOutlinedIcon from '@material-ui/icons/ErrorOutlined';
-import ErrorOutlineOutlinedIcon from '@material-ui/icons/ErrorOutlineOutlined';
-import {red, grey} from "@material-ui/core/colors";
-import {withStyles} from "@material-ui/core/styles";
+import { grey } from "@material-ui/core/colors";
+import { withStyles } from "@material-ui/core/styles";
 
 const styles = theme => ({
     root: {
@@ -27,26 +25,6 @@ const styles = theme => ({
         fontSize: 30,
         paddingRight: 10,
         color: grey[500]
-    },
-    iconFalse: {
-        marginLeft: 20,
-        marginBottom: 10,
-        color: grey[500],
-        '&:hover': {
-            color: red[500],
-        },
-        fontSize: 35,
-        verticalAlign: 'middle',
-    },
-    iconTrue: {
-        marginLeft: 20,
-        marginBottom: 10,
-        '&:hover': {
-            color: grey[500],
-        },
-        fontSize: 35,
-        verticalAlign: 'middle',
-        color: red[500]
     },
     infoRow: {
         marginBottom: 10,
@@ -67,32 +45,13 @@ const styles = theme => ({
 });
 
 class ClientDetails extends React.Component {
-    state = {
-        hasFlag: false
-    };
-
-    _handleClientFlagUpdate = () => {
-        let currentFlag = this.state.hasFlag
-        this.setState({hasFlag: !currentFlag})
-    };
-
     render() {
         const { classes } = this.props;
-        const hasFlag = this.state.hasFlag;
-        let flagIcon;
-
-        if (hasFlag) {
-            flagIcon = <ErrorOutlinedIcon className={classes.iconTrue}
-                                          onClick={this._handleClientFlagUpdate}/>
-        } else {
-            flagIcon = <ErrorOutlineOutlinedIcon className={classes.iconFalse}
-                                                 onClick={this._handleClientFlagUpdate}/>
-        }
+        
         return (
             <div>
                 <Grid container spacing={24}>
                     <Grid item xs={12}>
-                        <h1 style={{ color: "#094183" }}>{this.props.clientName}{flagIcon}</h1>
                         <Grid item xs={6} className={classes.infoRow}>
                             <EmailIcon
                                 className={classes.icon}/>{this.props.email}
@@ -110,7 +69,7 @@ class ClientDetails extends React.Component {
                                 variant="progress"
                                 steps={10}
                                 position="static"
-                                activeStep={this.props.technicalAbility}
+                                activeStep={parseInt(this.props.technicalAbility)}
                                 style={{backgroundColor: grey[50], width: 400}}
                                 nextButton={
                                     <Button className={classes.technicalAbility}

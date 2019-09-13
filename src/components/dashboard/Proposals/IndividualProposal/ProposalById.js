@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React  from "react";
 import { withStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 
@@ -6,7 +6,7 @@ import ProposalInfo from "./ProposalInfo";
 import ProposalResponses from "./ProposalResponses";
 import Notes from "../../Notes/Notes";
 import { getProposalById } from "../../../../api";
-import { getProposalByIdAction } from "../../../../store/actionCreators";
+import { getGetProposalByIdAction } from "../../../../store/actionCreators";
 import store from "../../../../store";
 
 import Paper from "@material-ui/core/Paper";
@@ -23,17 +23,13 @@ const styles = theme => ({
 });
 
 class ProposalById extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   state = {
     proposal: ""
   };
 
   async _reqTodoList(propID) {
     const proposalResult = await getProposalById(propID);
-    const proposalAction = getProposalByIdAction(proposalResult);
+    const proposalAction = getGetProposalByIdAction(proposalResult);
     store.dispatch(proposalAction);
   }
 
@@ -73,6 +69,7 @@ class ProposalById extends React.Component {
                 <ProposalInfo  
                   client={this.state.proposal.client}              
                   status={this.state.proposal.status}
+                  organisationName={this.state.proposal.client.organisation.name}
                   id={this.state.proposal._id}
                 />
                 {console.log(this.state.proposal.client)}

@@ -20,4 +20,4 @@ export const getClients = () => ajax('http://localhost:13000/api/client');
 
 export const getClientById = (id) => ajax('http://localhost:13000/api/client/' + id);
 
-
+export const getAllSubjects = () => ajax('http://localhost:13000/api/subject');

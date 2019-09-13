@@ -1,6 +1,5 @@
 import React from "react";
 import {withStyles} from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import Chip from "@material-ui/core/Chip";
 import FaceIcon from "@material-ui/icons/Face";
@@ -9,30 +8,13 @@ import Paper from "@material-ui/core/Paper";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
-
+import { grey, red } from "@material-ui/core/colors";
+import ErrorOutlinedIcon from '@material-ui/icons/ErrorOutlined';
+import ErrorOutlineOutlinedIcon from '@material-ui/icons/ErrorOutlineOutlined';
 import ClientDetails from "./modalcomponents/ClientDetails";
 import ClientOrg from "./modalcomponents/ClientOrg";
 import Notes from "../Notes/Notes";
-import { getClientById } from "../../../api";
-import { getClientByIdAction } from "../../../store/actionCreators";
-import store from "../../../store";
-
-
-function rand() {
-    return Math.round(Math.random() * 20) - 10;
-}
-
-function getModalStyle() {
-    const top = 50 + rand();
-    const left = 50 + rand();
-
-    return {
-        top: `${top}%`,
-        left: `${left}%`,
-        transform: `translate(-${top}%, -${left}%)`
-    };
-}
+import axios from "axios";
 
 const styles = theme => ({
     root: {
@@ -47,33 +29,45 @@ const styles = theme => ({
     },
     closeButton: {
         color: "#094183",
+    },    
+    iconFalse: {
+        marginLeft: 20,
+        marginBottom: 10,
+        color: grey[500],
+        '&:hover': {
+            color: red[500],
+        },
+        fontSize: 35,
+        verticalAlign: 'middle',
+    },
+    iconTrue: {
+        marginLeft: 20,
+        marginBottom: 10,
+        '&:hover': {
+            color: grey[500],
+        },
+        fontSize: 35,
+        verticalAlign: 'middle',
+        color: red[500]
     }
 });
 
 class ClientPageModal extends React.Component {
-    state = {
-        open: false,
-        fullWidth: true,
-        maxWidth: "xl",
-        client: "",
-    };
+    constructor(props) {
+        super(props);
 
-    // async _reqTodoList(clientId) {
-    //     const clientResult = await getClientById(clientId);
-    //     const clientAction = getClientByIdAction(clientResult);
-    //     store.dispatch(clientAction);
-    // }
+        var clientFlag = (this.props.client.flag ? this.props.client.flag : false);
 
-    // componentDidMount() {
-    //     //PASSING THE ID
-    //     const clientId = this.props.match.params.clientId;
-    //     this._reqTodoList(clientId);
-    // }
-
-    // _handleChange = () => {
-    //     this.setState({ client: store.getState().client });
-    // };
-
+        this.state = {
+            open: false,
+            fullWidth: true,
+            maxWidth: "xl",
+            client: this.props.client,
+            clientFlag: clientFlag,
+        };
+    
+    }
+    
     _handleClickOpen = () => {
         this.setState({open: true});
     };
@@ -86,13 +80,42 @@ class ClientPageModal extends React.Component {
         return (firstName + " " + lastName);
     }
 
+    _handleClientFlagUpdate = () => {
+        // Invert clientFlag value and update state and DB
+        var currentFlag = !this.state.clientFlag;
+        this.setState({clientFlag: currentFlag});
+
+        let client = this.state.client;
+        client.flag = currentFlag;
+
+        console.log(client);
+        // Send PUT request
+        const url = `http://localhost:13000/api/client/` + client._id
+        axios
+            .put(url, client)
+            .then(function(response) {
+                console.log(response);
+            })
+            .catch(function(error) {
+                console.log(error);
+            });
+    };
+
     render() {
         const { classes, client } = this.props;
-        // const { client } = this.state.client;
+        var flagIcon;
+        var clientFlag = this.state.clientFlag;
+
+        if (clientFlag) {
+            flagIcon = <ErrorOutlinedIcon className={classes.iconTrue}
+                                          onClick={this._handleClientFlagUpdate}/>
+        } else {
+            flagIcon = <ErrorOutlineOutlinedIcon className={classes.iconFalse}
+                                                 onClick={this._handleClientFlagUpdate}/>
+        }
 
         return (
             <div>
-                <Typography gutterBottom/>
                 <Chip
                     onClick={this._handleClickOpen}
                     icon={<FaceIcon/>}
@@ -108,42 +131,43 @@ class ClientPageModal extends React.Component {
                     aria-labelledby="max-width-dialog-title"
                 >
                     <DialogContent>
-                        <DialogContentText>
-                            <Grid container spacing={24}>
-                                <Grid item xs={6}>
+                        <Grid container spacing={24}>
+                            <Grid item xs={6}>
+                                <Paper className={classes.paper}>
+                                    <h1 style={{ color: "#094183" }}>
+                                        {this._concatenateNames(client.firstName,client.lastName)}{flagIcon}
+                                    </h1>
+                                    <ClientDetails
+                                        email={client.email}
+                                        technicalAbility={client.technicalAbility}
+                                        contactNumber={client.contactNumber}
+                                        orgNumber={client.organisation.number}
+                                        secondaryContactName={this._concatenateNames(client.secondaryContactFirstName, client.secondaryContactLastName)}
+                                        secondaryContactEmail={client.secondaryContactEmail}
+                                        secondaryContactNumber={client.secondaryContactNumber}
+                                        flag={client.flag}
+                                    />
+                                </Paper>
+                            </Grid>
+
+                            <Grid item xs={6}>
+                                <Grid style={{ marginBottom: "5%" }}>
                                     <Paper className={classes.paper}>
-                                        <ClientDetails
-                                            clientName={this._concatenateNames(client.firstName,client.lastName)}
-                                            email={client.email}
-                                            technicalAbility={client.technicalAbility}
-                                            contactNumber={client.contactNumber}
-                                            orgNumber={client.organisation.number}
-                                            secondaryContactName={this._concatenateNames(client.secondaryContactFirstName, client.secondaryContactLastName)}
-                                            secondaryContactEmail={client.secondaryContactEmail}
-                                            secondaryContactNumber={client.secondaryContactNumber}
+                                        <ClientOrg 
+                                            orgName={client.organisation.name}
+                                            orgSize={client.organisation.size}
+                                            industry={client.organisation.industry}
+                                            description={client.organisation.description}
                                         />
                                     </Paper>
                                 </Grid>
-
-                                <Grid item xs={6}>
-                                    <Grid xs={12} style={{ marginBottom: "5%" }}>
-                                        <Paper className={classes.paper}>
-                                            <ClientOrg 
-                                                orgName={client.organisation.name}
-                                                orgSize={client.organisation.size}
-                                                industry={client.organisation.industry}
-                                                description={client.organisation.description}
-                                            />
-                                        </Paper>
-                                    </Grid>
-                                    <Grid xs={12}>
-                                        <Paper className={classes.paper}>
-                                            <Notes notes={client.notes}/>
-                                        </Paper>
-                                    </Grid>
+                                <Grid>
+                                    <Paper className={classes.paper}>
+                                        <Notes notes={client.notes}/>
+                                    </Paper>
                                 </Grid>
                             </Grid>
-                        </DialogContentText>
+                        </Grid>
                     </DialogContent>
                     <DialogActions>
                         <Button onClick={this._handleClose} className={classes.closeButton}>

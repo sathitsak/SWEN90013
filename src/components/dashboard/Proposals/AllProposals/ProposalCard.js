@@ -75,7 +75,7 @@ class ProposalCard extends React.Component {
                             Client: {proposal.client.firstName + " " + proposal.client.lastName}
                         </Typography>
 
-                        <Divider component="li" paddingTop="20"/>
+                        <Divider/>
 
                         <Typography component="p" variant="overline"
                                     style={{marginTop: 5}}>

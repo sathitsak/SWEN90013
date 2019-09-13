@@ -12,7 +12,7 @@ const styles = {};
 class ViewClient extends React.Component {
 
     render() {
-        const {classes, client} = this.props;
+        const { client } = this.props;
 
         return (
             <div>

@@ -1,5 +1,4 @@
-import React, { useContext } from "react";
-import axios from "axios";
+import React from "react";
 import ProposalCard from "./ProposalCard";
 import Grid from "@material-ui/core/Grid";
 import List from "@material-ui/core/List";
@@ -12,18 +11,6 @@ import { Link } from "react-router-dom";
 import store from "../../../../store";
 import { getProposalList } from "../../../../api";
 import { getGetAllProposalsAction } from "../../../../store/actionCreators";
-import { endianness } from "os";
-
-// {title: 'test'}
-// new proposals works, just going to new proposal array
-//Proposal card structure
-// key={p.id}
-// id={p.id}
-// title={p.name}
-// organisation={p.organisation}
-// client={p.client}
-// supervisor={p.supervisor}
-// initial={this._getFirstCharacter(p.name)}
 
 const styles = theme => ({
   paper: {

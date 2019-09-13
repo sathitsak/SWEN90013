@@ -33,34 +33,34 @@ class ClientOrg extends React.Component {
         <Grid item xs={12}>
           <h5 className={classes.title}>ORGANISATION</h5>
 
-          <Grid container spacing={3}>
-            <Grid item xs={2}>
+          <Grid container spacing={8}>
+            <Grid item md={2} xs={4}>
               <div className={classes.orgHeader}>Name</div>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item md={6} xs={4}>
               <div className={classes.orgInfo}>{this.props.orgName}</div>
             </Grid>
           </Grid>
 
-          <Grid container spacing={3}>
-            <Grid item xs={2}>
+          <Grid container spacing={8}>
+            <Grid item md={2} xs={4}>
               <div className={classes.orgHeader}>Size</div>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item md={6} xs={4}>
               <div className={classes.orgInfo}>{this.props.orgSize}</div>
             </Grid>
           </Grid>
 
-          <Grid container spacing={3}>
-            <Grid item xs={2}>
+          <Grid container spacing={8}>
+            <Grid item md={2} xs={4}>
               <div className={classes.orgHeader}>Industry</div>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item md={6} xs={4}>
               <div className={classes.orgInfo}>{this.props.industry ? this.props.industry : "N/A"}</div>
             </Grid>
           </Grid>
 
-          <Grid container spacing={3}>
+          <Grid container spacing={8}>
             <Grid item xs={12}>
               <div className={classes.orgHeader} style={{marginBottom: 5}}>Description</div>
             </Grid>

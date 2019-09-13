@@ -149,7 +149,7 @@ class AssignToSupervisor extends React.Component {
     if (selectedSupervisor !== "") {
       alert("This project is assigned to:\n" + selectedSupervisor);
     } else {
-      alert("This project doesn't have responsible supervisor now.");
+      alert("This project has not been assigned to a supervisor");
     }
   };
 }
