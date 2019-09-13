@@ -14,10 +14,16 @@ const styles = theme => ({
     marginBottom: 10,
     color: "#000000",
     textAlign: "justify"
+  },
+  title: {
+    textAlign: "center",
+    paddingBottom: "3%",
+    fontWeight: "bold",
+    color: "#094183"
   }
 });
 
-class ClientOrgAndContact extends React.Component {
+class ClientOrg extends React.Component {
 
   render() {
     const { classes } = this.props;
@@ -25,14 +31,14 @@ class ClientOrgAndContact extends React.Component {
     return (
       <Grid container spacing={24}>
         <Grid item xs={12}>
-          <h5 style={{ color: "#094183", fontWeight: "bold" }}>Organisation</h5>
+          <h5 className={classes.title}>ORGANISATION</h5>
 
           <Grid container spacing={3}>
             <Grid item xs={2}>
               <div className={classes.orgHeader}>Name</div>
             </Grid>
             <Grid item xs={6}>
-              <div className={classes.orgInfo}>Hampers for the homeless</div>
+              <div className={classes.orgInfo}>{this.props.orgName}</div>
             </Grid>
           </Grid>
 
@@ -41,7 +47,7 @@ class ClientOrgAndContact extends React.Component {
               <div className={classes.orgHeader}>Size</div>
             </Grid>
             <Grid item xs={6}>
-              <div className={classes.orgInfo}>10 employees</div>
+              <div className={classes.orgInfo}>{this.props.orgSize}</div>
             </Grid>
           </Grid>
 
@@ -50,7 +56,7 @@ class ClientOrgAndContact extends React.Component {
               <div className={classes.orgHeader}>Industry</div>
             </Grid>
             <Grid item xs={6}>
-              <div className={classes.orgInfo}>Health and Welfare Services</div>
+              <div className={classes.orgInfo}>{this.props.industry ? this.props.industry : "N/A"}</div>
             </Grid>
           </Grid>
 
@@ -59,8 +65,7 @@ class ClientOrgAndContact extends React.Component {
               <div className={classes.orgHeader} style={{marginBottom: 5}}>Description</div>
             </Grid>
             <Grid item xs={12} className={classes.orgInfo}>
-              Hampers for the homeless is a charity organisation that gives out
-              Hampershandouts during Christmas each year
+              {this.props.description}
             </Grid>
           </Grid>
         </Grid>
@@ -69,4 +74,4 @@ class ClientOrgAndContact extends React.Component {
   }
 }
 
-export default withStyles(styles)(ClientOrgAndContact);
+export default withStyles(styles)(ClientOrg);

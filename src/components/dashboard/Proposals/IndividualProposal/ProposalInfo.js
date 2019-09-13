@@ -31,6 +31,7 @@ const styles = theme => ({
     height: 25,
     marginRight: 10,
     float: "left",
+    borderRadius: 50,
   },
   row: {
     alignItems: "center",

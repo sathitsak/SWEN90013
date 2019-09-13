@@ -67,21 +67,19 @@ class ProposalById extends React.Component {
             }
           </Grid>
 
-          <Grid item xs={12} sm={4}>
-            <Paper className={classes.paper} style={{ marginTop: "20px" }}>
-              {/* <ProposalInfo  
-                clientId={this.state.proposal.clientId}              
-                status={this.state.proposal.status}
-                id={this.state.proposal._id}
-              /> */}
-              <ProposalInfo  
-                client="Stephanie Armther"          
-                organisation="Hampers for Homeless"
-                status={this.state.proposal.status}
-                id={this.state.proposal._id}
-              />
-            </Paper>
-          </Grid>
+          {this.state.proposal.client ? 
+            <Grid item xs={12} sm={4}>
+              <Paper className={classes.paper} style={{ marginTop: "20px" }}>
+                <ProposalInfo  
+                  client={this.state.proposal.client}              
+                  status={this.state.proposal.status}
+                  id={this.state.proposal._id}
+                />
+                {console.log(this.state.proposal.client)}
+              </Paper>
+            </Grid>
+          : <div/> }
+          
           {this.state.proposal.notes ? 
             <Grid item xs={12} className={classes.notes}>
               <Paper className={classes.paper} style={{ padding: "2% 3% 3% 3%", marginBottom: "20px", height: "auto" }}>

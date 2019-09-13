@@ -29,7 +29,7 @@ const styles = theme => ({
         color: grey[500]
     },
     iconFalse: {
-        marginLeft: 50,
+        marginLeft: 20,
         marginBottom: 10,
         color: grey[500],
         '&:hover': {
@@ -39,7 +39,8 @@ const styles = theme => ({
         verticalAlign: 'middle',
     },
     iconTrue: {
-        marginLeft: 50,
+        marginLeft: 20,
+        marginBottom: 10,
         '&:hover': {
             color: grey[500],
         },
@@ -76,8 +77,7 @@ class ClientDetails extends React.Component {
     };
 
     render() {
-        console.log(this.prop)
-        const {classes} = this.props;
+        const { classes } = this.props;
         const hasFlag = this.state.hasFlag;
         let flagIcon;
 
@@ -92,17 +92,16 @@ class ClientDetails extends React.Component {
             <div>
                 <Grid container spacing={24}>
                     <Grid item xs={12}>
-                        <h1 style={{ color: "#094183" }}>{this.props.client} {flagIcon}</h1>
+                        <h1 style={{ color: "#094183" }}>{this.props.clientName}{flagIcon}</h1>
                         <Grid item xs={6} className={classes.infoRow}>
                             <EmailIcon
-                                className={classes.icon}/> s.armther@hamper.com.au
+                                className={classes.icon}/>{this.props.email}
                         </Grid>
                         <Grid item xs={6} className={classes.infoRow}>
-                            <PhoneIcon className={classes.icon}/> 0429 305 713
+                            <PhoneIcon className={classes.icon}/>{this.props.contactNumber}
                         </Grid>
                         <Grid item xs={6} className={classes.infoRow}>
-                            <BusinessIcon className={classes.icon}/> (03) 888
-                            6543
+                            <BusinessIcon className={classes.icon}/>{this.props.orgNumber}
                         </Grid>
 
                         <h5 className={classes.infoHeading}>Technical Ability</h5>
@@ -111,7 +110,7 @@ class ClientDetails extends React.Component {
                                 variant="progress"
                                 steps={10}
                                 position="static"
-                                activeStep={2}
+                                activeStep={this.props.technicalAbility}
                                 style={{backgroundColor: grey[50], width: 400}}
                                 nextButton={
                                     <Button className={classes.technicalAbility}
@@ -130,14 +129,14 @@ class ClientDetails extends React.Component {
 
                         <h5 className={classes.infoHeading}>Secondary Contact</h5>
                         <Grid item xs={6} className={classes.infoRow}>
-                            <PersonIcon className={classes.icon}/> Bob Bobbins
+                            <PersonIcon className={classes.icon}/>{this.props.secondaryContactName}
                         </Grid>
                         <Grid item xs={6} className={classes.infoRow}>
                             <EmailIcon
-                                className={classes.icon}/> b.bobbins@hamper.com
+                                className={classes.icon}/>{this.props.secondaryContactEmail}
                         </Grid>
                         <Grid item xs={6} className={classes.infoRow}>
-                            <PhoneIcon className={classes.icon}/> 0472 473 653
+                            <PhoneIcon className={classes.icon}/>{this.props.secondaryContactNumber}
                         </Grid>
                     </Grid>
                 </Grid>

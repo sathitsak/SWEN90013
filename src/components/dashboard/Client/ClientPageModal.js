@@ -12,8 +12,8 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 
 import ClientDetails from "./modalcomponents/ClientDetails";
-import ClientOrgAndContact from "./modalcomponents/ClientOrgAndContact";
-import ClientNotes from "./modalcomponents/ClientNotes";
+import ClientOrg from "./modalcomponents/ClientOrg";
+import Notes from "../Notes/Notes";
 import { getClientById } from "../../../api";
 import { getClientByIdAction } from "../../../store/actionCreators";
 import store from "../../../store";
@@ -55,30 +55,24 @@ class ClientPageModal extends React.Component {
         open: false,
         fullWidth: true,
         maxWidth: "xl",
-        client: ""
+        client: "",
     };
 
-    async _reqTodoList(clientId) {
-        // const clientId = store.getState().proposal.clientId;
-        // console.log(clientId);
-        const clientResult = await getClientById(clientId);
-        const clientAction = getClientByIdAction(clientResult);
-        store.dispatch(clientAction);
-    }
+    // async _reqTodoList(clientId) {
+    //     const clientResult = await getClientById(clientId);
+    //     const clientAction = getClientByIdAction(clientResult);
+    //     store.dispatch(clientAction);
+    // }
 
-    componentDidMount() {
-        //PASSING THE ID
-        const id = this.props.clientId;
-        console.log("clientId" + " " + id);
-        // const id = "";
-        // if (type === "proposal") {
-        //     id =  store.getState().proposal.clientId;
-        //     console.log("clientModal"+ " "+id);
-        // } else if (type === "project") {
-        //     id = store.getState().project;
-        // };
-        this._reqTodoList(id);
-      }
+    // componentDidMount() {
+    //     //PASSING THE ID
+    //     const clientId = this.props.match.params.clientId;
+    //     this._reqTodoList(clientId);
+    // }
+
+    // _handleChange = () => {
+    //     this.setState({ client: store.getState().client });
+    // };
 
     _handleClickOpen = () => {
         this.setState({open: true});
@@ -88,14 +82,13 @@ class ClientPageModal extends React.Component {
         this.setState({open: false});
     };
 
-    _handleChange = () => {
-        this.setState({ client: store.getState().client });
-      };
-    
-    unsubscribe = store.subscribe(this._handleChange);
+    _concatenateNames = (firstName, lastName) => {
+        return (firstName + " " + lastName);
+    }
 
     render() {
-        const { classes } = this.props;
+        const { classes, client } = this.props;
+        // const { client } = this.state.client;
 
         return (
             <div>
@@ -103,7 +96,7 @@ class ClientPageModal extends React.Component {
                 <Chip
                     onClick={this._handleClickOpen}
                     icon={<FaceIcon/>}
-                    label="Stephanie Armther"
+                    label={this._concatenateNames(client.firstName,client.lastName)}
                     variant="outlined"
                     align="center"
                 />
@@ -120,20 +113,34 @@ class ClientPageModal extends React.Component {
                                 <Grid item xs={6}>
                                     <Paper className={classes.paper}>
                                         <ClientDetails
-                                            client={this.state.client}/>
+                                            clientName={this._concatenateNames(client.firstName,client.lastName)}
+                                            email={client.email}
+                                            technicalAbility={client.technicalAbility}
+                                            contactNumber={client.contactNumber}
+                                            orgNumber={client.organisation.number}
+                                            secondaryContactName={this._concatenateNames(client.secondaryContactFirstName, client.secondaryContactLastName)}
+                                            secondaryContactEmail={client.secondaryContactEmail}
+                                            secondaryContactNumber={client.secondaryContactNumber}
+                                        />
                                     </Paper>
                                 </Grid>
 
                                 <Grid item xs={6}>
-                                    <Paper className={classes.paper}>
-                                        <ClientOrgAndContact/>
-                                    </Paper>
-                                </Grid>
-
-                                <Grid item xs={12}>
-                                    <Paper className={classes.paper}>
-                                        <ClientNotes/>
-                                    </Paper>
+                                    <Grid xs={12} style={{ marginBottom: "5%" }}>
+                                        <Paper className={classes.paper}>
+                                            <ClientOrg 
+                                                orgName={client.organisation.name}
+                                                orgSize={client.organisation.size}
+                                                industry={client.organisation.industry}
+                                                description={client.organisation.description}
+                                            />
+                                        </Paper>
+                                    </Grid>
+                                    <Grid xs={12}>
+                                        <Paper className={classes.paper}>
+                                            <Notes notes={client.notes}/>
+                                        </Paper>
+                                    </Grid>
                                 </Grid>
                             </Grid>
                         </DialogContentText>

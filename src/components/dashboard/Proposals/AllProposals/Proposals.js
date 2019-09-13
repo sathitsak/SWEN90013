@@ -83,7 +83,6 @@ class Proposals extends React.Component {
 
   async _reqTodoList() {
     const result = await getProposalList();
-    console.log(result);
     const action = getGetAllProposalsAction(result);
     store.dispatch(action);
   }
@@ -98,7 +97,6 @@ class Proposals extends React.Component {
     let targetProposals = [];
 
     proposals.forEach(p => {
-      console.log(p._id)
       // First check if valid before sending through
       if ('client' in p ) {
         if ('organisation' in p.client) {

@@ -25,14 +25,16 @@ class Notes extends React.Component {
                 <Typography variant="h5" className={classes.notesTitle}>
                     NOTES
                 </Typography>
-                <div>
-                    {
-                        notes.map(
-                            (note, index) =>
-                                <SingleNote key={index} note={note}/>
-                        )
-                    }
-                </div>
+                {notes ? 
+                   <div>
+                        {
+                            notes.map(
+                                (note, index) =>
+                                    <SingleNote key={index} note={note}/>
+                            )
+                        }
+                    </div>
+                : <div/> }
                 <Grid align='right'>
                     <EmailModal/>
                 </Grid>
