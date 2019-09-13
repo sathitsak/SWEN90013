@@ -47,5 +47,43 @@ export default theme => ({
     },
     userTitle: {
         marginTop: 40
-    }
+    },
+    container: {
+        display: "flex",
+        flexWrap: "wrap"
+      },
+      formControl: {
+        minWidth: 120
+      },
+    //   showSup: {
+    //     textAlign: "left",
+    //     paddingLeft: 10,
+    //     marginLeft: 20,
+    //     marginTop: 10,
+    //     height: 30,
+    //     width: 570,
+    //     fontSize: 17
+    //   },
+      primaryButton: {
+        backgroundColor: "#094183",
+        color: "#ffffff",
+        "&:hover": {
+          backgroundColor: "#062d5c",
+          color: "#ffffff",
+        },
+      },
+      showSup: {
+        overflow: "auto",
+        textAlign: "justify",
+        paddingLeft: 10,
+        paddingTop: 5,
+        paddingBottom: 5,
+        height: 35,
+        marginRight: 10,
+        marginBottom: 5,
+        color: "#000000",
+        // [theme.breakpoints.down("sm")]: {
+        //     marginRight: 30
+        // },
+      }
 });

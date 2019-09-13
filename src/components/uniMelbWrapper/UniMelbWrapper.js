@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Helmet } from "react-helmet";
 import { Header } from "./Header";
 import { Footer } from "./Footer";
+import { uom_css } from "../../css/uom.css"
 
 class UniMelbWrapper extends Component {
   render() {
@@ -16,7 +17,7 @@ class UniMelbWrapper extends Component {
             defer="true"
             async="true"
             rel="stylesheet"
-            href="https://d2h9b02ioca40d.cloudfront.net/v7.0.1/uom.css"
+            href={uom_css}
           />
         </Helmet>
         <div className="uomcontent">
