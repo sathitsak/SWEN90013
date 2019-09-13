@@ -101,17 +101,14 @@ class Proposals extends React.Component {
       console.log(p._id)
       // First check if valid before sending through
       if ('client' in p ) {
-        console.log(p.client)
         if ('organisation' in p.client) {
           if (p.status === status) {
-            console.log(p.status)
             targetProposals.push(p);
           }
         }
       }
       
     });
-    console.log("Filtered propsal" + proposals);
     return targetProposals;
   };
 
@@ -157,10 +154,6 @@ class Proposals extends React.Component {
                     key={p._id}
                     id={p._id}
                     proposal={p}
-                    // title={p.name}
-                    // organisation={p.client.organisation}
-                    // client={p.client}
-                    // supervisor={p.supervisor}
                   />
                 ))}
               </List>

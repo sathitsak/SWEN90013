@@ -11,7 +11,7 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 const styles = theme => ({
     expansionPanel: {
         borderRadius: 5,
-        marginBottom: 5,
+        marginBottom: 7,
     },
     expand: {
         transform: "rotate(0deg)",

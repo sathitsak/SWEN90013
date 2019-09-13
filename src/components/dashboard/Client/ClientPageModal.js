@@ -14,6 +14,10 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import ClientDetails from "./modalcomponents/ClientDetails";
 import ClientOrgAndContact from "./modalcomponents/ClientOrgAndContact";
 import ClientNotes from "./modalcomponents/ClientNotes";
+import { getClientById } from "../../../api";
+import { getClientByIdAction } from "../../../store/actionCreators";
+import store from "../../../store";
+
 
 function rand() {
     return Math.round(Math.random() * 20) - 10;
@@ -50,28 +54,56 @@ class ClientPageModal extends React.Component {
     state = {
         open: false,
         fullWidth: true,
-        maxWidth: "xl"
+        maxWidth: "xl",
+        client: ""
     };
 
-    handleClickOpen = () => {
+    async _reqTodoList(clientId) {
+        // const clientId = store.getState().proposal.clientId;
+        // console.log(clientId);
+        const clientResult = await getClientById(clientId);
+        const clientAction = getClientByIdAction(clientResult);
+        store.dispatch(clientAction);
+    }
+
+    componentDidMount() {
+        //PASSING THE ID
+        const id = this.props.clientId;
+        console.log("clientId" + " " + id);
+        // const id = "";
+        // if (type === "proposal") {
+        //     id =  store.getState().proposal.clientId;
+        //     console.log("clientModal"+ " "+id);
+        // } else if (type === "project") {
+        //     id = store.getState().project;
+        // };
+        this._reqTodoList(id);
+      }
+
+    _handleClickOpen = () => {
         this.setState({open: true});
     };
 
-    handleClose = () => {
+    _handleClose = () => {
         this.setState({open: false});
     };
 
+    _handleChange = () => {
+        this.setState({ client: store.getState().client });
+      };
+    
+    unsubscribe = store.subscribe(this._handleChange);
+
     render() {
-        console.log('modal')
-        console.log(this.state)
-        const {classes} = this.props;
+        const { classes } = this.props;
+
         return (
             <div>
                 <Typography gutterBottom/>
                 <Chip
-                    onClick={this.handleClickOpen}
+                    onClick={this._handleClickOpen}
                     icon={<FaceIcon/>}
-                    label={this.props.client}
+                    label="Stephanie Armther"
                     variant="outlined"
                     align="center"
                 />
@@ -79,7 +111,7 @@ class ClientPageModal extends React.Component {
                     fullWidth={this.state.fullWidth}
                     maxWidth={this.state.maxWidth}
                     open={this.state.open}
-                    onClose={this.handleClose}
+                    onClose={this._handleClose}
                     aria-labelledby="max-width-dialog-title"
                 >
                     <DialogContent>
@@ -88,7 +120,7 @@ class ClientPageModal extends React.Component {
                                 <Grid item xs={6}>
                                     <Paper className={classes.paper}>
                                         <ClientDetails
-                                            client={this.props.client}/>
+                                            client={this.state.client}/>
                                     </Paper>
                                 </Grid>
 
@@ -107,7 +139,7 @@ class ClientPageModal extends React.Component {
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={this.handleClose} className={classes.closeButton}>
+                        <Button onClick={this._handleClose} className={classes.closeButton}>
                             Close
                         </Button>
                     </DialogActions>

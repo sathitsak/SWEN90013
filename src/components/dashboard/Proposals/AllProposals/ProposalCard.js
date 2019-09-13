@@ -12,7 +12,7 @@ import grey from "@material-ui/core/colors/grey"
 
 const styles = theme => ({
     card: {
-        maxWidth: 426,
+        width: "96%",
         margin: 10,
         overflow: "auto",
     },

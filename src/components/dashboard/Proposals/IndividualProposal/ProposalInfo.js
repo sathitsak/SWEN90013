@@ -2,8 +2,9 @@ import React from "react";
 import Grid from "@material-ui/core/Grid";
 import ClientPageModal from "../../Client/ClientPageModal";
 import StatusChangeModal from "./StatusChangeModal";
-import { green, amber, red }from "@material-ui/core/colors";
+import { green, amber, red, grey }from "@material-ui/core/colors";
 import { withStyles } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
 
 const styles = theme => ({
   container: {
@@ -16,7 +17,8 @@ const styles = theme => ({
     fontWeight: "bold",
     fontSize: 18,
     verticalAlign: "middle",
-    position: "relative"
+    position: "relative",
+    color: grey[700],
   },
   infoContent: {
     fontSize: 16,
@@ -32,6 +34,12 @@ const styles = theme => ({
   },
   row: {
     alignItems: "center",
+  },
+  header: {
+    textAlign: "center",
+    fontWeight: "bold",
+    color: "#094183",
+    marginBottom: "5%",
   }
 });
 
@@ -46,7 +54,7 @@ class ProposalInfo extends React.Component {
   _determineStatusButtonColour(status) {
     if (status === "new") {
       return amber[500];
-    } else if (status === "accepted") {
+    } else if (status === "approved") {
       return green[500];
     } else {
       return red[500];
@@ -54,15 +62,23 @@ class ProposalInfo extends React.Component {
   }
 
   _capitalize(str){
-    return str.charAt(0).toUpperCase() + str.slice(1);
+    if (str === "new") {
+      return "New";
+    } else if (str === "approved") {
+      return "Approved";
+    } else {
+      return "Rejected"
+    }
   }
 
   render() {
     const { classes } = this.props;
-    console.log('proposalinfo')
-    console.log(this.props)
+
     return (
       <div>
+        <Typography variant="h5" className={classes.header}>
+            INFO
+        </Typography>
         <Grid container spacing={24}>
           <Grid item xs={12}>
             <Grid container spacing={3}  className={classes.row}>
@@ -100,7 +116,7 @@ class ProposalInfo extends React.Component {
                 <div className={classes.infoHeader}>Organisation</div>
               </Grid>
               <Grid item xs={7}>
-                <div className={classes.infoContent}>{this.props.organisation}</div>
+                <div className={classes.infoContent}>{this.props.status}</div>
               </Grid>
             </Grid>
             

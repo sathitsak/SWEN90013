@@ -4,7 +4,8 @@ import {
     GET_SUPERVISORS,
     SET_CURRENT_SUPERVISOR,
     GET_ALL_PROPOSALS,
-    GET_PROPOSAL_BY_ID
+    GET_PROPOSAL_BY_ID,
+    GET_CLIENT_BY_ID
 } from "./actionTypes";
 
 export const getGetAllProjectAction = (projects) => ({
@@ -35,8 +36,13 @@ export const getGetAllProposalsAction = (proposals) => ({
     page_title: "View Proposals",
 });
 
-export const getGetProposalByIdAction = (proposal) => ({
+export const getProposalByIdAction = (proposal) => ({
     type: GET_PROPOSAL_BY_ID,
     proposal: proposal,
-    page_title: proposal.title,
+    page_title: proposal.name,
+});
+
+export const getClientByIdAction = (client) => ({
+    type: GET_CLIENT_BY_ID,
+    client: client,
 });

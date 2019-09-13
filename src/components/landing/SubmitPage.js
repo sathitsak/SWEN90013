@@ -289,7 +289,7 @@ class SubmitPage extends React.Component {
               </div>
 
               <div>
-                <label className="required">Who will be beneficiaries of the end-product?</label>
+                <label className="required">Who will be beneficiaries of the end product?</label>
                 <textarea id="beneficiaries" type="text" />
               </div>
 
