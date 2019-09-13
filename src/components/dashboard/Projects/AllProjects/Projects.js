@@ -35,7 +35,7 @@ const myIDs = {
 
 const status = {
     new: "new",
-    inProgress: "in progress",
+    inProgress: "inProgress",
     completed: "completed"
 };
 
@@ -116,7 +116,7 @@ class ViewProjects extends React.Component {
                                 {this._filterProjectsByStatus(status.new).map(
                                     (project, index) => (
                                         <ProjectCard
-                                            id={project._id}
+                                            _id={project._id}
                                             key={index}
                                             project={project}
                                         />

@@ -43,9 +43,6 @@ class ProjectById extends React.Component {
             <Grid
                 container
                 spacing={9}
-                // direction="column"
-                // alignContent="center"
-                //justify="flex-end"
             >
                 <Grid item xs={6} className={classes.projectInfo}>
                     <Paper className={classes.paper}>

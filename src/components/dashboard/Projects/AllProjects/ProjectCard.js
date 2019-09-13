@@ -41,11 +41,12 @@ const styles = {
 
 class ProjectCard extends React.Component {
     render() {
-        const {classes, id, project} = this.props;
+        const {classes, _id, project} = this.props;
 
         return (
             <Card className={classes.card}>
-                <Link to={`/dashboard/projects/${id}`} className={classes.link}>
+                <Link to={`/dashboard/projects/${_id}`}
+                      className={classes.link}>
                     <CardHeader
                         avatar={
                             <Avatar className={classes.avatar}>
@@ -53,7 +54,6 @@ class ProjectCard extends React.Component {
                             </Avatar>
                         }
                         title={project.name}
-                        // subheader={project.industry}
                         component="div"
                         className={classes.cardHeader}
                     />
