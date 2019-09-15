@@ -25,7 +25,6 @@ class ViewClient extends React.Component {
                     </Grid>
                     <Grid item style={{marginTop: 10}} align="center">
                         <ClientPageModal client={client}/>
-                        {/*{clientId}*/}
                     </Grid>
                 </Grid>
             </div>
@@ -35,7 +34,7 @@ class ViewClient extends React.Component {
 
 ViewClient.propTypes = {
     classes: PropTypes.object.isRequired,
-    clientId: PropTypes.string.isRequired,
+    client: PropTypes.object.isRequired,
 };
 
 export default withStyles(styles)(ViewClient);

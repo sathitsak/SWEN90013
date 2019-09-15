@@ -45,6 +45,7 @@ const TeamCard = props => {
   function handleExpandClick() {
     setExpanded(!expanded);
   }
+
   return (
     <Card style={{ margin: 10, raised: true }}>
       <CardHeader

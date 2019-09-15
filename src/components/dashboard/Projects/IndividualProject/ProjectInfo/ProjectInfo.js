@@ -41,7 +41,8 @@ class ProjectInfo extends React.Component {
     }
 
     render() {
-        const {classes, project, proposal, description} = this.props;
+        const {classes, project, description} = this.props;
+        const {proposal} = this.state;
 
         return (
             <div>
@@ -50,23 +51,38 @@ class ProjectInfo extends React.Component {
                 </Typography>
                 <Grid container direction='column'>
                     <Grid item className={classes.basic}>
-                        <ChangeStatus status={project.status}/>
+                        {project.status ? 
+                            <ChangeStatus status={project.status}/>
+                        : <div/>
+                        }
                     </Grid>
 
                     <Grid item className={classes.basic}>
-                        <Description description={description}/>
+                        {description ? 
+                            <Description description={description}/>
+                        : <div />
+                        }
                     </Grid>
 
                     <Grid item className={classes.basic}>
-                        <ViewProposal proposalID={project.proposalId}/>
+                        {project.proposalId ? 
+                            <ViewProposal proposalID={project.proposalId}/>
+                        : <div/>
+                        }
                     </Grid>
 
                     <Grid item className={classes.basic}>
-                        <ViewClient client={proposal.client}/>
+                        {proposal.client ? 
+                            <ViewClient client={proposal.client}/>
+                            : <div />
+                        }
                     </Grid>
 
                     <Grid item className={classes.basic}>
-                        <Organization orgName={proposal.client.organisation.name}/>
+                        {proposal.client ? 
+                            <Organization orgName={proposal.client.organisation.name}/>
+                            : <div />
+                        }
                     </Grid>
 
                     <Grid item className={classes.basic}>
@@ -81,9 +97,5 @@ class ProjectInfo extends React.Component {
         );
     }
 }
-
-// ProjectInfo.propTypes = {
-//   classes: PropTypes.object.isRequired
-// };
 
 export default withStyles(styles)(ProjectInfo);

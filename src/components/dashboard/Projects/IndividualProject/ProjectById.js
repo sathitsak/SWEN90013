@@ -76,13 +76,13 @@ class ProjectById extends React.Component {
                     <Paper className={classes.paper} style={{height: "100%"}}>
                         <ProjectInfo
                             project={this.state.project}
-                            proposal={this.state.proposal}
+                            // proposal={this.state.proposal}
                             description={this.state.proposal.outlineOfProject}/>
                     </Paper>
                 </Grid>
                 <Grid item xs={6}>
                     <Paper className={classes.paper} style={{ position: "relative" }}>
-                        <TeamPage />
+                        <TeamPage productIds={this.state.project.productIds}/>
                     </Paper>
                     </Grid>
                     <Grid item xs={12} className={classes.notes}>

@@ -4,6 +4,7 @@ import { withStyles } from "@material-ui/core/styles";
 import TeamCard from "./TeamCard";
 import axios from "axios";
 import CreateStudentTeamModal from '../StudentTeam/CreateStudentTeamModal';
+import store from "../../../../../store";
 
 const styles = theme => ({
   root: {
@@ -77,22 +78,40 @@ const teams = [
 class TeamPage extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      teams: [],
-      open: false
-    };
+    // this.state = {
+    //   teams: [],
+    //   open: false
+    // };
+    this.state = store.getState();
+    this.setState({open: false});
+
+    this._handleStoreChange = this._handleStoreChange.bind(this);
+    store.subscribe(this._handleStoreChange);
   }
 
   componentDidMount() {
-    axios
-      .get("http://5ce79b719f2c390014dba00f.mockapi.io/teams")
-      .then(response => {
-        console.log(response.data);
-        this.setState({ teams: response.data });
-      })
-      .catch(error => {
-        console.log(error);
-      });
+    // axios
+    //   .get("http://5ce79b719f2c390014dba00f.mockapi.io/teams")
+    //   .then(response => {
+    //     console.log(response.data);
+    //     this.setState({ teams: response.data });
+    //   })
+    //   .catch(error => {
+    //     console.log(error);
+    //   });
+
+    // this.setState(store.getState());
+    // const productIds = this.props.productIds;
+
+    // console.log(productIds);
+  }
+
+  _getProductObject = (productId) => {
+
+  };
+
+  _handleStoreChange() {
+    this.setState(store.getState());
   }
 
   _handleClickOpen = () => {
@@ -112,9 +131,18 @@ class TeamPage extends React.Component {
           STUDENT TEAMS        
         </Typography>
 
-        {this.state.teams.map(p => (
+        {/* {this.state.teams.map(p => (
           <TeamCard name={p.name} key={p.id} students={p.students} />
-        ))}
+        ))} */}
+
+        {this.props.productIds ? this.props.productIds.map(id => (
+          // <TeamCard key={id} productId={id} />
+          <div>{id}</div>
+        ))
+
+        : <div/>
+      
+        }
 
         <CreateStudentTeamModal />
       </div>

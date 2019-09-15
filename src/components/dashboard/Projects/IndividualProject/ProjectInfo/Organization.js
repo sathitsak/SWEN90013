@@ -38,7 +38,7 @@ class Organization extends React.Component {
 
 Organization.propTypes = {
   classes: PropTypes.object.isRequired,
-  industry: PropTypes.string.isRequired
+  orgName: PropTypes.string.isRequired
 };
 
 export default withStyles(styles)(Organization);
