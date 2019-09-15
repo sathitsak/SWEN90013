@@ -102,7 +102,7 @@ class ProposalInfo extends React.Component {
             <div className={classes.infoHeader}>Client</div>
           </Grid>
           <Grid item md={8} xs={12}>
-            <ClientPageModal clientId={this.props.client._id}></ClientPageModal>
+            <ClientPageModal client={this.props.client}></ClientPageModal>
           </Grid>
 
           <br/><br/>

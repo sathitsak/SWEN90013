@@ -65,7 +65,7 @@ class ProjectCard extends React.Component {
             >
               Client: {project.proposal.client.firstName + " " + project.proposal.client.lastName}
             </Typography>
-            <Divider component="li" paddingTop="20" />
+            <Divider/>
             <Typography
               component="p"
               variant="overline"

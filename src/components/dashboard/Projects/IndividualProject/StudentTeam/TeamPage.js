@@ -113,7 +113,7 @@ class TeamPage extends React.Component {
         </Typography>
 
         {this.state.teams.map(p => (
-          <TeamCard name={p.name} students={p.students} />
+          <TeamCard name={p.name} key={p.id} students={p.students} />
         ))}
 
         <CreateStudentTeamModal />

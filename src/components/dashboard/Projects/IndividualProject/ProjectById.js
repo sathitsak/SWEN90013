@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import {withStyles} from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import ProjectInfo from "./ProjectInfo/ProjectInfo";
-import ProjectNotes from "./Notes/ProjectNotes";
+import Notes from "../../Notes/Notes";
 import {getProjectById, getProposalById} from "../../../../api";
 import {
     getGetProjectByIdAction,
@@ -39,10 +39,6 @@ class ProjectById extends React.Component {
     _handleStoreChange() {
         this.setState(store.getState());
     }
-
-    // state = {
-    //     project: ""
-    // };
 
     async _reqTodoList(projID) {
         const project = await getProjectById(projID);
@@ -81,19 +77,21 @@ class ProjectById extends React.Component {
                         <ProjectInfo
                             project={this.state.project}
                             proposal={this.state.proposal}
-                            description={this.state.project.name}/>
+                            description={this.state.proposal.outlineOfProject}/>
                     </Paper>
                 </Grid>
-                {/* <Grid item xs={6}>
-          <Paper className={classes.paper} style={{ position: "relative" }}>
-            <TeamPage />
-          </Paper>
-        </Grid>
-        <Grid item xs={12} className={classes.notes}>
-          <Paper className={classes.paper} style={{ marginBottom: "20px" }}>
-            <ProjectNotes />
-          </Paper>
-        </Grid> */}
+                <Grid item xs={6}>
+                    <Paper className={classes.paper} style={{ position: "relative" }}>
+                        <TeamPage />
+                    </Paper>
+                    </Grid>
+                    <Grid item xs={12} className={classes.notes}>
+                    <Paper className={classes.paper} style={{ marginBottom: "20px" }}>
+                        <Notes
+                            notes={this.state.project.notes}
+                        />
+                    </Paper>
+                </Grid>
             </Grid>
         );
     }
