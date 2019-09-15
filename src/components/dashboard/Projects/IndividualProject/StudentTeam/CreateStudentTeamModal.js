@@ -26,6 +26,8 @@ import TableHead from "@material-ui/core/TableHead/TableHead";
 import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
 import Input from "@material-ui/core/Input";
+import store from "../../../../../store";
+import axios from "axios";
 
 const styles = theme => ({
   root: {
@@ -103,12 +105,23 @@ const TEAM_SIZE = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 1
 const INITIAL_NUM_STUDENTS = 4;
 
 class CreateStudentTeamModal extends React.Component {
-  state = {
-    open: false,
-    fullWidth: true,
-    maxWidth: "lg",
-    numStudents: INITIAL_NUM_STUDENTS,
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      open: false,
+      fullWidth: true,
+      maxWidth: "lg",
+      numStudents: INITIAL_NUM_STUDENTS,
+    };
+
+    this._handleStoreChange = this._handleStoreChange.bind(this);
+    store.subscribe(this._handleStoreChange);
+}
+
+  _handleStoreChange() {
+      this.setState(store.getState());
+  }
 
   _handleClickOpen = () => {
     this.setState({ open: true });
@@ -126,13 +139,45 @@ class CreateStudentTeamModal extends React.Component {
     let rows = [];
 
     for (var i = 0; i < this.state.numStudents; i++) {
-      console.log(i);
       let newObject = { index: i };
       rows.push(newObject);
     };
-    {console.log(rows)}
     return rows;
   };
+
+  _concatenateNames = (firstName, lastName) => {
+    return (firstName + " " + lastName);
+  }
+
+  _handleCreateStudentTeam = () => {    
+    const studentList = [];
+    for (var i = 0; i < this.state.numStudents; i++) {
+      let firstName = document.getElementById("firstName"+i).value;
+      let lastName = document.getElementById("lastName"+i).value;
+      let email = document.getElementById("email"+i).value;
+      var nextStudent = {
+        name: this._concatenateNames(firstName, lastName),
+        email: email,
+      }
+      studentList.push(nextStudent);
+    };
+
+    const teamName = document.getElementById("teamName").value;
+    const projectId = this.state.project._id;
+
+    // Send POST request
+    axios
+      .post(
+        `http://localhost:13000/api/product`, {
+          name: teamName,
+          projectId: projectId,
+          students: studentList
+        }
+      );
+
+    // Close window
+    this._handleClose();
+  }
 
   render() {
     const { classes } = this.props;
@@ -179,7 +224,7 @@ class CreateStudentTeamModal extends React.Component {
                   autoComplete="off"
                 >
                   <TextField
-                    id="Team Name"
+                    id="teamName"
                     className={classes.textField}
                     margin="normal"
                     inputProps={{ 'aria-label': 'Team Name' }}
@@ -206,7 +251,7 @@ class CreateStudentTeamModal extends React.Component {
                     MenuProps={MenuProps}
                   >
                     {TEAM_SIZE.map(size => (
-                      <MenuItem value={size}>
+                      <MenuItem value={size} key={size}>
                         {size}
                       </MenuItem>
                     ))}
@@ -227,15 +272,15 @@ class CreateStudentTeamModal extends React.Component {
                 <TableBody>
                   {this._createStudentRows().map(   
                     (index) => (
-                      <TableRow>
+                      <TableRow key={index.index}>
                            <TableCell component="th" scope="row">
                               <form 
                                 className={classes.container} 
                                 noValidate 
                                 autoComplete="off"
-                              >                              
+                              >     
                                 <TextField
-                                  id={"firstName"+index}
+                                  id={"firstName"+index.index}
                                   className={classes.textField}
                                   margin="dense"
                                   inputProps={{ 'aria-label': 'First Name' }}
@@ -256,7 +301,7 @@ class CreateStudentTeamModal extends React.Component {
                               autoComplete="off"
                             >
                               <TextField
-                                id={"lastName"+index}
+                                id={"lastName"+index.index}
                                 className={classes.textField}
                                 margin="dense"
                                 inputProps={{ 'aria-label': 'Last Name' }}
@@ -277,7 +322,7 @@ class CreateStudentTeamModal extends React.Component {
                               autoComplete="off"
                             >
                               <TextField
-                                id={"emailAddress"+index}
+                                id={"email"+index.index}
                                 className={classes.textField}
                                 margin="dense"
                                 inputProps={{ 'aria-label': 'Email Address' }}
