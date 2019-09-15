@@ -4,8 +4,11 @@ import {withStyles} from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import ProjectInfo from "./ProjectInfo/ProjectInfo";
 import ProjectNotes from "./Notes/ProjectNotes";
-import {getProjectById} from "../../../../api";
-import {getGetProjectByIdAction} from "../../../../store/actionCreators";
+import {getProjectById, getProposalById} from "../../../../api";
+import {
+    getGetProjectByIdAction,
+    getGetProposalByIdAction
+} from "../../../../store/actionCreators";
 import store from "../../../../store";
 import {Paper} from "@material-ui/core";
 import grey from "@material-ui/core/colors/grey";
@@ -13,26 +16,42 @@ import grey from "@material-ui/core/colors/grey";
 import TeamPage from "./StudentTeam/TeamPage";
 
 const styles = theme => ({
-  notes: {
-    width: "100%",
-    height: 140
-  },
-  paper: {
-    padding: theme.spacing.unit * 2,
-    color: theme.palette.text.secondary,
-    backgroundColor: grey[50]
-  },
+    notes: {
+        width: "100%",
+        height: 140
+    },
+    paper: {
+        padding: theme.spacing.unit * 2,
+        color: theme.palette.text.secondary,
+        backgroundColor: grey[50]
+    },
 });
 
 class ProjectById extends React.Component {
-    state = {
-      project: ""
-    };
+    constructor(props) {
+        super(props);
+
+        this.state = store.getState();
+        this._handleStoreChange = this._handleStoreChange.bind(this);
+        store.subscribe(this._handleStoreChange);
+    }
+
+    _handleStoreChange() {
+        this.setState(store.getState());
+    }
+
+    // state = {
+    //     project: ""
+    // };
 
     async _reqTodoList(projID) {
         const project = await getProjectById(projID);
         const getProAction = getGetProjectByIdAction(project);
         store.dispatch(getProAction);
+
+        const proposalResult = await getProposalById(this.state.project.proposalId);
+        const proposalAction = getGetProposalByIdAction(proposalResult);
+        store.dispatch(proposalAction);
     }
 
     componentDidMount() {
@@ -40,31 +59,32 @@ class ProjectById extends React.Component {
         this._reqTodoList(projID);
     }
 
-    _handleChange = () => {
-      this.setState({ project : store.getState().project });
-      console.log(this.state.project.proposal);
-    };
+    // _handleChange = () => {
+    //     this.setState({project: store.getState().project});
+    //     console.log(this.state.project.proposal);
+    // };
 
-    unsubscribe = store.subscribe(this._handleChange);
+    // unsubscribe = store.subscribe(this._handleChange);
 
     render() {
         const {classes} = this.props;
 
-    return (
-      <Grid
-        container
-        spacing={16}
-        justify="flex-end"
-        direction="row"
-      >
-        <Grid item xs={6}>
-          <Paper className={classes.paper} style={{ height: "100%" }}>
-            <ProjectInfo 
-              project={this.state.project}
-              description={this.state.project.name}/>
-          </Paper>
-        </Grid>
-        {/* <Grid item xs={6}>
+        return (
+            <Grid
+                container
+                spacing={16}
+                justify="flex-end"
+                direction="row"
+            >
+                <Grid item xs={6}>
+                    <Paper className={classes.paper} style={{height: "100%"}}>
+                        <ProjectInfo
+                            project={this.state.project}
+                            // proposal={this.state.proposal}
+                            description={this.state.project.name}/>
+                    </Paper>
+                </Grid>
+                {/* <Grid item xs={6}>
           <Paper className={classes.paper} style={{ position: "relative" }}>
             <TeamPage />
           </Paper>
@@ -74,9 +94,9 @@ class ProjectById extends React.Component {
             <ProjectNotes />
           </Paper>
         </Grid> */}
-      </Grid>
-    );
-  }
+            </Grid>
+        );
+    }
 }
 
 // ProjectById.propTypes = {

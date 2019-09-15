@@ -4,10 +4,11 @@ import {
     GET_SUPERVISORS,
     SET_CURRENT_SUPERVISOR,
     GET_ALL_PROPOSALS,
-    GET_PROPOSAL_BY_ID
+    GET_PROPOSAL_BY_ID, GET_CLIENT_BY_ID
 } from "./actionTypes";
 import {getSetCurrentSupervisorAction} from "./actionCreators";
 import store from "./index";
+import {func} from "prop-types";
 
 const defaultState = {
     projects: [],
@@ -17,6 +18,7 @@ const defaultState = {
     proposals: [],
     proposal: {},
     page_title: "",
+    client: {},
 };
 
 export default (state = defaultState, action) => {
@@ -42,6 +44,10 @@ export default (state = defaultState, action) => {
 
     if (action.type === GET_PROPOSAL_BY_ID) {
         return getProposalById(state, action);
+    }
+
+    if (action.type === GET_CLIENT_BY_ID) {
+        return getClientById(state, action);
     }
 
     return state;
@@ -96,5 +102,11 @@ function getSupervisors(state, action) {
     const newState = JSON.parse(JSON.stringify(state));
     newState.supervisors = action.supervisors;
     // console.log(action.supervisors);
+    return newState;
+}
+
+function getClientById(state, action) {
+    const newState = JSON.parse(JSON.stringify(state));
+    newState.client = action.client;
     return newState;
 }

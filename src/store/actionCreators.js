@@ -51,4 +51,4 @@ export const getGetClientByIdAction = (client) => ({
 export const getGetAllSubjectsAction = (subjects) => ({
     type: GET_ALL_SUBJECTS,
     subjects: subjects,
-})
+});
