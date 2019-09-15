@@ -80,6 +80,7 @@ class Proposals extends React.Component {
   }
 
   _filterProposalsByStatus = status => {
+    //TODO: filter by user
     const { proposals } = this.state;
     let targetProposals = [];
 

@@ -83,7 +83,7 @@ class SingleNote extends React.Component {
 
                         <Grid item xs={12} sm={2}>
                             <Typography className={classes.font}>
-                                {this._convertDate(note.date)}
+                                {"Commented at "+this._convertDate(note.date)}
                             </Typography>
                         </Grid>
                      </Grid>

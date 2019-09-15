@@ -15,6 +15,9 @@ import ClientDetails from "./modalcomponents/ClientDetails";
 import ClientOrg from "./modalcomponents/ClientOrg";
 import Notes from "../Notes/Notes";
 import axios from "axios";
+import {getClientById} from "../../../api/index";
+import {getGetClientByIdAction} from "../../../store/actionCreators";
+import store from "../../../store";
 
 const styles = theme => ({
     root: {
@@ -53,21 +56,27 @@ const styles = theme => ({
 });
 
 class ClientPageModal extends React.Component {
-    constructor(props) {
-        super(props);
+    state = {
+        open: false,
+        fullWidth: true,
+        maxWidth: "xl",
+        client: "",
+        clientFlag: false
+    };
 
-        var clientFlag = (this.props.client.flag ? this.props.client.flag : false);
-
-        this.state = {
-            open: false,
-            fullWidth: true,
-            maxWidth: "xl",
-            client: this.props.client,
-            clientFlag: clientFlag,
-        };
-    
+    async _reqTodoList(clientId) {
+        const client = await getClientById(clientId);
+        const getClientAction = getGetClientByIdAction(client);
+        console.log(getClientAction);
+        store.dispatch(getClientAction);
+        console.log(store.getState());
     }
-    
+
+    componentDidMount() {
+        const clientId = this.props.clientId;
+        this._reqTodoList(clientId);
+    }
+
     _handleClickOpen = () => {
         this.setState({open: true});
     };
@@ -88,7 +97,6 @@ class ClientPageModal extends React.Component {
         let client = this.state.client;
         client.flag = currentFlag;
 
-        console.log(client);
         // Send PUT request
         const url = `http://localhost:13000/api/client/` + client._id
         axios
@@ -101,9 +109,20 @@ class ClientPageModal extends React.Component {
             });
     };
 
+    _handleChange = () => {
+        this.setState({ client : store.getState().client });
+        console.log("here");
+        console.log(this.state.client);
+        // var clientFlag = (store.getState().client.flag ? store.getState().client.flag : false);
+        // this.state.setState({ clientFlag: clientFlag });
+    }
+
+    unsubscribe = store.subscribe(this._handleChange);
+
     render() {
-        const { classes, client } = this.props;
+        const { classes } = this.props;
         var flagIcon;
+        var client = this.state.client;
         var clientFlag = this.state.clientFlag;
 
         if (clientFlag) {
@@ -112,6 +131,10 @@ class ClientPageModal extends React.Component {
         } else {
             flagIcon = <ErrorOutlineOutlinedIcon className={classes.iconFalse}
                                                  onClick={this._handleClientFlagUpdate}/>
+        }
+
+        if (! client) {
+            return <div />
         }
 
         return (

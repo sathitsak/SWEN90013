@@ -43,7 +43,7 @@ export const getGetProposalByIdAction = (proposal) => ({
     page_title: proposal.name,
 });
 
-export const getClientByIdAction = (client) => ({
+export const getGetClientByIdAction = (client) => ({
     type: GET_CLIENT_BY_ID,
     client: client,
 });

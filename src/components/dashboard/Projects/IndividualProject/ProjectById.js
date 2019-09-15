@@ -25,10 +25,13 @@ const styles = theme => ({
 });
 
 class ProjectById extends React.Component {
+    state = {
+      project: ""
+    };
+
     async _reqTodoList(projID) {
         const project = await getProjectById(projID);
         const getProAction = getGetProjectByIdAction(project);
-        console.log(getProAction);
         store.dispatch(getProAction);
     }
 
@@ -36,6 +39,13 @@ class ProjectById extends React.Component {
         const projID = this.props.match.params.id;
         this._reqTodoList(projID);
     }
+
+    _handleChange = () => {
+      this.setState({ project : store.getState().project });
+      console.log(this.state.project.proposal);
+    };
+
+    unsubscribe = store.subscribe(this._handleChange);
 
     render() {
         const {classes} = this.props;
@@ -49,10 +59,12 @@ class ProjectById extends React.Component {
       >
         <Grid item xs={6}>
           <Paper className={classes.paper} style={{ height: "100%" }}>
-            <ProjectInfo />
+            <ProjectInfo 
+              project={this.state.project}
+              description={this.state.project.name}/>
           </Paper>
         </Grid>
-        <Grid item xs={6}>
+        {/* <Grid item xs={6}>
           <Paper className={classes.paper} style={{ position: "relative" }}>
             <TeamPage />
           </Paper>
@@ -61,14 +73,14 @@ class ProjectById extends React.Component {
           <Paper className={classes.paper} style={{ marginBottom: "20px" }}>
             <ProjectNotes />
           </Paper>
-        </Grid>
+        </Grid> */}
       </Grid>
     );
   }
 }
 
-ProjectById.propTypes = {
-    classes: PropTypes.object.isRequired
-};
+// ProjectById.propTypes = {
+//     classes: PropTypes.object.isRequired
+// };
 
 export default withStyles(styles)(ProjectById);

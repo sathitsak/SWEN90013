@@ -75,13 +75,21 @@ class ViewProjects extends React.Component {
     }
 
     _filterProjectsByStatus = status => {
-        const projects = this._filterProjectsForUser();
+        // TODO: Filter by user
+        const { projects } = this.state;
         let targetProjects = [];
-
-        projects.forEach(project => {
-            if (project.status === status) {
-                targetProjects.push(project);
-            }
+    
+        projects.forEach(p => {
+          // First check if valid before sending through
+          if ('proposal' in p) {
+            if ('client' in p.proposal) {
+                if ('organisation' in p.proposal.client) {
+                  if (p.status === status) {
+                    targetProjects.push(p);
+                  }
+                }
+              }
+          }
         });
         return targetProjects;
     };
@@ -117,7 +125,7 @@ class ViewProjects extends React.Component {
                                 {this._filterProjectsByStatus(status.new).map(
                                     (project, index) => (
                                         <ProjectCard
-                                            id={project.id}
+                                            _id={project._id}
                                             key={index}
                                             project={project}
                                         />

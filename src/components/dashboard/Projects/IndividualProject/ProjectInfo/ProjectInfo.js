@@ -28,20 +28,9 @@ const styles = {
 };
 
 class ProjectInfo extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = store.getState();
-    this._handleStoreChange = this._handleStoreChange.bind(this);
-    store.subscribe(this._handleStoreChange);
-  }
-
-  _handleStoreChange() {
-    this.setState(store.getState());
-  }
 
     render() {
-        const {classes} = this.props;
-        const {project, supervisors, currentSupervisor} = this.state;
+        const {classes, project, description } = this.props;
 
         return (
             <div>
@@ -54,27 +43,27 @@ class ProjectInfo extends React.Component {
                     </Grid>
 
                     <Grid item className={classes.basic}>
-                      <Description description={project.description} />
+                      <Description description={description} />
                     </Grid>
 
                     <Grid item className={classes.basic}>
-                      <ViewProposal proposalID={project.proposalID} />
+                      <ViewProposal proposalID={project.proposalId} />
                     </Grid>
 
                     <Grid item className={classes.basic}>
-                      <ViewClient client={project.client} />
+                      <ViewClient client={project.clientId} />
                     </Grid>
 
                     <Grid item className={classes.basic}>
-                      <Organization industry={project.industry} />
+                      <Organization industry={project.status} />
                     </Grid>
 
                     <Grid item className={classes.basic}>
-                        <AssignToSupervisor
-                            supervisorID={project.supervisorID}
+                        {/* <AssignToSupervisor
+                            supervisorID={project.supervisorId}
                             supervisors={supervisors}
                             currentSupervisor={currentSupervisor}
-                        />
+                        /> */}
                     </Grid>
                 </Grid>
             </div>
@@ -82,8 +71,8 @@ class ProjectInfo extends React.Component {
     }
 }
 
-ProjectInfo.propTypes = {
-  classes: PropTypes.object.isRequired
-};
+// ProjectInfo.propTypes = {
+//   classes: PropTypes.object.isRequired
+// };
 
 export default withStyles(styles)(ProjectInfo);

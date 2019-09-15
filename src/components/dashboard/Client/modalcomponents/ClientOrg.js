@@ -56,7 +56,7 @@ class ClientOrg extends React.Component {
               <div className={classes.orgHeader}>Industry</div>
             </Grid>
             <Grid item md={6} xs={4}>
-              <div className={classes.orgInfo}>{this.props.industry ? this.props.industry : "N/A"}</div>
+              <div className={classes.orgInfo}>{this.props.industry ? this.props.industry : " "}</div>
             </Grid>
           </Grid>
 
