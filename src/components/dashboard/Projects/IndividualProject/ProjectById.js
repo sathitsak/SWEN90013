@@ -80,7 +80,7 @@ class ProjectById extends React.Component {
                     <Paper className={classes.paper} style={{height: "100%"}}>
                         <ProjectInfo
                             project={this.state.project}
-                            // proposal={this.state.proposal}
+                            proposal={this.state.proposal}
                             description={this.state.project.name}/>
                     </Paper>
                 </Grid>

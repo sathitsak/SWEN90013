@@ -12,8 +12,6 @@ import ViewProposal from "./ViewProposal";
 import ViewClient from "./ViewClient";
 import Organization from "./Organization";
 import store from "../../../../../store";
-import {getProposalById} from "../../../../../api";
-import {getGetProposalByIdAction} from "../../../../../store/actionCreators";
 
 const styles = {
     basic: {
@@ -45,8 +43,7 @@ class ProjectInfo extends React.Component {
     }
 
     render() {
-        const {classes, project, description} = this.props;
-        const {proposal} = this.state;
+        const {classes, project, proposal, description} = this.props;
 
         return (
             <div>
@@ -71,7 +68,7 @@ class ProjectInfo extends React.Component {
                     </Grid>
 
                     <Grid item className={classes.basic}>
-                        <Organization industry={project.status}/>
+                        <Organization orgName={proposal.client.organisation.name}/>
                     </Grid>
 
                     <Grid item className={classes.basic}>

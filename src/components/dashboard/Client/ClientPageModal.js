@@ -64,19 +64,6 @@ class ClientPageModal extends React.Component {
         clientFlag: false
     };
 
-    // async _reqTodoList(clientId) {
-    //     const client = await getClientById(clientId);
-    //     const getClientAction = getGetClientByIdAction(client);
-    //     // console.log(getClientAction);
-    //     store.dispatch(getClientAction);
-    //     // console.log(store.getState());
-    // }
-
-    // componentDidMount() {
-    //     const clientId = this.props.clientId;
-    //     this._reqTodoList(clientId);
-    // }
-
     _handleClickOpen = () => {
         this.setState({open: true});
     };
@@ -94,7 +81,6 @@ class ClientPageModal extends React.Component {
         var currentFlag = !this.state.clientFlag;
         this.setState({clientFlag: currentFlag});
 
-        // let client = this.state.client;
         let client = this.props.client;
         client.flag = currentFlag;
 
@@ -110,20 +96,9 @@ class ClientPageModal extends React.Component {
             });
     };
 
-    // _handleChange = () => {
-    //     this.setState({ client : store.getState().client });
-    //     console.log("here");
-    //     console.log(this.state.client);
-    //     // var clientFlag = (store.getState().client.flag ? store.getState().client.flag : false);
-    //     // this.state.setState({ clientFlag: clientFlag });
-    // }
-
-    // unsubscribe = store.subscribe(this._handleChange);
-
     render() {
         const { classes } = this.props;
         var flagIcon;
-        // var client = this.state.client;
         var client = this.props.client;
         var clientFlag = this.state.clientFlag;
 

@@ -23,14 +23,14 @@ const styles = theme => ({
 
 class Organization extends React.Component {
   render() {
-    const { classes, industry } = this.props;
+    const { classes, orgName } = this.props;
 
     return (
       <div>
         <Typography align="left" color="textSecondary" variant="h6" style={{ fontWeight: "bold"}}>
           Organization:
         </Typography>
-        <Paper className={classes.organisation}>{industry}</Paper>
+        <Paper className={classes.organisation}>{orgName}</Paper>
       </div>
     );
   }
