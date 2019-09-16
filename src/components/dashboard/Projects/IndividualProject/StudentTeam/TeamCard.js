@@ -21,8 +21,6 @@ import Row from "react-bootstrap/Row";
 import Nav from "react-bootstrap/Nav";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-//npm install --save clsx
-
 const styles = theme => ({
   expand: {
     transform: "rotate(0deg)",
@@ -110,24 +108,53 @@ function TeamArtefacts(props) {
           <Col sm={9}>
             <TabContent>
               <TabPane eventKey="first">
-                {" "}
                 <List dense={true}>
                   {props.students.map(p => (
                     <ListItem>
                       <ListItemIcon>
                         <PersonIcon />
                       </ListItemIcon>
-                      <ListItemText primary={p} />
+                      <ListItemText primary={p.name} />
                     </ListItem>
                   ))}
                 </List>
               </TabPane>
             </TabContent>
             <TabContent>
-              <TabPane eventKey="second">Artefacts go here </TabPane>
+              <TabPane eventKey="second">
+                {/* Only display products if they exist */}
+                {props.productLinks ? 
+                  <List dense={true}>
+                    {props.productLinks.map(link => (
+                      <ListItem>
+                        <ListItemIcon>
+                          <PersonIcon />
+                        </ListItemIcon>
+                        <ListItemText primary={link} />
+                      </ListItem>
+                    ))}
+                  </List>
+                  : <div />
+                }
+              </TabPane>
             </TabContent>
             <TabContent>
-              <TabPane eventKey="third">Technologies go here</TabPane>
+              <TabPane eventKey="third">
+                {/* Only display technologies if they exist */}
+                {props.technologies ? 
+                  <List dense={true}>
+                    {props.technologies.map(tech => (
+                      <ListItem>
+                        <ListItemIcon>
+                          <PersonIcon />
+                        </ListItemIcon>
+                        <ListItemText primary={tech} />
+                      </ListItem>
+                    ))}
+                  </List>
+                  : <div />
+                }
+              </TabPane>
             </TabContent>
           </Col>
         </Row>

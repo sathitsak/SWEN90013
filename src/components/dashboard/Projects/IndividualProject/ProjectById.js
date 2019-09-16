@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import {withStyles} from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import ProjectInfo from "./ProjectInfo/ProjectInfo";
@@ -55,13 +54,6 @@ class ProjectById extends React.Component {
         this._reqTodoList(projID);
     }
 
-    // _handleChange = () => {
-    //     this.setState({project: store.getState().project});
-    //     console.log(this.state.project.proposal);
-    // };
-
-    // unsubscribe = store.subscribe(this._handleChange);
-
     render() {
         const {classes} = this.props;
 
@@ -76,13 +68,12 @@ class ProjectById extends React.Component {
                     <Paper className={classes.paper} style={{height: "100%"}}>
                         <ProjectInfo
                             project={this.state.project}
-                            // proposal={this.state.proposal}
                             description={this.state.proposal.outlineOfProject}/>
                     </Paper>
                 </Grid>
                 <Grid item xs={6}>
                     <Paper className={classes.paper} style={{ position: "relative" }}>
-                        <TeamPage productIds={this.state.project.productIds}/>
+                        <TeamPage products={this.state.project.products}/>
                     </Paper>
                     </Grid>
                     <Grid item xs={12} className={classes.notes}>
@@ -96,9 +87,5 @@ class ProjectById extends React.Component {
         );
     }
 }
-
-// ProjectById.propTypes = {
-//     classes: PropTypes.object.isRequired
-// };
 
 export default withStyles(styles)(ProjectById);

@@ -4,7 +4,9 @@ import {
     GET_SUPERVISORS,
     SET_CURRENT_SUPERVISOR,
     GET_ALL_PROPOSALS,
-    GET_PROPOSAL_BY_ID, GET_CLIENT_BY_ID
+    GET_PROPOSAL_BY_ID, 
+    GET_CLIENT_BY_ID, 
+    GET_PRODUCT_BY_ID,
 } from "./actionTypes";
 import {getSetCurrentSupervisorAction} from "./actionCreators";
 import store from "./index";
@@ -19,6 +21,7 @@ const defaultState = {
     proposal: {},
     page_title: "",
     client: {},
+    product: "",
 };
 
 export default (state = defaultState, action) => {
@@ -48,6 +51,10 @@ export default (state = defaultState, action) => {
 
     if (action.type === GET_CLIENT_BY_ID) {
         return getClientById(state, action);
+    }
+
+    if (action.type === GET_PRODUCT_BY_ID) {
+        return getProductById(state, action);
     }
 
     return state;
@@ -108,5 +115,11 @@ function getSupervisors(state, action) {
 function getClientById(state, action) {
     const newState = JSON.parse(JSON.stringify(state));
     newState.client = action.client;
+    return newState;
+}
+
+function getProductById(state, action) {
+    const newState = JSON.parse(JSON.stringify(state));
+    newState.product = action.product[0];
     return newState;
 }
