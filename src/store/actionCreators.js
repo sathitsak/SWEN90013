@@ -7,7 +7,6 @@ import {
     GET_PROPOSAL_BY_ID,
     GET_CLIENT_BY_ID,
     GET_ALL_SUBJECTS,
-    GET_PRODUCT_BY_ID,
 } from "./actionTypes";
 
 export const getGetAllProjectAction = (projects) => ({
@@ -52,9 +51,4 @@ export const getGetClientByIdAction = (client) => ({
 export const getGetAllSubjectsAction = (subjects) => ({
     type: GET_ALL_SUBJECTS,
     subjects: subjects,
-});
-
-export const getGetProductByIdAction = (product) => ({
-    type: GET_PRODUCT_BY_ID,
-    product: product,
 });

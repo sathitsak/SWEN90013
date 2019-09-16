@@ -164,17 +164,23 @@ class CreateStudentTeamModal extends React.Component {
 
     const teamName = document.getElementById("teamName").value;
     const projectId = this.state.project._id;
+    const newProduct = {
+      name: teamName,
+      projectId: projectId,
+      students: studentList
+    }
 
     // Send POST request
     axios
       .post(
-        `http://localhost:13000/api/product`, {
-          name: teamName,
-          projectId: projectId,
-          students: studentList
-        }
+        `http://localhost:13000/api/product`, newProduct
       );
 
+    // Update state
+    var products = store.getState().project.products;
+    products.push(newProduct);
+    store.getState().project.products = products;
+    
     // Close window
     this._handleClose();
   }
@@ -211,7 +217,7 @@ class CreateStudentTeamModal extends React.Component {
           <Divider />
 
           <DialogContent>
-            <Grid container spacing={3}>
+            <Grid container spacing={8}>
               <Grid item xs={2}>
                 <div className={classes.studentTeamHeader}>
                   Team Name
@@ -229,12 +235,13 @@ class CreateStudentTeamModal extends React.Component {
                     margin="normal"
                     inputProps={{ 'aria-label': 'Team Name' }}
                     fullWidth
+                    defaultValue="Team "
                   />
                 </form>
               </Grid>
             </Grid>
 
-            <Grid container spacing={3}>
+            <Grid container spacing={8}>
               <Grid item xs={2}>
                 <div className={classes.studentTeamHeader}>
                   Number of students
@@ -244,10 +251,10 @@ class CreateStudentTeamModal extends React.Component {
                 <form className={classes.container} noValidate autoComplete="off">
                   <Select
                     className={classes.selectField}
-                    autoWidth="true"
+                    autoWidth={true}
                     value={this.state.numStudents}
                     onChange={e => this._handleNumStudentsChange(e)}
-                    input={<Input id="email_template" />}
+                    // input={<Input id="email_template" />}
                     MenuProps={MenuProps}
                   >
                     {TEAM_SIZE.map(size => (

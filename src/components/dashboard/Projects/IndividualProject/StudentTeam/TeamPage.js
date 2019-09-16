@@ -1,7 +1,6 @@
 import React from "react";
 import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/core/styles";
-import PropTypes from "prop-types";
 import TeamCard from "./TeamCard";
 import CreateStudentTeamModal from '../StudentTeam/CreateStudentTeamModal';
 import store from "../../../../../store";
@@ -94,11 +93,6 @@ class TeamPage extends React.Component {
       </div>
     );
   }
-}
-
-TeamPage.propTypes = {
-  classes: PropTypes.object.isRequired,
-  productIds: PropTypes.array.isRequired
 }
 
 export default withStyles(styles)(TeamPage);
