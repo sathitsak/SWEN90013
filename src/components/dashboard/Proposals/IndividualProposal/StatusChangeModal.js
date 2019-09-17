@@ -196,28 +196,32 @@ class StatusChangeModal extends React.Component {
                       <MenuItem value="">
                         <em>None</em>
                       </MenuItem>
-                      { this.state.subjects ? 
-                        this.state.subjects.map(s => (
-                          <MenuItem value={s.subjectName}>{s.subjectName}</MenuItem>
+
+                      {this.props.subjects ? (
+                        this.props.subjects.map(s => (
+                          <em>
+                            <MenuItem value={s.name}>{s.name}</MenuItem>
+                          </em>
                         ))
-                        : <div/>
-                      }
+                      ) : (
+                        <div />
+                      )}
                     </Select>
                   </FormControl>
                 </Grid>
               </Grid>
 
               <DialogActions>
-                <Button 
-                  onClick={this._handleUpdate} 
-                  color="primary" 
+                <Button
+                  onClick={this._handleUpdate}
+                  color="primary"
                   className={classes.confirmButton}
                 >
                   Confirm Changes
                 </Button>
 
-                <Button 
-                  onClick={this._handleClose} 
+                <Button
+                  onClick={this._handleClose}
                   color="primary"
                   className={classes.discardButton}
                 >
