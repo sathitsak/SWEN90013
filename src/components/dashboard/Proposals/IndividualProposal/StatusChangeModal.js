@@ -1,7 +1,7 @@
 import React from "react";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
-import { green, red, grey }from "@material-ui/core/colors";
+import { green, red, grey } from "@material-ui/core/colors";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
@@ -13,7 +13,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import axios from "axios";
-import store from "../../../../store"
+import store from "../../../../store";
 import { withStyles } from "@material-ui/core/styles";
 import { getAllSubjects } from "../../../../api";
 import { getGetAllSubjectsAction } from "../../../../store/actionCreators";
@@ -34,14 +34,14 @@ const styles = theme => ({
   confirmButton: {
     backgroundColor: "#094183",
     color: "#FFFFFF",
-    '&:hover': {
-      backgroundColor:"#4074B2",
+    "&:hover": {
+      backgroundColor: "#4074B2"
     }
   },
   discardButton: {
-    color: "#094183",
+    color: "#094183"
   }
-})
+});
 
 class StatusChangeModal extends React.Component {
   constructor(props) {
@@ -170,7 +170,7 @@ class StatusChangeModal extends React.Component {
                 Change proposal status
               </DialogTitle>
               <Grid container spacing={24}>
-                <Grid item xs={6} style={{ padding : 50 }}>
+                <Grid item xs={6} style={{ padding: 50 }}>
                   <h6 style={{ color: grey[800] }}>
                     Why did you accept this project?
                   </h6>
@@ -186,7 +186,7 @@ class StatusChangeModal extends React.Component {
                 <Grid item xs={6} style={{ marginTop: 30 }}>
                   <FormControl style={{ width: "70%", marginTop: 9 }}>
                     <h6 style={{ color: grey[800] }}>
-                       Assign this proposal to a subject
+                      Assign this proposal to a subject
                     </h6>
                     <Select
                       value={this.state.subjectName}
@@ -200,7 +200,7 @@ class StatusChangeModal extends React.Component {
                       {this.props.subjects ? (
                         this.props.subjects.map(s => (
                           <em>
-                            <MenuItem value={s.name}>{s.name}</MenuItem>
+                            <MenuItem value={s._id}>{s.name}</MenuItem>
                           </em>
                         ))
                       ) : (
