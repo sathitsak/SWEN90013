@@ -1,10 +1,9 @@
 import React from "react";
-import PropTypes from "prop-types";
-import SwipeableViews from "react-swipeable-views";
-import { makeStyles, useTheme } from "@material-ui/core/styles";
-import AppBar from "@material-ui/core/AppBar";
-import Tabs from "@material-ui/core/Tabs";
-import Tab from "react-bootstrap/Tab";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import PersonIcon from "@material-ui/icons/Person";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
 import TabContainer from "react-bootstrap/TabContainer";
 import TabContent from "react-bootstrap/TabContent";
 import TabPane from "react-bootstrap/TabPane";
@@ -20,16 +19,23 @@ class TeamArtefacts extends React.Component {
         <TabContainer id="right-tabs-example" defaultActiveKey="first">
           <Row>
             <Col xs>
-              <Nav variant="pills" className="flex-column">
+              <Nav variant="pills" className="flex-column" >
                 <Nav.Item>
-                  <Nav.Link eventKey="first">Tab 1</Nav.Link>
+                  <Nav.Link eventKey="first">Students</Nav.Link>
                 </Nav.Item>
               </Nav>
             </Col>
             <Col xs>
               <Nav variant="pills" className="flex-column">
                 <Nav.Item>
-                  <Nav.Link eventKey="second">Tab 2</Nav.Link>
+                  <Nav.Link eventKey="second">Artefacts</Nav.Link>
+                </Nav.Item>
+              </Nav>
+            </Col>
+            <Col xs>
+              <Nav variant="pills" className="flex-column">
+                <Nav.Item>
+                  <Nav.Link eventKey="third">Technologies</Nav.Link>
                 </Nav.Item>
               </Nav>
             </Col>
@@ -37,8 +43,54 @@ class TeamArtefacts extends React.Component {
           <Row>
             <Col sm={9}>
               <TabContent>
-                <TabPane eventKey="first">fdafdafsaf</TabPane>
-                <TabPane eventKey="second">fdafsf</TabPane>
+                <TabPane eventKey="first">
+                  <List dense={true}>
+                    {this.props.students.map(p => (
+                      <ListItem>
+                        <ListItemIcon>
+                          <PersonIcon />
+                        </ListItemIcon>
+                        <ListItemText primary={p.name} />
+                      </ListItem>
+                    ))}
+                  </List>
+                </TabPane>
+              </TabContent>
+              <TabContent>
+                <TabPane eventKey="second">
+                  {/* Only display products if they exist */}
+                  {this.props.productLinks ? 
+                    <List dense={true}>
+                      {this.props.productLinks.map(link => (
+                        <ListItem>
+                          <ListItemIcon>
+                            <PersonIcon />
+                          </ListItemIcon>
+                          <ListItemText primary={link} />
+                        </ListItem>
+                      ))}
+                    </List>
+                    : <div />
+                  }
+                </TabPane>
+              </TabContent>
+              <TabContent>
+                <TabPane eventKey="third">
+                  {/* Only display technologies if they exist */}
+                  {this.props.technologies ? 
+                    <List dense={true}>
+                      {this.props.technologies.map(tech => (
+                        <ListItem>
+                          <ListItemIcon>
+                            <PersonIcon />
+                          </ListItemIcon>
+                          <ListItemText primary={tech} />
+                        </ListItem>
+                      ))}
+                    </List>
+                    : <div />
+                  }
+                </TabPane>
               </TabContent>
             </Col>
           </Row>
