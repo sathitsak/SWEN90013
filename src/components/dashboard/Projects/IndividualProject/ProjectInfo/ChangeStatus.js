@@ -12,6 +12,9 @@ import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import Input from "@material-ui/core/Input";
 import InputLabel from "@material-ui/core/InputLabel";
+import {projectStatus} from "../../Constants/Constants";
+import store from "../../../../../store";
+import {updateProjectAction} from "../../../../../store/actionCreators";
 
 const styles = {};
 
@@ -24,36 +27,16 @@ class ChangeStatus extends React.Component {
         };
     }
 
-    _handleClickOpen = () => {
-        this.setState({open: true});
-    };
-
-    _handleClose = () => {
-        this.setState({open: false});
-    };
-
-    _handleSelect = e => {
-        this.setState({selectedStatus: e.target.value});
-    };
-
-    _handleOK = () => {
-        const {selectedState} = this.state;
-        this.setState({open: false});
-        //alert("you change the state");
-        console.log(this.state.selectedStatus);
-
-        // NEED BACKEND FUNCTIONALITY
-    };
-
     render() {
-        const {classes, status} = this.props;
+        const {classes, project} = this.props;
         const {open} = this.state;
 
         return (
             <div>
                 <Grid container>
                     <Grid item style={{marginTop: 10, marginRight: 80}}>
-                        <Typography align="left" color="textSecondary" variant="h6" style={{ fontWeight: "bold"}}>
+                        <Typography align="left" color="textSecondary"
+                                    variant="h6" style={{fontWeight: "bold"}}>
                             Status:
                         </Typography>
                     </Grid>
@@ -63,7 +46,7 @@ class ChangeStatus extends React.Component {
                             color="secondary"
                             onClick={this._handleClickOpen}
                         >
-                            {this.props.status}
+                            {this._showProjectStatus(project.status)}
                         </Button>
                     </Grid>
                 </Grid>
@@ -84,10 +67,15 @@ class ChangeStatus extends React.Component {
                                     onChange={e => this._handleSelect(e)}
                                     input={<Input id="sp-native-simple"/>}
                                 >
-                                    <option value="New">New</option>
-                                    <option value="In Progress">In Progress
+                                    <option value={projectStatus.new}>
+                                        New
                                     </option>
-                                    <option value="Completed">Completed</option>
+                                    <option value={projectStatus.inProgress}>
+                                        In Progress
+                                    </option>
+                                    <option value={projectStatus.completed}>
+                                        Completed
+                                    </option>
                                 </Select>
                             </FormControl>
                         </form>
@@ -104,11 +92,48 @@ class ChangeStatus extends React.Component {
             </div>
         );
     }
+
+    _handleClickOpen = () => {
+        this.setState({open: true});
+    };
+
+    _handleClose = () => {
+        this.setState({open: false});
+    };
+
+    _handleSelect = e => {
+        this.setState({selectedStatus: e.target.value});
+    };
+
+    _handleOK = () => {
+        const {selectedStatus} = this.state;
+        const {project} = this.props;
+        project.status = selectedStatus;
+        const updateProjAction = updateProjectAction(project._id, project);
+        store.dispatch(updateProjAction);
+        this.setState({open: false});
+
+        alert("Status of project changed to " + this._showProjectStatus(selectedStatus) + ".");
+    };
+
+    _showProjectStatus = status => {
+        switch (status) {
+            case projectStatus.new:
+                return "NEW";
+            case projectStatus.inProgress:
+                return "IN PROGRESS";
+            case projectStatus.completed:
+                return "COMPLETED";
+            default:
+                return "INVALID STATUS OF PROJECT";
+        }
+    };
+
 }
 
 ChangeStatus.propTypes = {
     classes: PropTypes.object.isRequired,
-    status: PropTypes.string.isRequired
+    project: PropTypes.object.isRequired
 };
 
 export default withStyles(styles)(ChangeStatus);

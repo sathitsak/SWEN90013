@@ -13,6 +13,7 @@ import {
     getGetAllProjectAction,
     getGetSupervisorsAction
 } from "../../../../store/actionCreators";
+import {projectStatus} from "../Constants/Constants";
 
 const styles = {
     paper: {
@@ -34,12 +35,6 @@ const myIDs = {
     coordinatorID: "coordinator 1 me"
 };
 
-const status = {
-    new: "new",
-    inProgress: "in progress",
-    completed: "completed"
-};
-
 class ViewProjects extends React.Component {
     constructor(props) {
         super(props);
@@ -56,12 +51,10 @@ class ViewProjects extends React.Component {
 
     async _reqTodoList() {
         const result = await getProjectList();
-        // console.log(result);
         const action = getGetAllProjectAction(result);
         store.dispatch(action);
 
         const supervisors = await getSupervisors();
-        // console.log(result);
         const getSupsAction = getGetSupervisorsAction(supervisors);
         store.dispatch(getSupsAction);
     }
@@ -76,20 +69,21 @@ class ViewProjects extends React.Component {
 
     _filterProjectsByStatus = status => {
         // TODO: Filter by user
-        const { projects } = this.state;
+        const {projects} = this.state;
         let targetProjects = [];
-    
+
         projects.forEach(p => {
-          // First check if valid before sending through
-          if ('proposal' in p) {
-            if ('client' in p.proposal) {
-                if ('organisation' in p.proposal.client) {
-                  if (p.status === status) {
-                    targetProjects.push(p);
-                  }
+            // First check if valid before sending through
+            // May not need this when back-end is fixed
+            if ('proposal' in p) {
+                if ('client' in p.proposal) {
+                    if ('organisation' in p.proposal.client) {
+                        if (p.status === status) {
+                            targetProjects.push(p);
+                        }
+                    }
                 }
-              }
-          }
+            }
         });
         return targetProjects;
     };
@@ -111,6 +105,7 @@ class ViewProjects extends React.Component {
 
     render() {
         const {classes} = this.props;
+        const {supervisors} = this.state;
 
         return (
             <Grid container justify="flex-end" direction="row"
@@ -122,12 +117,13 @@ class ViewProjects extends React.Component {
                         </Typography>
                         <div>
                             <List dense={true}>
-                                {this._filterProjectsByStatus(status.new).map(
+                                {this._filterProjectsByStatus(projectStatus.new).map(
                                     (project, index) => (
                                         <ProjectCard
                                             _id={project._id}
                                             key={index}
                                             project={project}
+                                            supervisors={supervisors}
                                         />
                                     )
                                 )}
@@ -143,12 +139,13 @@ class ViewProjects extends React.Component {
                         <div>
                             <List dense={true}>
                                 {
-                                    this._filterProjectsByStatus(status.inProgress).map(
+                                    this._filterProjectsByStatus(projectStatus.inProgress).map(
                                         (project, index) => (
                                             <ProjectCard
-                                                id={project.id}
+                                                _id={project._id}
                                                 key={index}
                                                 project={project}
+                                                supervisors={supervisors}
                                             />
                                         )
                                     )
@@ -164,12 +161,13 @@ class ViewProjects extends React.Component {
                         </Typography>
                         <div>
                             <List dense={true}>
-                                {this._filterProjectsByStatus(status.completed).map(
+                                {this._filterProjectsByStatus(projectStatus.completed).map(
                                     (project, index) => (
                                         <ProjectCard
-                                            id={project.id}
+                                            _id={project._id}
                                             key={index}
                                             project={project}
+                                            supervisors={supervisors}
                                         />
                                     )
                                 )}
