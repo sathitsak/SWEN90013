@@ -80,13 +80,7 @@ class TeamPage extends React.Component {
 
         {/* Only display teams if they exist */}
         {this.props.products ? this.props.products.map(product => (
-          <TeamCard 
-            name={product.name} 
-            key={product._id} 
-            students={product.students}
-            artefacts={product.productLinks}
-            technologies={product.technologies}
-          />
+          <TeamCard product={product} key={product._id}></TeamCard>
         ))
           : <div/>
         }

@@ -10,8 +10,6 @@ export const getProposalList = () => ajax('http://localhost:13000/api/proposal')
 
 export const getProposalById = (id) => ajax('http://localhost:13000/api/proposal/' + id);
 
-
-
 export const getAllSubjects = () => ajax('http://localhost:13000/api/subject');
 
 export const getProductById = (id) => ajax('http://localhost:13000/api/product/' + id);

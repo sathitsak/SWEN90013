@@ -22,6 +22,9 @@ import LastPageIcon from '@material-ui/icons/LastPage';
 import {withStyles} from "@material-ui/core/styles";
 import axios from "axios";
 import TableHead from "@material-ui/core/TableHead/TableHead";
+import store from "../../../../store";
+import { getProposalList } from "../../../../api";
+import { getGetAllProposalsAction } from "../../../../store/actionCreators";
 
 const useStyles1 = makeStyles(theme => ({
     root: {
@@ -110,46 +113,57 @@ const useStyles2 = theme => ({
 const status = {
     new: "new",
     approved: "approved",
-    rejected: "rejected"
+    reject: "reject"
 };
 
 class RejectedProposals extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            proposals: [],
-            page: 0,
-            setPage: 0,
-            rowsPerPage: 5,
-            setRowsPerPage: 5
-        };
+        this.state = store.getState();
+
+        this._handleStoreChange = this._handleStoreChange.bind(this);
+        store.subscribe(this._handleStoreChange);
+    }
+
+    _handleStoreChange() {
+        this.setState(store.getState());
+    }
+
+    async _reqTodoList() {
+        const result = await getProposalList();
+        const action = getGetAllProposalsAction(result);
+        store.dispatch(action);
     }
 
     componentDidMount() {
-        axios
-            .get(`https://5ce79b719f2c390014dba00f.mockapi.io/proposal/`)
-            .then(results => {
-                this.setState({proposals: results.data});
-            });
+        this._reqTodoList();
     }
 
     _filterProposalsByStatus = status => {
-        const {proposals} = this.state;
+        //TODO: filter by user
+        const { proposals } = this.state;
         let targetProposals = [];
 
         proposals.forEach(p => {
-            if (p.status === status) {
+            // First check if valid before sending through
+            if ('client' in p ) {
+            if ('organisation' in p.client) {
+                if (p.status === status) {
                 targetProposals.push(p);
+                }
             }
+            }
+            
         });
-        console.log(proposals);
+
         return targetProposals;
     };
+    
 
     render() {
         const classes = useStyles2();
 
-        const rejected = this._filterProposalsByStatus(status.rejected);
+        const rejected = this._filterProposalsByStatus(status.reject);
 
         const emptyRows = this.rowsPerPage - Math.min(this.rowsPerPage, rejected.length - this.page * this.rowsPerPage);
 
@@ -166,28 +180,28 @@ class RejectedProposals extends React.Component {
         }
 
         return (
-            <Paper className={classes.root}>
+            <Paper className={useStyles2.root}>
                 <div className={classes.tableWrapper}>
-                    <Table className={classes.table}>
+                    <Table className={useStyles2.table}>
                         <TableHead>
                             <TableRow>
-                                <TableCell>Project Name</TableCell>
-                                <TableCell align="left">Client</TableCell>
-                                <TableCell align="left">Organisation</TableCell>
-                                <TableCell align="left">Project Description</TableCell>
+                                <TableCell style={{ width: "20%"}}>Project Name</TableCell>
+                                <TableCell align="left" style={{ width: "15%"}}>Client</TableCell>
+                                <TableCell align="left" style={{ width: "15%"}}>Organisation</TableCell>
+                                <TableCell align="left" style={{ width: "50%"}}>Project Description</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {rejected.map(p => (
+                            {this._filterProposalsByStatus(status.reject).map(p => (
                                 <TableRow
                                     hover
-                                    onClick={event => handleClick(event, p.id)}
-                                    key={p.id}>
+                                    onClick={event => handleClick(event, p._id)}
+                                    key={p._id}>
                                     <TableCell component="th" scope="row">
                                         {p.name}
                                     </TableCell>
-                                    <TableCell align="left">{p.client}</TableCell>
-                                    <TableCell align="left">{p.organisation}</TableCell>
+                                    <TableCell align="left">{p.client.firstName + " " + p.client.lastName}</TableCell>
+                                    <TableCell align="left">{p.client.organisation.name}</TableCell>
                                     <TableCell align="left">{p.outlineOfProject}</TableCell>
                                 </TableRow>
                             ))}
