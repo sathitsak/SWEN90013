@@ -129,6 +129,9 @@ const names = [
   "Kelly Snyder"
 ];
 
+const templatesMap = new Map();
+const templatesNew = [];
+
 const nameEmailMap = new Map();
 
 const templates = [
@@ -151,13 +154,41 @@ class EmailModal extends React.Component {
       email_template: "",
       email_message: "",
       context: "",
-      available_recipients: []
+      available_recipients: [],
+      templatesNew: []
     };
     this.handleSendEmail = this.handleSendEmail.bind(this);
+    this.handleClickOpen = this.handleClickOpen.bind(this);
   }
 
   handleClickOpen = () => {
     this.setState({ open: true });
+
+    //get the templates
+    axios
+      .get(`http://35.197.167.244/template`)
+      .then(function(response) {
+        var responseSaved = response;
+        console.log(response.data.emailTemplate.client[0].title[0]);
+        console.log(response.data.emailTemplate.client[0].message[0]);
+        templatesNew.push(responseSaved.data.emailTemplate.client[0].title[0]);
+        templatesNew.push(
+          responseSaved.data.emailTemplate.proposal[0].title[0]
+        );
+        templatesMap.set(
+          response.data.emailTemplate.client[0].title[0],
+          response.data.emailTemplate.client[0].message[0]
+        );
+        templatesMap.set(
+          response.data.emailTemplate.client[0].title[0],
+          response.data.emailTemplate.proposal[0].message[0]
+        );
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+
+    console.log(this.state.templates);
 
     //check the URL to determine the context of the email
     var url = window.location.href;
@@ -234,39 +265,33 @@ class EmailModal extends React.Component {
   };
 
   getEmailMessage(template_title) {
-    for (var i = 0; i < templates.length; i++) {
-      if (templates[i].title === template_title) {
-        return templates[i].message;
-      }
-    }
+    // for (var i = 0; i < templates.length; i++) {
+    //   if (templates[i].title === template_title) {
+    //     return templates[i].message;
+    //   }
+    // }
+    return templatesMap.get(template_title);
   }
 
   handleSendEmail() {
     var emails = [];
+    var emailscc = [];
     this.state.email_recipients.map(name =>
       emails.push(nameEmailMap.get(name))
     );
 
-    //send multiple posts
+    this.state.email_cc.map(name => emailscc.push(nameEmailMap.get(name)));
 
-    //templates
-    // axios
-    //   .get(`http://localhost:13000/api/message/template`)
-    //   .then(function(response) {
-    //     console.log(response);
-    //   })
-    //   .catch(function(error) {
-    //     console.log(error);
-    //   });
+    //send multiple posts
 
     axios
       .post(`http://35.197.167.244/message`, {
         from: "thissupervisor",
-        to: "chamira.balasuriya@gmail.com",
+        to: emails,
         subject: "new",
         html: "<p>testttt</p>",
         projectType: "fdafdsa",
-        cc: ["chamira.b@live.com.au"],
+        cc: emailscc,
         projectID: ""
       })
       .then(function(response) {
@@ -368,7 +393,7 @@ class EmailModal extends React.Component {
                   )}
                   MenuProps={MenuProps}
                 >
-                  {names.map(name => (
+                  {this.state.available_recipients.map(name => (
                     <MenuItem key={name} value={name} style={{ width: "100%" }}>
                       {name}
                     </MenuItem>
@@ -418,13 +443,13 @@ class EmailModal extends React.Component {
                   input={<Input id="email_template" />}
                   MenuProps={MenuProps}
                 >
-                  {templates.map((template, index) => (
+                  {templatesNew.map(template => (
                     <MenuItem
-                      key={index}
-                      value={template.title}
+                      key={template}
+                      value={template}
                       style={{ width: "100%" }}
                     >
-                      {template.title}
+                      {template}
                     </MenuItem>
                   ))}
                 </Select>
@@ -468,4 +493,3 @@ class EmailModal extends React.Component {
 }
 
 export default withStyles(styles)(EmailModal);
-
