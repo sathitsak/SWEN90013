@@ -22,7 +22,7 @@ class ChangeStatus extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            selectedStatus: "",
+            selectedStatus: "new",
             open: false
         };
     }
