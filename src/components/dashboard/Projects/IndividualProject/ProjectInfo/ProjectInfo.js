@@ -10,6 +10,7 @@ import ViewProposal from "./ViewProposal";
 import ViewClient from "./ViewClient";
 import Organization from "./Organization";
 import store from "../../../../../store";
+import PropTypes from "prop-types";
 
 const styles = {
     basic: {
@@ -26,12 +27,10 @@ const styles = {
 };
 
 class ProjectInfo extends React.Component {
-
     constructor(props) {
         super(props);
 
         this.state = store.getState();
-
         this._handleStoreChange = this._handleStoreChange.bind(this);
         store.subscribe(this._handleStoreChange);
     }
@@ -41,8 +40,8 @@ class ProjectInfo extends React.Component {
     }
 
     render() {
-        const {classes, project, description} = this.props;
-        const {proposal} = this.state;
+        const {classes} = this.props;
+        const {project, proposal, supervisors} = this.state;
 
         return (
             <div>
@@ -51,51 +50,56 @@ class ProjectInfo extends React.Component {
                 </Typography>
                 <Grid container direction='column'>
                     <Grid item className={classes.basic}>
-                        {project.status ? 
-                            <ChangeStatus status={project.status}/>
-                        : <div/>
+                        {project.status ?
+                            <ChangeStatus project={project}/>
+                            : <div/>
                         }
                     </Grid>
 
                     <Grid item className={classes.basic}>
-                        {description ? 
-                            <Description description={description}/>
-                        : <div />
+                        {proposal.outlineOfProject ?
+                            <Description
+                                description={proposal.outlineOfProject}/>
+                            : <div/>
                         }
                     </Grid>
 
                     <Grid item className={classes.basic}>
-                        {project.proposalId ? 
+                        {project.proposalId ?
                             <ViewProposal proposalID={project.proposalId}/>
-                        : <div/>
+                            : <div/>
                         }
                     </Grid>
 
                     <Grid item className={classes.basic}>
-                        {proposal.client ? 
+                        {proposal.client ?
                             <ViewClient client={proposal.client}/>
-                            : <div />
+                            : <div/>
                         }
                     </Grid>
 
                     <Grid item className={classes.basic}>
-                        {proposal.client ? 
-                            <Organization orgName={proposal.client.organisation.name}/>
-                            : <div />
+                        {proposal.client ?
+                            <Organization
+                                orgName={proposal.client.organisation.name}/>
+                            : <div/>
                         }
                     </Grid>
 
                     <Grid item className={classes.basic}>
-                        {/* <AssignToSupervisor
-                            supervisorID={project.supervisorId}
+                        <AssignToSupervisor
+                            project={project}
                             supervisors={supervisors}
-                            currentSupervisor={currentSupervisor}
-                        /> */}
+                        />
                     </Grid>
                 </Grid>
             </div>
         );
     }
 }
+
+ProjectInfo.propTypes = {
+    classes: PropTypes.object.isRequired,
+};
 
 export default withStyles(styles)(ProjectInfo);
