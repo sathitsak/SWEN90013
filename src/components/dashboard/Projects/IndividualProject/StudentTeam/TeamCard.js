@@ -9,7 +9,8 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import Grid from "@material-ui/core/Grid";
 import TeamArtefacts from "./TeamArtefacts";
 import Chip from '@material-ui/core/Chip';
-import { green, white } from "@material-ui/core/colors";
+import { green } from "@material-ui/core/colors";
+import EditStudentTeam from "./EditStudentTeam";
 
 
 const styles = theme => ({
@@ -74,7 +75,7 @@ class TeamCard extends React.Component {
                                 {product.activelyUsed ? 
                                     <Chip size="small" label="Actively Used" className={classes.chip} />
                                  : <div/>}
-                                {product.Deployed ? 
+                                {product.deployed ? 
                                     <Chip size="small" label="Deployed" className={classes.chip} />
                                  : <div/>} 
                             </div>
@@ -82,10 +83,21 @@ class TeamCard extends React.Component {
                      </Grid>
                 </ExpansionPanelSummary>
                 <ExpansionPanelDetails className={classes.expansionPanelDetails}>
-                    <TeamArtefacts 
-                        students={product.students} 
-                        productLinks={product.productLinks}
-                        technologies={product.technologies} />
+                    <Grid container spacing={24}>
+                        <Grid item xs={12}>
+                            <TeamArtefacts 
+                                students={product.students} 
+                                productLinks={product.productLinks}
+                                technologies={product.technologies} 
+                            />
+                        </Grid>
+
+                        <Grid item xs={12} style={{ padding: 0 }}>
+                            <EditStudentTeam product={product}/>
+                        </Grid>
+                    
+                    </Grid>
+
                 </ExpansionPanelDetails>
             </ExpansionPanel>
         );

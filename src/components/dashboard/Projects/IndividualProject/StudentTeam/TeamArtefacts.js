@@ -46,7 +46,7 @@ class TeamArtefacts extends React.Component {
                 <TabPane eventKey="first">
                   <List dense={true}>
                     {this.props.students.map(p => (
-                      <ListItem>
+                      <ListItem key={p.name}>
                         <ListItemIcon>
                           <PersonIcon />
                         </ListItemIcon>
@@ -63,9 +63,6 @@ class TeamArtefacts extends React.Component {
                     <List dense={true}>
                       {this.props.productLinks.map(link => (
                         <ListItem>
-                          <ListItemIcon>
-                            <PersonIcon />
-                          </ListItemIcon>
                           <ListItemText primary={link} />
                         </ListItem>
                       ))}
@@ -81,9 +78,6 @@ class TeamArtefacts extends React.Component {
                     <List dense={true}>
                       {this.props.technologies.map(tech => (
                         <ListItem>
-                          <ListItemIcon>
-                            <PersonIcon />
-                          </ListItemIcon>
                           <ListItemText primary={tech} />
                         </ListItem>
                       ))}
