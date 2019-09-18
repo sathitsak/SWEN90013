@@ -229,8 +229,6 @@ class EmailModal extends React.Component {
       emails.push(nameEmailMap.get(name))
     );
 
-    console.log(emails);
-
     //send multiple posts
 
     //templates
@@ -244,16 +242,14 @@ class EmailModal extends React.Component {
     //   });
 
     axios
-      .post(`http://localhost:13000/api/email`, {
-        account: {
-          user: "cis.projectmanagementsystem@gmail",
-          pw: "finalyearproj2019"
-        },
-        message: {
-          from: "this supervisor",
-          to: this.state.email_recipients,
-          html: this.state.email_message
-        }
+      .post(`http://35.197.167.244/message`, {
+        from: "thissupervisor",
+        to: "chamira.balasuriya@gmail.com",
+        subject: "new",
+        html: "<p>testttt</p>",
+        projectType: "fdafdsa",
+        cc: ["chamira.b@live.com.au"],
+        projectID: ""
       })
       .then(function(response) {
         console.log(response);
