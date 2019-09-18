@@ -1,39 +1,43 @@
-import React from 'react';
+import React from "react";
 import PropTypes from "prop-types";
-import {withStyles} from "@material-ui/core/styles";
+import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import ListItemText from "@material-ui/core/ListItemText";
 import Grid from "@material-ui/core/Grid";
 
-import ChangeStatus from './ChangeStatus';
-import AssignToSupervisor from './AssignToSupervisor';
-import Description from './Description';
-import ViewProposal from './ViewProposal';
-import ViewClient from './ViewClient';
-import Organization from './Organization';
+import ChangeStatus from "./ChangeStatus";
+import AssignToSupervisor from "./AssignToSupervisor";
+import Description from "./Description";
+import ViewProposal from "./ViewProposal";
+import ViewClient from "./ViewClient";
+import Organization from "./Organization";
 import store from "../../../../../store";
 
 const styles = {
-    basic: {
-        marginTop: 10,
-        paddingLeft: 10,
-    },
-    font: {
-        color: "#757575",
-    }
+  basic: {
+    marginTop: 10,
+    paddingLeft: 10
+  },
+  infoTitle: {
+    textAlign: "center",
+    paddingLeft: "3%",
+    paddingBottom: "3%",
+    fontWeight: "bold",
+    color: "#094183"
+  }
 };
 
 class ProjectInfo extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = store.getState();
-        this._handleStoreChange = this._handleStoreChange.bind(this);
-        store.subscribe(this._handleStoreChange);
-    }
+  constructor(props) {
+    super(props);
+    this.state = store.getState();
+    this._handleStoreChange = this._handleStoreChange.bind(this);
+    store.subscribe(this._handleStoreChange);
+  }
 
-    _handleStoreChange() {
-        this.setState(store.getState());
-    }
+  _handleStoreChange() {
+    this.setState(store.getState());
+  }
 
     render() {
         const {classes} = this.props;
@@ -41,7 +45,7 @@ class ProjectInfo extends React.Component {
 
         return (
             <div>
-                <Typography variant="h5" align='center' className={classes.font}>
+                <Typography variant="h5" className={classes.infoTitle}>
                     PROJECT OUTLINE
                 </Typography>
                 <Grid container direction='column'>
@@ -50,19 +54,19 @@ class ProjectInfo extends React.Component {
                     </Grid>
 
                     <Grid item className={classes.basic}>
-                        <Description description={project.description}/>
+                      <Description description={project.description} />
                     </Grid>
 
                     <Grid item className={classes.basic}>
-                        <ViewProposal proposalID={project.proposalID}/>
+                      <ViewProposal proposalID={project.proposalID} />
                     </Grid>
 
                     <Grid item className={classes.basic}>
-                        <ViewClient client={project.client}/>
+                      <ViewClient client={project.client} />
                     </Grid>
 
                     <Grid item className={classes.basic}>
-                        <Organization industry={project.industry}/>
+                      <Organization industry={project.industry} />
                     </Grid>
 
                     <Grid item className={classes.basic}>
@@ -79,7 +83,7 @@ class ProjectInfo extends React.Component {
 }
 
 ProjectInfo.propTypes = {
-    classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired
 };
 
 export default withStyles(styles)(ProjectInfo);

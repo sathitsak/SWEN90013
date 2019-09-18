@@ -8,27 +8,25 @@ import {getProjectById} from "../../../../api";
 import {getGetProjectByIdAction} from "../../../../store/actionCreators";
 import store from "../../../../store";
 import {Paper} from "@material-ui/core";
+import grey from "@material-ui/core/colors/grey";
 
-const styles = {
-    projectInfo: {
-        marginBottom: 10,
-        width: "100%",
-        // height: 670
-    },
-    notes: {
-        width: "100%",
-        // height: 140
-    },
-    paper: {
-        padding: 20,
-        backgroundColor: "#f3f3f3"
-    }
-};
+import TeamPage from "./StudentTeam/TeamPage";
+
+const styles = theme => ({
+  notes: {
+    width: "100%",
+    height: 140
+  },
+  paper: {
+    padding: theme.spacing.unit * 2,
+    color: theme.palette.text.secondary,
+    backgroundColor: grey[50]
+  },
+});
 
 class ProjectById extends React.Component {
     async _reqTodoList(projID) {
         const project = await getProjectById(projID);
-        // console.log(result);
         const getProAction = getGetProjectByIdAction(project);
         console.log(getProAction);
         store.dispatch(getProAction);
@@ -42,26 +40,31 @@ class ProjectById extends React.Component {
     render() {
         const {classes} = this.props;
 
-        return (
-            <Grid
-                container
-                direction="column"
-                alignContent="center"
-                justify="flex-end"
-            >
-                <Grid item className={classes.projectInfo}>
-                    <Paper className={classes.paper}>
-                        <ProjectInfo/>
-                    </Paper>
-                </Grid>
-                <Grid item className={classes.notes}>
-                    <Paper className={classes.paper}>
-                        <ProjectNotes/>
-                    </Paper>
-                </Grid>
-            </Grid>
-        );
-    }
+    return (
+      <Grid
+        container
+        spacing={16}
+        justify="flex-end"
+        direction="row"
+      >
+        <Grid item xs={6}>
+          <Paper className={classes.paper} style={{ height: "100%" }}>
+            <ProjectInfo />
+          </Paper>
+        </Grid>
+        <Grid item xs={6}>
+          <Paper className={classes.paper} style={{ position: "relative" }}>
+            <TeamPage />
+          </Paper>
+        </Grid>
+        <Grid item xs={12} className={classes.notes}>
+          <Paper className={classes.paper} style={{ marginBottom: "20px" }}>
+            <ProjectNotes />
+          </Paper>
+        </Grid>
+      </Grid>
+    );
+  }
 }
 
 ProjectById.propTypes = {
