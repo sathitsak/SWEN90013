@@ -233,6 +233,16 @@ class EmailModal extends React.Component {
 
     //send multiple posts
 
+    //templates
+    // axios
+    //   .get(`http://localhost:13000/api/message/template`)
+    //   .then(function(response) {
+    //     console.log(response);
+    //   })
+    //   .catch(function(error) {
+    //     console.log(error);
+    //   });
+
     axios
       .post(`http://localhost:13000/api/email`, {
         account: {
