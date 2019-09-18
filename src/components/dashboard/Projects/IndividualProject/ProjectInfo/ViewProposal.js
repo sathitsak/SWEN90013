@@ -23,7 +23,7 @@ class ViewProposal extends React.Component {
                     <Grid item style={{marginTop: 10}} align="center">
                         <Button
                             variant="contained"
-                            color="secondary"
+                            color="primary"
                             href={`/dashboard/proposals/${proposalID}`}
                             style={{width: 140}}
                         >
