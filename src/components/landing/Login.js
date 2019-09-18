@@ -17,18 +17,22 @@ export default class Login extends React.Component {
         <section>
           <p>Login with your University of Melbourne username and password.</p>
           <form>
-            <fieldset style={{ border: 0, padding: 0}}>
-              <div style={{ width:"25.75rem"}}>
-                <label className="required">Username: </label>
+            <fieldset>
+              <div>
+                <label>Username: </label>
+              </div>
+              <div>
                 <input id="undernameInput" type="text" />
               </div>
-              <div style={{ width:"25.75rem"}}>
-                <label className="required">Password: </label>
+              <div>
+                <label>Password: </label>
+              </div>
+              <div>
                 <input id="undernameInput" type="text" />
               </div>
             </fieldset>
             <div>
-              <button type="submit" value="login" className="button cta" style={{marginLeft: "18%"}}>
+              <button type="submit" value="login" class="button cta">
                 <Link to={"/dashboard"}>Login</Link>
               </button>
             </div>

@@ -4,6 +4,10 @@ import { Link } from "react-router-dom";
 import UniMelbWrapper from "../uniMelbWrapper/UniMelbWrapper";
 import axios from "axios";
 
+let styles = {
+  width: "400px"
+};
+
 class SubmitPage extends React.Component {
   //Check if the input email is valide or not
   //If it is email then do this.handleClick();
@@ -47,8 +51,8 @@ class SubmitPage extends React.Component {
     var original = document.getElementById("original").value;
     var used = document.getElementById("used").value;
     var technical = document.getElementById("technical").value;
-    var organisationName = document.getElementById("organisationName").value;
-    var industryType = document.getElementById("industryType").value;
+    var organizationName = document.getElementById("organizationName").value;
+    var idustryType = document.getElementById("idustryType").value;
     var size = document.getElementById("size").value;
     var organisationBrief = document.getElementById("organisationBrief").value;
     var projectName = document.getElementById("projectName").value;
@@ -63,8 +67,8 @@ class SubmitPage extends React.Component {
       ci2email,
       ci2number,
       technical,
-      organisationName,
-      industryType,
+      organizationName,
+      idustryType,
       size,
       organisationBrief,
       projectName,
@@ -84,14 +88,14 @@ class SubmitPage extends React.Component {
         ci2lastname ||
         ci2email ||
         ci2number ||
-        organisationName ||
+        organizationName ||
         organisationBrief ||
         projectName ||
         outline ||
         beneficiaries ||
         benefits ||
         original) === "" ||
-      (technical || industryType || size) === -1
+      (technical || idustryType || size) == -1
     ) {
       alert("Please fill in all required fields");
     } else if (!this.ValidateContactInfo(officeNumber, number.ci2number)) {
@@ -163,8 +167,10 @@ class SubmitPage extends React.Component {
               <legend>About Your Organisation</legend>
 
               <div>
-                <label className="required">Organisation name</label>
-                <input id="organisationName" type="text" />
+                <h2> ABOUT YOUR ORGANISATION </h2>
+              </div>
+              <div>
+                <label>Organisation name:</label>
               </div>
 
               <div>
@@ -222,7 +228,60 @@ class SubmitPage extends React.Component {
                   </select>
                 </div>
               </div>
+              <div>
+                <label>Industry</label>
+              </div>
 
+              <div className="styled-select" style={styles}>
+                <select id="idustryType">
+                  <option value="-1">Please select&emsp;</option>
+                  <option value="Aged care">Aged care</option>
+                  <option value="Agriculture">Agriculture</option>
+                  <option value="Amusement, evens and recreation">
+                    Amusement, evens and recreation
+                  </option>
+                  <option value="Animal care and veterinary services">
+                    Animal care and veterinary services
+                  </option>
+                  <option value="Children’s services">
+                    Children’s services
+                  </option>
+                  <option value="Commercial sales ">Commercial sales</option>
+                  <option value="Education">Education</option>
+                  <option value="Graphic arts">Graphic arts</option>
+                  <option value="Hair and beauty ">Hair and beauty</option>
+                  <option value="Health and welfare services">
+                    Health and welfare services
+                  </option>
+                  <option value="Hospitality ">Hospitality</option>
+                  <option value="Indigenous organisations and services">
+                    Indigenous organisations and services
+                  </option>
+                  <option value="Journalism">Journalism</option>
+                  <option value="Local government administration">
+                    Local government administration
+                  </option>
+                  <option value="Market and business consultancy services">
+                    Market and business consultancy services
+                  </option>
+                  <option value="Miscellaneous">Miscellaneous</option>
+                  <option value="Real estate">Real estate</option>
+                  <option value="Restaurants">Restaurants</option>
+                  <option value="Retail">Retail</option>
+                  <option value="Social, community, home care and disability services">
+                    Social, community, home care and disability services
+                  </option>
+                  <option value="Sporting organisations">
+                    Sporting organisations
+                  </option>
+                  <option value="Storage services">Storage services</option>
+                  <option value="Technical services">Technical services</option>
+                  <option value="Telecommunications services">
+                    Telecommunications services
+                  </option>
+                  <option value="Tourism">Tourism</option>
+                </select>
+              </div>
               <div>
                 <label className="required">Size of Organisation</label>
                 <div className="styled-select" style={{ marginBottom: "3%" }}>
@@ -243,6 +302,23 @@ class SubmitPage extends React.Component {
                   </select>
                 </div>
               </div>
+              <div className="styled-select" style={styles}>
+                <select id="size">
+                  <option value="-1">Please select</option>
+                  <option value="more than 250 employees">
+                    more than 250 employees
+                  </option>
+                  <option value="between 50–249 employees">
+                    between 50 – 249 employees
+                  </option>
+                  <option value="between 10–49 employees">
+                    between 10 – 49 employees
+                  </option>
+                  <option value="less than 10 employees">
+                    Less than 10 employees
+                  </option>
+                </select>
+              </div>
 
               <div>
                 <label className="required">
@@ -250,7 +326,6 @@ class SubmitPage extends React.Component {
                 </label>
                 <textarea id="organisationBrief" type="text" />
               </div>
-            </fieldset>
 
             <br />
             <br />
@@ -266,7 +341,9 @@ class SubmitPage extends React.Component {
               </div>
 
               <div>
-                <label className="required">Briefly outline your project</label>
+                <label>Briefly outline your project:</label>
+              </div>
+              <div>
                 <textarea id="outline" type="text" />
               </div>
 
@@ -291,6 +368,9 @@ class SubmitPage extends React.Component {
                 </label>
                 <textarea id="original" type="text" />
               </div>
+              <div>
+                <textarea id="original" type="text" />
+              </div>
 
               <div>
                 <label className="required">
@@ -298,7 +378,6 @@ class SubmitPage extends React.Component {
                 </label>
                 <textarea id="used" type="text" />
               </div>
-            </fieldset>
 
             <br />
             <br />
@@ -307,27 +386,37 @@ class SubmitPage extends React.Component {
               <legend>About You</legend>
 
               <div>
-                <label className="required">First Name</label>
+                <label>Name: </label>
+              </div>
+              <div>
                 <input id="name" type="text" />
               </div>
 
               <div>
-                <label className="required">Last Name</label>
+                <label>Lastname: </label>
+              </div>
+              <div>
                 <input id="lastname" type="text" />
               </div>
 
               <div>
-                <label className="required">Email Address</label>
+                <label>Email: </label>
+              </div>
+              <div>
                 <input id="email" type="email" />
               </div>
 
               <div>
-                <label className="required">Mobile Number</label>
+                <label>Number: </label>
+              </div>
+              <div>
                 <input id="number" type="text" />
               </div>
 
               <div>
-                <label className="required">Office Number</label>
+                <label>Office number: </label>
+              </div>
+              <div>
                 <input id="officeNumber" type="text" />
               </div>
 
@@ -357,22 +446,26 @@ class SubmitPage extends React.Component {
               </h7>
 
               <div>
-                <label className="required">First Name</label>
                 <input id="ci2firstname" type="text" />
               </div>
-
               <div>
-                <label className="required">Last Name</label>
+                <label>Contact information 2 Last name: </label>
+              </div>
+              <div>
                 <input id="ci2lastname" type="text" />
               </div>
 
               <div>
-                <label className="required">Email Address</label>
+                <label>Contact information 2 Email: </label>
+              </div>
+              <div>
                 <input id="ci2email" type="text" />
               </div>
 
               <div>
-                <label className="required">Mobile Number</label>
+                <label>Contact information 2 Number: </label>
+              </div>
+              <div>
                 <input id="ci2number" type="text" />
               </div>
             </fieldset>

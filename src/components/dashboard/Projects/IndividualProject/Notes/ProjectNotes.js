@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from "prop-types";
 import {withStyles} from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-import EmailModal from '../../../Email/EmailModal';
+import EmailModal from '../../../email/EmailModal';
 import {Grid} from '@material-ui/core';
 import store from "../../../../../store";
-import SingleNote from "../../../Notes/SingleNote";
+import SingleNote from "./SingleNote";
 
 const styles = {
     notesTitle: {
@@ -30,7 +30,7 @@ class ProjectNotes extends React.Component {
     }
 
     _handleStoreChange() {
-        // this.setState({notes: store.getState().project.notes});
+        this.setState({notes: store.getState().project.notes,});
     }
 
     render() {

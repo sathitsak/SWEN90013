@@ -12,9 +12,8 @@ import grey from "@material-ui/core/colors/grey"
 
 const styles = theme => ({
     card: {
-        width: "96%",
-        margin: 10,
-        overflow: "auto",
+        // width: 350,
+        margin: 10
     },
     avatar: {
         backgroundColor: red[500]
@@ -41,45 +40,36 @@ const styles = theme => ({
 });
 
 class ProposalCard extends React.Component {
-
-    _checkSubjectExists = proposal => {
-        if ('subject' in proposal) {
-            return proposal.subject.name;
-        } else {
-            return " "
-        }
-    }
-
     render() {
-        const {classes, id, proposal} = this.props;
+        const {classes, id} = this.props;
         return (
             <Card className={classes.card}>
                 <Link
                     to={`/dashboard/proposals/${id}`}
-                    id={id}
+                    id={this.props.id}
                     className={classes.link}
                 >
                     <CardHeader
                         avatar={
                             <Avatar className={classes.avatar}>
-                                {proposal.name.slice(0, 1).toUpperCase()}
+                                {/* {this.props.title.slice(0, 1).toUpperCase()} */}
                             </Avatar>
                         }
-                        title={proposal.name}
-                        subheader={proposal.client.organisation.name}
+                        title={this.props.title}
+                        subheader={this.props.organisation}
                         className={classes.cardHeader}
                     />
                     <CardContent className={classes.cardContent}>
                         <Typography variant="overline" align="left"
                                     style={{marginBottom: 5}}>
-                            Client: {proposal.client.firstName + " " + proposal.client.lastName}
+                            Client: {this.props.client}
                         </Typography>
 
-                        <Divider/>
+                        <Divider component="li" paddingTop="20"/>
 
                         <Typography component="p" variant="overline"
                                     style={{marginTop: 5}}>
-                            Subject: {this._checkSubjectExists(proposal)}
+                            Supervisor: {this.props.supervisor}
                         </Typography>
                     </CardContent>
                 </Link>

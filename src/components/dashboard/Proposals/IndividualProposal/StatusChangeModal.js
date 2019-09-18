@@ -8,15 +8,18 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import TextField from "@material-ui/core/TextField";
+import Input from "@material-ui/core/Input";
+import OutlinedInput from "@material-ui/core/OutlinedInput";
+import FilledInput from "@material-ui/core/FilledInput";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
+import FormHelperText from "@material-ui/core/FormHelperText";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import axios from "axios";
 import store from "../../../../store";
 import { withStyles } from "@material-ui/core/styles";
-import { getAllSubjects } from "../../../../api";
-import { getGetAllSubjectsAction } from "../../../../store/actionCreators";
+
 
 const styles = theme => ({
   acceptButton: {
@@ -52,7 +55,7 @@ class StatusChangeModal extends React.Component {
       maxWidth: "md",
       option: "",
       rerender: "",
-      subjectName: "",
+      supervisor: "",
       status: ""
     };
   }
@@ -65,39 +68,23 @@ class StatusChangeModal extends React.Component {
     this.setState({ open: false });
   };
 
-  async _reqTodoList() {
-    const subjectsResult = await getAllSubjects();
-    const subjectsAction = getGetAllSubjectsAction(subjectsResult);
-    store.dispatch(subjectsAction);
-  }
-
-  componentDidMount() {
-    this._reqTodoList();
-  }
-
-  _handleChange = () => {
-    this.setState({ subjects: store.getState().subjects });
-  };
-
-  unsubscribe = store.subscribe(this._handleChange);
-
   _handleUpdate = () => {
     var responseText = document.getElementById("reason").value;
 
-    if (responseText === "" || this.state.subjectName === "") {
+    if (responseText == "" || this.state.supervisor == "") {
       alert("Please complete all fields");
     } else {
       if (this.state.option === "approved") {
         this.setState({ open: false });
         console.log("the proposal id is " + this.props.id);
         console.log(
-          "the subject for this project is " + this.state.subjectName
+          "the supervisor for this project is " + this.state.supervisor
         );
         axios
           .post(
             "http://localhost:13000/api/proposal/" + this.props.id + "/accept",
             {
-              subjectName: this.state.subjectName,
+              supervisor: this.state.supervisor,
               acceptReason: responseText
             }
           )
@@ -115,6 +102,7 @@ class StatusChangeModal extends React.Component {
           .post(
             "http://localhost:13000/api/proposal/" + this.props.id + " /reject",
             {
+              supervisor: this.state.supervisor,
               rejectReason: responseText
             }
           )
@@ -129,8 +117,8 @@ class StatusChangeModal extends React.Component {
   };
 
   _handleChange = event => {
-    this.setState({ subjectName: [event.target.value] });
-    console.log(this.state.subjectName);
+    this.setState({ supervisor: [event.target.value] });
+    console.log(this.state.coordinator);
   };
 
   render() {
@@ -139,7 +127,7 @@ class StatusChangeModal extends React.Component {
     return (
       <div>
         <Grid container spacing={24}>
-          <Grid item xs={6} style={{ paddingLeft: 22 }}>
+          <Grid item xs={6} align="center">
             <Button
               variant="contained"
               color="primary"
@@ -149,7 +137,7 @@ class StatusChangeModal extends React.Component {
               Accept
             </Button>
           </Grid>
-          <Grid item xs={6} align="left">
+          <Grid item xs={6} align="center">
             <Button
               variant="contained"
               color="secondary"
@@ -178,9 +166,9 @@ class StatusChangeModal extends React.Component {
                     id="reason"
                     multiline
                     rows="4"
-                    margin="dense"
+                    margin="normal"
                     variant="filled"
-                    style={{ width: "100%" }}
+                    style={{ width: 300 }}
                   />
                 </Grid>
                 <Grid item xs={6} style={{ marginTop: 30 }}>
@@ -189,8 +177,12 @@ class StatusChangeModal extends React.Component {
                       Assign this proposal to a subject
                     </h6>
                     <Select
-                      value={this.state.subjectName}
-                      id="subjectName"
+                      value={this.state.supervisor}
+                      id="supervisor"
+                      inputProps={{
+                        name: "age",
+                        id: "age-simple"
+                      }}
                       onChange={this._handleChange}
                     >
                       <MenuItem value="">

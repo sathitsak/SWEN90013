@@ -1,6 +1,8 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
+import { ProposalContext } from "../../state/Proposal";
+import axios from "axios";
 
 import ProposalInfo from "./ProposalInfo";
 import ProposalResponses from "./ProposalResponses";
@@ -25,6 +27,10 @@ const styles = theme => ({
 });
 
 class ProposalById extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
   state = {
     proposal: ""
   };
@@ -53,6 +59,8 @@ class ProposalById extends React.Component {
 
   render() {
     const { classes } = this.props;
+    console.log('propsalbyID')
+    console.log(this.state)
 
     return (
       <div className={classes.root}>
@@ -61,10 +69,9 @@ class ProposalById extends React.Component {
             {
               <ProposalResponses
                 q1={this.state.proposal.outlineOfProject}
-                q2={this.state.proposal.beneficiaries}
-                q3={this.state.proposal.endProductBenefits}
-                q4={this.state.proposal.originality}
-                q5={this.state.proposal.endProductUse}
+                q2={this.state.proposal.endProductBenefits}
+                q3={this.state.proposal.endProductUse}
+                q4={this.state.proposal.beneficiaries}
               />
             }
           </Grid>
