@@ -1,7 +1,7 @@
 import React from "react";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
-import { green, red }from "@material-ui/core/colors";
+import { green, red, grey } from "@material-ui/core/colors";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
@@ -17,6 +17,7 @@ import FormHelperText from "@material-ui/core/FormHelperText";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import axios from "axios";
+import store from "../../../../store";
 import { withStyles } from "@material-ui/core/styles";
 
 
@@ -36,14 +37,14 @@ const styles = theme => ({
   confirmButton: {
     backgroundColor: "#094183",
     color: "#FFFFFF",
-    '&:hover': {
-      backgroundColor:"#4074B2",
+    "&:hover": {
+      backgroundColor: "#4074B2"
     }
   },
   discardButton: {
-    color: "#094183",
+    color: "#094183"
   }
-})
+});
 
 class StatusChangeModal extends React.Component {
   constructor(props) {
@@ -156,13 +157,11 @@ class StatusChangeModal extends React.Component {
               <DialogTitle id="alert-dialog-title">
                 Change proposal status
               </DialogTitle>
-              <Grid container spacing={24} alignItems="center">
-                <Grid item xs={6} style={{ marginTop: 30 }} align="center">
-                  <DialogContent>
-                    <DialogContentText id="alert-dialog-description">
-                      Provide a reason for status change
-                    </DialogContentText>
-                  </DialogContent>
+              <Grid container spacing={24}>
+                <Grid item xs={6} style={{ padding: 50 }}>
+                  <h6 style={{ color: grey[800] }}>
+                    Why did you accept this project?
+                  </h6>
                   <TextField
                     id="reason"
                     multiline
@@ -172,11 +171,11 @@ class StatusChangeModal extends React.Component {
                     style={{ width: 300 }}
                   />
                 </Grid>
-                <Grid item xs={6} style={{ marginTop: 30 }} align="center">
-                  <FormControl style={{ minWidth: 200, marginTop: 50 }}>
-                    <InputLabel htmlFor="age-simple">
-                      Select supervisor
-                    </InputLabel>
+                <Grid item xs={6} style={{ marginTop: 30 }}>
+                  <FormControl style={{ width: "70%", marginTop: 9 }}>
+                    <h6 style={{ color: grey[800] }}>
+                      Assign this proposal to a subject
+                    </h6>
                     <Select
                       value={this.state.supervisor}
                       id="supervisor"
@@ -189,25 +188,32 @@ class StatusChangeModal extends React.Component {
                       <MenuItem value="">
                         <em>None</em>
                       </MenuItem>
-                      <MenuItem value={"None"}>None</MenuItem>
-                      <MenuItem value={"Eduardo"}>Eduardo</MenuItem>
-                      <MenuItem value={"Doc"}>Doc</MenuItem>
+
+                      {this.props.subjects ? (
+                        this.props.subjects.map(s => (
+                          <em>
+                            <MenuItem value={s._id}>{s.name}</MenuItem>
+                          </em>
+                        ))
+                      ) : (
+                        <div />
+                      )}
                     </Select>
                   </FormControl>
                 </Grid>
               </Grid>
 
               <DialogActions>
-                <Button 
-                  onClick={this._handleUpdate} 
-                  color="primary" 
+                <Button
+                  onClick={this._handleUpdate}
+                  color="primary"
                   className={classes.confirmButton}
                 >
                   Confirm Changes
                 </Button>
 
-                <Button 
-                  onClick={this._handleClose} 
+                <Button
+                  onClick={this._handleClose}
                   color="primary"
                   className={classes.discardButton}
                 >

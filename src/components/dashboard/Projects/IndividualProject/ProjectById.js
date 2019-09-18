@@ -13,6 +13,7 @@ import {Paper} from "@material-ui/core";
 import grey from "@material-ui/core/colors/grey";
 
 import TeamPage from "./StudentTeam/TeamPage";
+import PropTypes from "prop-types";
 
 const styles = theme => ({
     notes: {
@@ -66,18 +67,18 @@ class ProjectById extends React.Component {
             >
                 <Grid item xs={6}>
                     <Paper className={classes.paper} style={{height: "100%"}}>
-                        <ProjectInfo
-                            project={this.state.project}
-                            description={this.state.proposal.outlineOfProject}/>
+                        <ProjectInfo/>
                     </Paper>
                 </Grid>
                 <Grid item xs={6}>
-                    <Paper className={classes.paper} style={{ position: "relative" }}>
+                    <Paper className={classes.paper}
+                           style={{position: "relative"}}>
                         <TeamPage products={this.state.project.products}/>
                     </Paper>
-                    </Grid>
-                    <Grid item xs={12} className={classes.notes}>
-                    <Paper className={classes.paper} style={{ marginBottom: "20px" }}>
+                </Grid>
+                <Grid item xs={12} className={classes.notes}>
+                    <Paper className={classes.paper}
+                           style={{marginBottom: "20px"}}>
                         <Notes
                             notes={this.state.project.notes}
                         />
@@ -87,5 +88,9 @@ class ProjectById extends React.Component {
         );
     }
 }
+
+ProjectById.propTypes = {
+    classes: PropTypes.object.isRequired,
+};
 
 export default withStyles(styles)(ProjectById);
