@@ -243,29 +243,63 @@ class EditStudentTeam extends React.Component {
         store.dispatch(getProAction);
     }
 
-    render() {
-        const {classes, product} = this.props;
+    // Send PUT request
+    const url = `http://localhost:13000/api/product/` + this.props.product._id;
+    axios
+        .put(url, newProduct)
+        .then(function(response) {
+            console.log(response);
+        })
+        .catch(function(error) {
+            console.log(error);
+        });
+    
+    // Close window
+    this._handleClose();
+  }
 
-        return (
-            <div>
-                <Typography gutterBottom/>
+  render() {
+    const { classes, product } = this.props;
 
-                <Grid align="right">
-                    <Button
-                        className={classes.editTeamButton}
-                        onClick={this._handleClickOpen}
-                        color="primary"
-                        style={{marginRight: 12}}>
-                        Edit Team
-                    </Button>
-                </Grid>
+    return (
+      <div>
+        <Typography gutterBottom />
 
-                <Dialog
-                    fullWidth={this.state.fullWidth}
-                    maxWidth={this.state.maxWidth}
-                    open={this.state.open}
-                    onClose={this._handleClose}
-                    aria-labelledby="max-width-dialog-title"
+        <Grid align="right">
+          <Button 
+            className={classes.editTeamButton}
+            onClick={this._handleClickOpen} 
+            color="primary"
+            style={{ marginRight: 12 }}>
+            Edit Team
+          </Button>
+        </Grid>
+        
+        <Dialog
+          fullWidth={this.state.fullWidth}
+          maxWidth={this.state.maxWidth}
+          open={this.state.open}
+          onClose={this._handleClose}
+          aria-labelledby="max-width-dialog-title"
+        >
+          <DialogTitle onClose={this._handleClose}>
+            Edit {product.name}
+          </DialogTitle>
+
+          <Divider />
+
+          <DialogContent>
+            <Grid container spacing={8}>
+              <Grid item xs={2}>
+                <div className={classes.studentTeamHeader}>
+                  Team Name
+                </div>
+              </Grid>
+              <Grid item xs={10}>
+                <form 
+                  className={classes.container} 
+                  noValidate 
+                  autoComplete="off"
                 >
                     <DialogTitle onClose={this._handleClose}>
                         Edit {product.name}

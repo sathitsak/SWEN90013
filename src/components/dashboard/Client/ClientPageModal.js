@@ -163,7 +163,11 @@ class ClientPageModal extends React.Component {
                                 </Grid>
                                 <Grid>
                                     <Paper className={classes.paper}>
-                                        <Notes notes={client.notes}/>
+                                        <Notes 
+                                            notes={client.notes} 
+                                            object={client}
+                                            objectType={"client"}
+                                        />
                                     </Paper>
                                 </Grid>
                             </Grid>

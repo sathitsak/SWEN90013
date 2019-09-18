@@ -4,7 +4,8 @@ import {withStyles} from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import EmailModal from '../Email/EmailModal';
 import {Grid} from '@material-ui/core';
-import SingleNote from "./SingleNote"
+import SingleNote from "./SingleNote";
+import AddNoteModal from "./AddNoteModal";
 
 const styles = {
     notesTitle: {
@@ -35,8 +36,13 @@ class Notes extends React.Component {
                         }
                     </div>
                 : <div/> }
-                <Grid align='right'>
-                    <EmailModal/>
+                <Grid container align="right" spacing={8}>
+                    <Grid item xs={11} align="right">
+                        <AddNoteModal object={this.props.object} objectType={this.props.objectType}/>
+                    </Grid>
+                    <Grid item xs={1} align="right">
+                        <EmailModal/>
+                    </Grid>
                 </Grid>
             </div>
         );

@@ -199,8 +199,8 @@ class StatusChangeModal extends React.Component {
 
                       {this.props.subjects ? (
                         this.props.subjects.map(s => (
-                          <em>
-                            <MenuItem value={s._id}>{s.name}</MenuItem>
+                          <em key={s._id}>
+                            <MenuItem value={s._id} key={s._id}>{s.name}</MenuItem>
                           </em>
                         ))
                       ) : (
