@@ -26,10 +26,15 @@ class Description extends React.Component {
 
         return (
             <div>
-                <Typography align="left" color="textSecondary" variant="h6" style={{ fontWeight: "bold"}}>  
+                <Typography
+                    align="left"
+                    color="textSecondary"
+                    variant="h6"
+                    style={{fontWeight: "bold"}}
+                >
                     Description:
                 </Typography>
-                <Paper className={classes.description}> 
+                <Paper className={classes.description}>
                     {description}
                 </Paper>
             </div>

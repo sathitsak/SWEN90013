@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import { ProposalContext } from "../../state/Proposal";
@@ -6,10 +6,13 @@ import axios from "axios";
 
 import ProposalInfo from "./ProposalInfo";
 import ProposalResponses from "./ProposalResponses";
-import { getProposalById } from "../../../../api";
-import { getGetProposalByIdAction } from "../../../../store/actionCreators";
+import Notes from "../../Notes/Notes";
+import { getProposalById, getAllSubjects } from "../../../../api";
+import {
+  getGetProposalByIdAction,
+  getGetAllSubjectsAction
+} from "../../../../store/actionCreators";
 import store from "../../../../store";
-
 import Paper from "@material-ui/core/Paper";
 
 const styles = theme => ({
@@ -33,10 +36,13 @@ class ProposalById extends React.Component {
   };
 
   async _reqTodoList(propID) {
-    const result = await getProposalById(propID);
-    // console.log(result);
-    const action = getGetProposalByIdAction(result);
-    store.dispatch(action);
+    const proposalResult = await getProposalById(propID);
+    const proposalAction = getGetProposalByIdAction(proposalResult);
+    store.dispatch(proposalAction);
+    const subjectsResult = await getAllSubjects();
+    const subjectsAction = getGetAllSubjectsAction(subjectsResult);
+    store.dispatch(subjectsAction);
+    this.setState({ subjects: store.getState().subjects });
   }
 
   componentDidMount() {
@@ -70,22 +76,41 @@ class ProposalById extends React.Component {
             }
           </Grid>
 
-          <Grid item xs={12} sm={4}>
-            <Paper className={classes.paper} style={{ marginTop: "20px" }}>
-              {/* <ProposalInfo
-                client={this.state.proposal.client}
-                organisation={this.state.proposal.name}
-                status={this.state.proposal.status}
-                id={this.state.proposal._id}
-              /> */}
-              <ProposalInfo
-                client="Stephanie Armther"
-                organisation="Hampers for Homeless"
-                status="new"
-                id="123456"
-              />
-            </Paper>
-          </Grid>
+          {this.state.proposal.client ? (
+            <Grid item xs={12} sm={4}>
+              <Paper className={classes.paper} style={{ marginTop: "20px" }}>
+                <ProposalInfo
+                  client={this.state.proposal.client}
+                  status={this.state.proposal.status}
+                  organisationName={
+                    this.state.proposal.client.organisation.name
+                  }
+                  id={this.state.proposal._id}
+                  subjects={this.state.subjects}
+                />
+                {console.log(this.state.proposal.client)}
+              </Paper>
+            </Grid>
+          ) : (
+            <div />
+          )}
+
+          {this.state.proposal.notes ? (
+            <Grid item xs={12} className={classes.notes}>
+              <Paper
+                className={classes.paper}
+                style={{
+                  padding: "2% 3% 3% 3%",
+                  marginBottom: "20px",
+                  height: "auto"
+                }}
+              >
+                <Notes notes={this.state.proposal.notes} />
+              </Paper>
+            </Grid>
+          ) : (
+            <div />
+          )}
         </Grid>
       </div>
     );
