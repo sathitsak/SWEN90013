@@ -1,3 +1,4 @@
+
 import React from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
@@ -380,3 +381,4 @@ class EmailModal extends React.Component {
 }
 
 export default withStyles(styles)(EmailModal);
+
