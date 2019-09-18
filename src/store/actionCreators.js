@@ -6,7 +6,9 @@ import {
     GET_PROPOSAL_BY_ID,
     GET_CLIENT_BY_ID,
     GET_ALL_SUBJECTS,
-    UPDATE_PROJECT
+    UPDATE_PROJECT,
+    UPDATE_PRODUCT,
+    CREATE_NEW_PRODUCT
 } from "./actionTypes";
 
 export const getGetAllProjectAction = projects => ({
@@ -52,4 +54,15 @@ export const updateProjectAction = (id, project) => ({
     type: UPDATE_PROJECT,
     id: id,
     project: project
+});
+
+export const updateProductAction = (id, product) => ({
+    type: UPDATE_PRODUCT,
+    id: id,
+    product: product
+});
+
+export const createNewProductAction = (product) => ({
+    type: CREATE_NEW_PRODUCT,
+    product: product
 });
