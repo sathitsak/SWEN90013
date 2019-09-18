@@ -5,19 +5,27 @@ import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import Typography from '@material-ui/core/Typography';
+import clsx from "clsx";
+import IconButton from "@material-ui/core/IconButton";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
-const styles = {
-    expansionPanelSummary: {
-        backgroundColor: "#424242",
-        marginTop: 5,
+
+const styles = theme => ({
+    expansionPanel: {
+        borderRadius: 5,
+        marginBottom: 5,
     },
-    expansionPanelDetails: {
-        backgroundColor: "#757575",
+    expand: {
+        transform: "rotate(0deg)",
+        marginLeft: "auto",
+        transition: theme.transitions.create("transform", {
+          duration: theme.transitions.duration.shortest
+        })
     },
-    font:{
-        color: "white",
-    }
-};
+    expandOpen: {
+        transform: "rotate(180deg)"
+    },
+});
 
 class SingleNote extends React.Component {
     constructor(props) {
@@ -32,9 +40,9 @@ class SingleNote extends React.Component {
         const {note, classes} = this.props;
 
         return (
-            <ExpansionPanel>
+            <ExpansionPanel className={classes.expansionPanel}>
                 <ExpansionPanelSummary
-                    // expandIcon={<ExpandMoreIcon/>}
+                    expandIcon={<ExpandMoreIcon />}
                     aria-controls="panel1a-content"
                     id="panel1a-header"
                     className={classes.expansionPanelSummary}

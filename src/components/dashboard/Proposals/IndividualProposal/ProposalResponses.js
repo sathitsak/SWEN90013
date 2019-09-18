@@ -9,7 +9,9 @@ const styles = theme => ({
     root: {
         ...theme.mixins.gutters(),
         paddingTop: theme.spacing.unit * 2,
-        paddingBottom: theme.spacing.unit * 2
+        paddingBottom: theme.spacing.unit * 2,
+        marginTop: 20, 
+        marginLeft: 15
     }
 });
 
@@ -21,42 +23,38 @@ class ProposalResponses extends React.Component {
                 <Paper
                     className={classes.root}
                     elevation={5}
-                    style={{marginTop: 20, marginLeft: 15}}
                 >
                     <Typography variant="h6" component="h3">
                         Briefly outline your project
                     </Typography>
-                    <Typography component="p">{this.props.q1}</Typography>
+                    <Typography component="p" align='justify'>{this.props.q1}</Typography>
                 </Paper>
                 <Paper
                     className={classes.root}
                     elevation={5}
-                    style={{marginTop: 20, marginLeft: 15}}
                 >
                     <Typography variant="h6" component="h3">
                         Benefits of end product
                     </Typography>
-                    <Typography component="p">{this.props.q2}</Typography>
+                    <Typography component="p" align='justify'>{this.props.q2}</Typography>
                 </Paper>
                 <Paper
                     className={classes.root}
                     elevation={5}
-                    style={{marginTop: 20, marginLeft: 15}}
                 >
                     <Typography variant="h6" component="h3">
                         Use of the end-product
                     </Typography>
-                    <Typography component="p">{this.props.q3}</Typography>
+                    <Typography component="p" align='justify'>{this.props.q3}</Typography>
                 </Paper>
                 <Paper
                     className={classes.root}
                     elevation={5}
-                    style={{marginTop: 20, marginLeft: 15}}
                 >
                     <Typography variant="h6" component="h3">
                         Beneficiaries of end-product
                     </Typography>
-                    <Typography component="p">{this.props.q4}</Typography>
+                    <Typography component="p" align='justify'>{this.props.q4}</Typography>
                 </Paper>
             </div>
         );

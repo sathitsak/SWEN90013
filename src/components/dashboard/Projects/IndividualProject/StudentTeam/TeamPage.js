@@ -19,6 +19,7 @@ import Slide from "@material-ui/core/Slide";
 import Fab from "@material-ui/core/Fab";
 import EmailIcon from "@material-ui/icons/Email";
 //import AddCircleIcon from "@material-ui/icons/add_circle";
+import CreateStudentTeamModal from '../StudentTeam/CreateStudentTeamModal';
 
 const styles = theme => ({
   root: {
@@ -49,7 +50,14 @@ const styles = theme => ({
     position: "relative",
     overflow: "auto",
     maxHeight: 100
-  }
+  },
+  teamTitle: {
+    textAlign: "center",
+    paddingLeft: "3%",
+    paddingBottom: "3%",
+    fontWeight: "bold",
+    color: "#094183"
+  },
 });
 
 //dummy data --> now getting from axios
@@ -115,33 +123,16 @@ class TeamPage extends React.Component {
     const { classes } = this.props;
 
     return (
-      <div>
-        <Grid container spacing={24}>
-          <Grid item xs={12}>
-            <Typography variant="h5" align="center">
-              STUDENT TEAM
-            </Typography>
-            <div align="right">
-              <Fab
-                color="primary"
-                aria-label="Email"
-                className={classes.fab}
-                onClick={this._handleClickOpen}
-              ></Fab>
-            </div>
+      <div style={{ position: "relative", marginBottom: 10, overflow: "auto"}}>
+        <Typography variant="h5" className={classes.teamTitle}>
+          STUDENT TEAMS        
+        </Typography>
 
-            <div>
-              <List
-                style={{ height: 454, maxHeight: 470, overflow: "auto" }}
-                dense={true}
-              >
-                {this.state.teams.map(p => (
-                  <TeamCard name={p.name} students={p.students} />
-                ))}
-              </List>
-            </div>
-          </Grid>
-        </Grid>
+        {this.state.teams.map(p => (
+          <TeamCard name={p.name} students={p.students} />
+        ))}
+
+        <CreateStudentTeamModal />
       </div>
     );
   }

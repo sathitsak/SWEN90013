@@ -5,7 +5,15 @@ import Typography from "@material-ui/core/Typography";
 import EmailModal from "../../../email/EmailModal";
 import { Grid } from "@material-ui/core";
 
-const styles = {};
+const styles = {
+  notesTitle: {
+    textAlign: "center",
+    paddingLeft: "3%",
+    paddingBottom: "3%",
+    fontWeight: "bold",
+    color: "#094183"
+  }
+};
 
 class Notes extends React.Component {
   render() {
@@ -13,7 +21,7 @@ class Notes extends React.Component {
 
     return (
       <div>
-        <Typography variant="h5" align="center">
+        <Typography variant="h5" className={classes.notesTitle}>
           NOTES
         </Typography>
         <Grid align="right">

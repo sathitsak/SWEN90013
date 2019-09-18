@@ -6,25 +6,25 @@ import CardHeader from "@material-ui/core/CardHeader";
 import { Link } from "react-router-dom";
 import Avatar from "@material-ui/core/Avatar";
 import red from "@material-ui/core/colors/red";
+import grey from "@material-ui/core/colors/grey";
 import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
 import CardContent from "@material-ui/core/CardContent";
 
 const styles = {
   card: {
-    margin: 10
+    margin: 10,
   },
   link: {
     float: "left",
     width: "100%",
     textDecoration: "none",
     "&:hover": {
-      // backgroundColor: teal[200]
-      backgroundColor: "#f5f5f5"
+      backgroundColor: grey[200],
+      textDecoration: "none",
     },
     "&:active": {
-      // backgroundColor: teal[300]
-      backgroundColor: "#ADB8C1"
+      backgroundColor: grey[300]
     }
   },
   avatar: {

@@ -1,16 +1,39 @@
 import React from "react";
 import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
-import Fab from "@material-ui/core/Fab";
-import Chip from "@material-ui/core/Chip";
-import FaceIcon from "@material-ui/icons/Face";
-import red from "@material-ui/core/colors/red";
-import lightGreen from "@material-ui/core/colors/lightGreen";
-import { blue, amber } from "@material-ui/core/colors";
 import ClientPageModal from "./ClientPageModal";
-import Divider from "@material-ui/core/Divider";
 import StatusChangeModal from "./StatusChangeModal";
+import { green, amber, red }from "@material-ui/core/colors";
+import { withStyles } from "@material-ui/core/styles";
+
+const styles = theme => ({
+  container: {
+    justifyItems: "start",
+  },
+  button: {
+    marginRight: "20px"
+  },
+  infoHeader: {
+    fontWeight: "bold",
+    fontSize: 18,
+    verticalAlign: "middle",
+    position: "relative"
+  },
+  infoContent: {
+    fontSize: 16,
+    verticalAlign: "middle",
+    position: "relative",
+    color: "#000000"
+  },
+  status: {
+    width: 25,
+    height: 25,
+    marginRight: 10,
+    float: "left",
+  },
+  row: {
+    alignItems: "center",
+  }
+});
 
 class ProposalInfo extends React.Component {
   constructor(props) {
@@ -20,16 +43,18 @@ class ProposalInfo extends React.Component {
     };
   }
 
-  determineStatusButtonColour(status) {
+  _determineStatusButtonColour(status) {
     if (status === "new") {
-      return blue[500];
-    } else {
       return amber[500];
+    } else if (status === "accepted") {
+      return green[500];
+    } else {
+      return red[500];
     }
   }
 
-  handleClientClick() {
-    alert("You clicked the client");
+  _capitalize(str){
+    return str.charAt(0).toUpperCase() + str.slice(1);
   }
 
   render() {
@@ -39,49 +64,57 @@ class ProposalInfo extends React.Component {
     return (
       <div>
         <Grid container spacing={24}>
-          <Grid item xs={6} style={{ marginTop: 50 }}>
-            <Typography align="center" variant="h5">
-              Status
-            </Typography>
-          </Grid>
-          <Grid item xs={6} style={{ marginTop: 30 }} align="center">
-            <Button
-              variant="contained"
-              color="primary"
-              style={{
-                backgroundColor: this.determineStatusButtonColour(
-                  this.props.status
-                ),
-                marginTop: 18
-              }}
-            >
-              {this.props.status}
-            </Button>
-          </Grid>
+          <Grid item xs={12}>
+            <Grid container spacing={3}  className={classes.row}>
+              <Grid item xs={5}>
+                <div className={classes.infoHeader}>Status</div>
+              </Grid>
+              <Grid item xs={7}>
+                  <div 
+                    className={classes.status}
+                    style={{
+                      backgroundColor: this._determineStatusButtonColour(
+                        this.props.status
+                      ),
+                    }} 
+                  />
+                  <div className={classes.infoContent}>{this._capitalize(this.props.status)}</div>
+              </Grid>
+            </Grid>
 
-          <Grid item xs={6} style={{ marginTop: 30 }}>
-            <Typography variant="h5" align="center">
-              Client
-            </Typography>
+            <br/>
+
+            <Grid container spacing={3}  className={classes.row}>
+              <Grid item xs={5}>
+                <div className={classes.infoHeader}>Client</div>
+              </Grid>
+              <Grid item xs={7}>
+                <ClientPageModal client={this.props.client}></ClientPageModal>
+              </Grid>
+            </Grid>
+
+            <br/>
+
+            <Grid container spacing={3}  className={classes.row}>
+              <Grid item xs={5} wrap="wrap">
+                <div className={classes.infoHeader}>Organisation</div>
+              </Grid>
+              <Grid item xs={7}>
+                <div className={classes.infoContent}>{this.props.organisation}</div>
+              </Grid>
+            </Grid>
+            
+            <br/>
+
+            <div className={classes.infoHeader}>Change Status</div>
+                  
           </Grid>
-          <Grid item xs={6} style={{ marginTop: 30 }} align="center">
-            <ClientPageModal client={this.props.client} />
-          </Grid>
-          <Grid item xs={6} style={{ marginTop: 30 }}>
-            <Typography variant="h5" align="center">
-              Organisation {this.props.name}
-            </Typography>
-          </Grid>
-          <Grid item xs={6} style={{ marginTop: 30 }}>
-            <Typography variant="h5" align="center">
-              {this.props.organisation}
-            </Typography>
-          </Grid>
-          <StatusChangeModal id={this.props.id} />
         </Grid>
+
+        <StatusChangeModal id={this.props.id} />
       </div>
     );
   }
 }
 
-export default ProposalInfo;
+export default withStyles(styles)(ProposalInfo);

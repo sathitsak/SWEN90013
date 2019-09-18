@@ -53,7 +53,7 @@ class ChangeStatus extends React.Component {
             <div>
                 <Grid container>
                     <Grid item style={{marginTop: 10, marginRight: 80}}>
-                        <Typography align="left" variant="h6">
+                        <Typography align="left" color="textSecondary" variant="h6" style={{ fontWeight: "bold"}}>
                             Status:
                         </Typography>
                     </Grid>
@@ -73,7 +73,7 @@ class ChangeStatus extends React.Component {
                     open={open}
                     onClose={this._handleClose}
                 >
-                    <DialogTitle>Choose a new status</DialogTitle>
+                    <DialogTitle>Update project status</DialogTitle>
                     <DialogContent>
                         <form className={classes.container}>
                             <FormControl className={classes.formControl}>

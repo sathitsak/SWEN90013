@@ -1,8 +1,7 @@
 import React from "react";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
-import red from "@material-ui/core/colors/red";
-import lightGreen from "@material-ui/core/colors/lightGreen";
+import { green, red }from "@material-ui/core/colors";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
@@ -18,6 +17,33 @@ import FormHelperText from "@material-ui/core/FormHelperText";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import axios from "axios";
+import { withStyles } from "@material-ui/core/styles";
+
+
+const styles = theme => ({
+  acceptButton: {
+    backgroundColor: green[400],
+    "&:hover": {
+      backgroundColor: green[800]
+    }
+  },
+  rejectButton: {
+    backgroundColor: red[400],
+    "&:hover": {
+      backgroundColor: red[800]
+    }
+  },
+  confirmButton: {
+    backgroundColor: "#094183",
+    color: "#FFFFFF",
+    '&:hover': {
+      backgroundColor:"#4074B2",
+    }
+  },
+  discardButton: {
+    color: "#094183",
+  }
+})
 
 class StatusChangeModal extends React.Component {
   constructor(props) {
@@ -95,24 +121,26 @@ class StatusChangeModal extends React.Component {
   };
 
   render() {
+    const { classes } = this.props;
+
     return (
       <div>
         <Grid container spacing={24}>
-          <Grid item xs={6} style={{ marginTop: 30 }}>
+          <Grid item xs={6} align="center">
             <Button
               variant="contained"
               color="primary"
-              style={{ backgroundColor: lightGreen[500], marginLeft: 100 }}
+              className={classes.acceptButton}
               onClick={() => this._handleClickOpen("approved")}
             >
               Accept
             </Button>
           </Grid>
-          <Grid item xs={6} style={{ marginTop: 30 }} align="center">
+          <Grid item xs={6} align="center">
             <Button
               variant="contained"
               color="secondary"
-              style={{ backgroundColor: red[500], marginLeft: 80 }}
+              className={classes.rejectButton}
               align="center"
               onClick={() => this._handleClickOpen("reject")}
             >
@@ -128,7 +156,7 @@ class StatusChangeModal extends React.Component {
               <DialogTitle id="alert-dialog-title">
                 Change proposal status
               </DialogTitle>
-              <Grid container spacing={24}>
+              <Grid container spacing={24} alignItems="center">
                 <Grid item xs={6} style={{ marginTop: 30 }} align="center">
                   <DialogContent>
                     <DialogContentText id="alert-dialog-description">
@@ -170,11 +198,20 @@ class StatusChangeModal extends React.Component {
               </Grid>
 
               <DialogActions>
-                <Button onClick={this._handleClose} color="primary">
-                  Cancel
+                <Button 
+                  onClick={this._handleUpdate} 
+                  color="primary" 
+                  className={classes.confirmButton}
+                >
+                  Confirm Changes
                 </Button>
-                <Button onClick={this._handleUpdate} color="primary" autoFocus>
-                  Accept Changes
+
+                <Button 
+                  onClick={this._handleClose} 
+                  color="primary"
+                  className={classes.discardButton}
+                >
+                  Cancel
                 </Button>
               </DialogActions>
             </Dialog>
@@ -185,4 +222,4 @@ class StatusChangeModal extends React.Component {
   }
 }
 
-export default StatusChangeModal;
+export default withStyles(styles)(StatusChangeModal);

@@ -3,16 +3,16 @@ import axios from "axios";
 import ProposalCard from "./ProposalCard";
 import Grid from "@material-ui/core/Grid";
 import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
 import Typography from "@material-ui/core/Typography";
-import { ProposalContext } from "../../state/Proposal";
 import Paper from "@material-ui/core/Paper";
+import grey from "@material-ui/core/colors/grey";
 import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button/Button";
 import { Link } from "react-router-dom";
 import store from "../../../../store";
 import { getProposalList } from "../../../../api";
 import { getGetAllProposalsAction } from "../../../../store/actionCreators";
+import { endianness } from "os";
 
 // {title: 'test'}
 // new proposals works, just going to new proposal array
@@ -28,9 +28,11 @@ import { getGetAllProposalsAction } from "../../../../store/actionCreators";
 const styles = theme => ({
   paper: {
     padding: 10,
-    margin: 40,
-    backgroundColor: "#f3f3f3",
-    width: 390
+    margin: 10,
+    backgroundColor: grey[50],
+    [theme.breakpoints.up("xl")]: {
+      width: 600
+    },
   },
   link: {
     textDecoration: "none",
@@ -42,6 +44,22 @@ const styles = theme => ({
     paddingBottom: "3%",
     fontWeight: "bold",
     color: "#094183"
+  },
+  rejectedButton: {
+    position: "absolute",
+    color: "#ffffff",
+    backgroundColor: "#094183",
+      '&:hover': {
+          backgroundColor: "#4074B2",
+          color: "#ffffff",
+    },
+    [theme.breakpoints.up("xl")]: {
+      marginRight: 198
+    },
+    [theme.breakpoints.down("xl")]: {
+      right: 0
+    },
+    bottom: 0
   }
 });
 
@@ -65,7 +83,6 @@ class Proposals extends React.Component {
 
   async _reqTodoList() {
     const result = await getProposalList();
-    // console.log(result);
     console.log(result);
     const action = getGetAllProposalsAction(result);
     store.dispatch(action);
@@ -88,17 +105,12 @@ class Proposals extends React.Component {
     console.log("Filtered propsal" + proposals);
     return targetProposals;
   };
-  //Buggy: can't handle null item
-  _getFirstCharacter = title => {
-    var string = title;
-    // return string.charAt(0);
-    return "A";
-  };
 
   render() {
     const { classes } = this.props;
 
     return (
+      <div style={{position: "relative"}}>
       <Grid
         container
         spacing={16}
@@ -121,7 +133,6 @@ class Proposals extends React.Component {
                     organisation={p.name}
                     client={p.name}
                     supervisor={p.name}
-                    initial={this._getFirstCharacter(p.name)}
                   />
                 ))}
               </List>
@@ -149,22 +160,18 @@ class Proposals extends React.Component {
               </List>
             </div>
           </Paper>
-        </Grid>
-
-        <Link to={`/dashboard/rejectedProposals`} className={classes.link}>
-          <Button
-            variant="contained"
-            size="medium"
-            style={{
-              backgroundColor: "#094183",
-              color: "#ffffff"
-            }}
-            className={classes.margin}
-          >
-            View Rejected Proposals
-          </Button>
-        </Link>
+        </Grid>   
       </Grid>
+      <Link to={`/dashboard/rejectedProposals`} className={classes.link}>
+            <Button
+              variant="contained"
+              size="medium"
+              className={classes.rejectedButton}
+            >
+              View Rejected Proposals
+            </Button>
+          </Link>
+      </div>
     );
   }
 }

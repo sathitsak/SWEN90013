@@ -49,7 +49,8 @@ const styles = theme => ({
     backgroundColor: "#094183",
     '&:hover': {
       backgroundColor: "#4074B2"
-    }
+    },
+    boxShadow: "none",
   },
   studentTeamHeader: {
     fontWeight: "bold",
@@ -140,15 +141,17 @@ class CreateStudentTeamModal extends React.Component {
       <div>
         <Typography gutterBottom />
 
-        <Fab
-          color="primary"
-          aria-label="Create Student Team"
-          className={classes.fab}
-          onClick={this._handleClickOpen}
-        >
-          <GroupAddIcon />
-        </Fab>
-
+        <Grid align="right">
+          <Fab
+            color="primary"
+            aria-label="Create Student Team"
+            className={classes.fab}
+            onClick={this._handleClickOpen}
+          >
+            <GroupAddIcon />
+          </Fab>
+        </Grid>
+        
         <Dialog
           fullWidth={this.state.fullWidth}
           maxWidth={this.state.maxWidth}
