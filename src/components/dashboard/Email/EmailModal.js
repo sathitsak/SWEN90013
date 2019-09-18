@@ -21,6 +21,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
 import store from "../../../store";
 import axios from "axios";
+import { ENETUNREACH } from "constants";
 
 function rand() {
   return Math.round(Math.random() * 20) - 10;
@@ -75,6 +76,22 @@ const styles = theme => ({
     right: theme.spacing.unit,
     top: theme.spacing.unit,
     color: theme.palette.grey[500]
+  },
+  fab: {
+    backgroundColor: "#094183",
+    "&:hover": {
+      backgroundColor: "#4074B2"
+    },
+    boxShadow: "none"
+  },
+  sendButton: {
+    backgroundColor: "#094183",
+    "&:hover": {
+      backgroundColor: "#4074B2"
+    }
+  },
+  discardButton: {
+    color: "#094183"
   }
 });
 
@@ -112,6 +129,11 @@ const names = [
   "Kelly Snyder"
 ];
 
+const templatesMap = new Map();
+const templatesNew = [];
+
+const nameEmailMap = new Map();
+
 const templates = [
   { title: "Template A", message: "template content a" },
   { title: "Template B", message: "template content b" },
@@ -120,22 +142,94 @@ const templates = [
 ];
 
 class EmailModal extends React.Component {
-  state = {
-    open: false,
-    fullWidth: true,
-    maxWidth: "lg",
-    email_recipients: [],
-    email_cc: [],
-    email_bcc: [],
-    email_template: "",
-    email_message: ""
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      open: false,
+      fullWidth: true,
+      maxWidth: "lg",
+      email_recipients: [],
+      email_cc: [],
+      email_bcc: [],
+      email_template: "",
+      email_message: "",
+      context: "",
+      available_recipients: [],
+      templatesNew: []
+    };
+    this.handleSendEmail = this.handleSendEmail.bind(this);
+    this.handleClickOpen = this.handleClickOpen.bind(this);
+  }
 
   handleClickOpen = () => {
     this.setState({ open: true });
+
+    //get the templates
+    axios
+      .get(`http://35.197.167.244/template`)
+      .then(function(response) {
+        var responseSaved = response;
+        console.log(response.data.emailTemplate.client[0].title[0]);
+        console.log(response.data.emailTemplate.client[0].message[0]);
+        templatesNew.push(responseSaved.data.emailTemplate.client[0].title[0]);
+        templatesNew.push(
+          responseSaved.data.emailTemplate.proposal[0].title[0]
+        );
+        templatesMap.set(
+          response.data.emailTemplate.client[0].title[0],
+          response.data.emailTemplate.client[0].message[0]
+        );
+        templatesMap.set(
+          response.data.emailTemplate.client[0].title[0],
+          response.data.emailTemplate.proposal[0].message[0]
+        );
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+
+    console.log(this.state.templates);
+
+    //check the URL to determine the context of the email
+    var url = window.location.href;
+    var split = url.split("/");
+    var context = split[4];
+    console.log(split[4]);
+
+    if (split[4] == "proposals") {
+      var clientName = store.getState().proposal.client.firstName;
+      var clientEmail = store.getState().proposal.client.email;
+      nameEmailMap.set(clientName, clientEmail);
+      this.setState({
+        available_recipients: [clientName]
+      });
+    } else if (split[4] == "projects") {
+      this.state.available_recipients.push(
+        store.getState().proposal.client.firstName
+      );
+      nameEmailMap.set(
+        store.getState().proposal.client.firstName,
+        store.getState().proposal.client.email
+      );
+
+      var teams = store.getState().project.products;
+      var students = [];
+
+      teams.map(individualTeam => students.push(individualTeam.students));
+
+      var studentsFlattened = students.flat();
+
+      studentsFlattened.map(student => {
+        nameEmailMap.set(student.name, student.email);
+        this.state.available_recipients.push(student.name);
+      });
+    }
   };
 
   handleClose = () => {
+    this.setState({ available_recipients: [] });
+    this.setState({ email_recipients: [] });
+    nameEmailMap.clear();
     this.setState({ open: false });
   };
 
@@ -171,26 +265,34 @@ class EmailModal extends React.Component {
   };
 
   getEmailMessage(template_title) {
-    for (var i = 0; i < templates.length; i++) {
-      if (templates[i].title === template_title) {
-        return templates[i].message;
-      }
-    }
+    // for (var i = 0; i < templates.length; i++) {
+    //   if (templates[i].title === template_title) {
+    //     return templates[i].message;
+    //   }
+    // }
+    return templatesMap.get(template_title);
   }
 
-  // UPDATE URL FROM BOWEN
   handleSendEmail() {
+    var emails = [];
+    var emailscc = [];
+    this.state.email_recipients.map(name =>
+      emails.push(nameEmailMap.get(name))
+    );
+
+    this.state.email_cc.map(name => emailscc.push(nameEmailMap.get(name)));
+
+    //send multiple posts
+
     axios
-      .post(`http://localhost:13000/api/email`, {
-        account: {
-          user: "cis.projectmanagementsystem@gmail",
-          pw: "finalyearproj2019"
-        },
-        message: {
-          from: "this supervisor",
-          to: this.state.email_recipients,
-          html: this.state.email_message
-        }
+      .post(`http://35.197.167.244/message`, {
+        from: "thissupervisor",
+        to: emails,
+        subject: "new",
+        html: "<p>testttt</p>",
+        projectType: "fdafdsa",
+        cc: emailscc,
+        projectID: ""
       })
       .then(function(response) {
         console.log(response);
@@ -199,9 +301,18 @@ class EmailModal extends React.Component {
         console.log(error);
       });
     alert("sending email");
+    this.setState({ email_recipients: [] });
+    this.setState({ available_recipients: [] });
+    nameEmailMap.clear();
+    this.setState({ open: false });
   }
 
   unsubscribe = store.subscribe(this.handleChange);
+
+  _handleEmailContentChange(e) {
+    const email_message = e.target.value;
+    this.setState({ email_message: email_message });
+  }
 
   render() {
     const { classes } = this.props;
@@ -252,7 +363,7 @@ class EmailModal extends React.Component {
                   )}
                   MenuProps={MenuProps}
                 >
-                  {names.map(name => (
+                  {this.state.available_recipients.map(name => (
                     <MenuItem key={name} value={name} style={{ width: "100%" }}>
                       {name}
                     </MenuItem>
@@ -282,7 +393,7 @@ class EmailModal extends React.Component {
                   )}
                   MenuProps={MenuProps}
                 >
-                  {names.map(name => (
+                  {this.state.available_recipients.map(name => (
                     <MenuItem key={name} value={name} style={{ width: "100%" }}>
                       {name}
                     </MenuItem>
@@ -332,13 +443,13 @@ class EmailModal extends React.Component {
                   input={<Input id="email_template" />}
                   MenuProps={MenuProps}
                 >
-                  {templates.map((template, index) => (
+                  {templatesNew.map(template => (
                     <MenuItem
-                      key={index}
-                      value={template.title}
+                      key={template}
+                      value={template}
                       style={{ width: "100%" }}
                     >
-                      {template.title}
+                      {template}
                     </MenuItem>
                   ))}
                 </Select>
@@ -352,11 +463,10 @@ class EmailModal extends React.Component {
                 multiline="true"
                 rows="10"
                 value={this.state.email_message}
-                // onChange={this.handleChange.bind(this)}
+                onChange={e => this._handleEmailContentChange(e)}
               />
             </form>
           </DialogContent>
-
           <Divider />
 
           <DialogActions>
@@ -364,10 +474,15 @@ class EmailModal extends React.Component {
               variant="contained"
               color="primary"
               onClick={this.handleSendEmail}
+              className={classes.sendButton}
             >
               Send
             </Button>
-            <Button onClick={this.handleClose} color="primary">
+            <Button
+              onClick={this.handleClose}
+              color="primary"
+              className={classes.discardButton}
+            >
               Discard
             </Button>
           </DialogActions>

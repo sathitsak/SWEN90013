@@ -2,18 +2,22 @@ import React from "react";
 import PropTypes from "prop-types";
 import {withStyles} from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 
-const styles = {
+const styles = theme => ({
     description: {
         overflow: "auto",
         textAlign: "justify",
-        paddingLeft: 10,
-        marginLeft: 20,
-        height: 170
+        padding: 10,
+        height: 170,
+        marginRight: 10,
+        marginBottom: "1%",
+        color: "#000000",
+        [theme.breakpoints.down("sm")]: {
+            marginRight: 30
+        },
     }
-};
+});
 
 class Description extends React.Component {
 
@@ -22,18 +26,17 @@ class Description extends React.Component {
 
         return (
             <div>
-                <Grid container direction='column'>
-                    <Grid item xs={2}>
-                        <Typography align="left" variant="h6">
-                            Description:
-                        </Typography>
-                    </Grid>
-                    <Grid item style={{marginTop: 10}} align="center">
-                        <Paper className={classes.description}>
-                            {description}
-                        </Paper>
-                    </Grid>
-                </Grid>
+                <Typography
+                    align="left"
+                    color="textSecondary"
+                    variant="h6"
+                    style={{fontWeight: "bold"}}
+                >
+                    Description:
+                </Typography>
+                <Paper className={classes.description}>
+                    {description}
+                </Paper>
             </div>
         );
     }

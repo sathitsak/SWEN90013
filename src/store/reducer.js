@@ -2,21 +2,29 @@ import {
     GET_ALL_PROJECTS,
     GET_PROJECT_BY_ID,
     GET_SUPERVISORS,
-    SET_CURRENT_SUPERVISOR,
     GET_ALL_PROPOSALS,
-    GET_PROPOSAL_BY_ID
+    GET_PROPOSAL_BY_ID,
+    GET_CLIENT_BY_ID,
+    GET_ALL_SUBJECTS,
+    UPDATE_PROJECT,
+    UPDATE_PRODUCT,
+    CREATE_NEW_PRODUCT
 } from "./actionTypes";
-import {getSetCurrentSupervisorAction} from "./actionCreators";
-import store from "./index";
+import {
+    updateProject,
+    updateProduct,
+    postNewProduct
+} from "../api";
 
 const defaultState = {
     projects: [],
     project: {},
     supervisors: [],
-    currentSupervisor: "",
     proposals: [],
     proposal: {},
     page_title: "",
+    client: {},
+    subjects: [],
 };
 
 export default (state = defaultState, action) => {
@@ -32,10 +40,6 @@ export default (state = defaultState, action) => {
         return getSupervisors(state, action);
     }
 
-    if (action.type === SET_CURRENT_SUPERVISOR) {
-        return setCurrentSupervisor(state, action);
-    }
-
     if (action.type === GET_ALL_PROPOSALS) {
         return getAllProposals(state, action);
     }
@@ -44,7 +48,33 @@ export default (state = defaultState, action) => {
         return getProposalById(state, action);
     }
 
+    if (action.type === GET_CLIENT_BY_ID) {
+        return getClientById(state, action);
+    }
+
+    if (action.type === GET_ALL_SUBJECTS) {
+        return getAllSubjects(state, action);
+    }
+
+    if (action.type === UPDATE_PROJECT) {
+        return updateProjectById(state, action);
+    }
+
+    if (action.type === UPDATE_PRODUCT) {
+        return updateProductById(state, action);
+    }
+
+    if (action.type === CREATE_NEW_PRODUCT) {
+        return createProduct(state, action);
+    }
+
     return state;
+};
+
+function getAllSubjects(state, action) {
+    const newState = JSON.parse(JSON.stringify(state));
+    newState.subjects = action.subjects;
+    return newState;
 }
 
 function getProposalById(state, action) {
@@ -61,12 +91,6 @@ function getAllProposals(state, action) {
     return newState;
 }
 
-function setCurrentSupervisor(state, action) {
-    const newState = JSON.parse(JSON.stringify(state));
-    newState.currentSupervisor = action.currentSupervisor;
-    return newState;
-}
-
 function getAllProjects(state, action) {
     const newState = JSON.parse(JSON.stringify(state));
     newState.projects = action.projects;
@@ -78,23 +102,45 @@ function getProjectById(state, action) {
     const newState = JSON.parse(JSON.stringify(state));
     newState.project = action.project;
     newState.page_title = action.page_title;
-
     const supervisorID = newState.project.supervisorID;
 
     let currentSupervisor = "";
-    newState.supervisors.forEach((supervisor) => {
+    newState.supervisors.forEach(supervisor => {
         if (supervisor.id === supervisorID) {
             currentSupervisor = supervisor.firstName + " " + supervisor.lastName;
             newState.currentSupervisor = currentSupervisor;
         }
     });
     return newState;
-
 }
 
 function getSupervisors(state, action) {
     const newState = JSON.parse(JSON.stringify(state));
     newState.supervisors = action.supervisors;
-    // console.log(action.supervisors);
+    return newState;
+}
+
+function getClientById(state, action) {
+    const newState = JSON.parse(JSON.stringify(state));
+    newState.client = action.client;
+    return newState;
+}
+
+function updateProjectById(state, action) {
+    const newState = JSON.parse(JSON.stringify(state));
+    newState.project = action.project;
+    updateProject(action.id, action.project);
+    return newState;
+}
+
+function updateProductById(state, action) {
+    const newState = JSON.parse(JSON.stringify(state));
+    updateProduct(action.id, action.product);
+    return newState;
+}
+
+function createProduct(state, action) {
+    const newState = JSON.parse(JSON.stringify(state));
+    postNewProduct(action.product);
     return newState;
 }

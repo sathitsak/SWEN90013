@@ -1,70 +1,98 @@
 import React from "react";
-import PropTypes from "prop-types";
-import { withStyles } from "@material-ui/core/styles";
+import {withStyles} from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import ProjectInfo from "./ProjectInfo/ProjectInfo";
-import Notes from "./Notes/Notes";
-import { getProjectById } from "../../../../api";
-import { getGetProjectByIdAction } from "../../../../store/actionCreators";
+import Notes from "../../Notes/Notes";
+import {getProjectById, getProposalById} from "../../../../api";
+import {
+    getGetProjectByIdAction,
+    getGetProposalByIdAction
+} from "../../../../store/actionCreators";
 import store from "../../../../store";
-import { Paper } from "@material-ui/core";
+import {Paper} from "@material-ui/core";
+import grey from "@material-ui/core/colors/grey";
 
-const styles = {
-  projectInfo: {
-    width: "100%",
-    height: 670
-  },
-  notes: {
-    width: "100%",
-    height: 140
-  },
-  paper: {
-    padding: 20,
-    backgroundColor: "#f3f3f3"
-  }
-};
+import TeamPage from "./StudentTeam/TeamPage";
+import PropTypes from "prop-types";
+
+const styles = theme => ({
+    notes: {
+        width: "100%",
+        height: 140
+    },
+    paper: {
+        padding: theme.spacing.unit * 2,
+        color: theme.palette.text.secondary,
+        backgroundColor: grey[50]
+    },
+});
 
 class ProjectById extends React.Component {
-  async _reqTodoList(projID) {
-    const project = await getProjectById(projID);
-    // console.log(result);
-    const getProAction = getGetProjectByIdAction(project);
-    console.log(getProAction);
-    store.dispatch(getProAction);
-  }
+    constructor(props) {
+        super(props);
 
-  componentDidMount() {
-    const projID = this.props.match.params.id;
-    this._reqTodoList(projID);
-  }
+        this.state = store.getState();
+        this._handleStoreChange = this._handleStoreChange.bind(this);
+        store.subscribe(this._handleStoreChange);
+    }
 
-  render() {
-    const { classes } = this.props;
+    _handleStoreChange() {
+        this.setState(store.getState());
+    }
 
-    return (
-      <Grid
-        container
-        direction="column"
-        alignContent="center"
-        justify="flex-end"
-      >
-        <Grid item className={classes.projectInfo}>
-          <Paper className={classes.paper}>
-            <ProjectInfo />
-          </Paper>
-        </Grid>
-        <Grid item className={classes.notes}>
-          <Paper className={classes.paper}>
-            <Notes />
-          </Paper>
-        </Grid>
-      </Grid>
-    );
-  }
+    async _reqTodoList(projID) {
+        const project = await getProjectById(projID);
+        const getProAction = getGetProjectByIdAction(project);
+        store.dispatch(getProAction);
+
+        const proposalResult = await getProposalById(this.state.project.proposalId);
+        const proposalAction = getGetProposalByIdAction(proposalResult);
+        store.dispatch(proposalAction);
+    }
+
+    componentDidMount() {
+        const projID = this.props.match.params.id;
+        this._reqTodoList(projID);
+    }
+
+    render() {
+        const {classes} = this.props;
+
+        return (
+            <Grid
+                container
+                spacing={16}
+                justify="flex-end"
+                direction="row"
+            >
+                <Grid item xs={6}>
+                    <Paper className={classes.paper} style={{height: "100%"}}>
+                        <ProjectInfo/>
+                    </Paper>
+                </Grid>
+                <Grid item xs={6}>
+                    <Paper className={classes.paper}
+                           style={{position: "relative"}}>
+                        <TeamPage/>
+                    </Paper>
+                </Grid>
+                <Grid item xs={12} className={classes.notes}>
+                    <Paper className={classes.paper}
+                           style={{marginBottom: "20px"}}>
+                        <Notes
+                            notes={this.state.project.notes} 
+                            object={this.state.project}
+                            objectType={"project"}
+                        />
+                    </Paper>
+                </Grid>
+            </Grid>
+        );
+    }
 }
 
 ProjectById.propTypes = {
-  classes: PropTypes.object.isRequired
+    classes: PropTypes.object.isRequired,
 };
 
 export default withStyles(styles)(ProjectById);

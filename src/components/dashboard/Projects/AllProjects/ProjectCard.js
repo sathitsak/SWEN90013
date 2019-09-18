@@ -6,6 +6,7 @@ import CardHeader from "@material-ui/core/CardHeader";
 import {Link} from "react-router-dom";
 import Avatar from "@material-ui/core/Avatar";
 import red from "@material-ui/core/colors/red";
+import grey from "@material-ui/core/colors/grey";
 import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
 import CardContent from "@material-ui/core/CardContent";
@@ -19,12 +20,11 @@ const styles = {
         width: "100%",
         textDecoration: "none",
         "&:hover": {
-            // backgroundColor: teal[200]
-            backgroundColor: "#f5f5f5"
+            backgroundColor: grey[200],
+            textDecoration: "none",
         },
         "&:active": {
-            // backgroundColor: teal[300]
-            backgroundColor: "#ADB8C1"
+            backgroundColor: grey[300]
         }
     },
     avatar: {
@@ -35,57 +35,70 @@ const styles = {
     },
     cardContent: {
         paddingTop: 12,
-        paddingBottom: 0,
+        paddingBottom: 0
     }
 };
 
 class ProjectCard extends React.Component {
     render() {
-        const {classes, id, project} = this.props;
+        const {classes, _id, project} = this.props;
 
         return (
             <Card className={classes.card}>
-                <Link to={`/dashboard/projects/${id}`} className={classes.link}>
+                <Link to={`/dashboard/projects/${_id}`}
+                      className={classes.link}>
                     <CardHeader
                         avatar={
                             <Avatar className={classes.avatar}>
-                                {project.projectName.slice(0, 1).toUpperCase()}
+                                {project.name.slice(0, 1).toUpperCase()}
                             </Avatar>
                         }
-                        title={project.projectName}
-                        subheader={project.industry}
+                        title={project.name}
+                        subheader={project.industryType ? project.industryType : " "}
                         component="div"
                         className={classes.cardHeader}
                     />
-                    <CardContent
-                        component="div"
-                        className={classes.cardContent}
-                    >
+                    <CardContent component="div"
+                                 className={classes.cardContent}>
                         <Typography
                             variant="overline"
                             align="left"
                             style={{marginBottom: 5}}
                         >
-                            Client: {project.client}
+                            Client: {project.proposal.client.firstName + " " + project.proposal.client.lastName}
                         </Typography>
-                        <Divider component="li" paddingTop="20"/>
+                        <Divider/>
                         <Typography
                             component="p"
                             variant="overline"
                             style={{marginTop: 5}}
                         >
-                            Supervisor: {project.supervisorID}
+                            Supervisor: {this._showSupervisor(project.supervisorId)}
                         </Typography>
                     </CardContent>
                 </Link>
             </Card>
         );
     }
+
+    _showSupervisor = (supervisorId) => {
+        const {supervisors} = this.props;
+        let supervisorName = "NO SUPERVISOR ASSIGNED";
+        supervisors.forEach(sp => {
+            if (sp._id === supervisorId) {
+                // supervisorName = sp.firstName + " " + sp.lastName;
+                supervisorName = sp.firstName;
+            }
+        });
+        return supervisorName;
+    };
 }
 
 ProjectCard.propTypes = {
     classes: PropTypes.object.isRequired,
-    project: PropTypes.object.isRequired
+    _id: PropTypes.string.isRequired,
+    project: PropTypes.object.isRequired,
+    supervisors: PropTypes.array.isRequired,
 };
 
 export default withStyles(styles)(ProjectCard);

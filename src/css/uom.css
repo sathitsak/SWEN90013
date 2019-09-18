@@ -11281,12 +11281,15 @@ td.unit-description:before {
 }
 
 .uomcontent fieldset {
-    border: 0;
-    padding: 0;
+    border: 1px solid lightgray;
+    padding: 10px 30px 10px 30px;
 }
 
-.uomcontent fieldset div {
-    padding: 10px 0;
+.uomcontent fieldset legend {
+    font-size: 15px;
+    font-weight: bold;   
+    text-transform: uppercase;
+    width: auto;
 }
 
 .uomcontent fieldset small {
@@ -11302,16 +11305,26 @@ td.unit-description:before {
 
 .uomcontent fieldset label {
     font-size: 1rem;
-    display: inline;
+    display: block;
     position: relative;
-    width: 100%;
+    width: auto;
+}
+
+.required:after {
+    padding-left: 5px;
+    padding-left: 0.3125rem;
+    content: "*";
+    color: #df0620;
+    font-weight: bold;
 }
 
 @media screen and (min-width: 769px) {
     .uomcontent fieldset label {
-        width: 25.75rem;
-        display: inline-block;
+        width: auto;
+        position: relative;
+        display: block;
     }
+
 }
 
 .uomcontent fieldset .invalid small {
@@ -11364,7 +11377,8 @@ td.unit-description:before {
     .uomcontent fieldset input[type="search"],
     .uomcontent fieldset input[type="text"],
     .uomcontent fieldset input[type="url"] {
-        width: 25rem;
+        width: 100%;
+        margin-bottom: 3%;
     }
 }
 
@@ -11429,7 +11443,8 @@ td.unit-description:before {
 
 @media screen and (min-width: 769px) {
     .uomcontent fieldset textarea {
-        width: 25rem;
+        width: 100%;
+        margin-bottom: 3%;
     }
 }
 

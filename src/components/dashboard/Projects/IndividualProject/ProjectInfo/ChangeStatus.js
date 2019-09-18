@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { withStyles } from "@material-ui/core/styles";
+import {withStyles} from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
@@ -12,103 +12,128 @@ import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import Input from "@material-ui/core/Input";
 import InputLabel from "@material-ui/core/InputLabel";
-
+import {projectStatus} from "../../Constants/Constants";
 import store from "../../../../../store";
+import {updateProjectAction} from "../../../../../store/actionCreators";
 
 const styles = {};
 
 class ChangeStatus extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      selectedStatus: "",
-      open: false
-    };
-  }
+    constructor(props) {
+        super(props);
+        this.state = {
+            selectedStatus: "new",
+            open: false
+        };
+    }
 
-  _handleClickOpen = () => {
-    this.setState({ open: true });
-  };
+    render() {
+        const {classes, project} = this.props;
+        const {open} = this.state;
 
-  _handleClose = () => {
-    this.setState({ open: false });
-  };
-
-  _handleSelect = e => {
-    this.setState({ selectedStatus: e.target.value });
-  };
-
-  _handleOK = () => {
-    const { selectedState } = this.state;
-    this.setState({ open: false });
-    //alert("you change the state");
-    console.log(this.state.selectedStatus);
-
-    // NEED BACKEND FUNCTIONALITY
-  };
-
-  render() {
-    const { classes, status } = this.props;
-    const { open } = this.state;
-
-    return (
-      <div>
-        <Grid container>
-          <Grid item style={{ marginTop: 10, marginRight: 80 }}>
-            <Typography align="left" variant="h6">
-              Status:
-            </Typography>
-          </Grid>
-          <Grid item style={{ marginTop: 10 }} align="center">
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={this._handleClickOpen}
-            >
-              {this.props.status}
-            </Button>
-          </Grid>
-        </Grid>
-        <Dialog
-          disableBackdropClick
-          disableEscapeKeyDown
-          open={open}
-          onClose={this._handleClose}
-        >
-          <DialogTitle>Choose a new status</DialogTitle>
-          <DialogContent>
-            <form className={classes.container}>
-              <FormControl className={classes.formControl}>
-                <InputLabel htmlFor="sp-native-simple">Status</InputLabel>
-                <Select
-                  native
-                  onChange={e => this._handleSelect(e)}
-                  input={<Input id="sp-native-simple" />}
+        return (
+            <div>
+                <Grid container>
+                    <Grid item style={{marginTop: 10, marginRight: 80}}>
+                        <Typography align="left" color="textSecondary"
+                                    variant="h6" style={{fontWeight: "bold"}}>
+                            Status:
+                        </Typography>
+                    </Grid>
+                    <Grid item style={{marginTop: 10}} align="center">
+                        <Button
+                            variant="contained"
+                            color="secondary"
+                            onClick={this._handleClickOpen}
+                        >
+                            {this._showProjectStatus(project.status)}
+                        </Button>
+                    </Grid>
+                </Grid>
+                <Dialog
+                    disableBackdropClick
+                    disableEscapeKeyDown
+                    open={open}
+                    onClose={this._handleClose}
                 >
-                  <option value="New">New</option>
-                  <option value="In Progress">In Progress</option>
-                  <option value="Completed">Completed</option>
-                </Select>
-              </FormControl>
-            </form>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={this._handleClose} color="primary">
-              Cancel
-            </Button>
-            <Button onClick={this._handleOK} color="primary">
-              Ok
-            </Button>
-          </DialogActions>
-        </Dialog>
-      </div>
-    );
-  }
+                    <DialogTitle>Update project status</DialogTitle>
+                    <DialogContent>
+                        <form className={classes.container}>
+                            <FormControl className={classes.formControl}>
+                                <InputLabel
+                                    htmlFor="sp-native-simple">Status</InputLabel>
+                                <Select
+                                    native
+                                    onChange={e => this._handleSelect(e)}
+                                    input={<Input id="sp-native-simple"/>}
+                                >
+                                    <option value={projectStatus.new}>
+                                        New
+                                    </option>
+                                    <option value={projectStatus.inProgress}>
+                                        In Progress
+                                    </option>
+                                    <option value={projectStatus.completed}>
+                                        Completed
+                                    </option>
+                                </Select>
+                            </FormControl>
+                        </form>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={this._handleClose} color="primary">
+                            Cancel
+                        </Button>
+                        <Button onClick={this._handleOK} color="primary">
+                            Ok
+                        </Button>
+                    </DialogActions>
+                </Dialog>
+            </div>
+        );
+    }
+
+    _handleClickOpen = () => {
+        this.setState({open: true});
+    };
+
+    _handleClose = () => {
+        this.setState({open: false});
+    };
+
+    _handleSelect = e => {
+        this.setState({selectedStatus: e.target.value});
+    };
+
+    _handleOK = () => {
+        const {selectedStatus} = this.state;
+        const {project} = this.props;
+        project.status = selectedStatus;
+        const updateProjAction = updateProjectAction(project._id, project);
+        store.dispatch(updateProjAction);
+        this.setState({open: false});
+
+        alert("Status of project changed to " + this._showProjectStatus(selectedStatus) + ".");
+    };
+
+    _showProjectStatus = status => {
+        switch (status) {
+            case projectStatus.new:
+                return "NEW";
+            case projectStatus.inProgress:
+                return "IN PROGRESS";
+            case projectStatus.completed:
+                return "COMPLETED";
+            default:
+                return "INVALID STATUS OF PROJECT";
+        }
+    };
+
 }
 
 ChangeStatus.propTypes = {
-  classes: PropTypes.object.isRequired,
-  status: PropTypes.string.isRequired
+    classes: PropTypes.object.isRequired,
+    project: PropTypes.object.isRequired
 };
 
 export default withStyles(styles)(ChangeStatus);
