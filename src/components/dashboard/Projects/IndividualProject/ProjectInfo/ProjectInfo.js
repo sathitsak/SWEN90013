@@ -31,6 +31,7 @@ class ProjectInfo extends React.Component {
         super(props);
 
         this.state = store.getState();
+
         this._handleStoreChange = this._handleStoreChange.bind(this);
         store.subscribe(this._handleStoreChange);
     }

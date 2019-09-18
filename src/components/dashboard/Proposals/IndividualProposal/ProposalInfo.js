@@ -1,9 +1,10 @@
 import React from "react";
 import Grid from "@material-ui/core/Grid";
-import ClientPageModal from "./ClientPageModal";
+import ClientPageModal from "../../Client/ClientPageModal";
 import StatusChangeModal from "./StatusChangeModal";
-import { green, amber, red }from "@material-ui/core/colors";
+import { green, amber, red, grey }from "@material-ui/core/colors";
 import { withStyles } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
 
 const styles = theme => ({
   container: {
@@ -16,7 +17,8 @@ const styles = theme => ({
     fontWeight: "bold",
     fontSize: 18,
     verticalAlign: "middle",
-    position: "relative"
+    position: "relative",
+    color: grey[700],
   },
   infoContent: {
     fontSize: 16,
@@ -29,9 +31,16 @@ const styles = theme => ({
     height: 25,
     marginRight: 10,
     float: "left",
+    borderRadius: 50,
   },
   row: {
     alignItems: "center",
+  },
+  header: {
+    textAlign: "center",
+    fontWeight: "bold",
+    color: "#094183",
+    marginBottom: "5%",
   }
 });
 
@@ -46,7 +55,7 @@ class ProposalInfo extends React.Component {
   _determineStatusButtonColour(status) {
     if (status === "new") {
       return amber[500];
-    } else if (status === "accepted") {
+    } else if (status === "approved") {
       return green[500];
     } else {
       return red[500];
@@ -98,14 +107,12 @@ class ProposalInfo extends React.Component {
           <br />
           <br />
 
-            <Grid container spacing={3}  className={classes.row}>
-              <Grid item xs={5}>
-                <div className={classes.infoHeader}>Client</div>
-              </Grid>
-              <Grid item xs={7}>
-                <ClientPageModal client={this.props.client}></ClientPageModal>
-              </Grid>
-            </Grid>
+          <Grid item md={4} xs={12}>
+            <div className={classes.infoHeader}>Client</div>
+          </Grid>
+          <Grid item md={8} xs={12}>
+            <ClientPageModal client={this.props.client}></ClientPageModal>
+          </Grid>
 
           <br />
           <br />

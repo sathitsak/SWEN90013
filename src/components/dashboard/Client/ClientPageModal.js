@@ -156,7 +156,7 @@ class ClientPageModal extends React.Component {
                                         <ClientOrg
                                             orgName={client.organisation.name}
                                             orgSize={client.organisation.size}
-                                            industry={client.organisation.industry}
+                                            industry={client.organisation.industryType}
                                             description={client.organisation.description}
                                         />
                                     </Paper>

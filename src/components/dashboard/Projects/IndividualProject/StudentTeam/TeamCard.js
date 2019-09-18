@@ -12,6 +12,7 @@ import Chip from '@material-ui/core/Chip';
 import { green } from "@material-ui/core/colors";
 import EditStudentTeam from "./EditStudentTeam";
 
+
 const styles = theme => ({
     expansionPanel: {
         borderRadius: 5,
@@ -45,6 +46,7 @@ const styles = theme => ({
 class TeamCard extends React.Component {
     constructor(props) {
         super(props);
+
         this.state = {
             open: false,
         }
@@ -101,90 +103,6 @@ class TeamCard extends React.Component {
         );
     }
 
-function TeamArtefacts(props) {
-  return (
-    <div>
-      <TabContainer id="right-tabs-example" defaultActiveKey="first">
-        <Row>
-          <Col xs>
-            <Nav variant="pills" className="flex-column" >
-              <Nav.Item >
-                <Nav.Link eventKey="first">Students</Nav.Link>
-              </Nav.Item>
-            </Nav>
-          </Col>
-          <Col xs>
-            <Nav variant="pills" className="flex-column">
-              <Nav.Item>
-                <Nav.Link eventKey="second">Artefacts</Nav.Link>
-              </Nav.Item>
-            </Nav>
-          </Col>
-          <Col xs>
-            <Nav variant="pills" className="flex-column">
-              <Nav.Item>
-                <Nav.Link eventKey="third">Technologies</Nav.Link>
-              </Nav.Item>
-            </Nav>
-          </Col>
-        </Row>
-        <Row>
-          <Col sm={9}>
-            <TabContent>
-              <TabPane eventKey="first">
-                <List dense={true}>
-                  {props.students.map(p => (
-                    <ListItem>
-                      <ListItemIcon>
-                        <PersonIcon />
-                      </ListItemIcon>
-                      <ListItemText primary={p.name} />
-                    </ListItem>
-                  ))}
-                </List>
-              </TabPane>
-            </TabContent>
-            <TabContent>
-              <TabPane eventKey="second">
-                {/* Only display products if they exist */}
-                {props.productLinks ? 
-                  <List dense={true}>
-                    {props.productLinks.map(link => (
-                      <ListItem>
-                        <ListItemIcon>
-                          <PersonIcon />
-                        </ListItemIcon>
-                        <ListItemText primary={link} />
-                      </ListItem>
-                    ))}
-                  </List>
-                  : <div />
-                }
-              </TabPane>
-            </TabContent>
-            <TabContent>
-              <TabPane eventKey="third">
-                {/* Only display technologies if they exist */}
-                {props.technologies ? 
-                  <List dense={true}>
-                    {props.technologies.map(tech => (
-                      <ListItem>
-                        <ListItemIcon>
-                          <PersonIcon />
-                        </ListItemIcon>
-                        <ListItemText primary={tech} />
-                      </ListItem>
-                    ))}
-                  </List>
-                  : <div />
-                }
-              </TabPane>
-            </TabContent>
-          </Col>
-        </Row>
-      </TabContainer>
-    </div>
-  );
 }
 
 TeamCard.propTypes = {
