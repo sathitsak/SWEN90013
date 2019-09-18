@@ -1,15 +1,9 @@
-<<<<<<< HEAD:src/components/dashboard/email/EmailModal.js
 
 import React from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Modal from "@material-ui/core/Modal";
-=======
-import React from "react";
-import { withStyles } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
->>>>>>> 8b4b53a7b993a6ca61e533ef195b08a3f7e902d1:src/components/dashboard/Email/EmailModal.js
 import Button from "@material-ui/core/Button";
 import Chip from "@material-ui/core/Chip";
 import Dialog from "@material-ui/core/Dialog";
@@ -18,10 +12,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Fab from "@material-ui/core/Fab";
 import EmailIcon from "@material-ui/icons/Email";
-<<<<<<< HEAD:src/components/dashboard/email/EmailModal.js
 import TextField from "@material-ui/core/TextField";
-=======
->>>>>>> 8b4b53a7b993a6ca61e533ef195b08a3f7e902d1:src/components/dashboard/Email/EmailModal.js
 import InputBase from "@material-ui/core/InputBase";
 import { Divider } from "@material-ui/core";
 import FormControl from "@material-ui/core/FormControl";
@@ -32,7 +23,6 @@ import Select from "@material-ui/core/Select";
 import store from "../../../store";
 import axios from "axios";
 
-<<<<<<< HEAD:src/components/dashboard/email/EmailModal.js
 function rand() {
   return Math.round(Math.random() * 20) - 10;
 }
@@ -48,8 +38,6 @@ function getModalStyle() {
   };
 }
 
-=======
->>>>>>> 8b4b53a7b993a6ca61e533ef195b08a3f7e902d1:src/components/dashboard/Email/EmailModal.js
 const styles = theme => ({
   root: {
     flexGrow: 1,
@@ -81,11 +69,7 @@ const styles = theme => ({
     },
     [theme.breakpoints.down("md")]: {
       width: 480
-<<<<<<< HEAD:src/components/dashboard/email/EmailModal.js
     }
-=======
-    },
->>>>>>> 8b4b53a7b993a6ca61e533ef195b08a3f7e902d1:src/components/dashboard/Email/EmailModal.js
   },
   closeButton: {
     position: "absolute",
@@ -173,7 +157,6 @@ class EmailModal extends React.Component {
   };
 
   handleChange = (emailField, event) => {
-<<<<<<< HEAD:src/components/dashboard/email/EmailModal.js
     if (emailField == "email_recipients") {
       this.setState({ email_recipients: event.target.value });
     } else if (emailField == "email_cc") {
@@ -181,15 +164,6 @@ class EmailModal extends React.Component {
     } else if (emailField == "email_bcc") {
       this.setState({ email_bcc: event.target.value });
     } else if (emailField == "email_template") {
-=======
-    if (emailField === "email_recipients") {
-      this.setState({ email_recipients: event.target.value });
-    } else if (emailField === "email_cc") {
-      this.setState({ email_cc: event.target.value });
-    } else if (emailField === "email_bcc") {
-      this.setState({ email_bcc: event.target.value });
-    } else if (emailField === "email_template") {
->>>>>>> 8b4b53a7b993a6ca61e533ef195b08a3f7e902d1:src/components/dashboard/Email/EmailModal.js
       this.setState({ email_template: event.target.value });
       let email_message = this.getEmailMessage(event.target.value);
       this.setState({ email_message: email_message });
@@ -204,19 +178,11 @@ class EmailModal extends React.Component {
         value.push(options[i].value);
       }
     }
-<<<<<<< HEAD:src/components/dashboard/email/EmailModal.js
     if (emailField == "email_recipients") {
       this.setState({ email_recipients: value });
     } else if (emailField == "email_cc") {
       this.setState({ email_cc: value });
     } else if (emailField == "email_bcc") {
-=======
-    if (emailField === "email_recipients") {
-      this.setState({ email_recipients: value });
-    } else if (emailField === "email_cc") {
-      this.setState({ email_cc: value });
-    } else if (emailField === "email_bcc") {
->>>>>>> 8b4b53a7b993a6ca61e533ef195b08a3f7e902d1:src/components/dashboard/Email/EmailModal.js
       this.setState({ email_bcc: value });
     }
   };
@@ -415,7 +381,4 @@ class EmailModal extends React.Component {
 }
 
 export default withStyles(styles)(EmailModal);
-<<<<<<< HEAD:src/components/dashboard/email/EmailModal.js
 
-=======
->>>>>>> 8b4b53a7b993a6ca61e533ef195b08a3f7e902d1:src/components/dashboard/Email/EmailModal.js

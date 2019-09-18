@@ -5,14 +5,14 @@ import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 
 import ClientPageModal
-    from '../../../Client/ClientPageModal';
+    from '../../../Proposals/IndividualProposal/ClientPageModal';
 
 const styles = {};
 
 class ViewClient extends React.Component {
 
     render() {
-        const { client } = this.props;
+        const {classes, client} = this.props;
 
         return (
             <div>
