@@ -37,7 +37,6 @@ class AppContainer extends React.Component {
   state = {
     mobileOpen: false,
     open: false,
-    page_title: ""
   };
 
   componentWillReceiveProps(nextProps) {

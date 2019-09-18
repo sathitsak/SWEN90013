@@ -18,7 +18,7 @@ export const getGetAllProjectAction = projects => ({
 export const getGetProjectByIdAction = project => ({
     type: GET_PROJECT_BY_ID,
     project: project,
-    page_title: project.projectName
+    page_title: project.name
 });
 
 export const getGetSupervisorsAction = supervisors => ({
@@ -35,7 +35,7 @@ export const getGetAllProposalsAction = proposals => ({
 export const getGetProposalByIdAction = proposal => ({
     type: GET_PROPOSAL_BY_ID,
     proposal: proposal,
-    page_title: proposal.title,
+    page_title: proposal.name,
 });
 
 export const getGetClientByIdAction = client => ({
@@ -51,5 +51,6 @@ export const getGetAllSubjectsAction = subjects => ({
 export const updateProjectAction = (id, project) => ({
     type: UPDATE_PROJECT,
     id: id,
-    project: project
+    project: project,
+    page_title: project.name
 });
