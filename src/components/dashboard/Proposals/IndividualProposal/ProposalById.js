@@ -54,6 +54,8 @@ class ProposalById extends React.Component {
 
   render() {
     const { classes } = this.props;
+    console.log('propsalbyID')
+    console.log(this.state)
 
     return (
       <div className={classes.root}>
@@ -73,7 +75,7 @@ class ProposalById extends React.Component {
             <Paper className={classes.paper} style={{ marginTop: "20px" }}>
               <ProposalInfo
                 client={this.state.proposal.client}
-                organisation={this.state.proposal.organisation}
+                organisation={this.state.proposal.name}
                 status={this.state.proposal.status}
                 id={this.state.proposal._id}
               />

@@ -17,7 +17,7 @@ const styles = {
     paper: {
         padding: 10,
         margin: 40,
-        backgroundColor: "#f3f3f3",
+        backgroundColor: "#f3f3f3"
     },
     swimTitle: {
         textAlign: "center",
@@ -70,7 +70,7 @@ class ViewProjects extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        console.log(nextProps.currentPage)
+        console.log(nextProps.currentPage);
     }
 
     _filterProjectsByStatus = status => {
@@ -108,54 +108,62 @@ class ViewProjects extends React.Component {
                   alignContent="center">
                 <Grid item sm>
                     <Paper className={classes.paper}>
-                        <Typography
-                            variant="h5"
-                            className={classes.swimTitle}
-                        >
+                        <Typography variant="h5" className={classes.swimTitle}>
                             New
                         </Typography>
                         <div>
                             <List dense={true}>
-                                {this._filterProjectsByStatus(status.new).map((project, index) => (
-                                    <ProjectCard id={project.id} key={index}
-                                                 project={project}/>
-                                ))}
+                                {this._filterProjectsByStatus(status.new).map(
+                                    (project, index) => (
+                                        <ProjectCard
+                                            id={project.id}
+                                            key={index}
+                                            project={project}
+                                        />
+                                    )
+                                )}
                             </List>
                         </div>
                     </Paper>
                 </Grid>
                 <Grid item sm>
                     <Paper className={classes.paper}>
-                        <Typography
-                            variant="h5"
-                            className={classes.swimTitle}
-                        >
+                        <Typography variant="h5" className={classes.swimTitle}>
                             In Progress
                         </Typography>
                         <div>
                             <List dense={true}>
-                                {this._filterProjectsByStatus(status.inProgress).map((project, index) => (
-                                    <ProjectCard id={project.id} key={index}
-                                                 project={project}/>
-                                ))}
+                                {
+                                    this._filterProjectsByStatus(status.inProgress).map(
+                                        (project, index) => (
+                                            <ProjectCard
+                                                id={project.id}
+                                                key={index}
+                                                project={project}
+                                            />
+                                        )
+                                    )
+                                }
                             </List>
                         </div>
                     </Paper>
                 </Grid>
                 <Grid item sm>
                     <Paper className={classes.paper}>
-                        <Typography
-                            variant="h5"
-                            className={classes.swimTitle}
-                        >
+                        <Typography variant="h5" className={classes.swimTitle}>
                             Completed
                         </Typography>
                         <div>
                             <List dense={true}>
-                                {this._filterProjectsByStatus(status.completed).map((project, index) => (
-                                    <ProjectCard id={project.id} key={index}
-                                                 project={project}/>
-                                ))}
+                                {this._filterProjectsByStatus(status.completed).map(
+                                    (project, index) => (
+                                        <ProjectCard
+                                            id={project.id}
+                                            key={index}
+                                            project={project}
+                                        />
+                                    )
+                                )}
                             </List>
                         </div>
                     </Paper>

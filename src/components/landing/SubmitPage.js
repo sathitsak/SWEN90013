@@ -78,44 +78,44 @@ class SubmitPage extends React.Component {
       original,
       used
     );
-    // if (
-    //   (firstname ||
-    //     lastname ||
-    //     email ||
-    //     number ||
-    //     officeNumber ||
-    //     ci2firstname ||
-    //     ci2lastname ||
-    //     ci2email ||
-    //     ci2number ||
-    //     organizationName ||
-    //     organisationBrief ||
-    //     projectName ||
-    //     outline ||
-    //     beneficiaries ||
-    //     benefits ||
-    //     original) === "" ||
-    //   (technical || idustryType || size) == -1
-    // ) {
-    //   alert("please fill every form");
-    // } else if (!this.ValidateContactInfo(officeNumber,number.ci2number)) {
-    //   alert("please enter valid phone number");
-    // } else if (!this.ValidateEmail(email,ci2email)) {
-    //   alert("please enter valid email");
-    // }else{
+    if (
+      (firstname ||
+        lastname ||
+        email ||
+        number ||
+        officeNumber ||
+        ci2firstname ||
+        ci2lastname ||
+        ci2email ||
+        ci2number ||
+        organizationName ||
+        organisationBrief ||
+        projectName ||
+        outline ||
+        beneficiaries ||
+        benefits ||
+        original) === "" ||
+      (technical || idustryType || size) == -1
+    ) {
+      alert("please fill every form");
+    } else if (!this.ValidateContactInfo(officeNumber,number.ci2number)) {
+      alert("please enter valid phone number");
+    } else if (!this.ValidateEmail(email,ci2email)) {
+      alert("please enter valid email");
+    }else{
 
     axios
-      .post(`http://localhost:13000/api/proposal`, {
-        FirstName: firstname,
-        LastName: lastname,
-        Email: email,
-        ContactNumber: number,
-        SecondaryContactFirstName: ci2firstname,
-        SecondaryContactLastName: ci2lastname,
-        SecondaryContactEmail: ci2email,
-        SecondaryContactNumber: ci2number,
-        OrganisationNumber: officeNumber,
-        TechnicalAbility: technical,
+      .post(`http://localhost:13000/api/proposal/submit`, {
+        firstName: firstname,
+        lastName: lastname,
+        email: email,
+        number: number,
+        secondaryContactFirstName: ci2firstname,
+        secondaryContactLastName: ci2lastname,
+        secondaryContactEmail: ci2email,
+        secondaryContactContactNumber: ci2number,
+        officeNumber: officeNumber,
+        technical: technical,
         organizationName: organizationName,
         idustryType: idustryType,
         size: size,
@@ -133,7 +133,7 @@ class SubmitPage extends React.Component {
       .catch(function(error) {
         console.log(error);
       });
-    // }
+    }
 
     console.log("request sent!");
 
