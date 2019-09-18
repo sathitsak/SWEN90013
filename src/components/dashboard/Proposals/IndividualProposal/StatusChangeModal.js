@@ -172,7 +172,7 @@ class StatusChangeModal extends React.Component {
               <Grid container spacing={24}>
                 <Grid item xs={6} style={{ padding: 50 }}>
                   <h6 style={{ color: grey[800] }}>
-                    Why did you accept this project?
+                    Please state your reasoning:
                   </h6>
                   <TextField
                     id="reason"
@@ -186,7 +186,7 @@ class StatusChangeModal extends React.Component {
                 <Grid item xs={6} style={{ marginTop: 30 }}>
                   <FormControl style={{ width: "70%", marginTop: 9 }}>
                     <h6 style={{ color: grey[800] }}>
-                      Assign this proposal to a subject
+                      If applicable, please assign this proposal to a subject
                     </h6>
                     <Select
                       value={this.state.subjectName}

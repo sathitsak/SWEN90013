@@ -76,7 +76,6 @@ class Proposals extends React.Component {
 
   componentDidMount() {
     this._reqTodoList();
-    //http://localhost:13000/api/proposal
   }
 
   _filterProposalsByStatus = status => {
@@ -148,14 +147,14 @@ class Proposals extends React.Component {
         </Grid>   
       </Grid>
       <Link to={`/dashboard/rejectedProposals`} className={classes.link}>
-            <Button
-              variant="contained"
-              size="medium"
-              className={classes.rejectedButton}
-            >
-              View Rejected Proposals
-            </Button>
-          </Link>
+        <Button
+          variant="contained"
+          size="medium"
+          className={classes.rejectedButton}
+        >
+          View Rejected Proposals
+        </Button>
+      </Link>
       </div>
     );
   }
