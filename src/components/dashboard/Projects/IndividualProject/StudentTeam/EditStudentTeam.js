@@ -226,7 +226,7 @@ class EditStudentTeam extends React.Component {
       students: studentList,
     }
 
-    // Send POST request
+    // Send PUT request
     const url = `http://localhost:13000/api/product/` + this.props.product._id;
     axios
         .put(url, newProduct)

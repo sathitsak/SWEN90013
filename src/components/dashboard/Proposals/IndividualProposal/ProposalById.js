@@ -98,7 +98,11 @@ class ProposalById extends React.Component {
                   height: "auto"
                 }}
               >
-                <Notes notes={this.state.proposal.notes} />
+                <Notes 
+                  notes={this.state.proposal.notes} 
+                  object={this.state.proposal}
+                  objectType={"proposal"}
+                />
               </Paper>
             </Grid>
           ) : (

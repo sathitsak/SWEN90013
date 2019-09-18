@@ -80,7 +80,9 @@ class ProjectById extends React.Component {
                     <Paper className={classes.paper}
                            style={{marginBottom: "20px"}}>
                         <Notes
-                            notes={this.state.project.notes}
+                            notes={this.state.project.notes} 
+                            object={this.state.project}
+                            objectType={"project"}
                         />
                     </Paper>
                 </Grid>
