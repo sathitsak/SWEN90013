@@ -287,422 +287,398 @@ class EditStudentTeam extends React.Component {
                                     noValidate
                                     autoComplete="off"
                                 >
-                                    <DialogTitle onClose={this._handleClose}>
-                                        Edit {product.name}
-                                    </DialogTitle>
-
-                                    <Divider/>
-
-                                    <DialogContent>
-                                        <Grid container spacing={8}>
-                                            <Grid item xs={2}>
-                                                <div
-                                                    className={classes.studentTeamHeader}>
-                                                    Team Name
-                                                </div>
-                                            </Grid>
-                                            <Grid item xs={10}>
-                                                <form
-                                                    className={classes.container}
-                                                    noValidate
-                                                    autoComplete="off"
-                                                >
-                                                    <TextField
-                                                        id="teamName"
-                                                        className={classes.textField}
-                                                        margin="normal"
-                                                        inputProps={{'aria-label': 'Team Name'}}
-                                                        fullWidth
-                                                        defaultValue={product.name}
-                                                    />
-                                                </form>
-                                            </Grid>
-                                        </Grid>
-
-                                        <br/>
-
-                                        {/* Tabs student, artefacts and technologies. Pre-load current information */}
-                                        <TabContainer id="right-tabs-example"
-                                                      defaultActiveKey="first">
-                                            <Row>
-                                                <Col xs>
-                                                    <Nav variant="pills"
-                                                         className="flex-column">
-                                                        <Nav.Item>
-                                                            <Nav.Link
-                                                                eventKey="first">Students</Nav.Link>
-                                                        </Nav.Item>
-                                                    </Nav>
-                                                </Col>
-                                                <Col xs>
-                                                    <Nav variant="pills"
-                                                         className="flex-column">
-                                                        <Nav.Item>
-                                                            <Nav.Link
-                                                                eventKey="second">Artefacts</Nav.Link>
-                                                        </Nav.Item>
-                                                    </Nav>
-                                                </Col>
-                                                <Col xs>
-                                                    <Nav variant="pills"
-                                                         className="flex-column">
-                                                        <Nav.Item>
-                                                            <Nav.Link
-                                                                eventKey="third">Technologies</Nav.Link>
-                                                        </Nav.Item>
-                                                    </Nav>
-                                                </Col>
-                                                <Col xs>
-                                                    <Nav variant="pills"
-                                                         className="flex-column">
-                                                        <Nav.Item>
-                                                            <Nav.Link
-                                                                eventKey="fourth">Metrics</Nav.Link>
-                                                        </Nav.Item>
-                                                    </Nav>
-                                                </Col>
-                                            </Row>
-                                            <Row>
-                                                {/* Table to display students */}
-                                                <Col sm={12}>
-                                                    <TabContent>
-                                                        <TabPane
-                                                            eventKey="first">
-                                                            <Grid container
-                                                                  spacing={8}
-                                                                  alignItems="center">
-                                                                <Grid item
-                                                                      xs={3}>
-                                                                    <div
-                                                                        className={classes.studentTeamHeader}>
-                                                                        Number
-                                                                        of
-                                                                        students
-                                                                    </div>
-                                                                </Grid>
-                                                                <Grid item
-                                                                      xs={9}>
-                                                                    <form
-                                                                        className={classes.container}
-                                                                        noValidate
-                                                                        autoComplete="off">
-                                                                        <Select
-                                                                            className={classes.selectField}
-                                                                            autoWidth={true}
-                                                                            value={this.state.numStudents}
-                                                                            onChange={e => this._handleNumStudentsChange(e)}
-                                                                            MenuProps={MenuProps}
-                                                                        >
-                                                                            {NUM_ITEMS.map(number => (
-                                                                                <MenuItem
-                                                                                    value={number}
-                                                                                    key={number}>
-                                                                                    {number}
-                                                                                </MenuItem>
-                                                                            ))}
-                                                                        </Select>
-                                                                    </form>
-                                                                </Grid>
-                                                            </Grid>
-
-                                                            <Table
-                                                                className={classes.table}>
-                                                                <TableHead>
-                                                                    <TableRow>
-                                                                        <TableCell
-                                                                            align="left">Name</TableCell>
-                                                                        <TableCell
-                                                                            align="left">Email
-                                                                            Address</TableCell>
-                                                                    </TableRow>
-                                                                </TableHead>
-
-                                                                <TableBody>
-                                                                    {this._createRows("numStudents").map(
-                                                                        (index) => (
-                                                                            <TableRow
-                                                                                key={index.index}>
-                                                                                <TableCell
-                                                                                    component="th"
-                                                                                    scope="row">
-                                                                                    <form
-                                                                                        className={classes.container}
-                                                                                        noValidate
-                                                                                        autoComplete="off"
-                                                                                    >
-                                                                                        <TextField
-                                                                                            id={"name" + index.index}
-                                                                                            className={classes.textField}
-                                                                                            margin="dense"
-                                                                                            inputProps={{'aria-label': 'Name'}}
-                                                                                            fullWidth
-                                                                                            variant="outlined"
-                                                                                            defaultValue={product.students[index.index] ? product.students[index.index].name : ""}
-                                                                                            InputProps={{
-                                                                                                classes: {
-                                                                                                    input: classes.resize,
-                                                                                                },
-                                                                                            }}
-                                                                                        />
-                                                                                    </form>
-                                                                                </TableCell>
-                                                                                <TableCell
-                                                                                    align="left">
-                                                                                    <form
-                                                                                        className={classes.container}
-                                                                                        noValidate
-                                                                                        autoComplete="off"
-                                                                                    >
-                                                                                        <TextField
-                                                                                            id={"email" + index.index}
-                                                                                            className={classes.textField}
-                                                                                            margin="dense"
-                                                                                            inputProps={{'aria-label': 'Email Address'}}
-                                                                                            fullWidth
-                                                                                            variant="outlined"
-                                                                                            defaultValue={product.students[index.index] ? product.students[index.index].email : ""}
-                                                                                            InputProps={{
-                                                                                                classes: {
-                                                                                                    input: classes.resize,
-                                                                                                },
-                                                                                            }}
-                                                                                        />
-                                                                                    </form>
-                                                                                </TableCell>
-                                                                            </TableRow>
-                                                                        )
-                                                                    )}
-                                                                </TableBody>
-                                                            </Table>
-                                                        </TabPane>
-                                                    </TabContent>
-
-                                                    {/* Table to display artefacts */}
-                                                    <TabContent>
-                                                        <TabPane
-                                                            eventKey="second">
-                                                            <Grid container
-                                                                  spacing={8}
-                                                                  alignItems="center">
-                                                                <Grid item
-                                                                      xs={3}>
-                                                                    <div
-                                                                        className={classes.studentTeamHeader}>
-                                                                        Number
-                                                                        of
-                                                                        artefacts
-                                                                    </div>
-                                                                </Grid>
-                                                                <Grid item
-                                                                      xs={9}>
-                                                                    <form
-                                                                        className={classes.container}
-                                                                        noValidate
-                                                                        autoComplete="off">
-                                                                        <Select
-                                                                            className={classes.selectField}
-                                                                            autoWidth={true}
-                                                                            value={this.state.numProductLinks}
-                                                                            onChange={e => this._handleNumProductLinksChange(e)}
-                                                                            MenuProps={MenuProps}
-                                                                        >
-                                                                            {NUM_ITEMS.map(number => (
-                                                                                <MenuItem
-                                                                                    value={number}
-                                                                                    key={number}>
-                                                                                    {number}
-                                                                                </MenuItem>
-                                                                            ))}
-                                                                        </Select>
-                                                                    </form>
-                                                                </Grid>
-                                                            </Grid>
-
-                                                            <Table
-                                                                className={classes.table}>
-                                                                <TableHead>
-                                                                    <TableRow>
-                                                                        <TableCell
-                                                                            align="left">Artefact
-                                                                            Link</TableCell>
-                                                                    </TableRow>
-                                                                </TableHead>
-
-                                                                <TableBody>
-                                                                    {this._createRows("numProductLinks").map(
-                                                                        (index) => (
-                                                                            <TableRow
-                                                                                key={index.index}>
-                                                                                <TableCell
-                                                                                    component="th"
-                                                                                    scope="row">
-                                                                                    <form
-                                                                                        className={classes.container}
-                                                                                        noValidate
-                                                                                        autoComplete="off"
-                                                                                    >
-                                                                                        <TextField
-                                                                                            id={"productLinks" + index.index}
-                                                                                            className={classes.textField}
-                                                                                            margin="dense"
-                                                                                            inputProps={{'aria-label': 'Artefact'}}
-                                                                                            fullWidth
-                                                                                            variant="outlined"
-                                                                                            defaultValue={product.productLinks[index.index] ? product.productLinks[index.index] : ""}
-                                                                                            InputProps={{
-                                                                                                classes: {
-                                                                                                    input: classes.resize,
-                                                                                                },
-                                                                                            }}
-                                                                                        />
-                                                                                    </form>
-                                                                                </TableCell>
-                                                                            </TableRow>
-                                                                        )
-                                                                    )}
-                                                                </TableBody>
-                                                            </Table>
-                                                        </TabPane>
-                                                    </TabContent>
-
-                                                    {/* Table to display technologies */}
-                                                    <TabContent>
-                                                        <TabPane
-                                                            eventKey="third">
-                                                            <Grid container
-                                                                  spacing={8}
-                                                                  alignItems="center">
-                                                                <Grid item
-                                                                      xs={3}>
-                                                                    <div
-                                                                        className={classes.studentTeamHeader}>
-                                                                        Number
-                                                                        of
-                                                                        technologies
-                                                                        utilised
-                                                                    </div>
-                                                                </Grid>
-                                                                <Grid item
-                                                                      xs={9}>
-                                                                    <form
-                                                                        className={classes.container}
-                                                                        noValidate
-                                                                        autoComplete="off">
-                                                                        <Select
-                                                                            className={classes.selectField}
-                                                                            autoWidth={true}
-                                                                            value={this.state.numTechnologies}
-                                                                            onChange={e => this._handleNumTechnologiesChange(e)}
-                                                                            MenuProps={MenuProps}
-                                                                        >
-                                                                            {NUM_ITEMS.map(number => (
-                                                                                <MenuItem
-                                                                                    value={number}
-                                                                                    key={number}>
-                                                                                    {number}
-                                                                                </MenuItem>
-                                                                            ))}
-                                                                        </Select>
-                                                                    </form>
-                                                                </Grid>
-                                                            </Grid>
-
-                                                            <Grid container
-                                                                  spacing={8}
-                                                                  style={{
-                                                                      marginLeft: 20,
-                                                                      width: "98%"
-                                                                  }}>
-                                                                {this._createRows("numTechnologies").map(
-                                                                    (index) => (
-                                                                        <Grid
-                                                                            item
-                                                                            xs={3}
-                                                                            key={index.index}>
-                                                                            <form
-                                                                                className={classes.container}
-                                                                                noValidate
-                                                                                autoComplete="off"
-                                                                            >
-                                                                                <TextField
-                                                                                    id={"technologies" + index.index}
-                                                                                    className={classes.textField}
-                                                                                    margin="dense"
-                                                                                    inputProps={{'aria-label': 'Technology'}}
-                                                                                    fullWidth
-                                                                                    variant="outlined"
-                                                                                    defaultValue={product.technologies[index.index] ? product.technologies[index.index] : ""}
-                                                                                    InputProps={{
-                                                                                        classes: {
-                                                                                            input: classes.resize,
-                                                                                        },
-                                                                                    }}
-                                                                                />
-                                                                            </form>
-                                                                        </Grid>
-                                                                    )
-                                                                )}
-                                                            </Grid>
-                                                        </TabPane>
-                                                    </TabContent>
-
-                                                    {/* Table to display metrics */}
-                                                    <TabContent>
-                                                        <TabPane
-                                                            eventKey="fourth">
-                                                            <FormControlLabel
-                                                                control={
-                                                                    <Switch
-                                                                        checked={this.state.activelyUsed}
-                                                                        onChange={this._handleMetricChange("activelyUsed")}
-                                                                        value="activelyUsed"
-                                                                    />
-                                                                }
-                                                                label="Actively Used"
-                                                                labelPlacement="start"
-                                                            />
-                                                            <br/>
-                                                            <FormControlLabel
-                                                                control={
-                                                                    <Switch
-                                                                        checked={this.state.deployed}
-                                                                        onChange={this._handleMetricChange("deployed")}
-                                                                        value="deployed"
-                                                                    />
-                                                                }
-                                                                label="Deployed"
-                                                                labelPlacement="start"
-                                                            />
-                                                        </TabPane>
-                                                    </TabContent>
-                                                </Col>
-                                            </Row>
-                                        </TabContainer>
-
-                                    </DialogContent>
-
-                                    <Divider/>
-
-                                    <DialogActions>
-                                        <Button
-                                            className={classes.saveButton}
-                                            variant="contained"
-                                            color="primary"
-                                            onClick={this._handleUpdateStudentTeam}
-                                        >
-                                            Save
-                                        </Button>
-                                        <Button
-                                            className={classes.discardButton}
-                                            onClick={this._handleClose}
-                                            color="primary">
-                                            Discard
-                                        </Button>
-                                    </DialogActions>
+                                    <TextField
+                                        id="teamName"
+                                        className={classes.textField}
+                                        margin="normal"
+                                        inputProps={{'aria-label': 'Team Name'}}
+                                        fullWidth
+                                        defaultValue={product.name}
+                                    />
                                 </form>
                             </Grid>
                         </Grid>
+
+                        <br/>
+
+                        {/* Tabs student, artefacts and technologies. Pre-load current information */}
+                        <TabContainer id="right-tabs-example"
+                                        defaultActiveKey="first">
+                            <Row>
+                                <Col xs>
+                                    <Nav variant="pills"
+                                            className="flex-column">
+                                        <Nav.Item>
+                                            <Nav.Link
+                                                eventKey="first">Students</Nav.Link>
+                                        </Nav.Item>
+                                    </Nav>
+                                </Col>
+                                <Col xs>
+                                    <Nav variant="pills"
+                                            className="flex-column">
+                                        <Nav.Item>
+                                            <Nav.Link
+                                                eventKey="second">Artefacts</Nav.Link>
+                                        </Nav.Item>
+                                    </Nav>
+                                </Col>
+                                <Col xs>
+                                    <Nav variant="pills"
+                                            className="flex-column">
+                                        <Nav.Item>
+                                            <Nav.Link
+                                                eventKey="third">Technologies</Nav.Link>
+                                        </Nav.Item>
+                                    </Nav>
+                                </Col>
+                                <Col xs>
+                                    <Nav variant="pills"
+                                            className="flex-column">
+                                        <Nav.Item>
+                                            <Nav.Link
+                                                eventKey="fourth">Metrics</Nav.Link>
+                                        </Nav.Item>
+                                    </Nav>
+                                </Col>
+                            </Row>
+                            <Row>
+                                {/* Table to display students */}
+                                <Col sm={12}>
+                                    <TabContent>
+                                        <TabPane
+                                            eventKey="first">
+                                            <Grid container
+                                                    spacing={8}
+                                                    alignItems="center">
+                                                <Grid item
+                                                        xs={3}>
+                                                    <div
+                                                        className={classes.studentTeamHeader}>
+                                                        Number
+                                                        of
+                                                        students
+                                                    </div>
+                                                </Grid>
+                                                <Grid item
+                                                        xs={9}>
+                                                    <form
+                                                        className={classes.container}
+                                                        noValidate
+                                                        autoComplete="off">
+                                                        <Select
+                                                            className={classes.selectField}
+                                                            autoWidth={true}
+                                                            value={this.state.numStudents}
+                                                            onChange={e => this._handleNumStudentsChange(e)}
+                                                            MenuProps={MenuProps}
+                                                        >
+                                                            {NUM_ITEMS.map(number => (
+                                                                <MenuItem
+                                                                    value={number}
+                                                                    key={number}>
+                                                                    {number}
+                                                                </MenuItem>
+                                                            ))}
+                                                        </Select>
+                                                    </form>
+                                                </Grid>
+                                            </Grid>
+
+                                            <Table
+                                                className={classes.table}>
+                                                <TableHead>
+                                                    <TableRow>
+                                                        <TableCell
+                                                            align="left">Name</TableCell>
+                                                        <TableCell
+                                                            align="left">Email
+                                                            Address</TableCell>
+                                                    </TableRow>
+                                                </TableHead>
+
+                                                <TableBody>
+                                                    {this._createRows("numStudents").map(
+                                                        (index) => (
+                                                            <TableRow
+                                                                key={index.index}>
+                                                                <TableCell
+                                                                    component="th"
+                                                                    scope="row">
+                                                                    <form
+                                                                        className={classes.container}
+                                                                        noValidate
+                                                                        autoComplete="off"
+                                                                    >
+                                                                        <TextField
+                                                                            id={"name" + index.index}
+                                                                            className={classes.textField}
+                                                                            margin="dense"
+                                                                            inputProps={{'aria-label': 'Name'}}
+                                                                            fullWidth
+                                                                            variant="outlined"
+                                                                            defaultValue={product.students[index.index] ? product.students[index.index].name : ""}
+                                                                            InputProps={{
+                                                                                classes: {
+                                                                                    input: classes.resize,
+                                                                                },
+                                                                            }}
+                                                                        />
+                                                                    </form>
+                                                                </TableCell>
+                                                                <TableCell
+                                                                    align="left">
+                                                                    <form
+                                                                        className={classes.container}
+                                                                        noValidate
+                                                                        autoComplete="off"
+                                                                    >
+                                                                        <TextField
+                                                                            id={"email" + index.index}
+                                                                            className={classes.textField}
+                                                                            margin="dense"
+                                                                            inputProps={{'aria-label': 'Email Address'}}
+                                                                            fullWidth
+                                                                            variant="outlined"
+                                                                            defaultValue={product.students[index.index] ? product.students[index.index].email : ""}
+                                                                            InputProps={{
+                                                                                classes: {
+                                                                                    input: classes.resize,
+                                                                                },
+                                                                            }}
+                                                                        />
+                                                                    </form>
+                                                                </TableCell>
+                                                            </TableRow>
+                                                        )
+                                                    )}
+                                                </TableBody>
+                                            </Table>
+                                        </TabPane>
+                                    </TabContent>
+
+                                    {/* Table to display artefacts */}
+                                    <TabContent>
+                                        <TabPane
+                                            eventKey="second">
+                                            <Grid container
+                                                    spacing={8}
+                                                    alignItems="center">
+                                                <Grid item
+                                                        xs={3}>
+                                                    <div
+                                                        className={classes.studentTeamHeader}>
+                                                        Number
+                                                        of
+                                                        artefacts
+                                                    </div>
+                                                </Grid>
+                                                <Grid item
+                                                        xs={9}>
+                                                    <form
+                                                        className={classes.container}
+                                                        noValidate
+                                                        autoComplete="off">
+                                                        <Select
+                                                            className={classes.selectField}
+                                                            autoWidth={true}
+                                                            value={this.state.numProductLinks}
+                                                            onChange={e => this._handleNumProductLinksChange(e)}
+                                                            MenuProps={MenuProps}
+                                                        >
+                                                            {NUM_ITEMS.map(number => (
+                                                                <MenuItem
+                                                                    value={number}
+                                                                    key={number}>
+                                                                    {number}
+                                                                </MenuItem>
+                                                            ))}
+                                                        </Select>
+                                                    </form>
+                                                </Grid>
+                                            </Grid>
+
+                                            <Table
+                                                className={classes.table}>
+                                                <TableHead>
+                                                    <TableRow>
+                                                        <TableCell
+                                                            align="left">Artefact
+                                                            Link</TableCell>
+                                                    </TableRow>
+                                                </TableHead>
+
+                                                <TableBody>
+                                                    {this._createRows("numProductLinks").map(
+                                                        (index) => (
+                                                            <TableRow
+                                                                key={index.index}>
+                                                                <TableCell
+                                                                    component="th"
+                                                                    scope="row">
+                                                                    <form
+                                                                        className={classes.container}
+                                                                        noValidate
+                                                                        autoComplete="off"
+                                                                    >
+                                                                        <TextField
+                                                                            id={"productLinks" + index.index}
+                                                                            className={classes.textField}
+                                                                            margin="dense"
+                                                                            inputProps={{'aria-label': 'Artefact'}}
+                                                                            fullWidth
+                                                                            variant="outlined"
+                                                                            defaultValue={product.productLinks[index.index] ? product.productLinks[index.index] : ""}
+                                                                            InputProps={{
+                                                                                classes: {
+                                                                                    input: classes.resize,
+                                                                                },
+                                                                            }}
+                                                                        />
+                                                                    </form>
+                                                                </TableCell>
+                                                            </TableRow>
+                                                        )
+                                                    )}
+                                                </TableBody>
+                                            </Table>
+                                        </TabPane>
+                                    </TabContent>
+
+                                    {/* Table to display technologies */}
+                                    <TabContent>
+                                        <TabPane
+                                            eventKey="third">
+                                            <Grid container
+                                                    spacing={8}
+                                                    alignItems="center">
+                                                <Grid item
+                                                        xs={3}>
+                                                    <div
+                                                        className={classes.studentTeamHeader}>
+                                                        Number
+                                                        of
+                                                        technologies
+                                                        utilised
+                                                    </div>
+                                                </Grid>
+                                                <Grid item
+                                                        xs={9}>
+                                                    <form
+                                                        className={classes.container}
+                                                        noValidate
+                                                        autoComplete="off">
+                                                        <Select
+                                                            className={classes.selectField}
+                                                            autoWidth={true}
+                                                            value={this.state.numTechnologies}
+                                                            onChange={e => this._handleNumTechnologiesChange(e)}
+                                                            MenuProps={MenuProps}
+                                                        >
+                                                            {NUM_ITEMS.map(number => (
+                                                                <MenuItem
+                                                                    value={number}
+                                                                    key={number}>
+                                                                    {number}
+                                                                </MenuItem>
+                                                            ))}
+                                                        </Select>
+                                                    </form>
+                                                </Grid>
+                                            </Grid>
+
+                                            <Grid container
+                                                    spacing={8}
+                                                    style={{
+                                                        marginLeft: 20,
+                                                        width: "98%"
+                                                    }}>
+                                                {this._createRows("numTechnologies").map(
+                                                    (index) => (
+                                                        <Grid
+                                                            item
+                                                            xs={3}
+                                                            key={index.index}>
+                                                            <form
+                                                                className={classes.container}
+                                                                noValidate
+                                                                autoComplete="off"
+                                                            >
+                                                                <TextField
+                                                                    id={"technologies" + index.index}
+                                                                    className={classes.textField}
+                                                                    margin="dense"
+                                                                    inputProps={{'aria-label': 'Technology'}}
+                                                                    fullWidth
+                                                                    variant="outlined"
+                                                                    defaultValue={product.technologies[index.index] ? product.technologies[index.index] : ""}
+                                                                    InputProps={{
+                                                                        classes: {
+                                                                            input: classes.resize,
+                                                                        },
+                                                                    }}
+                                                                />
+                                                            </form>
+                                                        </Grid>
+                                                    )
+                                                )}
+                                            </Grid>
+                                        </TabPane>
+                                    </TabContent>
+
+                                    {/* Table to display metrics */}
+                                    <TabContent>
+                                        <TabPane
+                                            eventKey="fourth">
+                                            <FormControlLabel
+                                                control={
+                                                    <Switch
+                                                        checked={this.state.activelyUsed}
+                                                        onChange={this._handleMetricChange("activelyUsed")}
+                                                        value="activelyUsed"
+                                                    />
+                                                }
+                                                label="Actively Used"
+                                                labelPlacement="start"
+                                            />
+                                            <br/>
+                                            <FormControlLabel
+                                                control={
+                                                    <Switch
+                                                        checked={this.state.deployed}
+                                                        onChange={this._handleMetricChange("deployed")}
+                                                        value="deployed"
+                                                    />
+                                                }
+                                                label="Deployed"
+                                                labelPlacement="start"
+                                            />
+                                        </TabPane>
+                                    </TabContent>
+                                </Col>
+                            </Row>
+                        </TabContainer>
+
                     </DialogContent>
+
+                    <Divider/>
+
+                    <DialogActions>
+                        <Button
+                            className={classes.saveButton}
+                            variant="contained"
+                            color="primary"
+                            onClick={this._handleUpdateStudentTeam}
+                        >
+                            Save
+                        </Button>
+                        <Button
+                            className={classes.discardButton}
+                            onClick={this._handleClose}
+                            color="primary">
+                            Discard
+                        </Button>
+                    </DialogActions>
                 </Dialog>
             </div>
         );
