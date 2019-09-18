@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from "prop-types";
-import { withStyles } from "@material-ui/core";
+import {withStyles} from "@material-ui/core";
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
@@ -9,9 +9,8 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import Grid from "@material-ui/core/Grid";
 import TeamArtefacts from "./TeamArtefacts";
 import Chip from '@material-ui/core/Chip';
-import { green } from "@material-ui/core/colors";
+import {green} from "@material-ui/core/colors";
 import EditStudentTeam from "./EditStudentTeam";
-
 
 const styles = theme => ({
     expansionPanel: {
@@ -25,7 +24,7 @@ const styles = theme => ({
         transform: "rotate(0deg)",
         marginLeft: "auto",
         transition: theme.transitions.create("transform", {
-          duration: theme.transitions.duration.shortest
+            duration: theme.transitions.duration.shortest
         })
     },
     expandOpen: {
@@ -36,7 +35,7 @@ const styles = theme => ({
         fontWeight: "bold"
     },
     chip: {
-        marginRight: 3, 
+        marginRight: 3,
         backgroundColor: green[500],
         fontSize: 12,
         color: "#FFFFFF",
@@ -53,12 +52,12 @@ class TeamCard extends React.Component {
     }
 
     render() {
-        const {product, classes} = this.props;
+        const {classes, product, projectId} = this.props;
 
         return (
             <ExpansionPanel className={classes.expansionPanel}>
                 <ExpansionPanelSummary
-                    expandIcon={<ExpandMoreIcon />}
+                    expandIcon={<ExpandMoreIcon/>}
                     aria-controls="panel1a-content"
                     id="panel1a-header"
                     className={classes.expansionPanelSummary}
@@ -71,43 +70,49 @@ class TeamCard extends React.Component {
                         </Grid>
 
                         <Grid item xs={7}>
-                            <div style={{ textAlign: "right" }}>
-                                {product.activelyUsed ? 
-                                    <Chip size="small" label="Actively Used" className={classes.chip} />
-                                 : <div/>}
-                                {product.deployed ? 
-                                    <Chip size="small" label="Deployed" className={classes.chip} />
-                                 : <div/>} 
+                            <div style={{textAlign: "right"}}>
+                                {product.activelyUsed ?
+                                    <Chip size="small" label="Actively Used"
+                                          className={classes.chip}/>
+                                    : <div/>}
+                                {product.deployed ?
+                                    <Chip size="small" label="Deployed"
+                                          className={classes.chip}/>
+                                    : <div/>}
                             </div>
                         </Grid>
-                     </Grid>
+                    </Grid>
                 </ExpansionPanelSummary>
-                <ExpansionPanelDetails className={classes.expansionPanelDetails}>
+                <ExpansionPanelDetails
+                    className={classes.expansionPanelDetails}>
                     <Grid container spacing={24}>
                         <Grid item xs={12}>
-                            <TeamArtefacts 
-                                students={product.students} 
+                            <TeamArtefacts
+                                students={product.students}
                                 productLinks={product.productLinks}
-                                technologies={product.technologies} 
+                                technologies={product.technologies}
                             />
                         </Grid>
 
-                        <Grid item xs={12} style={{ padding: 0 }}>
-                            <EditStudentTeam product={product}/>
+                        <Grid item xs={12} style={{padding: 0}}>
+                            <EditStudentTeam
+                                product={product}
+                                projectId={projectId}
+                            />
                         </Grid>
-                    
+
                     </Grid>
 
                 </ExpansionPanelDetails>
             </ExpansionPanel>
         );
     }
-
 }
 
 TeamCard.propTypes = {
     classes: PropTypes.object.isRequired,
     product: PropTypes.object.isRequired,
+    projectId: PropTypes.string.isRequired,
 };
 
 export default withStyles(styles)(TeamCard);
