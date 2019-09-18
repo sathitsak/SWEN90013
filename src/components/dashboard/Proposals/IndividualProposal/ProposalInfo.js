@@ -106,9 +106,12 @@ class ProposalInfo extends React.Component {
             
             <br/>
 
+          <br/><br />
+
+          <Grid item xs={12}>
             <div className={classes.infoHeader}>Change Status</div>
-                  
           </Grid>
+              
         </Grid>
 
         <StatusChangeModal id={this.props.id} />

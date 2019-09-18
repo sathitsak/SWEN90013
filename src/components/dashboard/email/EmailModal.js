@@ -22,6 +22,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
 import store from "../../../store";
 import axios from "axios";
+import { ENETUNREACH } from "constants";
 
 function rand() {
   return Math.round(Math.random() * 20) - 10;
@@ -79,19 +80,19 @@ const styles = theme => ({
   },
   fab: {
     backgroundColor: "#094183",
-    '&:hover': {
+    "&:hover": {
       backgroundColor: "#4074B2"
     },
-    boxShadow: "none",
+    boxShadow: "none"
   },
   sendButton: {
     backgroundColor: "#094183",
-    '&:hover': {
-      backgroundColor:"#4074B2",
+    "&:hover": {
+      backgroundColor: "#4074B2"
     }
   },
   discardButton: {
-    color: "#094183",
+    color: "#094183"
   }
 });
 
@@ -129,6 +130,8 @@ const names = [
   "Kelly Snyder"
 ];
 
+const nameEmailMap = new Map();
+
 const templates = [
   { title: "Template A", message: "template content a" },
   { title: "Template B", message: "template content b" },
@@ -137,22 +140,66 @@ const templates = [
 ];
 
 class EmailModal extends React.Component {
-  state = {
-    open: false,
-    fullWidth: true,
-    maxWidth: "lg",
-    email_recipients: [],
-    email_cc: [],
-    email_bcc: [],
-    email_template: "",
-    email_message: ""
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      open: false,
+      fullWidth: true,
+      maxWidth: "lg",
+      email_recipients: [],
+      email_cc: [],
+      email_bcc: [],
+      email_template: "",
+      email_message: "",
+      context: "",
+      available_recipients: []
+    };
+    this.handleSendEmail = this.handleSendEmail.bind(this);
+  }
 
   handleClickOpen = () => {
     this.setState({ open: true });
+
+    //check the URL to determine the context of the email
+    var url = window.location.href;
+    var split = url.split("/");
+    var context = split[4];
+    console.log(split[4]);
+
+    if (split[4] == "proposals") {
+      var clientName = store.getState().proposal.client.firstName;
+      var clientEmail = store.getState().proposal.client.email;
+      nameEmailMap.set(clientName, clientEmail);
+      this.setState({
+        available_recipients: [clientName]
+      });
+    } else if (split[4] == "projects") {
+      this.state.available_recipients.push(
+        store.getState().proposal.client.firstName
+      );
+      nameEmailMap.set(
+        store.getState().proposal.client.firstName,
+        store.getState().proposal.client.email
+      );
+
+      var teams = store.getState().project.products;
+      var students = [];
+
+      teams.map(individualTeam => students.push(individualTeam.students));
+
+      var studentsFlattened = students.flat();
+
+      studentsFlattened.map(student => {
+        nameEmailMap.set(student.name, student.email);
+        this.state.available_recipients.push(student.name);
+      });
+    }
   };
 
   handleClose = () => {
+    this.setState({ available_recipients: [] });
+    this.setState({ email_recipients: [] });
+    nameEmailMap.clear();
     this.setState({ open: false });
   };
 
@@ -195,19 +242,33 @@ class EmailModal extends React.Component {
     }
   }
 
-  // UPDATE URL FROM BOWEN
   handleSendEmail() {
+    var emails = [];
+    this.state.email_recipients.map(name =>
+      emails.push(nameEmailMap.get(name))
+    );
+
+    //send multiple posts
+
+    //templates
+    // axios
+    //   .get(`http://localhost:13000/api/message/template`)
+    //   .then(function(response) {
+    //     console.log(response);
+    //   })
+    //   .catch(function(error) {
+    //     console.log(error);
+    //   });
+
     axios
-      .post(`http://localhost:13000/api/email`, {
-        account: {
-          user: "cis.projectmanagementsystem@gmail",
-          pw: "finalyearproj2019"
-        },
-        message: {
-          from: "this supervisor",
-          to: this.state.email_recipients,
-          html: this.state.email_message
-        }
+      .post(`http://35.197.167.244/message`, {
+        from: "thissupervisor",
+        to: "chamira.balasuriya@gmail.com",
+        subject: "new",
+        html: "<p>testttt</p>",
+        projectType: "fdafdsa",
+        cc: ["chamira.b@live.com.au"],
+        projectID: ""
       })
       .then(function(response) {
         console.log(response);
@@ -216,13 +277,17 @@ class EmailModal extends React.Component {
         console.log(error);
       });
     alert("sending email");
+    this.setState({ email_recipients: [] });
+    this.setState({ available_recipients: [] });
+    nameEmailMap.clear();
+    this.setState({ open: false });
   }
 
   unsubscribe = store.subscribe(this.handleChange);
 
   _handleEmailContentChange(e) {
     const email_message = e.target.value;
-    this.setState({email_message: email_message})
+    this.setState({ email_message: email_message });
   }
 
   render() {
@@ -250,111 +315,134 @@ class EmailModal extends React.Component {
 
           <Divider />
 
-            <DialogContent>
-                <form className={classes.container} noValidate autoComplete="off">
-                    <FormControl className={classes.formControl}>
-                        <InputLabel htmlFor="email_recipients">To</InputLabel>
-                        <Select className={classes.selectField}
-                            autoWidth="true"
-                            multiple
-                            value={this.state.email_recipients}
-                            onChange={(e) => this.handleChange("email_recipients", e)}
-                            input={<Input id="email_recipients" />}
-                            renderValue={selected => (
-                            <div className={classes.chips}>
-                                {selected.map(value => (
-                                <Chip key={value} label={value} className={classes.chip} />
-                                ))}
-                            </div>
-                            )}
-                            MenuProps={MenuProps}
-                        >
-                            {names.map(name => (
-                            <MenuItem key={name} value={name} style={{width:'100%'}}>
-                                {name}
-                            </MenuItem>
-                            ))}
-                        </Select>
-                    </FormControl>
-                    <br/>
-                    <FormControl className={classes.formControl}>
-                        <InputLabel htmlFor="email_cc">CC</InputLabel>
-                        <Select className={classes.selectField}
-                            autoWidth="true"
-                            multiple
-                            value={this.state.email_cc}
-                            onChange={(e) => this.handleChange("email_cc", e)}
-                            input={<Input id="email_cc" />}
-                            renderValue={selected => (
-                            <div className={classes.chips}>
-                                {selected.map(value => (
-                                <Chip key={value} label={value} className={classes.chip} />
-                                ))}
-                            </div>
-                            )}
-                            MenuProps={MenuProps}
-                        >
-                            {names.map(name => (
-                            <MenuItem key={name} value={name} style={{width:'100%'}}>
-                                {name}
-                            </MenuItem>
-                            ))}
-                        </Select>
-                    </FormControl>
-                    <br/>
-                    <FormControl className={classes.formControl}>
-                        <InputLabel htmlFor="email_bcc">BCC</InputLabel>
-                        <Select className={classes.selectField}
-                            autoWidth="true"
-                            multiple
-                            value={this.state.email_bcc}
-                            onChange={(e) => this.handleChange("email_bcc", e)}
-                            input={<Input id="email_bcc" />}
-                            renderValue={selected => (
-                            <div className={classes.chips}>
-                                {selected.map(value => (
-                                <Chip key={value} label={value} className={classes.chip} />
-                                ))}
-                            </div>
-                            )}
-                            MenuProps={MenuProps}
-                        >
-                            {names.map(name => (
-                            <MenuItem key={name} value={name} style={{width:'100%'}}>
-                                {name}
-                            </MenuItem>
-                            ))}
-                        </Select>
-                    </FormControl>
-                    <br/>
-                    <FormControl className={classes.formControl}>
-                        <InputLabel htmlFor="email_template">Choose template if applicable</InputLabel>
-                        <Select className={classes.selectField}
-                            autoWidth="true"
-                            value={this.state.email_template}
-                            onChange={(e) => this.handleChange("email_template", e)}
-                            input={<Input id="email_template" />}
-                            MenuProps={MenuProps}
-                        >
-                            {templates.map((template, index) => (
-                            <MenuItem key={index} value={template.title} style={{width:'100%'}}>
-                                {template.title}
-                            </MenuItem>
-                            ))}
-                        </Select>
-                    </FormControl>
-                    
-                    <Divider style={{marginTop:"1%", marginBottom:"1%"}}/>
-                    <InputBase fullWidth
-                        id="message"
-                        className={classes.margin}
-                        multiline="true"
-                        rows="10"
-                        value={this.state.email_message}
-                        onChange={(e) => this._handleEmailContentChange(e)}
-                    />
-                </form>
-            </DialogContent>
+          <DialogContent>
+            <form className={classes.container} noValidate autoComplete="off">
+              <FormControl className={classes.formControl}>
+                <InputLabel htmlFor="email_recipients">To</InputLabel>
+                <Select
+                  className={classes.selectField}
+                  autoWidth="true"
+                  multiple
+                  value={this.state.email_recipients}
+                  onChange={e => this.handleChange("email_recipients", e)}
+                  input={<Input id="email_recipients" />}
+                  renderValue={selected => (
+                    <div className={classes.chips}>
+                      {selected.map(value => (
+                        <Chip
+                          key={value}
+                          label={value}
+                          className={classes.chip}
+                        />
+                      ))}
+                    </div>
+                  )}
+                  MenuProps={MenuProps}
+                >
+                  {this.state.available_recipients.map(name => (
+                    <MenuItem key={name} value={name} style={{ width: "100%" }}>
+                      {name}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+              <br />
+              <FormControl className={classes.formControl}>
+                <InputLabel htmlFor="email_cc">CC</InputLabel>
+                <Select
+                  className={classes.selectField}
+                  autoWidth="true"
+                  multiple
+                  value={this.state.email_cc}
+                  onChange={e => this.handleChange("email_cc", e)}
+                  input={<Input id="email_cc" />}
+                  renderValue={selected => (
+                    <div className={classes.chips}>
+                      {selected.map(value => (
+                        <Chip
+                          key={value}
+                          label={value}
+                          className={classes.chip}
+                        />
+                      ))}
+                    </div>
+                  )}
+                  MenuProps={MenuProps}
+                >
+                  {names.map(name => (
+                    <MenuItem key={name} value={name} style={{ width: "100%" }}>
+                      {name}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+              <br />
+              <FormControl className={classes.formControl}>
+                <InputLabel htmlFor="email_bcc">BCC</InputLabel>
+                <Select
+                  className={classes.selectField}
+                  autoWidth="true"
+                  multiple
+                  value={this.state.email_bcc}
+                  onChange={e => this.handleChange("email_bcc", e)}
+                  input={<Input id="email_bcc" />}
+                  renderValue={selected => (
+                    <div className={classes.chips}>
+                      {selected.map(value => (
+                        <Chip
+                          key={value}
+                          label={value}
+                          className={classes.chip}
+                        />
+                      ))}
+                    </div>
+                  )}
+                  MenuProps={MenuProps}
+                >
+                  {names.map(name => (
+                    <MenuItem key={name} value={name} style={{ width: "100%" }}>
+                      {name}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+              <br />
+              <FormControl className={classes.formControl}>
+                <InputLabel htmlFor="email_template">
+                  Choose template if applicable
+                </InputLabel>
+                <Select
+                  className={classes.selectField}
+                  autoWidth="true"
+                  value={this.state.email_template}
+                  onChange={e => this.handleChange("email_template", e)}
+                  input={<Input id="email_template" />}
+                  MenuProps={MenuProps}
+                >
+                  {templates.map((template, index) => (
+                    <MenuItem
+                      key={index}
+                      value={template.title}
+                      style={{ width: "100%" }}
+                    >
+                      {template.title}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+
+              <Divider style={{ marginTop: "1%", marginBottom: "1%" }} />
+              <InputBase
+                fullWidth
+                id="message"
+                className={classes.margin}
+                multiline="true"
+                rows="10"
+                value={this.state.email_message}
+                onChange={e => this._handleEmailContentChange(e)}
+              />
+            </form>
+          </DialogContent>
           <Divider />
 
           <DialogActions>
@@ -366,8 +454,8 @@ class EmailModal extends React.Component {
             >
               Send
             </Button>
-            <Button 
-              onClick={this.handleClose} 
+            <Button
+              onClick={this.handleClose}
               color="primary"
               className={classes.discardButton}
             >

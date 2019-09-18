@@ -41,19 +41,19 @@ const styles = {
 
 class ProjectCard extends React.Component {
   render() {
-    const { classes, id, project } = this.props;
+    const { classes, _id, project } = this.props;
 
     return (
       <Card className={classes.card}>
-        <Link to={`/dashboard/projects/${id}`} className={classes.link}>
+        <Link to={`/dashboard/projects/${_id}`} className={classes.link}>
           <CardHeader
             avatar={
               <Avatar className={classes.avatar}>
-                {project.projectName.slice(0, 1).toUpperCase()}
+                {project.name.slice(0, 1).toUpperCase()}
               </Avatar>
             }
-            title={project.projectName}
-            subheader={project.industry}
+            title={project.name}
+            subheader={project.industryType ? project.industryType : " "}
             component="div"
             className={classes.cardHeader}
           />
@@ -63,15 +63,15 @@ class ProjectCard extends React.Component {
               align="left"
               style={{ marginBottom: 5 }}
             >
-              Client: {project.client}
+              Client: {project.proposal.client.firstName + " " + project.proposal.client.lastName}
             </Typography>
-            <Divider component="li" paddingTop="20" />
+            <Divider/>
             <Typography
               component="p"
               variant="overline"
               style={{ marginTop: 5 }}
             >
-              Supervisor: {project.supervisorID}
+              Supervisor: {project.supervisorId ? project.supervisorId : " "}
             </Typography>
           </CardContent>
         </Link>

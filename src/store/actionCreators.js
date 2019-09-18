@@ -40,3 +40,13 @@ export const getGetProposalByIdAction = (proposal) => ({
     proposal: proposal,
     page_title: proposal.title,
 });
+
+export const getGetClientByIdAction = (client) => ({
+    type: GET_CLIENT_BY_ID,
+    client: client,
+});
+
+export const getGetAllSubjectsAction = (subjects) => ({
+    type: GET_ALL_SUBJECTS,
+    subjects: subjects,
+});
