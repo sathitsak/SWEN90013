@@ -110,9 +110,8 @@ const names = [
   "Virginia Andrews",
   "Kelly Snyder"
 ];
-//chamira code
+
 const nameEmailMap = new Map();
-//
 
 const templates = [
   { title: "Template A", message: "template content a" },
@@ -151,15 +150,11 @@ class EmailModal extends React.Component {
     if (split[4] == "proposals") {
       var clientName = store.getState().proposal.client.firstName;
       var clientEmail = store.getState().proposal.client.email;
-      console.log("Client name: " + clientName);
-      console.log("Client Email: " + clientEmail);
       nameEmailMap.set(clientName, clientEmail);
       this.setState({
         available_recipients: [clientName]
       });
     } else if (split[4] == "projects") {
-      console.log("clients email" + store.getState().proposal.client.email);
-      console.log(store.getState().proposal.client);
       this.state.available_recipients.push(
         store.getState().proposal.client.firstName
       );
@@ -167,16 +162,14 @@ class EmailModal extends React.Component {
         store.getState().proposal.client.firstName,
         store.getState().proposal.client.email
       );
-      console.log(store.getState().project.products);
 
       var teams = store.getState().project.products;
       var students = [];
 
       teams.map(individualTeam => students.push(individualTeam.students));
-      console.log(students);
+
       var studentsFlattened = students.flat();
 
-      //add to map1 for later and available_recipients
       studentsFlattened.map(student => {
         nameEmailMap.set(student.name, student.email);
         this.state.available_recipients.push(student.name);
@@ -185,10 +178,10 @@ class EmailModal extends React.Component {
   };
 
   handleClose = () => {
-    this.setState({ open: false });
-    //chamira code empty map2 and availablerecip
     this.setState({ available_recipients: [] });
+    this.setState({ email_recipients: [] });
     nameEmailMap.clear();
+    this.setState({ open: false });
   };
 
   handleChange = (emailField, event) => {
@@ -230,10 +223,7 @@ class EmailModal extends React.Component {
     }
   }
 
-  // UPDATE URL FROM BOWEN
   handleSendEmail() {
-    //FILTER THE EMAILS HERE
-    console.log("here are the recipients" + this.state.email_recipients);
     var emails = [];
     this.state.email_recipients.map(name =>
       emails.push(nameEmailMap.get(name))
@@ -241,7 +231,7 @@ class EmailModal extends React.Component {
 
     console.log(emails);
 
-    //send multiple posts?
+    //send multiple posts
 
     axios
       .post(`http://localhost:13000/api/email`, {
@@ -262,7 +252,10 @@ class EmailModal extends React.Component {
         console.log(error);
       });
     alert("sending email");
-    console.log("handleSendEmailFunction" + this.state.email_recipients);
+    this.setState({ email_recipients: [] });
+    this.setState({ available_recipients: [] });
+    nameEmailMap.clear();
+    this.setState({ open: false });
   }
 
   unsubscribe = store.subscribe(this.handleChange);
@@ -277,7 +270,6 @@ class EmailModal extends React.Component {
 
     return (
       <div>
-        {console.log("selected" + this.state.email_recipients)};
         <Typography gutterBottom />
         <Fab
           color="primary"
