@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useContext } from "react";
+import axios from "axios";
 import ProposalCard from "./ProposalCard";
 import Grid from "@material-ui/core/Grid";
 import List from "@material-ui/core/List";
@@ -11,6 +12,18 @@ import { Link } from "react-router-dom";
 import store from "../../../../store";
 import { getProposalList } from "../../../../api";
 import { getGetAllProposalsAction } from "../../../../store/actionCreators";
+import { endianness } from "os";
+
+// {title: 'test'}
+// new proposals works, just going to new proposal array
+//Proposal card structure
+// key={p.id}
+// id={p.id}
+// title={p.name}
+// organisation={p.organisation}
+// client={p.client}
+// supervisor={p.supervisor}
+// initial={this._getFirstCharacter(p.name)}
 
 const styles = theme => ({
   paper: {
@@ -70,6 +83,7 @@ class Proposals extends React.Component {
 
   async _reqTodoList() {
     const result = await getProposalList();
+    console.log(result);
     const action = getGetAllProposalsAction(result);
     store.dispatch(action);
   }
@@ -85,16 +99,11 @@ class Proposals extends React.Component {
     let targetProposals = [];
 
     proposals.forEach(p => {
-      // First check if valid before sending through
-      if ('client' in p ) {
-        if ('organisation' in p.client) {
-          if (p.status === status) {
-            targetProposals.push(p);
-          }
-        }
+      if (p.status === status) {
+        targetProposals.push(p);
       }
-      
     });
+    console.log("Filtered propsal" + proposals);
     return targetProposals;
   };
 
@@ -121,7 +130,10 @@ class Proposals extends React.Component {
                   <ProposalCard
                     key={p._id}
                     id={p._id}
-                    proposal={p}
+                    title={p._id}
+                    organisation={p.name}
+                    client={p.name}
+                    supervisor={p.name}
                   />
                 ))}
               </List>
@@ -139,7 +151,11 @@ class Proposals extends React.Component {
                   <ProposalCard
                     key={p._id}
                     id={p._id}
-                    proposal={p}
+                    title={p.name}
+                    organisation={p.organisation}
+                    client={p.client}
+                    supervisor={p.supervisor}
+                    initial={this._getFirstCharacter(p.name)}
                   />
                 ))}
               </List>

@@ -1,6 +1,9 @@
+
 import React from "react";
+import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
+import Modal from "@material-ui/core/Modal";
 import Button from "@material-ui/core/Button";
 import Chip from "@material-ui/core/Chip";
 import Dialog from "@material-ui/core/Dialog";
@@ -9,6 +12,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Fab from "@material-ui/core/Fab";
 import EmailIcon from "@material-ui/icons/Email";
+import TextField from "@material-ui/core/TextField";
 import InputBase from "@material-ui/core/InputBase";
 import { Divider } from "@material-ui/core";
 import FormControl from "@material-ui/core/FormControl";
@@ -19,6 +23,21 @@ import Select from "@material-ui/core/Select";
 import store from "../../../store";
 import axios from "axios";
 import { ENETUNREACH } from "constants";
+
+function rand() {
+  return Math.round(Math.random() * 20) - 10;
+}
+
+function getModalStyle() {
+  const top = 50 + rand();
+  const left = 50 + rand();
+
+  return {
+    top: `${top}%`,
+    left: `${left}%`,
+    transform: `translate(-${top}%, -${left}%)`
+  };
+}
 
 const styles = theme => ({
   root: {
@@ -185,13 +204,13 @@ class EmailModal extends React.Component {
   };
 
   handleChange = (emailField, event) => {
-    if (emailField === "email_recipients") {
+    if (emailField == "email_recipients") {
       this.setState({ email_recipients: event.target.value });
-    } else if (emailField === "email_cc") {
+    } else if (emailField == "email_cc") {
       this.setState({ email_cc: event.target.value });
-    } else if (emailField === "email_bcc") {
+    } else if (emailField == "email_bcc") {
       this.setState({ email_bcc: event.target.value });
-    } else if (emailField === "email_template") {
+    } else if (emailField == "email_template") {
       this.setState({ email_template: event.target.value });
       let email_message = this.getEmailMessage(event.target.value);
       this.setState({ email_message: email_message });
@@ -206,11 +225,11 @@ class EmailModal extends React.Component {
         value.push(options[i].value);
       }
     }
-    if (emailField === "email_recipients") {
+    if (emailField == "email_recipients") {
       this.setState({ email_recipients: value });
-    } else if (emailField === "email_cc") {
+    } else if (emailField == "email_cc") {
       this.setState({ email_cc: value });
-    } else if (emailField === "email_bcc") {
+    } else if (emailField == "email_bcc") {
       this.setState({ email_bcc: value });
     }
   };
@@ -450,3 +469,4 @@ class EmailModal extends React.Component {
 }
 
 export default withStyles(styles)(EmailModal);
+
