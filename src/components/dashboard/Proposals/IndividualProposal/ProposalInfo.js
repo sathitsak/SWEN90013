@@ -62,41 +62,50 @@ class ProposalInfo extends React.Component {
     }
   }
 
-  _capitalize(str){
+  _capitalize(str) {
     if (str === "new") {
       return "New";
     } else if (str === "approved") {
       return "Approved";
     } else {
-      return "Rejected"
+      return "Rejected";
     }
   }
 
   render() {
     const { classes } = this.props;
+    console.log("proposalInfo");
+    console.log(this.props.subjects);
 
     return (
       <div>
         <Typography variant="h5" className={classes.header}>
-            INFO
+          INFO
         </Typography>
-        <Grid container spacing={8} style={{ padding: 10, alignItems: "center" }}>
+        <Grid
+          container
+          spacing={8}
+          style={{ padding: 10, alignItems: "center" }}
+        >
           <Grid item md={4} xs={12}>
             <div className={classes.infoHeader}>Status</div>
           </Grid>
           <Grid item md={8} xs={12}>
-              <div 
-                className={classes.status}
-                style={{
-                  backgroundColor: this._determineStatusButtonColour(
-                    this.props.status
-                  ),
-                }} 
-              />
-              <div className={classes.infoContent}>{this._capitalize(this.props.status)}</div>
+            <div
+              className={classes.status}
+              style={{
+                backgroundColor: this._determineStatusButtonColour(
+                  this.props.status
+                )
+              }}
+            />
+            <div className={classes.infoContent}>
+              {this._capitalize(this.props.status)}
+            </div>
           </Grid>
 
-          <br/><br/>
+          <br />
+          <br />
 
           <Grid item md={4} xs={12}>
             <div className={classes.infoHeader}>Client</div>
@@ -105,20 +114,25 @@ class ProposalInfo extends React.Component {
             <ClientPageModal client={this.props.client}></ClientPageModal>
           </Grid>
 
-          <br/><br/>
+          <br />
+          <br />
 
           <Grid item xs={12} style={{ marginBottom: "3%" }}>
             <div className={classes.infoHeader}>Organisation</div>
-            <div className={classes.infoContent}>{this.props.organisationName}</div>            
+            <div className={classes.infoContent}>
+              {this.props.organisationName}
+            </div>
           </Grid>
 
-          <br/><br />
+          <br />
+          <br />
 
-          <div className={classes.infoHeader}>Change Status</div>
-              
+          <Grid item xs={12}>
+            <div className={classes.infoHeader}>Change Status</div>
+          </Grid>
         </Grid>
 
-        <StatusChangeModal id={this.props.id} />
+        <StatusChangeModal id={this.props.id} subjects={this.props.subjects} />
       </div>
     );
   }

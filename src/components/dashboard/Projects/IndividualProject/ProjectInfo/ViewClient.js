@@ -12,13 +12,14 @@ const styles = {};
 class ViewClient extends React.Component {
 
     render() {
-        const { client } = this.props;
+        const {client} = this.props;
 
         return (
             <div>
                 <Grid container>
                     <Grid item style={{marginTop: "2%", marginRight: 80}}>
-                        <Typography align="left" color="textSecondary" variant="h6" style={{ fontWeight: "bold"}}>
+                        <Typography align="left" color="textSecondary"
+                                    variant="h6" style={{fontWeight: "bold"}}>
                             Client:
                         </Typography>
                     </Grid>
@@ -33,7 +34,7 @@ class ViewClient extends React.Component {
 
 ViewClient.propTypes = {
     classes: PropTypes.object.isRequired,
-    client: PropTypes.string.isRequired,
+    client: PropTypes.object.isRequired,
 };
 
 export default withStyles(styles)(ViewClient);

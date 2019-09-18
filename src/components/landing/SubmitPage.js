@@ -94,97 +94,72 @@ class SubmitPage extends React.Component {
       (technical || industryType || size) === -1
     ) {
       alert("Please fill in all required fields");
-    } else if (!this.ValidateContactInfo(officeNumber,number.ci2number)) {
+    } else if (!this.ValidateContactInfo(officeNumber, number.ci2number)) {
       alert("Please enter a valid phone number");
-    } else if (!this.ValidateEmail(email,ci2email)) {
+    } else if (!this.ValidateEmail(email, ci2email)) {
       alert("Please enter a valid email");
-    }else{
-
-    axios
-      .post(`http://localhost:13000/api/proposal/submit`, {
-        firstName: firstname,
-        lastName: lastname,
-        email: email,
-        number: number,
-        secondaryContactFirstName: ci2firstname,
-        secondaryContactLastName: ci2lastname,
-        secondaryContactEmail: ci2email,
-        secondaryContactContactNumber: ci2number,
-        officeNumber: officeNumber,
-        technical: technical,
-        organisationName: organisationName,
-        industryType: industryType,
-        size: size,
-        organisationBrief: organisationBrief,
-        projectName: projectName,
-        outline: outline,
-        beneficiaries: beneficiaries,
-        benefits: benefits,
-        original: original,
-        used: original
-      })
-      .then(function(response) {
-        console.log(response);
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
+    } else {
+      axios
+        .post(`http://localhost:13000/api/proposal/submit`, {
+          firstName: firstname,
+          lastName: lastname,
+          email: email,
+          number: number,
+          secondaryContactFirstName: ci2firstname,
+          secondaryContactLastName: ci2lastname,
+          secondaryContactEmail: ci2email,
+          secondaryContactContactNumber: ci2number,
+          officeNumber: officeNumber,
+          technical: technical,
+          organisationName: organisationName,
+          industryType: industryType,
+          size: size,
+          organisationBrief: organisationBrief,
+          projectName: projectName,
+          outline: outline,
+          beneficiaries: beneficiaries,
+          benefits: benefits,
+          original: original,
+          used: original
+        })
+        .then(function(response) {
+          console.log(response);
+          alert("Your proposal has been sent");
+          document.getElementById("myForm").reset();
+        })
+        .catch(function(error) {
+          console.log(error);
+          alert("Oh no something went wrong please try again later");
+        });
     }
 
     console.log("request sent!");
-
-    // axios
-    //   .post(`http://localhost:13000/api/proposal`, {
-    //     // name: firstname + lastname,
-    //     // outlineOfProject: outline,
-    //     // endProductBenefits: benefits,
-    //     // beneficiaries: beneficiaries,
-    //     // originality: original,
-    //     // clientId: '007',
-    //     // subjectName: 'SWEN90013',
-    //     // organisationId: '001'
-    //     status: "approved",
-    //     name: "Emily",
-    //     outlineOfProject: "good",
-    //     endProductBenefits: "good",
-    //     beneficiaries: "good",
-    //     originality: "1",
-    //     clientId: "SUM"
-    //   })
-    //   .then(function(response) {
-    //     console.log(response);
-    //   })
-    //   .catch(function(error) {
-    //     console.log(error);
-    //   });
   };
 
   render() {
     return (
       <UniMelbWrapper>
-          <header>
-            <h1>University of Melbourne: Software Engineering Projects</h1>
-          </header>
+        <header>
+          <h1>University of Melbourne: Software Engineering Projects</h1>
+        </header>
+        <form id="myForm">
           <section>
             <div style={{ textAlign: "justify" }}>
               <h1>
-                <strong>
-                  Submit a Proposal
-                </strong>
+                <strong>Submit a Proposal</strong>
               </h1>
               <h7>
                 Please use this form to propose a project for our software
                 engineering masters students to undertake as part of their
-                coursework. We are not expecting a lot of detail from you at this
-                stage, just enough for an initial assessment. No information
-                (including contact details) in your proposal will be provided to
-                students without your prior permission.
+                coursework. We are not expecting a lot of detail from you at
+                this stage, just enough for an initial assessment. No
+                information (including contact details) in your proposal will be
+                provided to students without your prior permission.
               </h7>
             </div>
 
-            <br/>
-
-            <fieldset >
+            <br />
+            <fieldset>
               <legend>About Your Organisation</legend>
 
               <div>
@@ -194,7 +169,7 @@ class SubmitPage extends React.Component {
 
               <div>
                 <label className="required">Industry</label>
-                <div className="styled-select"  style={{marginBottom:"3%"}}>
+                <div className="styled-select" style={{ marginBottom: "3%" }}>
                   <select id="industryType">
                     <option value="-1">Please select&emsp;</option>
                     <option value="Aged care">Aged care</option>
@@ -237,7 +212,9 @@ class SubmitPage extends React.Component {
                       Sporting organisations
                     </option>
                     <option value="Storage services">Storage services</option>
-                    <option value="Technical services">Technical services</option>
+                    <option value="Technical services">
+                      Technical services
+                    </option>
                     <option value="Telecommunications services">
                       Telecommunications services
                     </option>
@@ -248,7 +225,7 @@ class SubmitPage extends React.Component {
 
               <div>
                 <label className="required">Size of Organisation</label>
-                <div className="styled-select"  style={{marginBottom:"3%"}}>
+                <div className="styled-select" style={{ marginBottom: "3%" }}>
                   <select id="size">
                     <option value="-1">Please select</option>
                     <option value="more than 250 employees">
@@ -268,18 +245,23 @@ class SubmitPage extends React.Component {
               </div>
 
               <div>
-                <label className="required">Briefly describe what your organisation does</label>
+                <label className="required">
+                  Briefly describe what your organisation does
+                </label>
                 <textarea id="organisationBrief" type="text" />
               </div>
             </fieldset>
 
-            <br/><br/>
+            <br />
+            <br />
 
-            <fieldset >
+            <fieldset>
               <legend>About Your Project Proposal</legend>
-              
+
               <div>
-                <label className="required">Provide a short title for your project</label>
+                <label className="required">
+                  Provide a short title for your project
+                </label>
                 <textarea id="projectName" type="text" />
               </div>
 
@@ -289,32 +271,41 @@ class SubmitPage extends React.Component {
               </div>
 
               <div>
-                <label className="required">Who will be beneficiaries of the end product?</label>
+                <label className="required">
+                  Who will be beneficiaries of the end product?
+                </label>
                 <textarea id="beneficiaries" type="text" />
               </div>
 
               <div>
-                <label className="required">State the benefits of the end product</label>
+                <label className="required">
+                  State the benefits of the end product
+                </label>
                 <textarea id="benefits" type="text" />
               </div>
 
               <div>
-                <label className="required">To your knowledge, how original is the idea or concept
-                  underlying the end product?</label>
-                  <textarea id="original" type="text" />
+                <label className="required">
+                  To your knowledge, how original is the idea or concept
+                  underlying the end product?
+                </label>
+                <textarea id="original" type="text" />
               </div>
 
               <div>
-                <label className="required">State of how you expect the end product will be used?</label>
+                <label className="required">
+                  State of how you expect the end product will be used?
+                </label>
                 <textarea id="used" type="text" />
               </div>
             </fieldset>
 
-            <br/><br/>
+            <br />
+            <br />
 
-            <fieldset >
+            <fieldset>
               <legend>About You</legend>
-              
+
               <div>
                 <label className="required">First Name</label>
                 <input id="name" type="text" />
@@ -344,7 +335,7 @@ class SubmitPage extends React.Component {
                 <label className="required">
                   Rate your level of technical ability / understanding{" "}
                 </label>
-                <div className="styled-select" style={{marginBottom:"3%"}}>
+                <div className="styled-select" style={{ marginBottom: "3%" }}>
                   <select id="technical">
                     <option value="-1">Please select</option>
                     <option value="1">1(non-technical)</option>
@@ -360,8 +351,8 @@ class SubmitPage extends React.Component {
                   </select>
                 </div>
               </div>
-   
-              <h7 style={{fontWeight: "bold" }}>
+
+              <h7 style={{ fontWeight: "bold" }}>
                 Secondary Contact Information
               </h7>
 
@@ -385,24 +376,28 @@ class SubmitPage extends React.Component {
                 <input id="ci2number" type="text" />
               </div>
             </fieldset>
-            
+
             <div>
-                <div style={{float:"left"}}>
-                  <Link to={"/"} className="button-hero-reverse">
-                    Return
-                  </Link>
-                </div>
-              <div style={{float:"right"}}>
-                <a className="button brand" onClick={this.handleClick} style={{ color: "#FFFFFF" }}>
+              <div style={{ float: "left" }}>
+                <Link to={"/"} className="button-hero-reverse">
+                  Return
+                </Link>
+              </div>
+              <div style={{ float: "right" }}>
+                <a
+                  className="button brand"
+                  onClick={this.handleClick}
+                  style={{ color: "#FFFFFF" }}
+                >
                   Submit
                 </a>
-                </div>
               </div>
+            </div>
 
-          <br/><br/>
-          
+            <br />
+            <br />
           </section>
-
+        </form>
       </UniMelbWrapper>
     );
   }

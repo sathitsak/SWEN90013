@@ -15,6 +15,9 @@ import ClientDetails from "./modalcomponents/ClientDetails";
 import ClientOrg from "./modalcomponents/ClientOrg";
 import Notes from "../Notes/Notes";
 import axios from "axios";
+import {getClientById} from "../../../api/index";
+import {getGetClientByIdAction} from "../../../store/actionCreators";
+import store from "../../../store";
 
 const styles = theme => ({
     root: {
@@ -29,7 +32,7 @@ const styles = theme => ({
     },
     closeButton: {
         color: "#094183",
-    },    
+    },
     iconFalse: {
         marginLeft: 20,
         marginBottom: 10,
@@ -53,21 +56,14 @@ const styles = theme => ({
 });
 
 class ClientPageModal extends React.Component {
-    constructor(props) {
-        super(props);
+    state = {
+        open: false,
+        fullWidth: true,
+        maxWidth: "xl",
+        client: "",
+        clientFlag: false
+    };
 
-        var clientFlag = (this.props.client.flag ? this.props.client.flag : false);
-
-        this.state = {
-            open: false,
-            fullWidth: true,
-            maxWidth: "xl",
-            client: this.props.client,
-            clientFlag: clientFlag,
-        };
-    
-    }
-    
     _handleClickOpen = () => {
         this.setState({open: true});
     };
@@ -85,10 +81,9 @@ class ClientPageModal extends React.Component {
         var currentFlag = !this.state.clientFlag;
         this.setState({clientFlag: currentFlag});
 
-        let client = this.state.client;
+        let client = this.props.client;
         client.flag = currentFlag;
 
-        console.log(client);
         // Send PUT request
         const url = `http://localhost:13000/api/client/` + client._id
         axios
@@ -102,8 +97,9 @@ class ClientPageModal extends React.Component {
     };
 
     render() {
-        const { classes, client } = this.props;
+        const { classes } = this.props;
         var flagIcon;
+        var client = this.props.client;
         var clientFlag = this.state.clientFlag;
 
         if (clientFlag) {
@@ -112,6 +108,10 @@ class ClientPageModal extends React.Component {
         } else {
             flagIcon = <ErrorOutlineOutlinedIcon className={classes.iconFalse}
                                                  onClick={this._handleClientFlagUpdate}/>
+        }
+
+        if (! client) {
+            return <div />
         }
 
         return (
@@ -153,7 +153,7 @@ class ClientPageModal extends React.Component {
                             <Grid item xs={6}>
                                 <Grid style={{ marginBottom: "5%" }}>
                                     <Paper className={classes.paper}>
-                                        <ClientOrg 
+                                        <ClientOrg
                                             orgName={client.organisation.name}
                                             orgSize={client.organisation.size}
                                             industry={client.organisation.industry}

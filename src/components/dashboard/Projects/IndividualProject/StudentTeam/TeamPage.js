@@ -2,8 +2,8 @@ import React from "react";
 import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/core/styles";
 import TeamCard from "./TeamCard";
-import axios from "axios";
 import CreateStudentTeamModal from '../StudentTeam/CreateStudentTeamModal';
+import store from "../../../../../store";
 
 const styles = theme => ({
   root: {
@@ -44,55 +44,19 @@ const styles = theme => ({
   },
 });
 
-//dummy data --> now getting from axios
-const teams = [
-  {
-    name: "Emu",
-    id: "24",
-    students: [
-      "Vanessa Little",
-      "Frieda Towne III",
-      "Marcelle Parisian",
-      "Dominic Swift",
-      "Jarred Ortiz",
-      "Shirley Labadie",
-      "Nina Toy",
-      "Rogers Kutch"
-    ]
-  },
-  {
-    name: "Goanna",
-    id: "12",
-    students: [
-      " Pamela Lindgren",
-      "Darron O'Hara",
-      "Alessia Schoen",
-      "Cruz Hudson",
-      "Clotilde Haley",
-      " Darien Wunsch"
-    ]
-  }
-];
-
 class TeamPage extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      teams: [],
-      open: false
-    };
+ 
+    this.state = store.getState();
+    this.setState({open: false});
+
+    this._handleStoreChange = this._handleStoreChange.bind(this);
+    store.subscribe(this._handleStoreChange);
   }
 
-  componentDidMount() {
-    axios
-      .get("http://5ce79b719f2c390014dba00f.mockapi.io/teams")
-      .then(response => {
-        console.log(response.data);
-        this.setState({ teams: response.data });
-      })
-      .catch(error => {
-        console.log(error);
-      });
+  _handleStoreChange() {
+    this.setState(store.getState());
   }
 
   _handleClickOpen = () => {
@@ -112,9 +76,12 @@ class TeamPage extends React.Component {
           STUDENT TEAMS        
         </Typography>
 
-        {this.state.teams.map(p => (
-          <TeamCard name={p.name} students={p.students} />
-        ))}
+        {/* Only display teams if they exist */}
+        {this.props.products ? this.props.products.map(product => (
+          <TeamCard product={product} key={product._id}></TeamCard>
+        ))
+          : <div/>
+        }
 
         <CreateStudentTeamModal />
       </div>

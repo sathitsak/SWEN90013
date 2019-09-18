@@ -75,15 +75,15 @@ class SingleNote extends React.Component {
                     className={classes.expansionPanelSummary}
                 >
                     <Grid container spacing={24}>
-                        <Grid item xs={12} sm={10}>
+                        <Grid item xs={12} sm={9}>
                             <Typography className={classes.font}>
                                 {this._shortenText(note.text)}
                             </Typography>
                         </Grid>
 
-                        <Grid item xs={12} sm={2}>
+                        <Grid item xs={12} sm={3}>
                             <Typography className={classes.font}>
-                                {this._convertDate(note.date)}
+                                {"Commented at "+this._convertDate(note.date)}
                             </Typography>
                         </Grid>
                      </Grid>
