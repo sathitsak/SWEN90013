@@ -95,7 +95,7 @@ class StatusChangeModal extends React.Component {
         );
         axios
           .post(
-            "http://localhost:13000/api/proposal/" + this.props.id + "/accept",
+            "http://172.26.88.142:3000/api/proposal/" + this.props.id + "/accept",
             {
               subjectName: this.state.subjectName,
               acceptReason: responseText
@@ -113,7 +113,7 @@ class StatusChangeModal extends React.Component {
         console.log("the reason to reject is " + responseText);
         axios
           .post(
-            "http://localhost:13000/api/proposal/" + this.props.id + " /reject",
+            "http://172.26.88.142:3000/api/proposal/" + this.props.id + " /reject",
             {
               rejectReason: responseText
             }

@@ -143,7 +143,7 @@ class AddNoteModal extends React.Component {
     var objectType = this.props.objectType;
 
     // Send PUT request
-    const url = `http://localhost:13000/api/` + objectType + "/" + this.props.object._id;
+    const url = `http://172.26.88.142:3000/api/` + objectType + "/" + this.props.object._id;
 
     console.log(url);
     axios
