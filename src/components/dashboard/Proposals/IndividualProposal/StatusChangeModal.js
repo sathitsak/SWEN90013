@@ -75,10 +75,12 @@ class StatusChangeModal extends React.Component {
     this._reqTodoList();
   }
 
-  _handleChange = () => {
+  _;
+  _handleChange = event => {
+    this.setState({ subjectName: [event.target.value] });
     this.setState({ subjects: store.getState().subjects });
+    console.log(this.state.subjectName);
   };
-
   unsubscribe = store.subscribe(this._handleChange);
 
   _handleUpdate = () => {
@@ -95,7 +97,9 @@ class StatusChangeModal extends React.Component {
         );
         axios
           .post(
-            "http://172.26.88.142:3000/api/proposal/" + this.props.id + "/accept",
+            "http://172.26.88.142:3000/api/proposal/" +
+              this.props.id +
+              "/accept",
             {
               subjectName: this.state.subjectName,
               acceptReason: responseText
@@ -113,7 +117,9 @@ class StatusChangeModal extends React.Component {
         console.log("the reason to reject is " + responseText);
         axios
           .post(
-            "http://172.26.88.142:3000/api/proposal/" + this.props.id + " /reject",
+            "http://172.26.88.142:3000/api/proposal/" +
+              this.props.id +
+              " /reject",
             {
               rejectReason: responseText
             }
@@ -126,11 +132,6 @@ class StatusChangeModal extends React.Component {
           });
       }
     }
-  };
-
-  _handleChange = event => {
-    this.setState({ subjectName: [event.target.value] });
-    console.log(this.state.subjectName);
   };
 
   render() {
@@ -200,7 +201,9 @@ class StatusChangeModal extends React.Component {
                       {this.props.subjects ? (
                         this.props.subjects.map(s => (
                           <em key={s._id}>
-                            <MenuItem value={s._id} key={s._id}>{s.name}</MenuItem>
+                            <MenuItem value={s._id} key={s._id}>
+                              {s.name}
+                            </MenuItem>
                           </em>
                         ))
                       ) : (
