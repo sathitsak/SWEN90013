@@ -8,7 +8,7 @@ export const getSupervisors = () => ajax('http://172.26.88.142:3000/api/supervis
 
 export const getProposalList = () => ajax('http://172.26.88.142:3000/api/proposal');
 
-export const getProposalById = (id) => ajax('http://172.26.88.142:3000api/proposal/' + id);
+export const getProposalById = (id) => ajax('http://172.26.88.142:3000/api/proposal/' + id);
 
 export const getAllSubjects = () => ajax('http://172.26.88.142:3000/api/subject');
 
