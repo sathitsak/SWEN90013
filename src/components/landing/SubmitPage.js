@@ -100,7 +100,7 @@ class SubmitPage extends React.Component {
       alert("Please enter a valid email");
     } else {
       axios
-        .post(`http://localhost:13000/api/proposal/submit`, {
+        .post(`http://172.26.88.142:3000/api/proposal/submit`, {
           firstName: firstname,
           lastName: lastname,
           email: email,
