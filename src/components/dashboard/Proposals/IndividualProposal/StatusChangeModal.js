@@ -52,7 +52,7 @@ class StatusChangeModal extends React.Component {
       maxWidth: "md",
       option: "",
       rerender: "",
-      subjectName: "",
+      subjectName: "subject001",
       status: ""
     };
   }
@@ -76,11 +76,13 @@ class StatusChangeModal extends React.Component {
   }
 
   _handleChange = event => {
-    this.setState({ subjectName: [event.target.value] });
-    this.setState({ subjects: store.getState().subjects });
-    console.log(this.state.subjectName);
+    console.log(event);
+    this.setState(() => {
+      return {
+        subjectName: event.target.value
+      };
+    });
   };
-  unsubscribe = store.subscribe(this._handleChange);
 
   _handleUpdate = () => {
     var responseText = document.getElementById("reason").value;
@@ -193,17 +195,9 @@ class StatusChangeModal extends React.Component {
                       id="subjectName"
                       onChange={this._handleChange}
                     >
-                      <MenuItem value="">
-                        <em>None</em>
-                      </MenuItem>
-
                       {this.props.subjects ? (
                         this.props.subjects.map(s => (
-                          <em key={s._id}>
-                            <MenuItem value={s._id} key={s._id}>
-                              {s.name}
-                            </MenuItem>
-                          </em>
+                          <MenuItem value={s._id}>{s.name}</MenuItem>
                         ))
                       ) : (
                         <div />
