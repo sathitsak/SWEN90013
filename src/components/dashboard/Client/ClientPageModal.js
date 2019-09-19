@@ -85,7 +85,7 @@ class ClientPageModal extends React.Component {
         client.flag = currentFlag;
 
         // Send PUT request
-        const url = `http://localhost:13000/api/client/` + client._id
+        const url = `http://172.26.88.142:3000/api/client/` + client._id
         axios
             .put(url, client)
             .then(function(response) {
