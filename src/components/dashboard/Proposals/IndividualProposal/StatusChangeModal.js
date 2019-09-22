@@ -75,11 +75,13 @@ class StatusChangeModal extends React.Component {
     this._reqTodoList();
   }
 
-  _handleChange = () => {
-    this.setState({ subjects: this.props.subjects });
+  _handleChange = event => {
+    this.setState(() => {
+      return {
+        subjectName: event.target.value
+      }
+    });
   };
-
-  unsubscribe = store.subscribe(this._handleChange);
 
   _handleUpdate = () => {
     var responseText = document.getElementById("reason").value;
