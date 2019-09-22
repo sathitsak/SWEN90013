@@ -28,76 +28,122 @@ class SubmitPage extends React.Component {
       return false;
     }
   };
+
+  checkClient = input => {
+    if (
+      input.firstName === "" ||
+      input.lastname === "" ||
+      !this.ValidateEmail(input.email) ||
+      !this.ValidateContactInfo(input.number) ||
+      !this.ValidateContactInfo(input.officeNumber) ||
+      input.technical === "-1"
+    )
+      return false;
+    return true;
+  };
+
+  checkSecondaryContact = input => {
+    if (
+      input.ci2firstname === "" ||
+      input.ci2lastname === "" ||
+      !this.ValidateEmail(input.ci2email) ||
+      !this.ValidateContactInfo(input.ci2number)
+    ) {
+      return false;
+    }
+    return true;
+  };
+  checkProposalInfo = input => {
+    if (
+      input.outline === "" ||
+      input.beneficiaries === "" ||
+      input.benefits === "" ||
+      input.used === "" ||
+      input.projectName === ""
+    ) {
+      return false;
+    }
+    return true;
+  };
+  checkOrganisationInfo = input => {
+    if (
+      input.organisationName === "" ||
+      input.industryType === "-1" ||
+      input.size === "-1" ||
+      input.organisationBrief === ""
+    ) {
+      return false;
+    }
+    return true;
+  };
+
   // handleClick get the data from form HTML
   // right now it is just console.log data
   // will be change to POST data to the server once it is ready
   handleClick = () => {
+    //Client
     var firstname = document.getElementById("name").value;
     var lastname = document.getElementById("lastname").value;
     var email = document.getElementById("email").value;
     var number = document.getElementById("number").value;
     var officeNumber = document.getElementById("officeNumber").value;
+    var technical = document.getElementById("technical").value;
+    //SecondaryContact
     var ci2firstname = document.getElementById("ci2firstname").value;
     var ci2lastname = document.getElementById("ci2lastname").value;
     var ci2email = document.getElementById("ci2email").value;
     var ci2number = document.getElementById("ci2number").value;
+    //Proposal info
     var outline = document.getElementById("outline").value;
     var beneficiaries = document.getElementById("beneficiaries").value;
     var benefits = document.getElementById("benefits").value;
     var original = document.getElementById("original").value;
     var used = document.getElementById("used").value;
-    var technical = document.getElementById("technical").value;
+    //Orgranisation info
     var organisationName = document.getElementById("organisationName").value;
     var industryType = document.getElementById("industryType").value;
     var size = document.getElementById("size").value;
     var organisationBrief = document.getElementById("organisationBrief").value;
     var projectName = document.getElementById("projectName").value;
-    console.log(
-      firstname,
-      lastname,
-      email,
-      number,
-      officeNumber,
-      ci2firstname,
-      ci2lastname,
-      ci2email,
-      ci2number,
-      technical,
-      organisationName,
-      industryType,
-      size,
-      organisationBrief,
-      projectName,
-      outline,
-      beneficiaries,
-      benefits,
-      original,
-      used
-    );
+
     if (
-      (firstname ||
-        lastname ||
-        email ||
-        number ||
-        officeNumber ||
-        ci2firstname ||
-        ci2lastname ||
-        ci2email ||
-        ci2number ||
-        organisationName ||
-        organisationBrief ||
-        projectName ||
-        outline ||
-        beneficiaries ||
-        benefits ||
-        original) === "" ||
-      (technical || industryType || size) === -1
+      !this.checkClient({
+        firstname,
+        lastname,
+        email,
+        number,
+        officeNumber,
+        technical
+      })
     ) {
-      alert("Please fill in all required fields");
-    } else if (!this.ValidateContactInfo(officeNumber, number.ci2number)) {
-      alert("Please enter a valid phone number");
-    } else if (!this.ValidateEmail(email, ci2email)) {
-      alert("Please enter a valid email");
+      alert("Please fill valid information for the client");
+    } else if (
+      !this.checkSecondaryContact({
+        ci2firstname,
+        ci2lastname,
+        ci2email,
+        ci2number
+      })
+    ) {
+      alert("Please fill valid information for the secondary contact");
+    } else if (
+      !this.checkProposalInfo({
+        outline,
+        beneficiaries,
+        benefits,
+        used,
+        projectName
+      })
+    ) {
+      alert("Please fill valid information for the proposal");
+    } else if (
+      !this.checkOrganisationInfo(
+        organisationName,
+        industryType,
+        size,
+        organisationBrief
+      )
+    ) {
     } else {
       axios
         .post(`http://172.26.88.142:3000/api/proposal/submit`, {
@@ -132,8 +178,6 @@ class SubmitPage extends React.Component {
           alert("Oh no something went wrong please try again later");
         });
     }
-
-    console.log("request sent!");
   };
 
   render() {
