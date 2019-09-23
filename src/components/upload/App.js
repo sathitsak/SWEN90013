@@ -100,7 +100,7 @@ class App extends Component {
   onClickDownload = () => {
     axios({
       url:
-        "https://react-download-test-sathitsak.s3.amazonaws.com/Resume+v3.pdf",
+        "https://react-download-test-sathitsak.s3.amazonaws.com/downLoadTest.pdf",
       method: "GET",
       responseType: "blob" // important
     }).then(response => {
