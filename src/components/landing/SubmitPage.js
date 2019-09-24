@@ -3,6 +3,7 @@ import { Column, Row } from "simple-flexbox";
 import { Link } from "react-router-dom";
 import UniMelbWrapper from "../uniMelbWrapper/UniMelbWrapper";
 import axios from "axios";
+import { proposalSentConfirmation } from "../dashboard/Email/AutomatedEmailFunctions";
 
 class SubmitPage extends React.Component {
   //Check if the input email is valide or not
@@ -170,7 +171,10 @@ class SubmitPage extends React.Component {
         })
         .then(function(response) {
           console.log(response);
-          alert("Your proposal has been sent");
+          alert(
+            "Your proposal has been sent! Please check your inbox or spam folder for a confirmation email. Please mark cis.projectmanagementsystem@gmail.com as not spam, as this will be the account that will contact you for updates regarding your proposal. "
+          );
+          proposalSentConfirmation(email, ci2email);
           document.getElementById("myForm").reset();
         })
         .catch(function(error) {

@@ -17,6 +17,7 @@ import store from "../../../../store";
 import { withStyles } from "@material-ui/core/styles";
 import { getAllSubjects } from "../../../../api";
 import { getGetAllSubjectsAction } from "../../../../store/actionCreators";
+import { proposalOutcome } from "../../Email/AutomatedEmailFunctions";
 
 const styles = theme => ({
   acceptButton: {
@@ -79,7 +80,7 @@ class StatusChangeModal extends React.Component {
     this.setState(() => {
       return {
         subjectName: event.target.value
-      }
+      };
     });
   };
 
@@ -97,7 +98,9 @@ class StatusChangeModal extends React.Component {
         );
         axios
           .post(
-            "http://172.26.88.142:3000/api/proposal/" + this.props.id + "/accept",
+            "http://172.26.88.142:3000/api/proposal/" +
+              this.props.id +
+              "/accept",
             {
               subjectName: this.state.subjectName,
               acceptReason: responseText
@@ -105,6 +108,12 @@ class StatusChangeModal extends React.Component {
           )
           .then(function(response) {
             console.log(response);
+            proposalOutcome(
+              store.getState().proposal.client.email,
+              store.getState().proposal.client.secondaryContactEmail,
+              "accept",
+              responseText
+            );
           })
           .catch(function(error) {
             console.log(error);
@@ -115,13 +124,21 @@ class StatusChangeModal extends React.Component {
         console.log("the reason to reject is " + responseText);
         axios
           .post(
-            "http://172.26.88.142:3000/api/proposal/" + this.props.id + " /reject",
+            "http://172.26.88.142:3000/api/proposal/" +
+              this.props.id +
+              " /reject",
             {
               rejectReason: responseText
             }
           )
           .then(function(response) {
             console.log(response);
+            proposalOutcome(
+              store.getState().proposal.client.email,
+              store.getState().proposal.client.secondaryContactEmail,
+              "reject",
+              responseText
+            );
           })
           .catch(function(error) {
             console.log(error);
@@ -202,7 +219,9 @@ class StatusChangeModal extends React.Component {
                       {this.props.subjects ? (
                         this.props.subjects.map(s => (
                           <em key={s._id}>
-                            <MenuItem value={s._id} key={s._id}>{s.name}</MenuItem>
+                            <MenuItem value={s._id} key={s._id}>
+                              {s.name}
+                            </MenuItem>
                           </em>
                         ))
                       ) : (
