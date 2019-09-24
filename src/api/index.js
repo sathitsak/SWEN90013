@@ -1,21 +1,42 @@
 import ajax from "./ajax";
 
-export const getProjectList = () => ajax('http://172.26.88.142:3000/api/project');
+const reqType = {
+    get: 'GET',
+    post: 'POST',
+    put: 'PUT',
+};
 
-export const getProjectById = (id) => ajax('http://172.26.88.142:3000/api/project/' + id);
+// const baseURL = 'http://localhost:13000/api';
+const baseURL = 'http://172.26.88.142:3000/api';
 
-export const getSupervisors = () => ajax('http://172.26.88.142:3000/api/supervisor');
+// Project related
+const projectURL = '/project';
+export const getProjectList = () => ajax(baseURL + projectURL, reqType.get);
+export const getProjectById = (id) => ajax(baseURL + projectURL + '/' + id, reqType.get);
+export const updateProject = (id, project) => ajax(baseURL + projectURL + '/' + id, project, reqType.put);
 
-export const getProposalList = () => ajax('http://172.26.88.142:3000/api/proposal');
+// Supervisor related
+const supervisorURL = '/supervisor';
+export const getSupervisors = () => ajax(baseURL + supervisorURL, reqType.get);
 
-export const getProposalById = (id) => ajax('http://172.26.88.142:3000/api/proposal/' + id);
+// Proposal related
+const proposalURL = '/proposal';
+export const getProposalList = () => ajax(baseURL + proposalURL, reqType.get);
+export const getProposalById = (id) => ajax(baseURL + proposalURL + '/' + id, reqType.get);
+export const changeProposalStatus = (id, option, object) => ajax(baseURL + proposalURL + '/' + id + '/' + option, object, reqType.post);
 
-export const getAllSubjects = () => ajax('http://172.26.88.142:3000/api/subject');
+// Subject related
+const subjectURL = '/subject';
+export const getAllSubjects = () => ajax(baseURL + subjectURL, reqType.get);
 
-export const getProductById = (id) => ajax('http://172.26.88.142:3000/api/product/' + id);
+// Product related
+const productURL = '/product';
+export const updateProduct = (id, product) => ajax(baseURL + productURL + '/' + id, product, reqType.put);
+export const postNewProduct = (product) => ajax(baseURL + productURL, product, reqType.post);
 
-export const updateProject = (id, project) => ajax('http://172.26.88.142:3000/api/project/' + id, project, 'PUT');
+// Client related
+const clientURL = '/client';
+export const updateClient = (id, client) => ajax(baseURL + clientURL + '/' + id, client, reqType.put);
 
-export const updateProduct = (id, product) => ajax('http://172.26.88.142:3000/api/product/' + id, product, 'PUT');
-
-export const postNewProduct = (product) => ajax('http://172.26.88.142:3000/api/product', product, 'POST');
+// Note related
+export const addNote = (objectType, objectId, object) => ajax(baseURL + '/' + objectType + '/' + objectId, object, reqType.put);

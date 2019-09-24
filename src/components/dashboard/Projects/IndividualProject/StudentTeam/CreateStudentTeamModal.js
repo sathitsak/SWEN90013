@@ -29,7 +29,7 @@ import store from "../../../../../store";
 import PropTypes from "prop-types";
 import {
     createNewProductAction,
-    getGetProjectByIdAction
+    getProjectByIdAction
 } from "../../../../../store/actionCreators";
 import {getProjectById} from "../../../../../api";
 
@@ -118,13 +118,6 @@ class CreateStudentTeamModal extends React.Component {
             maxWidth: "lg",
             numStudents: INITIAL_NUM_STUDENTS,
         };
-
-        this._handleStoreChange = this._handleStoreChange.bind(this);
-        store.subscribe(this._handleStoreChange);
-    }
-
-    _handleStoreChange() {
-        this.setState(store.getState());
     }
 
     _handleClickOpen = () => {
@@ -189,7 +182,7 @@ class CreateStudentTeamModal extends React.Component {
     async _updateProjectState() {
         const {projectId} = this.props;
         const project = await getProjectById(projectId);
-        const getProAction = getGetProjectByIdAction(project);
+        const getProAction = getProjectByIdAction(project);
         store.dispatch(getProAction);
     }
 

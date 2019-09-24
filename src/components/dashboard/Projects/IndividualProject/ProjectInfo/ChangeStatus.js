@@ -112,8 +112,6 @@ class ChangeStatus extends React.Component {
         const updateProjAction = updateProjectAction(project._id, project);
         store.dispatch(updateProjAction);
         this.setState({open: false});
-
-        alert("Status of project changed to " + this._showProjectStatus(selectedStatus) + ".");
     };
 
     _showProjectStatus = status => {

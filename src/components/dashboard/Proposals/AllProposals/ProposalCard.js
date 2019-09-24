@@ -9,6 +9,7 @@ import red from "@material-ui/core/colors/red";
 import Typography from "@material-ui/core/Typography";
 import {Link} from "react-router-dom";
 import grey from "@material-ui/core/colors/grey"
+import PropTypes from "prop-types";
 
 const styles = theme => ({
     card: {
@@ -24,11 +25,11 @@ const styles = theme => ({
         width: "100%",
         textDecoration: "none",
         "&:hover": {
-        backgroundColor: grey[200],
-        textDecoration: "none",
+            backgroundColor: grey[200],
+            textDecoration: "none",
         },
         "&:active": {
-        backgroundColor: grey[300]
+            backgroundColor: grey[300]
         }
     },
     cardHeader: {
@@ -41,14 +42,6 @@ const styles = theme => ({
 });
 
 class ProposalCard extends React.Component {
-
-    _checkSubjectExists = proposal => {
-        if ('subject' in proposal) {
-            return proposal.subject.name;
-        } else {
-            return " "
-        }
-    }
 
     render() {
         const {classes, id, proposal} = this.props;
@@ -79,14 +72,31 @@ class ProposalCard extends React.Component {
 
                         <Typography component="p" variant="overline"
                                     style={{marginTop: 5}}>
-                            Subject: {this._checkSubjectExists(proposal)}
+                            Subject: {this._showSubject(proposal.subjectId)}
                         </Typography>
                     </CardContent>
                 </Link>
             </Card>
         );
     }
+
+    _showSubject = (subjectId) => {
+        const {subjects} = this.props;
+        let subjectName = "NO RELATED SUBJECT";
+        subjects.forEach(sb => {
+            if (sb._id === subjectId)
+                subjectName = sb.name;
+        });
+        return subjectName;
+    };
 }
+
+ProposalCard.propTypes = {
+    classes: PropTypes.object.isRequired,
+    id: PropTypes.string.isRequired,
+    proposal: PropTypes.object.isRequired,
+    subjects: PropTypes.array.isRequired,
+};
 
 export default withStyles(styles)(ProposalCard);
 

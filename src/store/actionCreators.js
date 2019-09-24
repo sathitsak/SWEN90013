@@ -4,48 +4,45 @@ import {
     GET_SUPERVISORS,
     GET_ALL_PROPOSALS,
     GET_PROPOSAL_BY_ID,
-    GET_CLIENT_BY_ID,
     GET_ALL_SUBJECTS,
     UPDATE_PROJECT,
     UPDATE_PRODUCT,
-    CREATE_NEW_PRODUCT
+    CREATE_NEW_PRODUCT,
+    UPDATE_CLIENT,
+    ADD_NOTE,
+    CHANGE_PROPOSAL_STATUS
 } from "./actionTypes";
 
-export const getGetAllProjectAction = projects => ({
+export const getAllProjectAction = projects => ({
     type: GET_ALL_PROJECTS,
     projects: projects,
     page_title: "View Projects"
 });
 
-export const getGetProjectByIdAction = project => ({
+export const getProjectByIdAction = project => ({
     type: GET_PROJECT_BY_ID,
     project: project,
     page_title: project.name
 });
 
-export const getGetSupervisorsAction = supervisors => ({
+export const getSupervisorsAction = supervisors => ({
     type: GET_SUPERVISORS,
     supervisors: supervisors
 });
 
-export const getGetAllProposalsAction = proposals => ({
+export const getAllProposalsAction = proposals => ({
     type: GET_ALL_PROPOSALS,
     proposals: proposals,
     page_title: "View Proposals"
 });
 
-export const getGetProposalByIdAction = proposal => ({
+export const getProposalByIdAction = proposal => ({
     type: GET_PROPOSAL_BY_ID,
     proposal: proposal,
     page_title: proposal.name,
 });
 
-export const getGetClientByIdAction = client => ({
-    type: GET_CLIENT_BY_ID,
-    client: client
-});
-
-export const getGetAllSubjectsAction = subjects => ({
+export const getAllSubjectsAction = subjects => ({
     type: GET_ALL_SUBJECTS,
     subjects: subjects,
 });
@@ -66,4 +63,24 @@ export const updateProductAction = (id, product) => ({
 export const createNewProductAction = (product) => ({
     type: CREATE_NEW_PRODUCT,
     product: product
+});
+
+export const updateClientAction = (id, client) => ({
+    type: UPDATE_CLIENT,
+    id: id,
+    client: client
+});
+
+export const addNoteAction = (objectType, objectId, object) => ({
+    type: ADD_NOTE,
+    objectType: objectType,
+    objectId: objectId,
+    object: object
+});
+
+export const changeProposalStatusAction = (id, option, object) => ({
+    type: CHANGE_PROPOSAL_STATUS,
+    id: id,
+    option: option,
+    object: object
 });

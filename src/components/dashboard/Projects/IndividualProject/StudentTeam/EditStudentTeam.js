@@ -35,10 +35,8 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import PropTypes from "prop-types";
 import {
-    getGetProjectByIdAction,
     updateProductAction
 } from "../../../../../store/actionCreators";
-import {getProjectById} from "../../../../../api";
 
 const styles = theme => ({
         root: {
@@ -134,12 +132,6 @@ class EditStudentTeam extends React.Component {
             deployed: props.product.deployed ? props.product.deployed : false,
         };
 
-        this._handleStoreChange = this._handleStoreChange.bind(this);
-        store.subscribe(this._handleStoreChange);
-    }
-
-    _handleStoreChange() {
-        this.setState(store.getState());
     }
 
     _handleClickOpen = () => {
@@ -230,19 +222,9 @@ class EditStudentTeam extends React.Component {
         const updateProdAction = updateProductAction(product._id, product);
         store.dispatch(updateProdAction);
 
-        this._updateProjectState();
-
         // Close window
         this._handleClose();
     };
-
-    async _updateProjectState() {
-        const {projectId} = this.props;
-        const project = await getProjectById(projectId);
-        const getProAction = getGetProjectByIdAction(project);
-        store.dispatch(getProAction);
-    }
-
 
     render() {
         const {classes, product} = this.props;
@@ -303,11 +285,11 @@ class EditStudentTeam extends React.Component {
 
                         {/* Tabs student, artefacts and technologies. Pre-load current information */}
                         <TabContainer id="right-tabs-example"
-                                        defaultActiveKey="first">
+                                      defaultActiveKey="first">
                             <Row>
                                 <Col xs>
                                     <Nav variant="pills"
-                                            className="flex-column">
+                                         className="flex-column">
                                         <Nav.Item>
                                             <Nav.Link
                                                 eventKey="first">Students</Nav.Link>
@@ -316,7 +298,7 @@ class EditStudentTeam extends React.Component {
                                 </Col>
                                 <Col xs>
                                     <Nav variant="pills"
-                                            className="flex-column">
+                                         className="flex-column">
                                         <Nav.Item>
                                             <Nav.Link
                                                 eventKey="second">Artefacts</Nav.Link>
@@ -325,7 +307,7 @@ class EditStudentTeam extends React.Component {
                                 </Col>
                                 <Col xs>
                                     <Nav variant="pills"
-                                            className="flex-column">
+                                         className="flex-column">
                                         <Nav.Item>
                                             <Nav.Link
                                                 eventKey="third">Technologies</Nav.Link>
@@ -334,7 +316,7 @@ class EditStudentTeam extends React.Component {
                                 </Col>
                                 <Col xs>
                                     <Nav variant="pills"
-                                            className="flex-column">
+                                         className="flex-column">
                                         <Nav.Item>
                                             <Nav.Link
                                                 eventKey="fourth">Metrics</Nav.Link>
@@ -349,10 +331,10 @@ class EditStudentTeam extends React.Component {
                                         <TabPane
                                             eventKey="first">
                                             <Grid container
-                                                    spacing={8}
-                                                    alignItems="center">
+                                                  spacing={8}
+                                                  alignItems="center">
                                                 <Grid item
-                                                        xs={3}>
+                                                      xs={3}>
                                                     <div
                                                         className={classes.studentTeamHeader}>
                                                         Number
@@ -361,7 +343,7 @@ class EditStudentTeam extends React.Component {
                                                     </div>
                                                 </Grid>
                                                 <Grid item
-                                                        xs={9}>
+                                                      xs={9}>
                                                     <form
                                                         className={classes.container}
                                                         noValidate
@@ -462,10 +444,10 @@ class EditStudentTeam extends React.Component {
                                         <TabPane
                                             eventKey="second">
                                             <Grid container
-                                                    spacing={8}
-                                                    alignItems="center">
+                                                  spacing={8}
+                                                  alignItems="center">
                                                 <Grid item
-                                                        xs={3}>
+                                                      xs={3}>
                                                     <div
                                                         className={classes.studentTeamHeader}>
                                                         Number
@@ -474,7 +456,7 @@ class EditStudentTeam extends React.Component {
                                                     </div>
                                                 </Grid>
                                                 <Grid item
-                                                        xs={9}>
+                                                      xs={9}>
                                                     <form
                                                         className={classes.container}
                                                         noValidate
@@ -550,10 +532,10 @@ class EditStudentTeam extends React.Component {
                                         <TabPane
                                             eventKey="third">
                                             <Grid container
-                                                    spacing={8}
-                                                    alignItems="center">
+                                                  spacing={8}
+                                                  alignItems="center">
                                                 <Grid item
-                                                        xs={3}>
+                                                      xs={3}>
                                                     <div
                                                         className={classes.studentTeamHeader}>
                                                         Number
@@ -563,7 +545,7 @@ class EditStudentTeam extends React.Component {
                                                     </div>
                                                 </Grid>
                                                 <Grid item
-                                                        xs={9}>
+                                                      xs={9}>
                                                     <form
                                                         className={classes.container}
                                                         noValidate
@@ -588,11 +570,11 @@ class EditStudentTeam extends React.Component {
                                             </Grid>
 
                                             <Grid container
-                                                    spacing={8}
-                                                    style={{
-                                                        marginLeft: 20,
-                                                        width: "98%"
-                                                    }}>
+                                                  spacing={8}
+                                                  style={{
+                                                      marginLeft: 20,
+                                                      width: "98%"
+                                                  }}>
                                                 {this._createRows("numTechnologies").map(
                                                     (index) => (
                                                         <Grid
@@ -688,7 +670,6 @@ class EditStudentTeam extends React.Component {
 EditStudentTeam.propTypes = {
     classes: PropTypes.object.isRequired,
     product: PropTypes.object.isRequired,
-    projectId: PropTypes.string.isRequired,
 };
 
 export default withStyles(styles)(EditStudentTeam);

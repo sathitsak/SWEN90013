@@ -7,7 +7,6 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
 import FormControl from "@material-ui/core/FormControl";
-import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
 import Input from "@material-ui/core/Input";
 import DialogActions from "@material-ui/core/DialogActions";
@@ -15,6 +14,7 @@ import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import store from "../../../../../store";
 import {updateProjectAction} from "../../../../../store/actionCreators";
+import {grey} from "@material-ui/core/colors";
 
 const styles = theme => ({
     showSup: {
@@ -97,14 +97,15 @@ class AssignToSupervisor extends React.Component {
                     <DialogContent>
                         <form className={classes.container}>
                             <FormControl className={classes.formControl}>
-                                <InputLabel
-                                    htmlFor="sp-native-simple">Supervisors</InputLabel>
+                                <h6 style={{color: grey[800]}}>
+                                    Supervisors
+                                </h6>
                                 <Select
                                     native
                                     onChange={e => this._handleSelect(e)}
                                     input={<Input id="sp-native-simple"/>}
                                 >
-                                    <option value=""/>
+                                    <option value="">None</option>
                                     {supervisors.map((sp, index) => (
                                         <option
                                             key={index}
@@ -163,17 +164,6 @@ class AssignToSupervisor extends React.Component {
             selectedSupervisorId: "",
             open: false
         });
-
-        let spName = "";
-        supervisors.forEach(sp => {
-            if (sp._id === selectedSupervisorId)
-                spName = sp.firstName + " " + sp.lastName;
-        });
-        if(spName === "") {
-            alert("Unassign this project.");
-        } else {
-            alert("Assign this project to " + spName + ".");
-        }
     };
 
 }

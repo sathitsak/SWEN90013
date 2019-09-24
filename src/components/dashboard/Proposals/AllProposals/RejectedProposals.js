@@ -6,12 +6,10 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { makeStyles, useTheme } from '@material-ui/styles';
+import {makeStyles, useTheme} from '@material-ui/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
-import TableFooter from '@material-ui/core/TableFooter';
-import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import IconButton from '@material-ui/core/IconButton';
@@ -20,11 +18,10 @@ import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import LastPageIcon from '@material-ui/icons/LastPage';
 import {withStyles} from "@material-ui/core/styles";
-import axios from "axios";
 import TableHead from "@material-ui/core/TableHead/TableHead";
 import store from "../../../../store";
-import { getProposalList } from "../../../../api";
-import { getGetAllProposalsAction } from "../../../../store/actionCreators";
+import {getProposalList} from "../../../../api";
+import {getAllProposalsAction} from "../../../../store/actionCreators";
 
 const useStyles1 = makeStyles(theme => ({
     root: {
@@ -42,7 +39,7 @@ function TablePaginationActions(props) {
     const classes = useStyles1();
     const theme = useTheme();
 
-    const { count, page, rowsPerPage, onChangePage } = props;
+    const {count, page, rowsPerPage, onChangePage} = props;
 
     function handleFirstPageButtonClick(event) {
         onChangePage(event, 0);
@@ -67,24 +64,25 @@ function TablePaginationActions(props) {
                 disabled={page === 0}
                 aria-label="First Page"
             >
-                <FirstPageIcon />
+                <FirstPageIcon/>
             </IconButton>
-            <IconButton onClick={handleBackButtonClick} disabled={page === 0} aria-label="Previous Page">
-                <KeyboardArrowLeft />
+            <IconButton onClick={handleBackButtonClick} disabled={page === 0}
+                        aria-label="Previous Page">
+                <KeyboardArrowLeft/>
             </IconButton>
             <IconButton
                 onClick={handleNextButtonClick}
                 disabled={page >= Math.ceil(count / rowsPerPage) - 1}
                 aria-label="Next Page"
             >
-                <KeyboardArrowRight />
+                <KeyboardArrowRight/>
             </IconButton>
             <IconButton
                 onClick={handleLastPageButtonClick}
                 disabled={page >= Math.ceil(count / rowsPerPage) - 1}
                 aria-label="Last Page"
             >
-                <LastPageIcon />
+                <LastPageIcon/>
             </IconButton>
         </div>
     );
@@ -131,7 +129,7 @@ class RejectedProposals extends React.Component {
 
     async _reqTodoList() {
         const result = await getProposalList();
-        const action = getGetAllProposalsAction(result);
+        const action = getAllProposalsAction(result);
         store.dispatch(action);
     }
 
@@ -141,24 +139,24 @@ class RejectedProposals extends React.Component {
 
     _filterProposalsByStatus = status => {
         //TODO: filter by user
-        const { proposals } = this.state;
+        const {proposals} = this.state;
         let targetProposals = [];
 
         proposals.forEach(p => {
             // First check if valid before sending through
-            if ('client' in p ) {
-            if ('organisation' in p.client) {
-                if (p.status === status) {
-                targetProposals.push(p);
+            if ('client' in p) {
+                if ('organisation' in p.client) {
+                    if (p.status === status) {
+                        targetProposals.push(p);
+                    }
                 }
             }
-            }
-            
+
         });
 
         return targetProposals;
     };
-    
+
 
     render() {
         const classes = useStyles2();
@@ -176,7 +174,7 @@ class RejectedProposals extends React.Component {
         }
 
         function handleClick(event, id) {
-            window.location.href=`/dashboard/proposals/${id}`;
+            window.location.href = `/dashboard/proposals/${id}`;
         }
 
         return (
@@ -185,10 +183,14 @@ class RejectedProposals extends React.Component {
                     <Table className={useStyles2.table}>
                         <TableHead>
                             <TableRow>
-                                <TableCell style={{ width: "20%"}}>Project Name</TableCell>
-                                <TableCell align="left" style={{ width: "15%"}}>Client</TableCell>
-                                <TableCell align="left" style={{ width: "15%"}}>Organisation</TableCell>
-                                <TableCell align="left" style={{ width: "50%"}}>Project Description</TableCell>
+                                <TableCell style={{width: "20%"}}>Project
+                                    Name</TableCell>
+                                <TableCell align="left"
+                                           style={{width: "15%"}}>Client</TableCell>
+                                <TableCell align="left"
+                                           style={{width: "15%"}}>Organisation</TableCell>
+                                <TableCell align="left" style={{width: "50%"}}>Project
+                                    Description</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -200,9 +202,12 @@ class RejectedProposals extends React.Component {
                                     <TableCell component="th" scope="row">
                                         {p.name}
                                     </TableCell>
-                                    <TableCell align="left">{p.client.firstName + " " + p.client.lastName}</TableCell>
-                                    <TableCell align="left">{p.client.organisation.name}</TableCell>
-                                    <TableCell align="left">{p.outlineOfProject}</TableCell>
+                                    <TableCell
+                                        align="left">{p.client.firstName + " " + p.client.lastName}</TableCell>
+                                    <TableCell
+                                        align="left">{p.client.organisation.name}</TableCell>
+                                    <TableCell
+                                        align="left">{p.outlineOfProject}</TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>

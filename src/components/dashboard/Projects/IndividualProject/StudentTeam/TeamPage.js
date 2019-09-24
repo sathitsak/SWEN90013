@@ -50,7 +50,6 @@ class TeamPage extends React.Component {
         super(props);
 
         this.state = store.getState();
-        this.setState({open: false});
 
         this._handleStoreChange = this._handleStoreChange.bind(this);
         store.subscribe(this._handleStoreChange);
@@ -60,16 +59,8 @@ class TeamPage extends React.Component {
         this.setState(store.getState());
     }
 
-    _handleClickOpen = () => {
-        this.setState({open: true});
-    };
-
-    _handleClose = () => {
-        this.setState({open: false});
-    };
-
     render() {
-        const {classes} = this.props;
+        const {classes, products} = this.props;
         const {project} = this.state;
 
         return (
@@ -83,17 +74,18 @@ class TeamPage extends React.Component {
                 </Typography>
 
                 {/* Only display teams if they exist */}
-                {project.products ? project.products.map((product, index) => (
+                {products ? products.map((product, index) => (
                         <TeamCard
-                            product={product}
-                            projectId={project._id}
                             key={index}
+                            product={product}
                         />
                     ))
                     : <div/>
                 }
 
-                <CreateStudentTeamModal projectId={project._id}/>
+                <CreateStudentTeamModal
+                    projectId={project._id}
+                />
             </div>
         );
     }
@@ -101,6 +93,7 @@ class TeamPage extends React.Component {
 
 TeamPage.propTypes = {
     classes: PropTypes.object.isRequired,
+    products: PropTypes.array.isRequired,
 };
 
 export default withStyles(styles)(TeamPage);

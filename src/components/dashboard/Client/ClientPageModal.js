@@ -8,16 +8,14 @@ import Paper from "@material-ui/core/Paper";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
-import { grey, red } from "@material-ui/core/colors";
+import {grey, red} from "@material-ui/core/colors";
 import ErrorOutlinedIcon from '@material-ui/icons/ErrorOutlined';
 import ErrorOutlineOutlinedIcon from '@material-ui/icons/ErrorOutlineOutlined';
 import ClientDetails from "./modalcomponents/ClientDetails";
 import ClientOrg from "./modalcomponents/ClientOrg";
 import Notes from "../Notes/Notes";
-import axios from "axios";
-import {getClientById} from "../../../api/index";
-import {getGetClientByIdAction} from "../../../store/actionCreators";
 import store from "../../../store";
+import {updateClientAction} from "../../../store/actionCreators";
 
 const styles = theme => ({
     root: {
@@ -61,7 +59,7 @@ class ClientPageModal extends React.Component {
         fullWidth: true,
         maxWidth: "xl",
         client: "",
-        clientFlag: false
+        clientFlag: this.props.client.flag
     };
 
     _handleClickOpen = () => {
@@ -74,7 +72,7 @@ class ClientPageModal extends React.Component {
 
     _concatenateNames = (firstName, lastName) => {
         return (firstName + " " + lastName);
-    }
+    };
 
     _handleClientFlagUpdate = () => {
         // Invert clientFlag value and update state and DB
@@ -85,19 +83,12 @@ class ClientPageModal extends React.Component {
         client.flag = currentFlag;
 
         // Send PUT request
-        const url = `http://localhost:13000/api/client/` + client._id
-        axios
-            .put(url, client)
-            .then(function(response) {
-                console.log(response);
-            })
-            .catch(function(error) {
-                console.log(error);
-            });
+        const updateClientAct = updateClientAction(client._id, client);
+        store.dispatch(updateClientAct);
     };
 
     render() {
-        const { classes } = this.props;
+        const {classes} = this.props;
         var flagIcon;
         var client = this.props.client;
         var clientFlag = this.state.clientFlag;
@@ -110,8 +101,8 @@ class ClientPageModal extends React.Component {
                                                  onClick={this._handleClientFlagUpdate}/>
         }
 
-        if (! client) {
-            return <div />
+        if (!client) {
+            return <div/>
         }
 
         return (
@@ -119,7 +110,7 @@ class ClientPageModal extends React.Component {
                 <Chip
                     onClick={this._handleClickOpen}
                     icon={<FaceIcon/>}
-                    label={this._concatenateNames(client.firstName,client.lastName)}
+                    label={this._concatenateNames(client.firstName, client.lastName)}
                     variant="outlined"
                     align="center"
                 />
@@ -134,8 +125,8 @@ class ClientPageModal extends React.Component {
                         <Grid container spacing={24}>
                             <Grid item xs={6}>
                                 <Paper className={classes.paper}>
-                                    <h1 style={{ color: "#094183" }}>
-                                        {this._concatenateNames(client.firstName,client.lastName)}{flagIcon}
+                                    <h1 style={{color: "#094183"}}>
+                                        {this._concatenateNames(client.firstName, client.lastName)}{flagIcon}
                                     </h1>
                                     <ClientDetails
                                         email={client.email}
@@ -151,7 +142,7 @@ class ClientPageModal extends React.Component {
                             </Grid>
 
                             <Grid item xs={6}>
-                                <Grid style={{ marginBottom: "5%" }}>
+                                <Grid style={{marginBottom: "5%"}}>
                                     <Paper className={classes.paper}>
                                         <ClientOrg
                                             orgName={client.organisation.name}
@@ -163,8 +154,8 @@ class ClientPageModal extends React.Component {
                                 </Grid>
                                 <Grid>
                                     <Paper className={classes.paper}>
-                                        <Notes 
-                                            notes={client.notes} 
+                                        <Notes
+                                            notes={client.notes}
                                             object={client}
                                             objectType={"client"}
                                         />
@@ -174,7 +165,8 @@ class ClientPageModal extends React.Component {
                         </Grid>
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={this._handleClose} className={classes.closeButton}>
+                        <Button onClick={this._handleClose}
+                                className={classes.closeButton}>
                             Close
                         </Button>
                     </DialogActions>
