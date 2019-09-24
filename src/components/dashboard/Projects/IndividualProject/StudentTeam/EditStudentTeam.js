@@ -39,6 +39,8 @@ import {
     updateProductAction
 } from "../../../../../store/actionCreators";
 import {getProjectById} from "../../../../../api";
+import axios from "axios";
+
 
 const styles = theme => ({
         root: {
@@ -242,6 +244,21 @@ class EditStudentTeam extends React.Component {
         const getProAction = getGetProjectByIdAction(project);
         store.dispatch(getProAction);
     }
+    onClickDownload = () => {
+        axios({
+          url:
+            "https://react-download-test-sathitsak.s3.amazonaws.com/downLoadTest.pdf",
+          method: "GET",
+          responseType: "blob" // important
+        }).then(response => {
+          const url = window.URL.createObjectURL(new Blob([response.data]));
+          const link = document.createElement("a");
+          link.href = url;
+          link.setAttribute("download", "file.pdf");
+          document.body.appendChild(link);
+          link.click();
+        });
+      };
 
 
     render() {
@@ -258,6 +275,13 @@ class EditStudentTeam extends React.Component {
                         color="primary"
                         style={{marginRight: 12}}>
                         Edit Team
+                    </Button>
+                    <Button
+                        className={classes.editTeamButton}
+                        onClick={this.onClickDownload}
+                        color="primary"
+                        style={{marginRight: 12}}>
+                        Download document
                     </Button>
                 </Grid>
 
