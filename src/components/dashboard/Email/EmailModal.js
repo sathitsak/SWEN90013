@@ -131,8 +131,10 @@ const names = [
 
 const templatesMap = new Map();
 const templatesNewArray = [];
+const tempCoordinatorNameArray = [];
 
 const nameEmailMap = new Map();
+const coordinatorMap = new Map();
 
 const templates = [
   { title: "Template A", message: "template content a" },
@@ -165,7 +167,25 @@ class EmailModal extends React.Component {
   handleClickOpen = () => {
     this.setState({ open: true });
 
+    //get all coordinators
+
+    console.log(store.getState().subjects);
+    var subjects = store.getState().subjects;
+    var coordinators = [];
+
+    subjects.map(indCoor => coordinators.push(indCoor.coordinator));
+    console.log("new here");
+    console.log(coordinators);
+
+    for (var x = 0; x < coordinators.length; x++) {
+      var fullName = coordinators[x].firstName + " " + coordinators[x].lastName;
+      var fullNameRole = fullName + " (Coordinator)";
+      nameEmailMap.set(fullNameRole, coordinators[x].email);
+      this.state.available_recipients.push(fullNameRole);
+    }
+
     //get the templates
+
     axios
       .get(`http://172.26.88.142:3000/api/template`)
       .then(function(response) {
@@ -209,8 +229,16 @@ class EmailModal extends React.Component {
       this.state.available_recipients.push(clientName);
 
       nameEmailMap.set(clientSecondaryName, clientSecondaryEmail);
+
+      for (const x in tempCoordinatorNameArray) {
+        this.state.email_recipients.push(x);
+      }
+
       this.state.available_recipients.push(clientSecondaryName);
     } else if (split[4] == "projects") {
+      for (const x in tempCoordinatorNameArray) {
+        this.state.email_recipients.push(x);
+      }
       this.state.available_recipients.push(clientName, clientSecondaryName);
       nameEmailMap.set(
         store.getState().proposal.client.firstName,
@@ -289,6 +317,8 @@ class EmailModal extends React.Component {
     );
 
     this.state.email_cc.map(name => emailscc.push(nameEmailMap.get(name)));
+
+    console.log(emails);
 
     //send multiple posts
 
