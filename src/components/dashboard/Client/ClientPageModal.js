@@ -94,9 +94,8 @@ class ClientPageModal extends React.Component {
         const {classes} = this.props;
         var flagIcon;
         var client = this.props.client;
-        var clientFlag = this.state.clientFlag;
 
-        if (clientFlag) {
+        if (client.flag) {
             flagIcon = <ErrorOutlinedIcon className={classes.iconTrue}
                                           onClick={this._handleClientFlagUpdate}/>
         } else {
