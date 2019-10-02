@@ -77,7 +77,7 @@ class SingleNote extends React.Component {
                     <Grid container spacing={24}>
                         <Grid item xs>
                             <Typography className={classes.font}>
-                                {this._shortenText(note.text)}
+                                {note.text ? this._shortenText(note.text) : ""}
                             </Typography>
                         </Grid>
 

@@ -119,25 +119,32 @@ class AddNoteModal extends React.Component {
     _handleAddNote = () => {
         const {objectType, object} = this.props;
 
-        var noteMsg = document.getElementById("note").value;
-        var newNote = {
-            text: noteMsg,
-            date: Date.now().toString(),    // Date is represented as an integer, stored as a string
-        };
-        var notes = object.notes;
-        if (notes) {
-            notes.push(newNote);
+        var noteMsg = document.getElementById("note").value;   
+
+        if (noteMsg) {
+            var newNote = {
+                text: noteMsg,
+                date: Date.now().toString(),    // Date is represented as an integer, stored as a string
+            };
+            var notes = object.notes;
+            if (notes) {
+                notes.push(newNote);
+            } else {
+                notes = [newNote];
+            }
+            object.notes = notes;
+
+            // Send PUT request
+            const addNoteAct = addNoteAction(objectType, object._id, object);
+            store.dispatch(addNoteAct);
+
+            // Close window
+            this._handleClose();
         } else {
-            notes = [newNote];
+            alert("Please provide a valid note.");
         }
-        object.notes = notes;
-
-        // Send PUT request
-        const addNoteAct = addNoteAction(objectType, object._id, object);
-        store.dispatch(addNoteAct);
-
-        // Close window
-        this._handleClose();
+        
+        
     };
 
     render() {
