@@ -324,7 +324,7 @@ class EmailModal extends React.Component {
 
     axios
       .post(`http://35.197.167.244/message`, {
-        from: "thissupervisor",
+        from: "CIS Project Management",
         to: emails,
         subject: this.state.email_subject,
         html: this.state.email_message,
