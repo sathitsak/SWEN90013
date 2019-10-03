@@ -273,6 +273,7 @@ class StatusChangeModal extends React.Component {
             }
         }
     };
+
 }
 
 export default withStyles(styles)(StatusChangeModal);

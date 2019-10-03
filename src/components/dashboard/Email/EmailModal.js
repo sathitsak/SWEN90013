@@ -1,4 +1,4 @@
-import React from "react";
+import React, { forwardRef } from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
@@ -130,9 +130,11 @@ const names = [
 ];
 
 const templatesMap = new Map();
-const templatesNew = [];
+const templatesNewArray = [];
+const tempCoordinatorNameArray = [];
 
 const nameEmailMap = new Map();
+const coordinatorMap = new Map();
 
 const templates = [
   { title: "Template A", message: "template content a" },
@@ -151,6 +153,7 @@ class EmailModal extends React.Component {
       email_recipients: [],
       email_cc: [],
       email_bcc: [],
+      email_subject: "",
       email_template: "",
       email_message: "",
       context: "",
@@ -164,25 +167,36 @@ class EmailModal extends React.Component {
   handleClickOpen = () => {
     this.setState({ open: true });
 
+    //get all coordinators
+
+    console.log(store.getState().subjects);
+    var subjects = store.getState().subjects;
+    var coordinators = [];
+
+    subjects.map(indCoor => coordinators.push(indCoor.coordinator));
+    console.log("new here");
+    console.log(coordinators);
+
+    for (var x = 0; x < coordinators.length; x++) {
+      var fullName = coordinators[x].firstName + " " + coordinators[x].lastName;
+      var fullNameRole = fullName + " (Coordinator)";
+      nameEmailMap.set(fullNameRole, coordinators[x].email);
+      this.state.available_recipients.push(fullNameRole);
+    }
+
     //get the templates
+
     axios
-      .get(`http://35.197.167.244/template`)
+      .get(`http://172.26.88.142:3000/api/template`)
       .then(function(response) {
-        var responseSaved = response;
-        console.log(response.data.emailTemplate.client[0].title[0]);
-        console.log(response.data.emailTemplate.client[0].message[0]);
-        templatesNew.push(responseSaved.data.emailTemplate.client[0].title[0]);
-        templatesNew.push(
-          responseSaved.data.emailTemplate.proposal[0].title[0]
-        );
-        templatesMap.set(
-          response.data.emailTemplate.client[0].title[0],
-          response.data.emailTemplate.client[0].message[0]
-        );
-        templatesMap.set(
-          response.data.emailTemplate.client[0].title[0],
-          response.data.emailTemplate.proposal[0].message[0]
-        );
+        console.log(response.data);
+        var templates = response.data;
+
+        Object.keys(templates).forEach(function(key) {
+          console.log(key, templates[key].title);
+          templatesNewArray.push(templates[key].title);
+          templatesMap.set(templates[key].title, templates[key].message);
+        });
       })
       .catch(function(error) {
         console.log(error);
@@ -196,17 +210,36 @@ class EmailModal extends React.Component {
     var context = split[4];
     console.log(split[4]);
 
+    var clientName =
+      store.getState().proposal.client.firstName +
+      " " +
+      store.getState().proposal.client.lastName +
+      " (Client)";
+    var clientEmail = store.getState().proposal.client.email;
+    var clientSecondaryName =
+      store.getState().proposal.client.secondaryContactFirstName +
+      " " +
+      store.getState().proposal.client.secondaryContactLastName +
+      " (Secondary Contact)";
+    var clientSecondaryEmail = store.getState().proposal.client
+      .secondaryContactEmail;
+
     if (split[4] == "proposals") {
-      var clientName = store.getState().proposal.client.firstName;
-      var clientEmail = store.getState().proposal.client.email;
       nameEmailMap.set(clientName, clientEmail);
-      this.setState({
-        available_recipients: [clientName]
-      });
+      this.state.available_recipients.push(clientName);
+
+      nameEmailMap.set(clientSecondaryName, clientSecondaryEmail);
+
+      for (const x in tempCoordinatorNameArray) {
+        this.state.email_recipients.push(x);
+      }
+
+      this.state.available_recipients.push(clientSecondaryName);
     } else if (split[4] == "projects") {
-      this.state.available_recipients.push(
-        store.getState().proposal.client.firstName
-      );
+      for (const x in tempCoordinatorNameArray) {
+        this.state.email_recipients.push(x);
+      }
+      this.state.available_recipients.push(clientName, clientSecondaryName);
       nameEmailMap.set(
         store.getState().proposal.client.firstName,
         store.getState().proposal.client.email
@@ -229,6 +262,7 @@ class EmailModal extends React.Component {
   handleClose = () => {
     this.setState({ available_recipients: [] });
     this.setState({ email_recipients: [] });
+    this.setState({ email_cc: [] });
     nameEmailMap.clear();
     this.setState({ open: false });
   };
@@ -240,8 +274,10 @@ class EmailModal extends React.Component {
       this.setState({ email_cc: event.target.value });
     } else if (emailField == "email_bcc") {
       this.setState({ email_bcc: event.target.value });
+    } else if (emailField == "email_subject") {
+      this.setState({ email_subject: event.target.value });
     } else if (emailField == "email_template") {
-      this.setState({ email_template: event.target.value });
+      this.setState({ templatesNew: event.target.value });
       let email_message = this.getEmailMessage(event.target.value);
       this.setState({ email_message: email_message });
     }
@@ -282,14 +318,16 @@ class EmailModal extends React.Component {
 
     this.state.email_cc.map(name => emailscc.push(nameEmailMap.get(name)));
 
+    console.log(emails);
+
     //send multiple posts
 
     axios
       .post(`http://35.197.167.244/message`, {
-        from: "thissupervisor",
+        from: "CIS Project Management",
         to: emails,
-        subject: "new",
-        html: "<p>testttt</p>",
+        subject: this.state.email_subject,
+        html: this.state.email_message,
         projectType: "fdafdsa",
         cc: emailscc,
         projectID: ""
@@ -300,6 +338,7 @@ class EmailModal extends React.Component {
       .catch(function(error) {
         console.log(error);
       });
+
     alert("sending email");
     this.setState({ email_recipients: [] });
     this.setState({ available_recipients: [] });
@@ -431,6 +470,16 @@ class EmailModal extends React.Component {
                 </Select>
               </FormControl>
               <br />
+              <TextField
+                id="standard-with-placeholder"
+                label="Please enter a subject"
+                placeholder=""
+                className={classes.textField}
+                margin="normal"
+                style={{ maxWidth: 300, minWidth: 120 }}
+                onChange={e => this.handleChange("email_subject", e)}
+              />
+              <br />
               <FormControl className={classes.formControl}>
                 <InputLabel htmlFor="email_template">
                   Choose template if applicable
@@ -438,12 +487,12 @@ class EmailModal extends React.Component {
                 <Select
                   className={classes.selectField}
                   autoWidth="true"
-                  value={this.state.email_template}
+                  value={this.state.templatesNew}
                   onChange={e => this.handleChange("email_template", e)}
                   input={<Input id="email_template" />}
                   MenuProps={MenuProps}
                 >
-                  {templatesNew.map(template => (
+                  {templatesNewArray.map(template => (
                     <MenuItem
                       key={template}
                       value={template}
