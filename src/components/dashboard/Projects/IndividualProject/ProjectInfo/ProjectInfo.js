@@ -2,6 +2,8 @@ import React from "react";
 import {withStyles} from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
+import store from "../../../../../store";
+import PropTypes from "prop-types";
 
 import ChangeStatus from "./ChangeStatus";
 import AssignToSupervisor from "./AssignToSupervisor";
@@ -9,8 +11,7 @@ import Description from "./Description";
 import ViewProposal from "./ViewProposal";
 import ViewClient from "./ViewClient";
 import Organization from "./Organization";
-import store from "../../../../../store";
-import PropTypes from "prop-types";
+import Subject from "./Subject";
 
 const styles = {
     basic: {
@@ -42,7 +43,7 @@ class ProjectInfo extends React.Component {
 
     render() {
         const {classes} = this.props;
-        const {project, proposal, supervisors} = this.state;
+        const {project, proposal, supervisors, subjects} = this.state;
 
         return (
             <div>
@@ -88,11 +89,19 @@ class ProjectInfo extends React.Component {
                     </Grid>
 
                     <Grid item className={classes.basic}>
+                        <Subject
+                            proposal={proposal}
+                            subjects={subjects}
+                        />
+                    </Grid>
+
+                    <Grid item className={classes.basic}>
                         <AssignToSupervisor
                             project={project}
                             supervisors={supervisors}
                         />
                     </Grid>
+
                 </Grid>
             </div>
         );

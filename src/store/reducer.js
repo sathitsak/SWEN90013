@@ -4,16 +4,21 @@ import {
     GET_SUPERVISORS,
     GET_ALL_PROPOSALS,
     GET_PROPOSAL_BY_ID,
-    GET_CLIENT_BY_ID,
     GET_ALL_SUBJECTS,
     UPDATE_PROJECT,
     UPDATE_PRODUCT,
-    CREATE_NEW_PRODUCT
+    CREATE_NEW_PRODUCT,
+    UPDATE_CLIENT,
+    ADD_NOTE,
+    CHANGE_PROPOSAL_STATUS
 } from "./actionTypes";
 import {
     updateProject,
     updateProduct,
-    postNewProduct
+    postNewProduct,
+    updateClient,
+    addNote,
+    changeProposalStatus
 } from "../api";
 
 const defaultState = {
@@ -48,10 +53,6 @@ export default (state = defaultState, action) => {
         return getProposalById(state, action);
     }
 
-    if (action.type === GET_CLIENT_BY_ID) {
-        return getClientById(state, action);
-    }
-
     if (action.type === GET_ALL_SUBJECTS) {
         return getAllSubjects(state, action);
     }
@@ -66,6 +67,18 @@ export default (state = defaultState, action) => {
 
     if (action.type === CREATE_NEW_PRODUCT) {
         return createProduct(state, action);
+    }
+
+    if (action.type === UPDATE_CLIENT) {
+        return updateClientById(state, action);
+    }
+
+    if (action.type === ADD_NOTE) {
+        return addNoteByType(state, action);
+    }
+
+    if (action.type === CHANGE_PROPOSAL_STATUS) {
+        return changeProposalStatusByType(state, action);
     }
 
     return state;
@@ -102,27 +115,12 @@ function getProjectById(state, action) {
     const newState = JSON.parse(JSON.stringify(state));
     newState.project = action.project;
     newState.page_title = action.page_title;
-    const supervisorID = newState.project.supervisorID;
-
-    let currentSupervisor = "";
-    newState.supervisors.forEach(supervisor => {
-        if (supervisor.id === supervisorID) {
-            currentSupervisor = supervisor.firstName + " " + supervisor.lastName;
-            newState.currentSupervisor = currentSupervisor;
-        }
-    });
     return newState;
 }
 
 function getSupervisors(state, action) {
     const newState = JSON.parse(JSON.stringify(state));
     newState.supervisors = action.supervisors;
-    return newState;
-}
-
-function getClientById(state, action) {
-    const newState = JSON.parse(JSON.stringify(state));
-    newState.client = action.client;
     return newState;
 }
 
@@ -142,5 +140,23 @@ function updateProductById(state, action) {
 function createProduct(state, action) {
     const newState = JSON.parse(JSON.stringify(state));
     postNewProduct(action.product);
+    return newState;
+}
+
+function updateClientById(state, action) {
+    const newState = JSON.parse(JSON.stringify(state));
+    updateClient(action.id, action.client);
+    return newState;
+}
+
+function addNoteByType(state, action) {
+    const newState = JSON.parse(JSON.stringify(state));
+    addNote(action.objectType, action.objectId, action.object);
+    return newState;
+}
+
+function changeProposalStatusByType(state, action) {
+    const newState = JSON.parse(JSON.stringify(state));
+    changeProposalStatus(action.id, action.option, action.object);
     return newState;
 }

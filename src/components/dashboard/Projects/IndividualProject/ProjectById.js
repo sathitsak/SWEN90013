@@ -5,8 +5,8 @@ import ProjectInfo from "./ProjectInfo/ProjectInfo";
 import Notes from "../../Notes/Notes";
 import {getProjectById, getProposalById} from "../../../../api";
 import {
-    getGetProjectByIdAction,
-    getGetProposalByIdAction
+    getProjectByIdAction,
+    getProposalByIdAction
 } from "../../../../store/actionCreators";
 import store from "../../../../store";
 import {Paper} from "@material-ui/core";
@@ -42,11 +42,11 @@ class ProjectById extends React.Component {
 
     async _reqTodoList(projID) {
         const project = await getProjectById(projID);
-        const getProAction = getGetProjectByIdAction(project);
+        const getProAction = getProjectByIdAction(project);
         store.dispatch(getProAction);
 
-        const proposalResult = await getProposalById(this.state.project.proposalId);
-        const proposalAction = getGetProposalByIdAction(proposalResult);
+        const proposal = await getProposalById(this.state.project.proposalId);
+        const proposalAction = getProposalByIdAction(proposal);
         store.dispatch(proposalAction);
     }
 
@@ -73,14 +73,16 @@ class ProjectById extends React.Component {
                 <Grid item xs={6}>
                     <Paper className={classes.paper}
                            style={{position: "relative"}}>
-                        <TeamPage/>
+                        <TeamPage
+                            products={this.state.project.products}
+                        />
                     </Paper>
                 </Grid>
                 <Grid item xs={12} className={classes.notes}>
                     <Paper className={classes.paper}
                            style={{marginBottom: "20px"}}>
                         <Notes
-                            notes={this.state.project.notes} 
+                            notes={this.state.project.notes}
                             object={this.state.project}
                             objectType={"project"}
                         />

@@ -19,15 +19,15 @@ const styles = {
 class Notes extends React.Component {
 
     render() {
-        const { classes, notes } = this.props;
+        const {classes, notes} = this.props;
 
         return (
             <div>
                 <Typography variant="h5" className={classes.notesTitle}>
                     NOTES
                 </Typography>
-                {notes ? 
-                   <div>
+                {notes ?
+                    <div>
                         {
                             notes.map(
                                 (note, index) =>
@@ -35,10 +35,11 @@ class Notes extends React.Component {
                             )
                         }
                     </div>
-                : <div/> }
+                    : <div/>}
                 <Grid container align="right" spacing={8}>
                     <Grid item xs={11} align="right">
-                        <AddNoteModal object={this.props.object} objectType={this.props.objectType}/>
+                        <AddNoteModal object={this.props.object}
+                                      objectType={this.props.objectType}/>
                     </Grid>
                     <Grid item xs={1} align="right">
                         <EmailModal/>

@@ -8,10 +8,11 @@ import grey from "@material-ui/core/colors/grey";
 import List from "@material-ui/core/List";
 import ProjectCard from "./ProjectCard";
 import store from "../../../../store";
-import {getProjectList, getSupervisors} from "../../../../api";
+import {getAllSubjects, getProjectList, getSupervisors} from "../../../../api";
 import {
-    getGetAllProjectAction,
-    getGetSupervisorsAction
+    getAllProjectAction,
+    getSupervisorsAction,
+    getAllSubjectsAction
 } from "../../../../store/actionCreators";
 import {projectStatus} from "../Constants/Constants";
 
@@ -50,13 +51,17 @@ class ViewProjects extends React.Component {
     }
 
     async _reqTodoList() {
-        const result = await getProjectList();
-        const action = getGetAllProjectAction(result);
-        store.dispatch(action);
+        const projects = await getProjectList();
+        const getAllProjectAct = getAllProjectAction(projects);
+        store.dispatch(getAllProjectAct);
 
         const supervisors = await getSupervisors();
-        const getSupsAction = getGetSupervisorsAction(supervisors);
-        store.dispatch(getSupsAction);
+        const getSupervisorsAct = getSupervisorsAction(supervisors);
+        store.dispatch(getSupervisorsAct);
+
+        const subjects = await getAllSubjects();
+        const getAllSubjectsAct = getAllSubjectsAction(subjects);
+        store.dispatch(getAllSubjectsAct);
     }
 
     componentDidMount() {
@@ -105,7 +110,7 @@ class ViewProjects extends React.Component {
 
     render() {
         const {classes} = this.props;
-        const {supervisors} = this.state;
+        const {supervisors, subjects} = this.state;
 
         return (
             <Grid container justify="flex-end" direction="row"
@@ -124,6 +129,7 @@ class ViewProjects extends React.Component {
                                             key={index}
                                             project={project}
                                             supervisors={supervisors}
+                                            subjects={subjects}
                                         />
                                     )
                                 )}
@@ -146,6 +152,7 @@ class ViewProjects extends React.Component {
                                                 key={index}
                                                 project={project}
                                                 supervisors={supervisors}
+                                                subjects={subjects}
                                             />
                                         )
                                     )
@@ -168,6 +175,7 @@ class ViewProjects extends React.Component {
                                             key={index}
                                             project={project}
                                             supervisors={supervisors}
+                                            subjects={subjects}
                                         />
                                     )
                                 )}

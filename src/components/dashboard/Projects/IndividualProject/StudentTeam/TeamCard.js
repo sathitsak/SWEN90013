@@ -52,7 +52,7 @@ class TeamCard extends React.Component {
     }
 
     render() {
-        const {classes, product, projectId} = this.props;
+        const {classes, product} = this.props;
 
         return (
             <ExpansionPanel className={classes.expansionPanel}>
@@ -97,7 +97,6 @@ class TeamCard extends React.Component {
                         <Grid item xs={12} style={{padding: 0}}>
                             <EditStudentTeam
                                 product={product}
-                                projectId={projectId}
                             />
                         </Grid>
 
@@ -112,7 +111,6 @@ class TeamCard extends React.Component {
 TeamCard.propTypes = {
     classes: PropTypes.object.isRequired,
     product: PropTypes.object.isRequired,
-    projectId: PropTypes.string.isRequired,
 };
 
 export default withStyles(styles)(TeamCard);
