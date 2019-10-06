@@ -50,6 +50,9 @@ const styles = theme => ({
         fontSize: 35,
         verticalAlign: 'middle',
         color: red[500]
+    },
+    chipFlag: {
+        color: red[500]
     }
 });
 
@@ -91,9 +94,8 @@ class ClientPageModal extends React.Component {
         const {classes} = this.props;
         var flagIcon;
         var client = this.props.client;
-        var clientFlag = this.state.clientFlag;
 
-        if (clientFlag) {
+        if (client.flag) {
             flagIcon = <ErrorOutlinedIcon className={classes.iconTrue}
                                           onClick={this._handleClientFlagUpdate}/>
         } else {
@@ -109,7 +111,7 @@ class ClientPageModal extends React.Component {
             <div>
                 <Chip
                     onClick={this._handleClickOpen}
-                    icon={<FaceIcon/>}
+                    icon={client.flag ? <ErrorOutlinedIcon className={classes.chipFlag}/> : <FaceIcon/>}
                     label={this._concatenateNames(client.firstName, client.lastName)}
                     variant="outlined"
                     align="center"
@@ -136,7 +138,6 @@ class ClientPageModal extends React.Component {
                                         secondaryContactName={this._concatenateNames(client.secondaryContactFirstName, client.secondaryContactLastName)}
                                         secondaryContactEmail={client.secondaryContactEmail}
                                         secondaryContactNumber={client.secondaryContactNumber}
-                                        flag={client.flag}
                                     />
                                 </Paper>
                             </Grid>

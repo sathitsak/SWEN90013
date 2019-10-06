@@ -108,7 +108,12 @@ class ProposalInfo extends React.Component {
                         <div className={classes.infoContent}>
                             {proposal.client.organisation.name}
                         </div>
+                    </Grid>
 
+                    <br />
+                    <br />
+                    
+                    <Grid item xs={12} style={{marginBottom: "3%"}}>
                         <div className={classes.infoHeader}>Subject</div>
                         <div className={classes.infoContent}>
                             {proposal.subjectId ?
