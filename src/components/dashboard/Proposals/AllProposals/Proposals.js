@@ -165,7 +165,7 @@ class Proposals extends React.Component {
                         size="medium"
                         className={classes.rejectedButton}
                     >
-                        View Rejected Proposals
+                        View All Proposals
                     </Button>
                 </Link>
             </div>

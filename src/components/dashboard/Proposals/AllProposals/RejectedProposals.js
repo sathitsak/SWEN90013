@@ -20,99 +20,9 @@ import LastPageIcon from '@material-ui/icons/LastPage';
 import {withStyles} from "@material-ui/core/styles";
 import TableHead from "@material-ui/core/TableHead/TableHead";
 import store from "../../../../store";
-import {getProposalList} from "../../../../api";
-import {getAllProposalsAction} from "../../../../store/actionCreators";
-
-const useStyles1 = makeStyles(theme => ({
-    root: {
-        flexShrink: 0,
-        color: "#232FFD",
-        marginLeft: 100,
-    },
-    link: {
-        textDecoration: "none"
-    }
-}));
-
-
-function TablePaginationActions(props) {
-    const classes = useStyles1();
-    const theme = useTheme();
-
-    const {count, page, rowsPerPage, onChangePage} = props;
-
-    function handleFirstPageButtonClick(event) {
-        onChangePage(event, 0);
-    }
-
-    function handleBackButtonClick(event) {
-        onChangePage(event, page - 1);
-    }
-
-    function handleNextButtonClick(event) {
-        onChangePage(event, page + 1);
-    }
-
-    function handleLastPageButtonClick(event) {
-        onChangePage(event, Math.max(0, Math.ceil(count / rowsPerPage) - 1));
-    }
-
-    return (
-        <div className={classes.root}>
-            <IconButton
-                onClick={handleFirstPageButtonClick}
-                disabled={page === 0}
-                aria-label="First Page"
-            >
-                <FirstPageIcon/>
-            </IconButton>
-            <IconButton onClick={handleBackButtonClick} disabled={page === 0}
-                        aria-label="Previous Page">
-                <KeyboardArrowLeft/>
-            </IconButton>
-            <IconButton
-                onClick={handleNextButtonClick}
-                disabled={page >= Math.ceil(count / rowsPerPage) - 1}
-                aria-label="Next Page"
-            >
-                <KeyboardArrowRight/>
-            </IconButton>
-            <IconButton
-                onClick={handleLastPageButtonClick}
-                disabled={page >= Math.ceil(count / rowsPerPage) - 1}
-                aria-label="Last Page"
-            >
-                <LastPageIcon/>
-            </IconButton>
-        </div>
-    );
-}
-
-TablePaginationActions.propTypes = {
-    count: PropTypes.number.isRequired,
-    onChangePage: PropTypes.func.isRequired,
-    page: PropTypes.number.isRequired,
-    rowsPerPage: PropTypes.number.isRequired,
-};
-
-const useStyles2 = theme => ({
-    root: {
-        width: '100%',
-        marginTop: 100,
-    },
-    table: {
-        minWidth: 500,
-    },
-    tableWrapper: {
-        overflowX: 'auto',
-    },
-});
-
-const status = {
-    new: "new",
-    approved: "approved",
-    reject: "reject"
-};
+import {getProposalList, getAllSubjects} from "../../../../api";
+import {getAllProposalsAction, getAllSubjectsAction} from "../../../../store/actionCreators";
+import MaterialTable from 'material-table';
 
 class RejectedProposals extends React.Component {
     constructor(props) {
@@ -121,6 +31,17 @@ class RejectedProposals extends React.Component {
 
         this._handleStoreChange = this._handleStoreChange.bind(this);
         store.subscribe(this._handleStoreChange);
+
+        // this.theme = createMuiTheme({
+        //     MuiInput: {
+        //         formControl: {
+        //           "label + &": {
+        //             marginTop: "0"
+        //           }
+        //         }
+        //     }
+      
+        // });
     }
 
     _handleStoreChange() {
@@ -128,95 +49,76 @@ class RejectedProposals extends React.Component {
     }
 
     async _reqTodoList() {
-        const result = await getProposalList();
-        const action = getAllProposalsAction(result);
-        store.dispatch(action);
+        const proposals = await getProposalList();
+        const getAllProposalsAct = getAllProposalsAction(proposals);
+        store.dispatch(getAllProposalsAct);
+
+        const subjects = await getAllSubjects();
+        const getAllSubjectsAct = getAllSubjectsAction(subjects);
+        store.dispatch(getAllSubjectsAct);
     }
 
     componentDidMount() {
         this._reqTodoList();
     }
 
-    _filterProposalsByStatus = status => {
-        //TODO: filter by user
-        const {proposals} = this.state;
-        let targetProposals = [];
-
-        proposals.forEach(p => {
-            // First check if valid before sending through
-            if ('client' in p) {
-                if ('organisation' in p.client) {
-                    if (p.status === status) {
-                        targetProposals.push(p);
-                    }
-                }
-            }
-
-        });
-
-        return targetProposals;
+    _capitalize(str) {
+        if (str === "new") {
+            return "New";
+        } else if (str === "approved") {
+            return "Approved";
+        } else {
+            return "Rejected";
+        }
     };
 
+    _extractYear(str) {
+        // Format in which the date is stored in the DB: 2019-10-07T03:34:16.921Z
+        // Slice the string using "-" and extract only the first element
+        return str.split("-")[0];
+    }
+
+    _formatDataIntoTableList() {
+        const {proposals} = this.state;
+
+        let proposalList = [];
+
+        proposals.forEach(p => {
+            let nextProposal = {
+                year: this._extractYear(p.date),
+                name: p.name,
+                client: p.client.firstName + " " + p.client.lastName,
+                outlineOfProject: p.outlineOfProject,
+                status: this._capitalize(p.status),
+                subjectId: p.subjectId
+            }
+
+            proposalList.push(nextProposal);
+        })
+
+        return proposalList;
+    }
 
     render() {
-        const classes = useStyles2();
-
-        const rejected = this._filterProposalsByStatus(status.reject);
-
-        const emptyRows = this.rowsPerPage - Math.min(this.rowsPerPage, rejected.length - this.page * this.rowsPerPage);
-
-        function handleChangePage(event, newPage) {
-            this.setPage(newPage);
-        }
-
-        function handleChangeRowsPerPage(event) {
-            this.setRowsPerPage(parseInt(event.target.value, 10));
-        }
-
-        function handleClick(event, id) {
-            window.location.href = `/dashboard/proposals/${id}`;
-        }
-
+        
         return (
-            <Paper className={useStyles2.root}>
-                <div className={classes.tableWrapper}>
-                    <Table className={useStyles2.table}>
-                        <TableHead>
-                            <TableRow>
-                                <TableCell style={{width: "20%"}}>Project
-                                    Name</TableCell>
-                                <TableCell align="left"
-                                           style={{width: "15%"}}>Client</TableCell>
-                                <TableCell align="left"
-                                           style={{width: "15%"}}>Organisation</TableCell>
-                                <TableCell align="left" style={{width: "50%"}}>Project
-                                    Description</TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {this._filterProposalsByStatus(status.reject).map(p => (
-                                <TableRow
-                                    hover
-                                    onClick={event => handleClick(event, p._id)}
-                                    key={p._id}>
-                                    <TableCell component="th" scope="row">
-                                        {p.name}
-                                    </TableCell>
-                                    <TableCell
-                                        align="left">{p.client.firstName + " " + p.client.lastName}</TableCell>
-                                    <TableCell
-                                        align="left">{p.client.organisation.name}</TableCell>
-                                    <TableCell
-                                        align="left">{p.outlineOfProject}</TableCell>
-                                </TableRow>
-                            ))}
-                        </TableBody>
-
-                    </Table>
-                </div>
-            </Paper>
+            <MaterialTable
+                title="All Proposals"
+                columns={[
+                    { title: 'Year', field: 'year', filterCellStyle:{maxWidth:50} },
+                    { title: 'Proposal Name', field: 'name' },
+                    { title: 'Client', field: 'client' },
+                    { title: 'Description', field: 'outlineOfProject', filtering: false },
+                    { title: 'Status', field: 'status', lookup: { New: 'New', Approved: 'Approved', Rejected: 'Rejected'}, filterCellStyle:{marginTop:0} },
+                    { title: 'Subject', field: 'subjectId', filterCellStyle:{maxWidth:50} },
+                ]}
+                data={this._formatDataIntoTableList()}
+                options={{
+                    filtering: true,
+                }}
+            />
         );
     }
 }
 
-export default withStyles(useStyles2)(RejectedProposals);
+export default (RejectedProposals);
