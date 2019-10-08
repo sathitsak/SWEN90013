@@ -25,15 +25,21 @@ class AdminPage extends React.Component {
             <br />
             <Grid container spacing={3}>
               <Grid item xs={4} style={{ paddingLeft: 20 }}>
-                <h1>Add supervisor</h1>
+                <h1>Add Supervisor</h1>
+                <br/>
+                <h5>Supervisors in System</h5>
                 <AddSupervisorFrom />
               </Grid>
-              <Grid item xs={4}>
-                <h1>Add subject</h1>
+              <Grid item xs={4} style={{paddingLeft: 30}}>
+                <h1>Add Subject</h1>
+                <br/>
+                <h5>Subjects in System</h5>
                 <AddSubjectForm />
               </Grid>
-              <Grid item xs={4}>
-                <h1>Add coordinator</h1>
+              <Grid item xs={4} style={{paddingLeft: 30}}>
+                <h1>Add Coordinator</h1>
+                <br/>
+                <h5>Coordinators in System</h5>
                 <AddCoordinatorForm />
               </Grid>
             </Grid>

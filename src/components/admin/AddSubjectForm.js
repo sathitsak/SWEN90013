@@ -13,8 +13,12 @@ import EmailIcon from "@material-ui/icons/Email";
 import BuildingIcon from "@material-ui/icons/AccountBalance";
 import TimeIcon from "@material-ui/icons/AccessTime";
 import SubjectIcon from "@material-ui/icons/Assignment";
-
+import axios from 'axios'
 import Button from "@material-ui/core/Button";
+import Typography from "@material-ui/core/Typography"
+import Paper from "@material-ui/core/Paper"
+
+import {addNewSubject} from "./AdminFunctions"
 
 const styles = theme => ({
   margin: {
@@ -29,16 +33,38 @@ class AddSubjectForm extends React.Component {
     this.state = {
       subjectName: "",
       subjectCode: "",
-      subjectSemester: ""
+      subjectSemester: "",
+      allSubjects:[]
     };
     this._handleChange = this._handleChange.bind(this);
     this._handleSubmit = this._handleSubmit.bind(this);
-  }
+  } 
+
+
+  componentDidMount() {
+    axios.get('http://localhost:13000/api/subject')
+  .then(response => {
+    this.setState({
+      allSubjects: response.data.flat()
+    })
+  })
+  .catch(function (error) {
+    console.log(error);
+  })};
+
+  componentDidUpdate() {
+    axios.get('http://localhost:13000/api/subject')
+    .then(response => {
+      this.setState({
+        allSubjects: response.data.flat()
+      })
+    })
+    .catch(function (error) {
+      console.log(error);
+    })};
 
   _handleSubmit(event) {
-    console.log(this.state.subjectName);
-    console.log(this.state.subjectCode);
-    console.log(this.state.subjectSemester);
+    addNewSubject(this.state.subjectName, this.state.subjectCode, this.state.subjectSemester); 
     this.setState({ subjectName: "", subjectCode: "", subjectSemester: "" });
   }
 
@@ -53,9 +79,22 @@ class AddSubjectForm extends React.Component {
   };
 
   render() {
+    const{allSubjects} = this.state; 
     return (
       <div>
         <Grid container spacing={3}>
+          <Grid item xs={12} style={{paddingBottom:30}}>
+          <Paper style={{maxHeight: 200, overflow: 'auto', paddinTop: 50}}> 
+        
+        <br/>
+        <Typography component="p">
+   {allSubjects.map(subject => {
+     return <p>{subject.name} ({subject.code})</p>
+   })} 
+      
+        </Typography>
+      </Paper>
+          </Grid>
           <Grid item xs={12} style={{ paddingBottom: 30 }}>
             <FormControl className={styles.margin}>
               <InputLabel htmlFor="input-with-icon-adornment">Name</InputLabel>
@@ -108,7 +147,7 @@ class AddSubjectForm extends React.Component {
             </FormControl>
           </Grid>
           <br />
-          <Grid item xs={12} style={{ paddingBottom: 30 }}>
+          <Grid item xs={12} style={{ paddingBottom: 30, paddingTop: 30, marginLeft: '50%' }}>
             <Button
               variant="contained"
               color="primary"
