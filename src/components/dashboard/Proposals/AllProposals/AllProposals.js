@@ -10,7 +10,7 @@ import {getProposalList, getAllSubjects} from "../../../../api";
 import {getAllProposalsAction, getAllSubjectsAction} from "../../../../store/actionCreators";
 import MaterialTable from 'material-table';
 
-class RejectedProposals extends React.Component {
+class AllProposals extends React.Component {
     constructor(props) {
         super(props);
         this.state = store.getState();
@@ -37,16 +37,6 @@ class RejectedProposals extends React.Component {
         this._reqTodoList();
     }
 
-    _capitalize(str) {
-        if (str === "new") {
-            return "New";
-        } else if (str === "approved") {
-            return "Approved";
-        } else {
-            return "Rejected";
-        }
-    };
-
     _extractYear(str) {
         // Format in which the date is stored in the DB: 2019-10-07T03:34:16.921Z
         // Slice the string using "-" and extract only the first element
@@ -64,7 +54,7 @@ class RejectedProposals extends React.Component {
                 name: p.name,
                 client: p.client.firstName + " " + p.client.lastName,
                 outlineOfProject: p.outlineOfProject,
-                status: this._capitalize(p.status),
+                status: p.status,
                 subjectId: p.subjectId
             }
 
@@ -78,13 +68,13 @@ class RejectedProposals extends React.Component {
         
         return (
             <MaterialTable
-                title="All Proposals"
+                title="All Projects"
                 columns={[
                     { title: 'Year', field: 'year', filterCellStyle:{maxWidth:50} },
                     { title: 'Proposal Name', field: 'name' },
                     { title: 'Client', field: 'client' },
                     { title: 'Description', field: 'outlineOfProject', filtering: false },
-                    { title: 'Status', field: 'status', lookup: { New: 'New', Approved: 'Approved', Rejected: 'Rejected'}, filterCellStyle:{marginTop:0} },
+                    { title: 'Status', field: 'status', lookup: { new: 'New', approved: 'Approved', rejected: 'Rejected'}, filterCellStyle:{paddingTop:0} },
                     { title: 'Subject', field: 'subjectId', filterCellStyle:{maxWidth:50} },
                 ]}
                 data={this._formatDataIntoTableList()}
@@ -96,4 +86,4 @@ class RejectedProposals extends React.Component {
     }
 }
 
-export default (RejectedProposals);
+export default (AllProposals);

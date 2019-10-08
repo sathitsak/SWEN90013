@@ -35,7 +35,7 @@ const styles = theme => ({
         fontWeight: "bold",
         color: "#094183"
     },
-    rejectedButton: {
+    allProposalsButton: {
         position: "absolute",
         color: "#ffffff",
         backgroundColor: "#094183",
@@ -158,12 +158,12 @@ class Proposals extends React.Component {
                         </Paper>
                     </Grid>
                 </Grid>
-                <Link to={`/dashboard/rejectedProposals`}
+                <Link to={`/dashboard/allProposals`}
                       className={classes.link}>
                     <Button
                         variant="contained"
                         size="medium"
-                        className={classes.rejectedButton}
+                        className={classes.allProposalsButton}
                     >
                         View All Proposals
                     </Button>

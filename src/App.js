@@ -16,7 +16,8 @@ import { ProposalProvider } from "./components/dashboard/state/Proposal";
 import Projects from "./components/dashboard/Projects/AllProjects/Projects";
 import ProposalById from "./components/dashboard/Proposals/IndividualProposal/ProposalById";
 import ProjectById from "./components/dashboard/Projects/IndividualProject/ProjectById";
-import RejectedProposals from "./components/dashboard/Proposals/AllProposals/RejectedProposals";
+import AllProposals from "./components/dashboard/Proposals/AllProposals/AllProposals";
+import AllProjects from "./components/dashboard/Projects/AllProjects/AllProjects";
 
 class App extends React.Component {
   render() {
@@ -51,8 +52,12 @@ class App extends React.Component {
                     )}
                   />
                   <Route
-                    path={`${path}/rejectedProposals`}
-                    component={RejectedProposals}
+                    path={`${path}/allProposals`}
+                    component={AllProposals}
+                  />
+                  <Route
+                    path={`${path}/allProjects`}
+                    component={AllProjects}
                   />
                 </AppContainer>
               )}
