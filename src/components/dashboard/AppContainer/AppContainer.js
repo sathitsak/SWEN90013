@@ -101,6 +101,17 @@ class AppContainer extends React.Component {
             </ListItemIcon>
             <ListItemText primary="View Projects" />
           </ListItem>
+          <ListItem
+            button
+            key="View Student Teams"
+            component={Link}
+            to="/dashboard/teams"
+          >
+            <ListItemIcon>
+              <GavelIcon />
+            </ListItemIcon>
+            <ListItemText primary="View Student Teams" />
+          </ListItem>
         </List>
         <Divider />
         <List>

@@ -1,20 +1,20 @@
 /**
- * This component contains all proposals. It is entered via a "View All Proposals" button on the Proposals page.
+ * This component contains all products. It is entered via a "View Products" link on the app container drawer.
  * Author: Reyna Tan
- * Date: 07/05/2019
+ * Date: 09/10/2019
  */
 
 import React, { PureComponent } from 'react';
-import store from "../../../../store";
-import {getAllSubjects, getProjectList, getSupervisors} from "../../../../api";
+import store from "../../../store";
+import {getAllSubjects, getProjectList, getSupervisors} from "../../../api";
 import {
     getAllProjectAction,
     getSupervisorsAction,
     getAllSubjectsAction
-} from "../../../../store/actionCreators";
+} from "../../../store/actionCreators";
 import MaterialTable from 'material-table';
 
-class AllProjects extends PureComponent {
+class AllProducts extends PureComponent {
 
     constructor(props) {
         super(props);
@@ -60,7 +60,7 @@ class AllProjects extends PureComponent {
     _formatDataIntoTableList() {
         const {projects} = this.state;
 
-        let projectList = [];
+        let productList = [];
 
         projects.forEach(p => {
 
@@ -68,25 +68,32 @@ class AllProjects extends PureComponent {
             if ('proposal' in p) {
                 if ('client' in p.proposal) {
                     if ('organisation' in p.proposal.client) {
-                        let nextProject = {
-                            // year: this._extractYear(p.date),
-                            name: p.name,
-                            client: p.proposal.client.firstName + " " + p.proposal.client.lastName,
-                            outlineOfProject: p.proposal.outlineOfProject,
-                            status: p.status,
-                            subjectId: p.subjectId,
-                            supervisor: this._showSupervisorName(p.supervisorId),
-                            _id: p._id
+                        if (p.products.length > 0) {
+                            
+                            p.products.forEach(team => {
+                                let nextProduct = {
+                                    // year: this._extractYear(p.date),
+                                    subjectId: p.subjectId,
+                                    teamName: team.name,
+                                    projectName: p.name,
+                                    supervisor: this._showSupervisorName(p.supervisorId),
+                                    client: p.proposal.client.firstName + " " + p.proposal.client.lastName,
+                                    activelyUsed: team.activelyUsed,
+                                    deployed: team.deployed,
+                                    technologies: team.technologies.join(", "),
+                                    _id: p._id
+                                }
+                    
+                                productList.push(nextProduct);
+                            })
                         }
-            
-                        projectList.push(nextProject);
                     }
                 }
             }
             
         })
 
-        return projectList;
+        return productList;
     }
 
     _showSupervisorName = (supervisorId) => {
@@ -149,15 +156,17 @@ class AllProjects extends PureComponent {
         
         return (
             <MaterialTable
-                title="All Projects"
+                title="All Student Teams"
                 columns={[
                     // { title: 'Year', field: 'year', filterCellStyle:{maxWidth:50} },
-                    { title: 'Project Name', field: 'name' },
-                    { title: 'Client', field: 'client' },
-                    { title: 'Description', field: 'outlineOfProject', filtering: false },
-                    { title: 'Status', field: 'status', lookup: { new: 'New', inProgress: 'In Progress', completed: 'Completed'}, filterCellStyle:{paddingTop:0} },
                     { title: 'Subject', field: 'subjectId', filterCellStyle:{maxWidth:50}, lookup: this._getSubjectFilterLookup(), filterCellStyle:{paddingTop:0} },
+                    { title: 'Team Name', field: 'teamName' },
+                    { title: 'Project Name', field: 'projectName' },
                     { title: 'Supervisor', field: 'supervisor', lookup: this._getSupervisorFilterLookup(), filterCellStyle:{paddingTop:0} },
+                    { title: 'Client', field: 'client' },
+                    { title: 'Actively Used', field: 'activelyUsed', lookup: { true: "Yes", false: "No"}, filterCellStyle:{paddingTop:0} },
+                    { title: 'Deployed', field: 'deployed', lookup: { true: "Yes", false: "No"}, filterCellStyle:{paddingTop:0} },                 
+                    { title: 'Technologies', field: 'technologies' }
                 ]}
                 data={this._formatDataIntoTableList()}
                 options={{
@@ -169,4 +178,4 @@ class AllProjects extends PureComponent {
     }
 }
 
-export default (AllProjects);
+export default (AllProducts);
