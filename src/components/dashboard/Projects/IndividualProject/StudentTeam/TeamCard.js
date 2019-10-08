@@ -62,7 +62,7 @@ class TeamCard extends React.Component {
                     id="panel1a-header"
                     className={classes.expansionPanelSummary}
                 >
-                    <Grid container spacing={24}>
+                    <Grid container spacing={3}>
                         <Grid item xs={5}>
                             <Typography className={classes.teamName}>
                                 {product.name}
@@ -85,12 +85,13 @@ class TeamCard extends React.Component {
                 </ExpansionPanelSummary>
                 <ExpansionPanelDetails
                     className={classes.expansionPanelDetails}>
-                    <Grid container spacing={24}>
+                    <Grid container spacing={3}>
                         <Grid item xs={12}>
                             <TeamArtefacts
                                 students={product.students}
                                 productLinks={product.productLinks}
                                 technologies={product.technologies}
+                                key={product._id}
                             />
                         </Grid>
 

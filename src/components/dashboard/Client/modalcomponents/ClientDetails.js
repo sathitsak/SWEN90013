@@ -50,7 +50,7 @@ class ClientDetails extends React.Component {
         
         return (
             <div>
-                <Grid container spacing={24}>
+                <Grid container spacing={3}>
                     <Grid item xs={12}>
                         <Grid item xs={6} className={classes.infoRow}>
                             <EmailIcon

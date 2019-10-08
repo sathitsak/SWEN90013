@@ -1,5 +1,4 @@
 import React from "react";
-import { Column, Row } from "simple-flexbox";
 import { Link } from "react-router-dom";
 import UniMelbWrapper from "../uniMelbWrapper/UniMelbWrapper";
 import axios from "axios";
@@ -222,8 +221,8 @@ class SubmitPage extends React.Component {
                     <option value="-1">Please select&emsp;</option>
                     <option value="Aged care">Aged care</option>
                     <option value="Agriculture">Agriculture</option>
-                    <option value="Amusement, evens and recreation">
-                      Amusement, evens and recreation
+                    <option value="Amusement, events and recreation">
+                      Amusement, events and recreation
                     </option>
                     <option value="Animal care and veterinary services">
                       Animal care and veterinary services

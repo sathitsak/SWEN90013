@@ -76,7 +76,7 @@ class StatusChangeModal extends React.Component {
 
         return (
             <div>
-                <Grid container spacing={24}>
+                <Grid container spacing={3}>
                     <Grid item xs={6} style={{paddingLeft: 22}}>
                         <Button
                             variant="contained"
@@ -107,7 +107,7 @@ class StatusChangeModal extends React.Component {
                             <DialogTitle id="alert-dialog-title">
                                 Accept Proposal
                             </DialogTitle>
-                            <Grid container spacing={24}>
+                            <Grid container spacing={3}>
                                 <Grid item xs={6} style={{padding: 50}}>
                                     <h6 style={{color: grey[800]}}>
                                         Please state your reasoning:
@@ -138,7 +138,7 @@ class StatusChangeModal extends React.Component {
                                             >
                                                 {this.props.subjects ? (
                                                     this.props.subjects.map(s => (
-                                                        <MenuItem
+                                                        <MenuItem key={s._id}
                                                             value={s._id}>{s.name}</MenuItem>
                                                     ))
                                                 ) : (
@@ -178,7 +178,7 @@ class StatusChangeModal extends React.Component {
                             <DialogTitle id="alert-dialog-title">
                                 Reject Proposal
                             </DialogTitle>
-                            <Grid container spacing={24}>
+                            <Grid container spacing={3}>
                                 <Grid item xs={12} style={{padding: 50}}>
                                     <h6 style={{color: grey[800]}}>
                                         Please state your reasoning:

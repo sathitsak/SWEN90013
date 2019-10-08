@@ -24,8 +24,8 @@ const styles = theme => ({
     paper: {
         backgroundColor: theme.palette.background.paper,
         boxShadow: theme.shadows[5],
-        padding: theme.spacing.unit * 4,
-        paddingLeft: theme.spacing.unit * 4,
+        padding: theme.spacing(4),
+        paddingLeft: theme.spacing(4),
         outline: "none"
     },
     closeButton: {
@@ -124,7 +124,7 @@ class ClientPageModal extends React.Component {
                     aria-labelledby="max-width-dialog-title"
                 >
                     <DialogContent>
-                        <Grid container spacing={24}>
+                        <Grid container spacing={3}>
                             <Grid item xs={6}>
                                 <Paper className={classes.paper}>
                                     <h1 style={{color: "#094183"}}>

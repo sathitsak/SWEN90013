@@ -36,7 +36,7 @@ class Notes extends React.Component {
                         }
                     </div>
                     : <div/>}
-                <Grid container align="right" spacing={8}>
+                <Grid container align="right" spacing={1}>
                     <Grid item xs={11} align="right">
                         <AddNoteModal object={this.props.object}
                                       objectType={this.props.objectType}/>

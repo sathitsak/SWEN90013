@@ -112,7 +112,7 @@ class Proposals extends React.Component {
             <div style={{position: "relative"}}>
                 <Grid
                     container
-                    spacing={16}
+                    spacing={10}
                     alignContent="center"
                     justify="flex-end"
                     direction="row"

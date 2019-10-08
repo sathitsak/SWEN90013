@@ -1,24 +1,10 @@
 /**
- * This component contains all reject proposals. It is entered via a "View Rejected Proposals" button on the Proposals page.
+ * This component contains all proposals. It is entered via a "View All Proposals" button on the Proposals page.
  * Author: Reyna Tan
  * Date: 07/05/2019
  */
 
 import React from 'react';
-import PropTypes from 'prop-types';
-import {makeStyles, useTheme} from '@material-ui/styles';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
-import IconButton from '@material-ui/core/IconButton';
-import FirstPageIcon from '@material-ui/icons/FirstPage';
-import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
-import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
-import LastPageIcon from '@material-ui/icons/LastPage';
-import {withStyles} from "@material-ui/core/styles";
-import TableHead from "@material-ui/core/TableHead/TableHead";
 import store from "../../../../store";
 import {getProposalList, getAllSubjects} from "../../../../api";
 import {getAllProposalsAction, getAllSubjectsAction} from "../../../../store/actionCreators";
@@ -31,17 +17,6 @@ class RejectedProposals extends React.Component {
 
         this._handleStoreChange = this._handleStoreChange.bind(this);
         store.subscribe(this._handleStoreChange);
-
-        // this.theme = createMuiTheme({
-        //     MuiInput: {
-        //         formControl: {
-        //           "label + &": {
-        //             marginTop: "0"
-        //           }
-        //         }
-        //     }
-      
-        // });
     }
 
     _handleStoreChange() {

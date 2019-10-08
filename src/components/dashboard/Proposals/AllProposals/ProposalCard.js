@@ -30,7 +30,8 @@ const styles = theme => ({
         },
         "&:active": {
             backgroundColor: grey[300]
-        }
+        },
+        color: "#000000"
     },
     cardHeader: {
         paddingBottom: 0

@@ -25,7 +25,8 @@ const styles = {
         },
         "&:active": {
             backgroundColor: grey[300]
-        }
+        },
+        color: "#000000"
     },
     avatar: {
         backgroundColor: red[500]
