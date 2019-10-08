@@ -64,6 +64,20 @@ class AllProposals extends React.Component {
         return proposalList;
     }
 
+    _getSubjectFilterLookup() {
+        const {proposals} = this.state;
+
+        let subjectList = {};
+
+        proposals.forEach(p => {
+            if (! (p.subjectId in subjectList)) {
+                subjectList[p.subjectId] = p.subjectId;
+            }
+        })
+
+        return subjectList;
+    }
+
     render() {
         
         return (
@@ -75,7 +89,7 @@ class AllProposals extends React.Component {
                     { title: 'Client', field: 'client' },
                     { title: 'Description', field: 'outlineOfProject', filtering: false },
                     { title: 'Status', field: 'status', lookup: { new: 'New', approved: 'Approved', rejected: 'Rejected'}, filterCellStyle:{paddingTop:0} },
-                    { title: 'Subject', field: 'subjectId', filterCellStyle:{maxWidth:50} },
+                    { title: 'Subject', field: 'subjectId', filterCellStyle:{maxWidth:50}, lookup: this._getSubjectFilterLookup(), filterCellStyle:{paddingTop:0} },
                 ]}
                 data={this._formatDataIntoTableList()}
                 options={{

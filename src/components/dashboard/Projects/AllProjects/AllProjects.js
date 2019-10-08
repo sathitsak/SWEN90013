@@ -74,7 +74,7 @@ class AllProjects extends React.Component {
                             outlineOfProject: p.proposal.outlineOfProject,
                             status: p.status,
                             subjectId: p.subjectId,
-                            supervisor: p.supervisorId 
+                            supervisor: this._showSupervisorName(p.supervisorId) 
                         }
             
                         projectList.push(nextProject);
@@ -87,10 +87,52 @@ class AllProjects extends React.Component {
         return projectList;
     }
 
+    _showSupervisorName = (supervisorId) => {
+        const {supervisors} = this.state;
+        let supervisorName = " ";
+        supervisors.forEach(sp => {
+            if (sp._id === supervisorId) {
+                supervisorName = sp.firstName + " " + sp.lastName;
+            }
+        });
+        return supervisorName;
+    };
+
+    _getSupervisorFilterLookup() {
+        const {supervisors} = this.state;
+
+        let supervisorList = {};
+
+        supervisors.forEach(sp => {
+            let name = sp.firstName + " " + sp.lastName;
+
+            if (! (name in supervisorList)) {
+                supervisorList[name] = name;
+            }
+        })
+
+        return supervisorList;
+    }
+
     _getSubjectFilterLookup() {
-        const {subjects} = this.state;
+        const {projects} = this.state;
 
         let subjectList = {};
+
+        projects.forEach(p => {
+
+            // First check if valid
+            if ('proposal' in p) {
+                if ('client' in p.proposal) {
+                    if ('organisation' in p.proposal.client) {
+                        if (! (p.subjectId in subjectList)) {
+                            subjectList[p.subjectId] = p.subjectId;
+                        }
+                    }
+                }
+            }
+            
+        })
 
         return subjectList;
     }
@@ -106,8 +148,8 @@ class AllProjects extends React.Component {
                     { title: 'Client', field: 'client' },
                     { title: 'Description', field: 'outlineOfProject', filtering: false },
                     { title: 'Status', field: 'status', lookup: { new: 'New', inProgress: 'In Progress', completed: 'Completed'}, filterCellStyle:{paddingTop:0} },
-                    { title: 'Subject', field: 'subjectId', filterCellStyle:{maxWidth:50} },
-                    { title: 'Supervisor', field: 'supervisor' },
+                    { title: 'Subject', field: 'subjectId', filterCellStyle:{maxWidth:50}, lookup: this._getSubjectFilterLookup(), filterCellStyle:{paddingTop:0} },
+                    { title: 'Supervisor', field: 'supervisor', lookup: this._getSupervisorFilterLookup(), filterCellStyle:{paddingTop:0} },
                 ]}
                 data={this._formatDataIntoTableList()}
                 options={{
