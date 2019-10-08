@@ -4,13 +4,13 @@
  * Date: 07/05/2019
  */
 
-import React from 'react';
+import React, { PureComponent } from 'react';
 import store from "../../../../store";
 import {getProposalList, getAllSubjects} from "../../../../api";
 import {getAllProposalsAction, getAllSubjectsAction} from "../../../../store/actionCreators";
 import MaterialTable from 'material-table';
 
-class AllProposals extends React.Component {
+class AllProposals extends PureComponent {
     constructor(props) {
         super(props);
         this.state = store.getState();
@@ -55,7 +55,8 @@ class AllProposals extends React.Component {
                 client: p.client.firstName + " " + p.client.lastName,
                 outlineOfProject: p.outlineOfProject,
                 status: p.status,
-                subjectId: p.subjectId
+                subjectId: p.subjectId,
+                _id: p._id
             }
 
             proposalList.push(nextProposal);
@@ -78,6 +79,12 @@ class AllProposals extends React.Component {
         return subjectList;
     }
 
+    // Rediret to ProposalById page
+    _handleClick(_id) {
+        const { history } = this.props;
+        history.push(`/dashboard/proposals/${_id}`);
+    }
+
     render() {
         
         return (
@@ -95,6 +102,7 @@ class AllProposals extends React.Component {
                 options={{
                     filtering: true,
                 }}
+                onRowClick={(event, rowData) => this._handleClick(rowData._id)}
             />
         );
     }

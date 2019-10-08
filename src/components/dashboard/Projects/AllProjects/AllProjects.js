@@ -4,7 +4,7 @@
  * Date: 07/05/2019
  */
 
-import React from 'react';
+import React, { PureComponent } from 'react';
 import store from "../../../../store";
 import {getAllSubjects, getProjectList, getSupervisors} from "../../../../api";
 import {
@@ -14,7 +14,8 @@ import {
 } from "../../../../store/actionCreators";
 import MaterialTable from 'material-table';
 
-class AllProjects extends React.Component {
+class AllProjects extends PureComponent {
+
     constructor(props) {
         super(props);
 
@@ -74,7 +75,8 @@ class AllProjects extends React.Component {
                             outlineOfProject: p.proposal.outlineOfProject,
                             status: p.status,
                             subjectId: p.subjectId,
-                            supervisor: this._showSupervisorName(p.supervisorId) 
+                            supervisor: this._showSupervisorName(p.supervisorId),
+                            _id: p._id
                         }
             
                         projectList.push(nextProject);
@@ -137,6 +139,12 @@ class AllProjects extends React.Component {
         return subjectList;
     }
 
+    // Rediret to ProjectById page
+    _handleClick(_id) {
+        const { history } = this.props;
+        history.push(`/dashboard/projects/${_id}`);
+    }
+
     render() {
         
         return (
@@ -155,6 +163,7 @@ class AllProjects extends React.Component {
                 options={{
                     filtering: true,
                 }}
+                onRowClick={(event, rowData) => this._handleClick(rowData._id)}
             />
         );
     }
