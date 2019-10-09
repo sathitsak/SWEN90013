@@ -63,6 +63,7 @@ class ProposalById extends React.Component {
                                 q3={this.state.proposal.endProductBenefits}
                                 q4={this.state.proposal.originality}
                                 q5={this.state.proposal.endProductUse}
+                                proposal={this.state.proposal}
                             />
                         }
                     </Grid>

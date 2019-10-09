@@ -1,26 +1,14 @@
-import React, { forwardRef } from "react";
-import PropTypes from "prop-types";
+import React from "react";
 import { withStyles } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
-import Modal from "@material-ui/core/Modal";
 import Button from "@material-ui/core/Button";
-import Chip from "@material-ui/core/Chip";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import Fab from "@material-ui/core/Fab";
-import EmailIcon from "@material-ui/icons/Email";
 import TextField from "@material-ui/core/TextField";
-import InputBase from "@material-ui/core/InputBase";
 import { Divider } from "@material-ui/core";
-import FormControl from "@material-ui/core/FormControl";
-import Input from "@material-ui/core/Input";
-import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
-import Select from "@material-ui/core/Select";
 import store from "../../../store";
-import axios from "axios";
 import Grid from "@material-ui/core/Grid";
 import {getProjectById, getProposalById} from "../../../api";
 import {
@@ -138,7 +126,6 @@ class EditClientModal extends React.Component {
         if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
           return true;
         } else {
-            console.log("email wrong");
           return false;
         }
     };
@@ -151,7 +138,6 @@ class EditClientModal extends React.Component {
         ) {
           return true;
         } else {
-            console.log("phone number wrong");
           return false;
         }
     };
@@ -162,7 +148,6 @@ class EditClientModal extends React.Component {
             input.lastname === "" ||
             !this._validateEmail(input.email) ||
             !this._validateContactInfo(input.number) ||
-            // !this._validateContactInfo(input.officeNumber) ||
             input.technical === "-1"
         ) {
             return false;
@@ -189,7 +174,6 @@ class EditClientModal extends React.Component {
         var lastname = document.getElementById("lastName").value;
         var email = document.getElementById("email").value;
         var number = document.getElementById("contactNumber").value;
-        // var officeNumber = document.getElementById("officeNumber").value;
         var technicalAbility = document.getElementById("technicalAbility").value;
         //SecondaryContact
         var ci2firstname = document.getElementById("secondaryContactFirstName").value;
@@ -208,7 +192,6 @@ class EditClientModal extends React.Component {
             lastname,
             email,
             number,
-            // officeNumber,
             technicalAbility
         })
         ) {
@@ -283,7 +266,7 @@ class EditClientModal extends React.Component {
                 <Button onClick={this._handleOpen}
                     className={classes.editButton}>
                     Edit
-            </Button>
+                </Button>
                 <Dialog
                     fullWidth={this.state.fullWidth}
                     maxWidth={this.state.maxWidth}
@@ -328,14 +311,6 @@ class EditClientModal extends React.Component {
                                         className={classes.textField}
                                         margin="normal"
                                     />
-                                    {/* <TextField
-                                        id="officeNumber"
-                                        label="Office Number"
-                                        defaultValue={client.orgNumber}
-                                        className={classes.textField}
-                                        margin="normal"
-                                        InputLabelProps={{ shrink: true }}
-                                    /> */}
                                     <TextField
                                         id="technicalAbility"
                                         select

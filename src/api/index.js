@@ -24,6 +24,7 @@ const proposalURL = '/proposal';
 export const getProposalList = () => ajax(baseURL + proposalURL, reqType.get);
 export const getProposalById = (id) => ajax(baseURL + proposalURL + '/' + id, reqType.get);
 export const changeProposalStatus = (id, option, object) => ajax(baseURL + proposalURL + '/' + id + '/' + option, object, reqType.post);
+export const updateProposal = (id, proposal) => ajax(baseURL + proposalURL + '/' + id, proposal, reqType.put);
 
 // Subject related
 const subjectURL = '/subject';
