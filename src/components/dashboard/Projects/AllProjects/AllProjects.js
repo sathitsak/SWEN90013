@@ -69,7 +69,7 @@ class AllProjects extends PureComponent {
                 if ('client' in p.proposal) {
                     if ('organisation' in p.proposal.client) {
                         let nextProject = {
-                            // year: this._extractYear(p.date),
+                            year: this._extractYear(p.date),
                             name: p.name,
                             client: p.proposal.client.firstName + " " + p.proposal.client.lastName,
                             outlineOfProject: p.proposal.outlineOfProject,
@@ -151,7 +151,7 @@ class AllProjects extends PureComponent {
             <MaterialTable
                 title="All Projects"
                 columns={[
-                    // { title: 'Year', field: 'year', filterCellStyle:{maxWidth:50} },
+                    { title: 'Year', field: 'year', filterCellStyle:{maxWidth:50} },
                     { title: 'Project Name', field: 'name' },
                     { title: 'Client', field: 'client' },
                     { title: 'Description', field: 'outlineOfProject', filtering: false },

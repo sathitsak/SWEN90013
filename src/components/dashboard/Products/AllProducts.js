@@ -72,14 +72,14 @@ class AllProducts extends PureComponent {
                             
                             p.products.forEach(team => {
                                 let nextProduct = {
-                                    // year: this._extractYear(p.date),
+                                    year: this._extractYear(p.date),
                                     subjectId: p.subjectId,
                                     teamName: team.name,
                                     projectName: p.name,
                                     supervisor: this._showSupervisorName(p.supervisorId),
                                     client: p.proposal.client.firstName + " " + p.proposal.client.lastName,
-                                    activelyUsed: team.activelyUsed,
-                                    deployed: team.deployed,
+                                    activelyUsed: (team.activelyUsed ? team.activelyUsed : "false"),
+                                    deployed: (team.deployed ? team.deployed : "false"),
                                     technologies: team.technologies.join(", "),
                                     _id: p._id
                                 }
@@ -146,7 +146,7 @@ class AllProducts extends PureComponent {
         return subjectList;
     }
 
-    // Rediret to ProjectById page
+    // Redirect to ProjectById page
     _handleClick(_id) {
         const { history } = this.props;
         history.push(`/dashboard/projects/${_id}`);
@@ -158,14 +158,14 @@ class AllProducts extends PureComponent {
             <MaterialTable
                 title="All Student Teams"
                 columns={[
-                    // { title: 'Year', field: 'year', filterCellStyle:{maxWidth:50} },
+                    { title: 'Year', field: 'year', filterCellStyle:{maxWidth:50} },
                     { title: 'Subject', field: 'subjectId', filterCellStyle:{maxWidth:50}, lookup: this._getSubjectFilterLookup(), filterCellStyle:{paddingTop:0} },
                     { title: 'Team Name', field: 'teamName' },
                     { title: 'Project Name', field: 'projectName' },
                     { title: 'Supervisor', field: 'supervisor', lookup: this._getSupervisorFilterLookup(), filterCellStyle:{paddingTop:0} },
                     { title: 'Client', field: 'client' },
-                    { title: 'Actively Used', field: 'activelyUsed', lookup: { true: "Yes", false: "No"}, filterCellStyle:{paddingTop:0} },
-                    { title: 'Deployed', field: 'deployed', lookup: { true: "Yes", false: "No"}, filterCellStyle:{paddingTop:0} },                 
+                    { title: 'Actively Used', field: 'activelyUsed', lookup: { true: "Yes", false: "No"}, filterCellStyle:{paddingTop:0, maxWidth:50} },
+                    { title: 'Deployed', field: 'deployed', lookup: { true: "Yes", false: "No"}, filterCellStyle:{paddingTop:0, maxWidth:50} },                 
                     { title: 'Technologies', field: 'technologies' }
                 ]}
                 data={this._formatDataIntoTableList()}
