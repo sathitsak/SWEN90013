@@ -19,6 +19,7 @@ import ProjectById from "./components/dashboard/Projects/IndividualProject/Proje
 import AllProposals from "./components/dashboard/Proposals/AllProposals/AllProposals";
 import AllProjects from "./components/dashboard/Projects/AllProjects/AllProjects";
 import AllProducts from "./components/dashboard/Products/AllProducts";
+import AllClients from "./components/dashboard/Client/AllClients";
 
 class App extends React.Component {
   render() {
@@ -63,6 +64,10 @@ class App extends React.Component {
                   <Route
                     path={`${path}/teams`}
                     component={AllProducts}
+                  />
+                  <Route
+                    path={`${path}/clients`}
+                    component={AllClients}
                   />
                 </AppContainer>
               )}

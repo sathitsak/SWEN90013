@@ -12,7 +12,8 @@ import {
     ADD_NOTE,
     CHANGE_PROPOSAL_STATUS,
     GET_CLIENT_BY_ID,
-    UPDATE_PROPOSAL
+    UPDATE_PROPOSAL,
+    GET_ALL_CLIENTS
 } from "./actionTypes";
 import {
     updateProject,
@@ -32,6 +33,7 @@ const defaultState = {
     proposal: {},
     page_title: "",
     client: {},
+    clients: [],
     subjects: [],
 };
 
@@ -90,6 +92,10 @@ export default (state = defaultState, action) => {
 
     if (action.type === UPDATE_PROPOSAL) {
         return updateProposalById(state, action);
+    }
+
+    if (action.type === GET_ALL_CLIENTS) {
+        return getAllClients(state, action);
     }
 
     return state;
@@ -182,5 +188,12 @@ function updateProposalById(state, action) {
     const newState = JSON.parse(JSON.stringify(state));
     newState.proposal = action.proposal;
     updateProposal(action.id, action.proposal);
+    return newState;
+}
+
+function getAllClients(state, action) {
+    const newState = JSON.parse(JSON.stringify(state));
+    newState.clients = action.clients;
+    newState.page_title = action.page_title;
     return newState;
 }

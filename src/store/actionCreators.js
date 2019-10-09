@@ -12,7 +12,8 @@ import {
     ADD_NOTE,
     CHANGE_PROPOSAL_STATUS,
     GET_CLIENT_BY_ID,
-    UPDATE_PROPOSAL
+    UPDATE_PROPOSAL,
+    GET_ALL_CLIENTS
 } from "./actionTypes";
 
 export const getAllProjectAction = projects => ({
@@ -98,3 +99,10 @@ export const updateProposalAction = (id, proposal) => ({
     proposal: proposal,
     page_title: proposal.name
 });
+
+export const getAllClientsAction = clients => ({
+    type: GET_ALL_CLIENTS,
+    clients: clients,
+    page_title: "View Clients"
+});
+

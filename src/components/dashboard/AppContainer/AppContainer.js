@@ -20,6 +20,8 @@ import AssignmentIcon from "@material-ui/icons/Assignment";
 import { Link } from "react-router-dom";
 import GavelIcon from "@material-ui/icons/Gavel";
 import PersonIcon from "@material-ui/icons/Person";
+import FaceIcon from "@material-ui/icons/Face";
+import PeopleIcon from "@material-ui/icons/People";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
@@ -108,9 +110,20 @@ class AppContainer extends React.Component {
             to="/dashboard/teams"
           >
             <ListItemIcon>
-              <GavelIcon />
+              <PeopleIcon />
             </ListItemIcon>
             <ListItemText primary="View Student Teams" />
+          </ListItem>
+          <ListItem
+            button
+            key="View Clients"
+            component={Link}
+            to="/dashboard/clients"
+          >
+            <ListItemIcon>
+              <FaceIcon />
+            </ListItemIcon>
+            <ListItemText primary="View Clients" />
           </ListItem>
         </List>
         <Divider />

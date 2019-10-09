@@ -39,6 +39,7 @@ export const postNewProduct = (product) => ajax(baseURL + productURL, product, r
 const clientURL = '/client';
 export const getClientById = (id) => ajax(baseURL + clientURL + '/' + id, reqType.get);
 export const updateClient = (id, client) => ajax(baseURL + clientURL + '/' + id, client, reqType.put);
+export const getAllClients = () => ajax(baseURL + clientURL, reqType.get);
 
 // Note related
 export const addNote = (objectType, objectId, object) => ajax(baseURL + '/' + objectType + '/' + objectId, object, reqType.put);

@@ -101,6 +101,7 @@ class AllProposals extends PureComponent {
                 data={this._formatDataIntoTableList()}
                 options={{
                     filtering: true,
+                    exportButton: true,
                 }}
                 onRowClick={(event, rowData) => this._handleClick(rowData._id)}
             />
