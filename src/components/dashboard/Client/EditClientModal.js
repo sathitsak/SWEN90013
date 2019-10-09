@@ -22,22 +22,12 @@ import Select from "@material-ui/core/Select";
 import store from "../../../store";
 import axios from "axios";
 import Grid from "@material-ui/core/Grid";
-import {updateClientAction} from "../../../store/actionCreators";
-
-function rand() {
-    return Math.round(Math.random() * 20) - 10;
-}
-
-function getModalStyle() {
-    const top = 50 + rand();
-    const left = 50 + rand();
-
-    return {
-        top: `${top}%`,
-        left: `${left}%`,
-        transform: `translate(-${top}%, -${left}%)`
-    };
-}
+import {getProjectById, getProposalById} from "../../../api";
+import {
+    getProjectByIdAction,
+    getProposalByIdAction,
+    updateClientAction,
+} from "../../../store/actionCreators";
 
 const styles = theme => ({
     root: {
@@ -261,10 +251,29 @@ class EditClientModal extends React.Component {
          const updateClientAct = updateClientAction(this.props.client._id, client);
          store.dispatch(updateClientAct);
 
-         // Close window and ask store to obtain new client
+         // Update project/proposal state
+         this._updateObjectState();
+
+         // Close window
          this._handleDiscard();
         }
     };
+
+    async _updateObjectState() {
+        let objType = this.props.objType;
+        let objId = this.props.objID;
+
+        if (objType === "proposal") {
+            const proposal = await getProposalById(objId);
+            const getProposalAction = getProposalByIdAction(proposal);
+            store.dispatch(getProposalAction);    
+        } else if (objType === "project") {
+            const project = await getProjectById(objId);
+            const getProjectAction = getProjectByIdAction(project);
+            store.dispatch(getProjectAction);
+        }
+    }
+
 
     render() {
         const { classes, client } = this.props;
@@ -476,7 +485,7 @@ class EditClientModal extends React.Component {
                                     </TextField>
                                     <TextField
                                         id="description"
-                                        label="Description"
+                                        label="Description of Organisation"
                                         defaultValue={client.organisation.description}
                                         className={classes.emailTextField}
                                         margin="normal"

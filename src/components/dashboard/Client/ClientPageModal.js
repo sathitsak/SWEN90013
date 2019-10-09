@@ -102,6 +102,8 @@ class ClientPageModal extends React.Component {
         const {classes} = this.props;
         var flagIcon;
         var client = this.props.client;
+        var objType = this.props.objType;
+        var objID = this.props.objID;
 
         if (client.flag) {
             flagIcon = <ErrorOutlinedIcon className={classes.iconTrue}
@@ -177,7 +179,10 @@ class ClientPageModal extends React.Component {
                                 className={classes.closeButton}>
                             Close
                         </Button>
-                        <EditClientModal client={client} />
+                        <EditClientModal 
+                            client={client}
+                            objType={objType}
+                            objID={objID} />
                     </DialogActions>
                 </Dialog>
             </div>
