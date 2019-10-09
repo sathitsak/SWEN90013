@@ -72,7 +72,7 @@ class AllClients extends PureComponent {
                 organisation: c.organisation.name,
                 technicalAbility: c.technicalAbility,
                 flag: c.flag,
-                client: c
+                client: this._getClientPageModal(c)
             }
 
             clientList.push(nextClient);
@@ -82,14 +82,23 @@ class AllClients extends PureComponent {
         return clientList;
     }
 
+    // Render clientPageModal
+    _getClientPageModal(client) {
+        return (
+            <ClientPageModal 
+                client={client}
+                objType={"allClients"}
+            />
+        )
+    }
 
     // Render clientPageModal
     _handleClick(client) {
-       return ( 
+       return (
             <ClientPageModal 
                 client={client}
-                // objType={objType}
-                // objID={objID}
+                objType={"allClients"}
+                // objID={null}
             />
         )
     }
@@ -130,13 +139,14 @@ class AllClients extends PureComponent {
                         cellStyle: {textAlign:"center"},
                         lookup: this._getTechnicalAbilityLookup()
                      },
+                    { title: 'View', field: 'client', filtering: false }
                 ]}
                 data={this._formatDataIntoTableList()}
                 options={{
                     filtering: true,
                     exportButton: true,
                 }}
-                onRowClick={(event, rowData) => this._handleClick(rowData.client)}
+                // onRowClick={(event, rowData) => this._handleClick(rowData.client)}
             />
         );
     }

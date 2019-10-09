@@ -17,6 +17,8 @@ import Notes from "../Notes/Notes";
 import store from "../../../store";
 import {updateClientAction} from "../../../store/actionCreators";
 import EditClientModal from "./EditClientModal";
+import Fab from "@material-ui/core/Fab";
+import EditIcon from "@material-ui/icons/Edit";
 
 const styles = theme => ({
     root: {
@@ -61,6 +63,15 @@ const styles = theme => ({
     },
     chipFlag: {
         color: red[500]
+    },
+    fab: {
+        backgroundColor: "#FFFFFF",
+        color: grey[700],
+        "&:hover": {
+            backgroundColor: grey[400],
+            color: grey[800]
+        },
+        boxShadow: "none"
     }
 });
 
@@ -104,6 +115,7 @@ class ClientPageModal extends React.Component {
         var client = this.props.client;
         var objType = this.props.objType;
         var objID = this.props.objID;
+        var fabButton;
 
         if (client.flag) {
             flagIcon = <ErrorOutlinedIcon className={classes.iconTrue}
@@ -117,8 +129,20 @@ class ClientPageModal extends React.Component {
             return <div/>
         }
 
-        return (
-            <div>
+        // Return a view icon on allClients page, and a chip with clients name for all other pages.
+        if (this.props.objType === "allClients") {
+            fabButton = 
+                <Fab
+                    color="default"
+                    aria-label="View/Edit"
+                    className={classes.fab}
+                    onClick={this._handleClickOpen}
+                    size="small"
+                >
+                    <EditIcon />
+                </Fab>
+        } else {
+            fabButton = 
                 <Chip
                     onClick={this._handleClickOpen}
                     icon={client.flag ? <ErrorOutlinedIcon className={classes.chipFlag}/> : <FaceIcon/>}
@@ -126,6 +150,11 @@ class ClientPageModal extends React.Component {
                     variant="outlined"
                     align="center"
                 />
+        }
+
+        return (
+            <div>
+                {fabButton}
                 <Dialog
                     fullWidth={this.state.fullWidth}
                     maxWidth={this.state.maxWidth}

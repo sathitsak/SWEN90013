@@ -10,11 +10,12 @@ import { Divider } from "@material-ui/core";
 import MenuItem from "@material-ui/core/MenuItem";
 import store from "../../../store";
 import Grid from "@material-ui/core/Grid";
-import {getProjectById, getProposalById} from "../../../api";
+import {getProjectById, getProposalById, getAllClients} from "../../../api";
 import {
     getProjectByIdAction,
     getProposalByIdAction,
     updateClientAction,
+    getAllClientsAction
 } from "../../../store/actionCreators";
 
 const styles = theme => ({
@@ -254,6 +255,10 @@ class EditClientModal extends React.Component {
             const project = await getProjectById(objId);
             const getProjectAction = getProjectByIdAction(project);
             store.dispatch(getProjectAction);
+        } else if (objType === "allClients") {
+            const clients = await getAllClients();
+            const getAllClientsAct = getAllClientsAction(clients);
+            store.dispatch(getAllClientsAct);
         }
     }
 
@@ -315,7 +320,7 @@ class EditClientModal extends React.Component {
                                         id="technicalAbility"
                                         select
                                         label="Technical Ability"
-                                        className={classes.emailTextField}
+                                        className={classes.textField}
                                         defaultValue={this.state.technicalAbility}
                                         value={this.state.technicalAbility}
                                         onChange={e => this._handleTechnicalAbilityUpdate(e, "technicalAbility")}
