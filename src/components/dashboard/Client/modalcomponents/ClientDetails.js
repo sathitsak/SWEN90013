@@ -23,7 +23,7 @@ const styles = theme => ({
     icon: {
         verticalAlign: 'middle',
         fontSize: 30,
-        paddingRight: 10,
+        paddingRight: 15,
         color: grey[500]
     },
     infoRow: {
@@ -52,15 +52,12 @@ class ClientDetails extends React.Component {
             <div>
                 <Grid container spacing={3}>
                     <Grid item xs={12}>
-                        <Grid item xs={6} className={classes.infoRow}>
+                        <Grid item xs={8} className={classes.infoRow}>
                             <EmailIcon
                                 className={classes.icon}/>{this.props.email}
                         </Grid>
                         <Grid item xs={6} className={classes.infoRow}>
                             <PhoneIcon className={classes.icon}/>{this.props.contactNumber}
-                        </Grid>
-                        <Grid item xs={6} className={classes.infoRow}>
-                            <BusinessIcon className={classes.icon}/>{this.props.orgNumber}
                         </Grid>
 
                         <h5 className={classes.infoHeading}>Technical Ability</h5>
@@ -90,7 +87,7 @@ class ClientDetails extends React.Component {
                         <Grid item xs={6} className={classes.infoRow}>
                             <PersonIcon className={classes.icon}/>{this.props.secondaryContactName}
                         </Grid>
-                        <Grid item xs={6} className={classes.infoRow}>
+                        <Grid item xs={8} className={classes.infoRow}>
                             <EmailIcon
                                 className={classes.icon}/>{this.props.secondaryContactEmail}
                         </Grid>

@@ -16,6 +16,7 @@ import ClientOrg from "./modalcomponents/ClientOrg";
 import Notes from "../Notes/Notes";
 import store from "../../../store";
 import {updateClientAction} from "../../../store/actionCreators";
+import EditClientModal from "./EditClientModal";
 
 const styles = theme => ({
     root: {
@@ -28,8 +29,15 @@ const styles = theme => ({
         paddingLeft: theme.spacing(4),
         outline: "none"
     },
-    closeButton: {
+    editButton: {
         color: "#094183",
+    },
+    closeButton: {
+        backgroundColor: "#094183",
+        color: "#FFFFFF",
+        '&:hover': {
+            backgroundColor: "#4074B2",
+        },
     },
     iconFalse: {
         marginLeft: 20,
@@ -134,7 +142,6 @@ class ClientPageModal extends React.Component {
                                         email={client.email}
                                         technicalAbility={client.technicalAbility}
                                         contactNumber={client.contactNumber}
-                                        orgNumber={client.organisation.number}
                                         secondaryContactName={this._concatenateNames(client.secondaryContactFirstName, client.secondaryContactLastName)}
                                         secondaryContactEmail={client.secondaryContactEmail}
                                         secondaryContactNumber={client.secondaryContactNumber}
@@ -170,6 +177,7 @@ class ClientPageModal extends React.Component {
                                 className={classes.closeButton}>
                             Close
                         </Button>
+                        <EditClientModal client={client} />
                     </DialogActions>
                 </Dialog>
             </div>

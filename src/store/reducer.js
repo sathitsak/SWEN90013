@@ -10,7 +10,8 @@ import {
     CREATE_NEW_PRODUCT,
     UPDATE_CLIENT,
     ADD_NOTE,
-    CHANGE_PROPOSAL_STATUS
+    CHANGE_PROPOSAL_STATUS,
+    GET_CLIENT_BY_ID
 } from "./actionTypes";
 import {
     updateProject,
@@ -18,7 +19,7 @@ import {
     postNewProduct,
     updateClient,
     addNote,
-    changeProposalStatus
+    changeProposalStatus,
 } from "../api";
 
 const defaultState = {
@@ -79,6 +80,10 @@ export default (state = defaultState, action) => {
 
     if (action.type === CHANGE_PROPOSAL_STATUS) {
         return changeProposalStatusByType(state, action);
+    }
+
+    if (action.type === GET_CLIENT_BY_ID) {
+        return getClientById(state, action);
     }
 
     return state;
@@ -158,5 +163,11 @@ function addNoteByType(state, action) {
 function changeProposalStatusByType(state, action) {
     const newState = JSON.parse(JSON.stringify(state));
     changeProposalStatus(action.id, action.option, action.object);
+    return newState;
+}
+
+function getClientById(state, action) {
+    const newState = JSON.parse(JSON.stringify(state));
+    newState.client = action.client;
     return newState;
 }

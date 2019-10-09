@@ -10,7 +10,8 @@ import {
     CREATE_NEW_PRODUCT,
     UPDATE_CLIENT,
     ADD_NOTE,
-    CHANGE_PROPOSAL_STATUS
+    CHANGE_PROPOSAL_STATUS,
+    GET_CLIENT_BY_ID
 } from "./actionTypes";
 
 export const getAllProjectAction = projects => ({
@@ -83,4 +84,9 @@ export const changeProposalStatusAction = (id, option, object) => ({
     id: id,
     option: option,
     object: object
+});
+
+export const getClientByIdAction = client => ({
+    type: GET_CLIENT_BY_ID,
+    client: client,
 });
