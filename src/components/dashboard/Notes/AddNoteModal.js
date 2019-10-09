@@ -136,6 +136,7 @@ class AddNoteModal extends React.Component {
 
             // Send PUT request
             const addNoteAct = addNoteAction(objectType, object._id, object);
+            console.log(addNoteAct);
             store.dispatch(addNoteAct);
 
             // Close window
