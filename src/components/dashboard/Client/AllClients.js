@@ -98,7 +98,6 @@ class AllClients extends PureComponent {
             <ClientPageModal 
                 client={client}
                 objType={"allClients"}
-                // objID={null}
             />
         )
     }
@@ -139,14 +138,13 @@ class AllClients extends PureComponent {
                         cellStyle: {textAlign:"center"},
                         lookup: this._getTechnicalAbilityLookup()
                      },
-                    { title: 'View', field: 'client', filtering: false }
+                    { title: 'View', field: 'client', filtering: false, export: false }
                 ]}
                 data={this._formatDataIntoTableList()}
                 options={{
                     filtering: true,
                     exportButton: true,
                 }}
-                // onRowClick={(event, rowData) => this._handleClick(rowData.client)}
             />
         );
     }

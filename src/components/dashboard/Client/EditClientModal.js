@@ -168,6 +168,21 @@ class EditClientModal extends React.Component {
         return true;
     };
 
+    _addEditNote = (client) => {
+        var newNote = {
+            text: "Client profile has been updated.",
+            date: Date.now().toString(),    // Date is represented as an integer, stored as a string
+        };
+        var notes = client.notes;
+        if (notes) {
+            notes.push(newNote);
+        } else {
+            notes = [newNote];
+        }
+
+        return notes;
+    }
+
     // handleUpdate gets the data from form HTML
     _handleUpdate = () => {
         //Client
@@ -226,7 +241,7 @@ class EditClientModal extends React.Component {
                 description: description,
             },
             _id: this.props.client._id,
-            notes: this.props.client.notes,
+            notes: this._addEditNote(this.props.client),
             flag: this.props.client.flag,
             __v: this.props.client.__v
         }

@@ -29,7 +29,8 @@ import store from "../../../../../store";
 import PropTypes from "prop-types";
 import {
     createNewProductAction,
-    getProjectByIdAction
+    getProjectByIdAction,
+    addNoteAction
 } from "../../../../../store/actionCreators";
 import {getProjectById} from "../../../../../api";
 
@@ -171,6 +172,24 @@ class CreateStudentTeamModal extends React.Component {
         // Send POST request
         const createNewProdAction = createNewProductAction(newProduct);
         store.dispatch(createNewProdAction);
+
+        // Add note to project
+        var newNote = {
+            text: teamName + " has been created.",
+            date: Date.now().toString(),    // Date is represented as an integer, stored as a string
+        };
+        var notes = this.props.project.notes;
+        if (notes) {
+            notes.push(newNote);
+        } else {
+            notes = [newNote];
+        }
+        this.props.project.notes = notes;
+
+        // Send PUT request
+        const addNoteAct = addNoteAction("project", this.props.projectId, this.props.project);
+        console.log(addNoteAct);
+        store.dispatch(addNoteAct);
 
         // Update state
         this._updateProjectState();

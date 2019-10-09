@@ -104,6 +104,23 @@ class ClientPageModal extends React.Component {
         let client = this.props.client;
         client.flag = currentFlag;
 
+        // Add note to client
+        let noteMsg = "false";
+        if (currentFlag) {
+            noteMsg = "true";
+        } 
+        var newNote = {
+            text: "Client flag has been updated to " + noteMsg + ".",
+            date: Date.now().toString(),    // Date is represented as an integer, stored as a string
+        };
+        var notes = client.notes;
+        if (notes) {
+            notes.push(newNote);
+        } else {
+            notes = [newNote];
+        }
+        client.notes = notes;
+
         // Send PUT request
         const updateClientAct = updateClientAction(client._id, client);
         store.dispatch(updateClientAct);

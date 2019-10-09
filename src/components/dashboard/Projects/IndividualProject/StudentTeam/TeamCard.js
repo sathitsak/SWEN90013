@@ -52,7 +52,7 @@ class TeamCard extends React.Component {
     }
 
     render() {
-        const {classes, product} = this.props;
+        const {classes, product, project} = this.props;
 
         return (
             <ExpansionPanel className={classes.expansionPanel}>
@@ -98,6 +98,7 @@ class TeamCard extends React.Component {
                         <Grid item xs={12} style={{padding: 0}}>
                             <EditStudentTeam
                                 product={product}
+                                project={project}
                             />
                         </Grid>
 

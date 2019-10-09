@@ -113,6 +113,21 @@ class EditProposalModal extends React.Component {
         this.setState({ open: false });
     };
 
+    _addEditNote = (proposal) => {
+        var newNote = {
+            text: "Proposal has been updated.",
+            date: Date.now().toString(),    // Date is represented as an integer, stored as a string
+        };
+        var notes = proposal.notes;
+        if (notes) {
+            notes.push(newNote);
+        } else {
+            notes = [newNote];
+        }
+
+        return notes;
+    }
+
     // handleUpdate gets the data from form HTML
     _handleUpdate = () => {
         var name = document.getElementById("name").value;
@@ -126,7 +141,7 @@ class EditProposalModal extends React.Component {
         // Create new proposal object
         let proposal = {
             status: this.props.proposal.status,
-            notes: this.props.proposal.notes,
+            notes: this._addEditNote(this.props.proposal),
             _id: this.props.proposal._id,
             name: name,
             outlineOfProject: outlineOfProject,

@@ -34,8 +34,11 @@ import Nav from "react-bootstrap/Nav";
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import PropTypes from "prop-types";
+import {getProjectById} from "../../../../../api";
 import {
-    updateProductAction
+    updateProductAction,
+    addNoteAction,
+    getProjectByIdAction
 } from "../../../../../store/actionCreators";
 
 const styles = theme => ({
@@ -212,6 +215,7 @@ class EditStudentTeam extends React.Component {
             technologiesList.push(technology);
         }
 
+        // Update student team
         product.name = document.getElementById("teamName").value;
         product.deployed = deployed;
         product.activelyUsed = activelyUsed;
@@ -222,9 +226,37 @@ class EditStudentTeam extends React.Component {
         const updateProdAction = updateProductAction(product._id, product);
         store.dispatch(updateProdAction);
 
+        // Add note to project
+        var newNote = {
+            text: product.name + " has been updated.",
+            date: Date.now().toString(),    // Date is represented as an integer, stored as a string
+        };
+        var notes = this.props.project.notes;
+        if (notes) {
+            notes.push(newNote);
+        } else {
+            notes = [newNote];
+        }
+        this.props.project.notes = notes;
+
+        // Send PUT request
+        const addNoteAct = addNoteAction("project", this.props.project._id, this.props.project);
+        console.log(addNoteAct);
+        store.dispatch(addNoteAct);
+
+        // Update state
+        this._updateProjectState();
+
         // Close window
         this._handleClose();
     };
+
+    async _updateProjectState() {
+        const {project} = this.props;
+        const projectObj = await getProjectById(project._id);
+        const getProAction = getProjectByIdAction(projectObj);
+        store.dispatch(getProAction);
+    }
 
     render() {
         const {classes, product} = this.props;

@@ -11,10 +11,11 @@ import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import store from "../../../../store";
 import {withStyles} from "@material-ui/core/styles";
-import {getAllSubjects} from "../../../../api";
+import {getAllSubjects, getProposalById,} from "../../../../api";
 import {
     getAllSubjectsAction,
-    changeProposalStatusAction
+    changeProposalStatusAction,
+    getProposalByIdAction,
 } from "../../../../store/actionCreators";
 
 const styles = theme => ({
@@ -65,6 +66,12 @@ class StatusChangeModal extends React.Component {
         const subjectsResult = await getAllSubjects();
         const subjectsAction = getAllSubjectsAction(subjectsResult);
         store.dispatch(subjectsAction);
+    }
+
+    async _updateProposalState() {
+        const proposalResult = await getProposalById(this.props.id);
+        const proposalAction = getProposalByIdAction(proposalResult);
+        store.dispatch(proposalAction);
     }
 
     componentDidMount() {
@@ -255,7 +262,7 @@ class StatusChangeModal extends React.Component {
                 this.setState({openAccept: false});
                 const object = {
                     subjectId: subjectId,
-                    acceptReason: responseText
+                    acceptReason: "Accepted: " + responseText
                 };
                 const changeProposalStatusAct = changeProposalStatusAction(id, option, object);
                 store.dispatch(changeProposalStatusAct);
@@ -266,12 +273,15 @@ class StatusChangeModal extends React.Component {
             } else {
                 this.setState({openReject: false});
                 const object = {
-                    rejectReason: responseText
+                    rejectReason: "Rejected: " + responseText
                 };
                 const changeProposalStatusAct = changeProposalStatusAction(id, option, object);
                 store.dispatch(changeProposalStatusAct);
             }
         }
+
+        // update Proposal data 
+        this._updateProposalState();
     };
 
 }
