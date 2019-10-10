@@ -58,6 +58,11 @@ export default class Login extends React.Component {
       valueOfContext.authenticateRootUser();
     } else if (val == "authUser") {
       valueOfContext.authenticateUser();
+    } else {
+      alert(
+        "Incorrect Username or Password"
+      );
+      
     }
   }
 
@@ -108,6 +113,7 @@ export default class Login extends React.Component {
                   type="password"
                   value={this.state.password}
                   onChange={this._handleChange}
+                  
                 />
               </div>
             </fieldset>

@@ -1,7 +1,14 @@
 import axios from 'axios';
 import {baseURL} from "../../api/index" 
 
-
+export function nameValidator(name){
+  var letters = /^[A-Za-z]+$/;
+  if(name.value.match(letters)) {
+    return true;
+  } else {
+    return false; 
+  }
+}
 export function addNewSubject(name, code, semester) {
     axios.post(baseURL+'/subject', {
         name: name,

@@ -18,6 +18,19 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography"
 import Paper from "@material-ui/core/Paper"
 
+
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
+import ListItemText from '@material-ui/core/ListItemText';
+import Avatar from '@material-ui/core/Avatar';
+import IconButton from '@material-ui/core/IconButton';
+import FolderIcon from '@material-ui/icons/Folder';
+import DeleteIcon from '@material-ui/icons/Delete';
+import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
+
 import {addNewSubject} from "./AdminFunctions"
 import { baseURL } from "../../api";
 
@@ -42,7 +55,34 @@ class AddSubjectForm extends React.Component {
   } 
 
 
-  componentDidMount() {
+  componentDidMount() { 
+    ValidatorForm.addValidationRule("nameValidator", value => {
+      var regex = new RegExp("[0-9]+"); 
+      if(regex.test(value)) {
+        return false;
+      } else {
+        return true; 
+      }
+    })
+
+    ValidatorForm.addValidationRule("numberValidator", value => {
+      var regex = new RegExp("[0-9]+"); 
+      if(!regex.test(value)) {
+        return false;
+      } else {
+        return true; 
+      }
+    })
+
+    ValidatorForm.addValidationRule("checkNumberLength", value => {
+      if(value.length > 1) {
+        return false;
+      } else {
+        return true; 
+      }
+    })
+
+
     axios.get(baseURL+'/subject')
   .then(response => {
     this.setState({
@@ -85,78 +125,110 @@ class AddSubjectForm extends React.Component {
       <div>
         <Grid container spacing={3}>
           <Grid item xs={12} style={{paddingBottom:30}}>
-          <Paper style={{maxHeight: 200, overflow: 'auto', paddinTop: 50}}> 
-        
-        <br/>
-        <Typography component="p">
-   {allSubjects.map(subject => {
-     return <p>{subject.name} ({subject.code})</p>
-   })} 
+            <br/>
+          <List style={{maxHeight:200, overflow: 'auto'}}> 
+        {allSubjects.map((subject) => {
+     return  <ListItem>
+       
+     <ListItemIcon>
+       <SubjectIcon />
+     </ListItemIcon>
+     <ListItemText
+       primary={subject.name + " (" + subject.code+")"}
       
-        </Typography>
-      </Paper>
+       
+     />
+      <IconButton  aria-label="delete" >
+         <DeleteIcon />
+       </IconButton>
+   </ListItem>
+   })} 
+            
+       </List>
+          </Grid> 
+          <ValidatorForm
+                ref="form"
+                onSubmit={this._handleSubmit}
+                onError={errors => console.log(errors)}
+            > 
+            <Grid container spacing={1} alignItems="flex-end">
+         
+          <Grid item>
+          <TextValidator
+                    style={{marginLeft: 20, marginBottom: 30}}
+                    label="Subject Name"
+                    onChange={e=>this._handleChange("name",e)}
+                    name="subjectName"
+                    value={this.state.subjectName}
+                    validators={['required','nameValidator']}
+                    errorMessages={['This field is required', 'Please enter a valid subject name']}
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <SubjectIcon />
+                        </InputAdornment>
+                      ),
+                    }}
+                />
           </Grid>
-          <Grid item xs={12} style={{ paddingBottom: 30 }}>
-            <FormControl className={styles.margin}>
-              <InputLabel htmlFor="input-with-icon-adornment">Name</InputLabel>
-              <Input
-                id="input-with-icon-adornment"
-                value={this.state.subjectName}
-                onChange={e => this._handleChange("name", e)}
-                startAdornment={
-                  <InputAdornment position="start">
-                    <SubjectIcon />
-                  </InputAdornment>
-                }
-              />
-            </FormControl>
+        </Grid>
+        <br/> 
+                <Grid container spacing={1} alignItems="flex-end">
+          
+          <Grid item>
+          <TextValidator
+            style={{marginLeft: 20, marginBottom: 30}}
+                    label="Subject Code"
+                    onChange={e=>this._handleChange("code",e)}
+                    name="subjectCode"
+                    value={this.state.subjectCode}
+                    validators={['required']}
+                    errorMessages={['This field is required']}
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <SubjectIcon />
+                        </InputAdornment>
+                      ),
+                    }}
+                />
           </Grid>
-          <br />
-          <Grid item xs={12} style={{ paddingBottom: 30 }}>
-            <FormControl className={styles.margin}>
-              <InputLabel htmlFor="input-with-icon-adornment">
-                Subject Code
-              </InputLabel>
-              <Input
-                id="input-with-icon-adornment"
-                value={this.state.subjectCode}
-                onChange={e => this._handleChange("code", e)}
-                startAdornment={
-                  <InputAdornment position="start">
-                    <SubjectIcon />
-                  </InputAdornment>
-                }
-              />
-            </FormControl>
+        </Grid>
+        <br/> 
+                <Grid container spacing={1} alignItems="flex-end">
+         
+          <Grid item>
+          <TextValidator
+            style={{marginLeft: 20, marginBottom: 30}}
+                    label="Subject Semester"
+                    onChange={e=>this._handleChange("semester",e)}
+                    name="subjectSemester"
+                    value={this.state.subjectSemester}
+                    validators={['required', 'numbervalidator', 'checkNumberLength']}
+                    errorMessages={['This field is required','Please enter a valid semester', 'Please enter either semester 1 or 2']}
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <SubjectIcon />
+                        </InputAdornment>
+                      ),
+                    }}
+                />
           </Grid>
-          <br />
-          <Grid item xs={12} style={{ paddingBottom: 30 }}>
-            <FormControl className={styles.margin}>
-              <InputLabel htmlFor="input-with-icon-adornment">
-                Semester{" "}
-              </InputLabel>
-              <Input
-                id="input-with-icon-adornment"
-                value={this.state.subjectSemester}
-                onChange={e => this._handleChange("semester", e)}
-                startAdornment={
-                  <InputAdornment position="start">
-                    <TimeIcon />
-                  </InputAdornment>
-                }
-              />
-            </FormControl>
-          </Grid>
+        </Grid>
+
+    
           <br />
           <Grid item xs={12} style={{ paddingBottom: 30, paddingTop: 30, marginLeft: '50%' }}>
             <Button
               variant="contained"
               color="primary"
-              onClick={this._handleSubmit}
+              type="submit"
             >
               Submit
             </Button>
-          </Grid>
+            
+          </Grid></ValidatorForm>
         </Grid>
       </div>
     );

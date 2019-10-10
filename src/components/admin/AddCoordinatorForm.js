@@ -19,6 +19,20 @@ import {addNewCoordinator} from "./AdminFunctions"
 import SubjectIcon from "@material-ui/icons/Assignment"; 
 import {baseURL} from "../../api/index" 
 
+
+
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
+import ListItemText from '@material-ui/core/ListItemText';
+import Avatar from '@material-ui/core/Avatar';
+import IconButton from '@material-ui/core/IconButton';
+import FolderIcon from '@material-ui/icons/Folder';
+import DeleteIcon from '@material-ui/icons/Delete';
+import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
+
 const styles = theme => ({
   margin: {
     marginLeft: 10,
@@ -42,6 +56,34 @@ class AddCoordinatorForm extends React.Component {
     this._handleSubmit = this._handleSubmit.bind(this);
   }
   componentDidMount() {
+
+    //return false is what you check is true 
+    ValidatorForm.addValidationRule("nameValidator", value => {
+      var regex = new RegExp("[0-9]+"); 
+      if(regex.test(value)) {
+        return false;
+      } else {
+        return true; 
+      }
+    })
+
+    ValidatorForm.addValidationRule("numberValidator", value => {
+      var regex = new RegExp("[0-9]+"); 
+      if(!regex.test(value)) {
+        return false;
+      } else {
+        return true; 
+      }
+    })
+
+    ValidatorForm.addValidationRule("checkNumberLength", value => {
+      if(value.length != 10) {
+        return false;
+      } else {
+        return true; 
+      }
+    })
+
     axios.get(baseURL+'/coordinator')
   .then(response => {
     this.setState({
@@ -84,136 +126,187 @@ class AddCoordinatorForm extends React.Component {
       <div>
         <Grid container spacing={3}>
           <Grid item xs={12} style={{paddingBottom:30}}>
-          <Paper style={{maxHeight: 200, overflow: 'auto', paddinTop: 50}}> 
+         
        
         <br/>
-        <Typography component="p">
-   {allCoordinators.map(coordinator => {
-     return <p>{coordinator.firstName} {coordinator.lastName} ({coordinator.subjectId})</p>
-   })} 
+        <List style={{maxHeight:200, overflow: 'auto'}}> 
+        {allCoordinators.map((coordinator) => {
+     return  <ListItem>
+       
+     <ListItemIcon>
+       <AccountCircle />
+     </ListItemIcon>
+     <ListItemText
+       primary={coordinator.firstName + " " + coordinator.lastName + " (" +coordinator.subjectId+")"}
       
-        </Typography>
-      </Paper>
-          </Grid>
-          <Grid item xs={12} style={{ paddingBottom: 30 }}>
-            <FormControl className={styles.margin}>
-              <InputLabel htmlFor="input-with-icon-adornment">
-                First Name
-              </InputLabel>
-              <Input
-                id="input-with-icon-adornment"
-                value={this.state.coordinatorFirstName}
-                onChange={e=>this._handleChange("firstName",e)}
-                startAdornment={
-                  <InputAdornment position="start">
-                    <AccountCircle />
-                  </InputAdornment>
-                }
-              />
-            </FormControl>
-          </Grid>
-          <br />
-          <Grid item xs={12} style={{ paddingBottom: 30 }}>
-            <FormControl className={styles.margin}>
-              <InputLabel htmlFor="input-with-icon-adornment">
-                Last Name
-              </InputLabel>
-              <Input
-                id="input-with-icon-adornment"
-                value={this.state.coordinatorLastName}
-                onChange={e=>this._handleChange("lastName",e)}
-                startAdornment={
-                  <InputAdornment position="start">
-                    <AccountCircle />
-                  </InputAdornment>
-                }
-              />
-            </FormControl>
-          </Grid>
-          <br />
-          <Grid item xs={12} style={{ paddingBottom: 30 }}>
-            <FormControl className={styles.margin}>
-              <InputLabel htmlFor="input-with-icon-adornment">
-                Email{" "}
-              </InputLabel>
-              <Input
-                id="input-with-icon-adornment"
-                value={this.state.coordinatorEmail}
-                onChange={e=>this._handleChange("email",e)}
-                startAdornment={
-                  <InputAdornment position="start">
-                    <EmailIcon />
-                  </InputAdornment>
-                }
-              />
-            </FormControl>
-          </Grid>
-          <br />
-          <Grid item xs={12} style={{ paddingBottom: 30 }}>
-            <FormControl className={styles.margin}>
-              <InputLabel htmlFor="input-with-icon-adornment">
-                Contact Number{" "}
-              </InputLabel>
-              <Input
-                id="input-with-icon-adornment"
-                value={this.state.coordinatorContactNumber}
-                onChange={e=>this._handleChange("contactNumber",e)}
-                startAdornment={
-                  <InputAdornment position="start">
-                    <PhoneIcon />
-                  </InputAdornment>
-                }
-              />
-            </FormControl>
-          </Grid>
-          <br />
-          <Grid item xs={12} style={{ paddingBottom: 30 }}>
-            <FormControl className={styles.margin}>
-              <InputLabel htmlFor="input-with-icon-adornment">
-                Office Location{" "}
-              </InputLabel>
-              <Input
-                id="input-with-icon-adornment"
-                value={this.state.coordinatorOfficeLocation}
-                onChange={e=>this._handleChange("officeLocation",e)}
-                startAdornment={
-                  <InputAdornment position="start">
-                    <BuildingIcon />
-                  </InputAdornment>
-                }
-              />
-            </FormControl>
+       
+     />
+      <IconButton edge="end" aria-label="delete" >
+         <DeleteIcon />
+       </IconButton>
+   </ListItem>
+   })} 
+            
+       </List>
           </Grid> 
-          <Grid item xs={12} style={{paddingBotton:30}}>
-          <FormControl className={styles.margin}>
-              <InputLabel htmlFor="input-with-icon-adornment">
-                Subject Code
-              </InputLabel>
-              <Input
-                id="input-with-icon-adornment"
-                value={this.state.coordinatorSubject}
-                onChange={e => this._handleChange("subject", e)}
-                startAdornment={
-                  <InputAdornment position="start">
-                    <SubjectIcon />
-                  </InputAdornment>
-                }
-              />
-            </FormControl>
+          <ValidatorForm
+                ref="form"
+                onSubmit={this._handleSubmit}
+                onError={errors => console.log(errors)}
+            > 
+            <Grid container spacing={1} alignItems="flex-end">
+         
+          <Grid item>
+          <TextValidator
+                    style={{marginLeft: 20, marginBottom: 30}}
+                    label="First Name"
+                    onChange={e=>this._handleChange("firstName",e)}
+                    name="firstName"
+                    value={this.state.coordinatorFirstName}
+                    validators={['required','nameValidator']}
+                    errorMessages={['This field is required', 'Please enter a valid name']}
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <AccountCircle />
+                        </InputAdornment>
+                      ),
+                    }}
+                />
           </Grid>
-          <br/> 
-          <Grid item xs={12} style={{ paddingBottom: 30, paddingTop: 30, marginLeft:'50%' }}>
-            <Button
+        </Grid> 
+        <br/> 
+                <Grid container spacing={1} alignItems="flex-end">
+          
+          <Grid item>
+          <TextValidator
+            style={{marginLeft: 20, marginBottom: 30}}
+                    label="Last Name"
+                    onChange={e=>this._handleChange("lastName",e)}
+                    name="lastName"
+                    value={this.state.coordinatorLastName}
+                    validators={['required', 'nameValidator']}
+                    errorMessages={['This field is required', 'Please enter a valid name']}
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <AccountCircle />
+                        </InputAdornment>
+                      ),
+                    }}
+                />
+          </Grid>
+        </Grid>
+        <br/> 
+                <Grid container spacing={1} alignItems="flex-end">
+         
+          <Grid item>
+          <TextValidator
+            style={{marginLeft: 20, marginBottom: 30}}
+                    label="Email"
+                    onChange={e=>this._handleChange("email",e)}
+                    name="email"
+                    value={this.state.coordinatorEmail}
+                    validators={['required', 'isEmail']}
+                    errorMessages={['This field is required','Please enter a valid email']}
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <EmailIcon />
+                        </InputAdornment>
+                      ),
+                    }}
+                />
+          </Grid>
+        </Grid>
+        <br/> 
+                <Grid container spacing={1} alignItems="flex-end">
+         
+          <Grid item>
+         
+          <TextValidator
+            style={{marginLeft: 20, marginBottom: 30}}
+                    label="Contact Number"
+                    onChange={e=>this._handleChange("contactNumber",e)}
+                    name="contactNumber"
+                    value={this.state.coordinatorContactNumber}
+                    validators={['required','numberValidator', 'checkNumberLength']}
+                    errorMessages={['This field is required','Please enter a valid phone number', 'Please enter a phone number of the correct length']}
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <PhoneIcon />
+                        </InputAdornment>
+                      ),
+                    }}
+                />
+          </Grid>
+        </Grid>
+        <br/> 
+                <Grid container spacing={1} alignItems="flex-end">
+         
+          <Grid item>
+          <TextValidator
+            style={{marginLeft: 20 ,marginBottom: 30}}
+      label="Office Location"
+      onChange={e=>this._handleChange("officeLocation",e)}
+      name="officeLocation"
+      value={this.state.coordinatorOfficeLocation}
+      validators={['required']}
+      errorMessages={['This field is required']}
+      InputProps={{
+        startAdornment: (
+          <InputAdornment position="start">
+            <BuildingIcon />
+          </InputAdornment>
+        ),
+      }}
+  />
+
+          </Grid>
+        </Grid>
+                <br/> 
+                <Grid container spacing={1} alignItems="flex-end">
+          
+          <Grid item>
+          <TextValidator
+            style={{marginLeft: 20, marginBottom: 30}}
+      label="Subject"
+      onChange={e=>this._handleChange("subject",e)}
+      name="subject"
+      value={this.state.coordinatorSubject}
+      validators={['required']}
+      errorMessages={['This field is required']}
+      InputProps={{
+        startAdornment: (
+          <InputAdornment position="start">
+            <SubjectIcon />
+          </InputAdornment>
+        ),
+      }}
+  />
+          </Grid>
+        </Grid>
+
+        <br/>
+  <br/>
+  <Grid item xs={12} style={{ paddingBottom: 30 }}>
+ <Button
               variant="contained"
               color="primary"
-              onClick={this._handleSubmit}
+              
+              type="submit"
             >
               Submit
             </Button>
-          </Grid>
-        </Grid>
-      </div>
-    );
+</Grid> 
+
+            </ValidatorForm>
+            </Grid>
+            </div>
+    )
+
+           
   }
 }
 
