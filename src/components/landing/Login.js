@@ -2,6 +2,9 @@ import React from "react";
 import { Link } from "react-router-dom";
 import UniMelbWrapper from "../uniMelbWrapper/UniMelbWrapper";
 import { LoginContext } from "../admin/LoginProvider";
+import {baseURL} from "../../api/index"
+import axios from 'axios'
+
 
 const style = {
   backgroundColor: "white",
@@ -19,7 +22,9 @@ export default class Login extends React.Component {
     super(props);
     this.state = {
       username: "",
-      password: ""
+      password: "",
+      uomAuth: false,
+      rootUserAuth:false
     };
 
     this._handleChange = this._handleChange.bind(this);
@@ -32,8 +37,23 @@ export default class Login extends React.Component {
     });
   };
 
+  _ldapLogin() {
+    axios.post(baseURL+'/login', {
+      username: this.state.username,
+      password: this.state.password,
+      })
+      .then(response => {
+        valueOfContext.updateUserName(response.data.displayName);
+        this.setState({uomAuth: true})
+      })
+      .catch(error => {
+      });
+  }
+
   _handleStateChange() {
-    //WORKS
+    //WORKS 
+   
+
     if (val == "rootUser") {
       valueOfContext.authenticateRootUser();
     } else if (val == "authUser") {
@@ -41,13 +61,15 @@ export default class Login extends React.Component {
     }
   }
 
+ 
+
   _handleOnClick = () => {
     valueOfContext = this.context;
-    console.log(valueOfContext);
-
+   
+    this._ldapLogin(); 
     if (this.state.username == "root" && this.state.password == "root") {
       val = "rootUser";
-    } else if (this.state.username == "user" && this.state.password == "123") {
+    } else if (this.state.uomAuth==true) {
       val = "authUser";
     } else {
       val = "noUser";
@@ -92,10 +114,10 @@ export default class Login extends React.Component {
             <div>
               <Link to={
                   this._handleOnClick() == "rootUser"
-                    ? "/admin"
-                    : this._handleOnClick() == "authUser"
-                    ? "/dashboard"
-                    : "/login"
+                  ? "/admin"
+                  : this._handleOnClick() == "authUser"
+                  ? "/dashboard"
+                  : "/login"
                 }
                 onClick={() => this._handleStateChange()}
                 className="button brand" style={{ backgroundColor: "#008a00", borderBottomColor: "#005700" }}>

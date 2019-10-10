@@ -16,7 +16,8 @@ import Typography from "@material-ui/core/Typography"
 import Paper from "@material-ui/core/Paper"; 
 import Button from "@material-ui/core/Button"
 import {addNewCoordinator} from "./AdminFunctions"
-import SubjectIcon from "@material-ui/icons/Assignment";
+import SubjectIcon from "@material-ui/icons/Assignment"; 
+import {baseURL} from "../../api/index" 
 
 const styles = theme => ({
   margin: {
@@ -41,7 +42,7 @@ class AddCoordinatorForm extends React.Component {
     this._handleSubmit = this._handleSubmit.bind(this);
   }
   componentDidMount() {
-    axios.get('http://localhost:13000/api/coordinator')
+    axios.get(baseURL+'/coordinator')
   .then(response => {
     this.setState({
       allCoordinators: response.data
@@ -49,7 +50,7 @@ class AddCoordinatorForm extends React.Component {
   })}
 
   componentDidUpdate() {
-    axios.get('http://localhost:13000/api/coordinator')
+    axios.get(baseURL+'/coordinator')
   .then(response => {
     this.setState({
       allCoordinators: response.data

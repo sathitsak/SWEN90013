@@ -6,6 +6,8 @@ import AddCoordinatorForm from "./AddCoordinatorForm";
 import AddSubjectForm from "./AddSubjectForm" 
 import AddSupervisorFrom from "./AddSupervisorForm"
 
+
+
 const styles = theme => ({
     root: {
       flexGrow: 1
@@ -18,7 +20,10 @@ const styles = theme => ({
   });
 
 class AdminPage extends React.Component {
-    render() {
+
+  render() {
+
+    
         return (
           <div>
             <DenseAppBar />

@@ -16,6 +16,7 @@ import Typography from '@material-ui/core/Typography';
 import axios from "axios"
 import SubjectIcon from "@material-ui/icons/Assignment";
 import {addNewSupervisor} from "./AdminFunctions"
+import {baseURL} from "../../api/index" 
 
 import Button from "@material-ui/core/Button";
 
@@ -49,7 +50,7 @@ class AddSupervisorForm extends React.Component {
   }
 
   componentDidMount() {
-    axios.get('http://localhost:13000/api/supervisor')
+    axios.get(baseURL+'/supervisor')
   .then(response => {
     this.setState({
       allSupervisors: response.data
@@ -61,7 +62,7 @@ class AddSupervisorForm extends React.Component {
   }
 
   componentDidUpdate() {
-    axios.get('http://localhost:13000/api/supervisor')
+    axios.get(baseURL+'/supervisor')
   .then(response => {
     this.setState({
       allSupervisors: response.data

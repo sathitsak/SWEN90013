@@ -5,7 +5,8 @@ export const LoginContext = React.createContext();
 export default class LoginProvider extends React.Component {
   state = {
     isAuthenticatedRoot: false,
-    isAuthenticatedUser: false
+    isAuthenticatedUser: false,
+    userName:""
   };
 
   render() {
@@ -20,6 +21,10 @@ export default class LoginProvider extends React.Component {
           authenticateUser: () =>
             this.setState({
               isAuthenticatedUser: true
+            }),
+          updateUserName: (name) =>
+            this.setState({
+              userName: name
             })
         }}
       >

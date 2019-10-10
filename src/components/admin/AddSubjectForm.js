@@ -19,6 +19,7 @@ import Typography from "@material-ui/core/Typography"
 import Paper from "@material-ui/core/Paper"
 
 import {addNewSubject} from "./AdminFunctions"
+import { baseURL } from "../../api";
 
 const styles = theme => ({
   margin: {
@@ -42,7 +43,7 @@ class AddSubjectForm extends React.Component {
 
 
   componentDidMount() {
-    axios.get('http://localhost:13000/api/subject')
+    axios.get(baseURL+'/subject')
   .then(response => {
     this.setState({
       allSubjects: response.data.flat()
@@ -53,7 +54,7 @@ class AddSubjectForm extends React.Component {
   })};
 
   componentDidUpdate() {
-    axios.get('http://localhost:13000/api/subject')
+    axios.get(baseURL+'/subject')
     .then(response => {
       this.setState({
         allSubjects: response.data.flat()
