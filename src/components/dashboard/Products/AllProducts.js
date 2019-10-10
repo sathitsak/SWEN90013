@@ -6,11 +6,12 @@
 
 import React, { PureComponent } from 'react';
 import store from "../../../store";
-import {getAllSubjects, getProjectList, getSupervisors} from "../../../api";
+import {getAllSubjects, getProjectList, getSupervisors, getAllProducts} from "../../../api";
 import {
     getAllProjectAction,
     getSupervisorsAction,
-    getAllSubjectsAction
+    getAllSubjectsAction,
+    getAllProductsAction
 } from "../../../store/actionCreators";
 import MaterialTable from 'material-table';
 
@@ -41,6 +42,10 @@ class AllProducts extends PureComponent {
         const subjects = await getAllSubjects();
         const getAllSubjectsAct = getAllSubjectsAction(subjects);
         store.dispatch(getAllSubjectsAct);
+
+        // const products = await getAllProducts();
+        const getAllProductsAct = getAllProductsAction();
+        store.dispatch(getAllProductsAct);
     }
 
     componentDidMount() {

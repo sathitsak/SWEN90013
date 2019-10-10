@@ -34,6 +34,7 @@ export const getAllSubjects = () => ajax(baseURL + subjectURL, reqType.get);
 const productURL = '/product';
 export const updateProduct = (id, product) => ajax(baseURL + productURL + '/' + id, product, reqType.put);
 export const postNewProduct = (product) => ajax(baseURL + productURL, product, reqType.post);
+export const getAllProducts = () => ajax(baseURL + productURL, reqType.get);
 
 // Client related
 const clientURL = '/client';

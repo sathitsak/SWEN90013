@@ -13,7 +13,8 @@ import {
     CHANGE_PROPOSAL_STATUS,
     GET_CLIENT_BY_ID,
     UPDATE_PROPOSAL,
-    GET_ALL_CLIENTS
+    GET_ALL_CLIENTS,
+    GET_ALL_PRODUCTS
 } from "./actionTypes";
 
 export const getAllProjectAction = projects => ({
@@ -106,3 +107,7 @@ export const getAllClientsAction = clients => ({
     page_title: "View Clients"
 });
 
+export const getAllProductsAction = () => ({
+    type: GET_ALL_PRODUCTS,
+    page_title: "View Student Teams"
+});

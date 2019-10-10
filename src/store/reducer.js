@@ -13,7 +13,8 @@ import {
     CHANGE_PROPOSAL_STATUS,
     GET_CLIENT_BY_ID,
     UPDATE_PROPOSAL,
-    GET_ALL_CLIENTS
+    GET_ALL_CLIENTS,
+    GET_ALL_PRODUCTS
 } from "./actionTypes";
 import {
     updateProject,
@@ -96,6 +97,10 @@ export default (state = defaultState, action) => {
 
     if (action.type === GET_ALL_CLIENTS) {
         return getAllClients(state, action);
+    }
+
+    if (action.type === GET_ALL_PRODUCTS) {
+        return getAllProducts(state, action);
     }
 
     return state;
@@ -194,6 +199,12 @@ function updateProposalById(state, action) {
 function getAllClients(state, action) {
     const newState = JSON.parse(JSON.stringify(state));
     newState.clients = action.clients;
+    newState.page_title = action.page_title;
+    return newState;
+}
+
+function getAllProducts(state, action) {
+    const newState = JSON.parse(JSON.stringify(state));
     newState.page_title = action.page_title;
     return newState;
 }
