@@ -95,8 +95,8 @@ class AllProposals extends PureComponent {
                     { title: 'Proposal Name', field: 'name' },
                     { title: 'Client', field: 'client' },
                     { title: 'Description', field: 'outlineOfProject', filtering: false },
-                    { title: 'Status', field: 'status', lookup: { new: 'New', approved: 'Approved', rejected: 'Rejected'}, filterCellStyle:{paddingTop:0} },
-                    { title: 'Subject', field: 'subjectId', filterCellStyle:{maxWidth:50}, lookup: this._getSubjectFilterLookup(), filterCellStyle:{paddingTop:0} },
+                    { title: 'Status', field: 'status', lookup: { new: 'New', approved: 'Approved', reject: 'Rejected'}, filterCellStyle:{paddingTop:0} },
+                    { title: 'Subject', field: 'subjectId', filterCellStyle:{maxWidth:50, paddingTop:0}, lookup: this._getSubjectFilterLookup() },
                 ]}
                 data={this._formatDataIntoTableList()}
                 options={{
