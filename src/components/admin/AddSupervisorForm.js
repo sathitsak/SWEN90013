@@ -33,6 +33,8 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import Button from "@material-ui/core/Button";
 import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 
+import {deleteSupervisorMethod} from "./AdminFunctions";
+
 const styles = theme => ({
   margin: {
     marginLeft: 10,
@@ -74,7 +76,7 @@ class AddSupervisorForm extends React.Component {
 
     ValidatorForm.addValidationRule("numberValidator", value => {
       var regex = new RegExp("[0-9]+"); 
-      if(!regex.test(value)) {
+      if(!regex.test(value) && value.length != 0) {
         return false;
       } else {
         return true; 
@@ -82,7 +84,7 @@ class AddSupervisorForm extends React.Component {
     })
 
     ValidatorForm.addValidationRule("checkNumberLength", value => {
-      if(value.length != 10) {
+      if(value.length != 8 && value.length != 10) {
         return false;
       } else {
         return true; 
@@ -135,15 +137,7 @@ class AddSupervisorForm extends React.Component {
   }
 
   _deleteSupervisor(id) { 
-    console.log("Thisis the id")
-    console.log(id)
-    console.log("---")
-    axios.delete('http://35.244.89.250/supervisor/'+id)
-  .then(response => {
-  })
-  .catch(function (error) {
-    console.log(error);
-  });
+    deleteSupervisorMethod(id); 
 }
   
   

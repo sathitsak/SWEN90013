@@ -33,6 +33,8 @@ import FolderIcon from '@material-ui/icons/Folder';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 
+import {deleteCoordinatorMethod} from "./AdminFunctions"
+
 const styles = theme => ({
   margin: {
     marginLeft: 10,
@@ -119,6 +121,11 @@ class AddCoordinatorForm extends React.Component {
     addNewCoordinator(this.state.coordinatorFirstName, this.state.coordinatorLastName, this.state.coordinatorEmail, this.state.coordinatorContactNumber, this.state.coordinatorOfficeLocation, this.state.coordinatorSubject)
     this.setState({ coordinatorFirstName: "", coordinatorContactNumber:"", coordinatorLastName: "", coordinatorEmail: "" , coordinatorOfficeLocation:"", coordinatorSubject:""});
   }
+
+  _deleteCoordinator(id) { 
+    deleteCoordinatorMethod(id); 
+}
+  
   
   render() {
     const{ allCoordinators} = this.state; 
@@ -141,7 +148,7 @@ class AddCoordinatorForm extends React.Component {
       
        
      />
-      <IconButton edge="end" aria-label="delete" >
+      <IconButton edge="end" aria-label="delete" onClick={() => this._deleteCoordinator(coordinator._id)} >
          <DeleteIcon />
        </IconButton>
    </ListItem>

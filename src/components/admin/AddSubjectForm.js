@@ -34,6 +34,8 @@ import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import {addNewSubject} from "./AdminFunctions"
 import { baseURL } from "../../api";
 
+import {deleteSubjectMethod} from "./AdminFunctions"
+
 const styles = theme => ({
   margin: {
     marginLeft: 10,
@@ -65,22 +67,25 @@ class AddSubjectForm extends React.Component {
       }
     })
 
-    ValidatorForm.addValidationRule("numberValidator", value => {
+    ValidatorForm.addValidationRule("semesterValidator", value => {
       var regex = new RegExp("[0-9]+"); 
-      if(!regex.test(value)) {
-        return false;
+      
+      if(value != null) {
+        if(regex.test(value)) {
+          if(value.length == 1 && (value == 1 || value == 2)) {
+            return true; 
+          } else {
+            return false; 
+          }
+        } else {
+          return false; 
+        }
       } else {
         return true; 
       }
+      
     })
 
-    ValidatorForm.addValidationRule("checkNumberLength", value => {
-      if(value.length > 1) {
-        return false;
-      } else {
-        return true; 
-      }
-    })
 
 
     axios.get(baseURL+'/subject')
@@ -119,6 +124,10 @@ class AddSubjectForm extends React.Component {
     }
   };
 
+  _deleteSubject(id) { 
+    deleteSubjectMethod(id); 
+}
+
   render() {
     const{allSubjects} = this.state; 
     return (
@@ -138,7 +147,7 @@ class AddSubjectForm extends React.Component {
       
        
      />
-      <IconButton  aria-label="delete" >
+      <IconButton  aria-label="delete" onClick={() => this._deleteSubject(subject._id)} >
          <DeleteIcon />
        </IconButton>
    </ListItem>
@@ -204,8 +213,8 @@ class AddSubjectForm extends React.Component {
                     onChange={e=>this._handleChange("semester",e)}
                     name="subjectSemester"
                     value={this.state.subjectSemester}
-                    validators={['required', 'numbervalidator', 'checkNumberLength']}
-                    errorMessages={['This field is required','Please enter a valid semester', 'Please enter either semester 1 or 2']}
+                    validators={['required', 'semesterValidator']}
+                    errorMessages={['This field is required', 'Please enter either Semester 1 or 2']}
                     InputProps={{
                       startAdornment: (
                         <InputAdornment position="start">
