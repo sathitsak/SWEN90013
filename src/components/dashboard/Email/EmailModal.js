@@ -22,6 +22,7 @@ import Select from "@material-ui/core/Select";
 import store from "../../../store";
 import axios from "axios";
 import { ENETUNREACH } from "constants";
+import {constructNormalEmail} from "./EmailHeaderFooter"; 
 
 function rand() {
   return Math.round(Math.random() * 20) - 10;
@@ -173,7 +174,7 @@ class EmailModal extends React.Component {
     var subjects = store.getState().subjects;
     var coordinators = [];
 
-    subjects.map(indCoor => coordinators.push(indCoor.coordinator));
+    subjects.map(indCoor => coordinators.push(indCoor.coordinator.firstName));
     console.log("new here");
     console.log(coordinators);
 
@@ -327,7 +328,7 @@ class EmailModal extends React.Component {
         from: "CIS Project Management",
         to: emails,
         subject: this.state.email_subject,
-        html: this.state.email_message,
+        html: constructNormalEmail(this.state.email_message),
         projectType: "fdafdsa",
         cc: emailscc,
         projectID: ""
