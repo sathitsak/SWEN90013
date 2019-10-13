@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import UniMelbWrapper from "../uniMelbWrapper/UniMelbWrapper";
 import axios from "axios";
 import { proposalSentConfirmation } from "../dashboard/Email/AutomatedEmailFunctions";
+import { baseURL } from "../../api/index";
 
 class SubmitPage extends React.Component {
   //Check if the input email is valide or not
@@ -146,7 +147,7 @@ class SubmitPage extends React.Component {
     ) {
     } else {
       axios
-        .post(`http://172.26.88.142:3000/api/proposal/submit`, {
+        .post(baseURL + `/proposal/submit`, {
           firstName: firstname,
           lastName: lastname,
           email: email,

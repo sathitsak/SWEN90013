@@ -100,8 +100,8 @@ class EditClientModal extends React.Component {
             fullWidth: true,
             maxWidth: "lg",
             technicalAbility: this.props.client.technicalAbility,
-            orgSize: this.props.client.organisation.size,
-            industry: this.props.client.organisation.industry
+            size: this.props.client.organisation.size,
+            industryType: this.props.client.organisation.industryType
         };
     }
 
@@ -116,10 +116,10 @@ class EditClientModal extends React.Component {
     _handleTechnicalAbilityUpdate = (e, attribute) => {
         if (attribute === "technicalAbility") {
             this.setState({ technicalAbility: e.target.value });
-        } else if (attribute === "orgSize") {
-            this.setState({ orgSize: e.target.value });
-        } else if (attribute === "industry") {
-            this.setState({ industry: e.target.value });
+        } else if (attribute === "size") {
+            this.setState({ size: e.target.value });
+        } else if (attribute === "industryType") {
+            this.setState({ industryType: e.target.value });
         }
     };
 
@@ -198,8 +198,8 @@ class EditClientModal extends React.Component {
         var ci2number = document.getElementById("secondaryContactNumber").value;
         //Orgranisation info
         var organisationName = document.getElementById("orgName").value;
-        var industry = document.getElementById("industry").value;
-        var size = document.getElementById("orgSize").value;
+        var industryType = document.getElementById("industryType").value;
+        var size = document.getElementById("size").value;
         var description = document.getElementById("description").value;
 
         if (
@@ -237,7 +237,7 @@ class EditClientModal extends React.Component {
             organisation: {
                 name: organisationName,
                 size: size,
-                industry: industry,
+                industryType: industryType,
                 description: description,
             },
             _id: this.props.client._id,
@@ -402,13 +402,13 @@ class EditClientModal extends React.Component {
                                         margin="normal"
                                     />
                                     <TextField
-                                        id="orgSize"
+                                        id="size"
                                         select
                                         label="Size of Organisation"
                                         className={classes.textField}
-                                        defaultValue={this.state.orgSize}
-                                        value={this.state.orgSize}
-                                        onChange={e => this._handleTechnicalAbilityUpdate(e, "orgSize")}
+                                        defaultValue={this.state.size}
+                                        value={this.state.size}
+                                        onChange={e => this._handleTechnicalAbilityUpdate(e, "size")}
                                         SelectProps={{
                                             MenuProps: {
                                                 className: classes.menu,
@@ -422,13 +422,13 @@ class EditClientModal extends React.Component {
                                         <MenuItem value={"Less than 10 employees"}>Less than 10 employees</MenuItem>
                                     </TextField>
                                     <TextField
-                                        id="industry"
+                                        id="industryType"
                                         select
                                         label="Industry"
                                         className={classes.emailTextField}
-                                        defaultValue={this.state.industry}
-                                        value={this.state.industry}
-                                        onChange={e => this._handleTechnicalAbilityUpdate(e, "industry")}
+                                        defaultValue={this.state.industryType}
+                                        value={this.state.industryType}
+                                        onChange={e => this._handleTechnicalAbilityUpdate(e, "industryType")}
                                         SelectProps={{
                                             MenuProps: {
                                                 className: classes.menu,
