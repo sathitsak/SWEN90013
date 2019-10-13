@@ -83,7 +83,9 @@ class Proposals extends React.Component {
 
     componentDidMount() {
         this._reqTodoList();
+      
     }
+
 
     _filterProposalsByStatus = status => {
         //TODO: filter by user

@@ -173,7 +173,7 @@ class SubmitPage extends React.Component {
           alert(
             "Your proposal has been sent! Please check your inbox or spam folder for a confirmation email. Please mark cis.projectmanagementsystem@gmail.com as not spam, as this will be the account that will contact you for updates regarding your proposal. "
           );
-          proposalSentConfirmation(email, ci2email, firstname, ci2firstname);
+          proposalSentConfirmation(email, ci2email, firstname, ci2firstname, projectName, outline, beneficiaries, benefits, original, used );
           document.getElementById("myForm").reset();
         })
         .catch(function(error) {
