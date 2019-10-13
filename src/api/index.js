@@ -7,7 +7,7 @@ const reqType = {
 };
 
 // export const baseURL = 'http://localhost:13000/api';
-const baseURL = 'http://172.26.88.142:3000/api';
+export const baseURL = 'http://172.26.88.142:3000/api';
 
 // Project related
 const projectURL = '/project';
