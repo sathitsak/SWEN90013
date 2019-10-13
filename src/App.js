@@ -16,8 +16,14 @@ import Proposals from "./components/dashboard/Proposals/AllProposals/Proposals";
 import { ProposalProvider } from "./components/dashboard/state/Proposal";
 import Projects from "./components/dashboard/Projects/AllProjects/Projects";
 import ProposalById from "./components/dashboard/Proposals/IndividualProposal/ProposalById";
-import ProjectById from "./components/dashboard/Projects/IndividualProject/ProjectById";
-import RejectedProposals from "./components/dashboard/Proposals/AllProposals/RejectedProposals";
+import ProjectById from "./components/dashboard/Projects/IndividualProject/ProjectById"; 
+
+import AllProposals from "./components/dashboard/Proposals/AllProposals/AllProposals";
+import AllProjects from "./components/dashboard/Projects/AllProjects/AllProjects";
+import AllProducts from "./components/dashboard/Products/AllProducts";
+import AllClients from "./components/dashboard/Client/AllClients";
+
+
 import Admin from "./components/admin/AdminPage"
 import LoginProvider, {LoginContext} from "./components/admin/LoginProvider"; 
 
@@ -68,6 +74,7 @@ const AuthenticatedUserRoute = ({ component: Component, ...rest }) => (
 
 
 
+
 class App extends React.Component {
   render() {
     return (
@@ -102,9 +109,23 @@ class App extends React.Component {
                       </Fragment>
                     )}
                   />
+
                   <AuthenticatedUserRoute
-                    path={`${path}/rejectedProposals`}
-                    component={RejectedProposals}
+                    path={`${path}/allProposals`}
+                    component={AllProposals}
+                  />
+                  <AuthenticatedUserRoute
+                    path={`${path}/allProjects`}
+                    component={AllProjects}
+                  />
+                  <AuthenticatedUserRoute
+                    path={`${path}/teams`}
+                    component={AllProducts}
+                  />
+                  <AuthenticatedUserRoute
+                    path={`${path}/clients`}
+                    component={AllClients}
+
                   />
                 </AppContainer>
               )}

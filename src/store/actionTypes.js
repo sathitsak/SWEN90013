@@ -10,3 +10,7 @@ export const CREATE_NEW_PRODUCT = "create_new_product";
 export const UPDATE_CLIENT = "update_client";
 export const ADD_NOTE = "add_note";
 export const CHANGE_PROPOSAL_STATUS = "change_proposal_status";
+export const GET_CLIENT_BY_ID = "get_client_by_id";
+export const UPDATE_PROPOSAL = "update_proposal";
+export const GET_ALL_CLIENTS = "get_all_clients";
+export const GET_ALL_PRODUCTS = "get_all_products";

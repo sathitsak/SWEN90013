@@ -6,9 +6,7 @@ const styles = theme => ({
     root: {
         width: 900
     },
-    snackbar: {
-        margin: theme.spacing.unit
-    }
+
 });
 
 class ClientNotes extends React.Component {

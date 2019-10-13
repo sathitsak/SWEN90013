@@ -75,7 +75,11 @@ class ProjectInfo extends React.Component {
 
                     <Grid item className={classes.basic}>
                         {proposal.client ?
-                            <ViewClient client={proposal.client}/>
+                            <ViewClient 
+                                client={proposal.client} 
+                                objType={"project"} 
+                                objID={project._id}
+                            />
                             : <div/>
                         }
                     </Grid>

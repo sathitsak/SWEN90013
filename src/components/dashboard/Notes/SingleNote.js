@@ -74,7 +74,7 @@ class SingleNote extends React.Component {
                     id="panel1a-header"
                     className={classes.expansionPanelSummary}
                 >
-                    <Grid container spacing={24}>
+                    <Grid container spacing={3}>
                         <Grid item xs>
                             <Typography className={classes.font}>
                                 {note.text ? this._shortenText(note.text) : ""}

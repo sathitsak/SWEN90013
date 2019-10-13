@@ -158,6 +158,21 @@ class AssignToSupervisor extends React.Component {
         const {selectedSupervisorId} = this.state;
         const {project, supervisors} = this.props;
         project.supervisorId = selectedSupervisorId;
+
+        // Add note to project
+        var newNote = {
+            text: "Project has been assigned to " + this._showSupervisor(project.supervisorId) + ".",
+            date: Date.now().toString(),    // Date is represented as an integer, stored as a string
+        };
+        var notes = project.notes;
+        if (notes) {
+            notes.push(newNote);
+        } else {
+            notes = [newNote];
+        }
+        project.notes = notes;
+
+        // Update project to DB
         const updateProjAction = updateProjectAction(project._id, project);
         store.dispatch(updateProjAction);
         this.setState({

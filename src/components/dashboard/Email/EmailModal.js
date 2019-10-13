@@ -48,8 +48,8 @@ const styles = theme => ({
   paper: {
     backgroundColor: theme.palette.background.paper,
     boxShadow: theme.shadows[5],
-    padding: theme.spacing.unit * 4,
-    paddingLeft: theme.spacing.unit * 4,
+    padding: theme.spacing(4),
+    paddingLeft: theme.spacing(4),
     outline: "none"
   },
   formControl: {
@@ -61,9 +61,6 @@ const styles = theme => ({
     display: "flex",
     flexWrap: "wrap"
   },
-  chip: {
-    margin: theme.spacing.unit / 4
-  },
   selectField: {
     [theme.breakpoints.up("md")]: {
       width: 1118
@@ -74,8 +71,8 @@ const styles = theme => ({
   },
   closeButton: {
     position: "absolute",
-    right: theme.spacing.unit,
-    top: theme.spacing.unit,
+    right: theme.spacing(),
+    top: theme.spacing(),
     color: theme.palette.grey[500]
   },
   fab: {

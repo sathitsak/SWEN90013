@@ -78,6 +78,7 @@ class TeamPage extends React.Component {
                         <TeamCard
                             key={index}
                             product={product}
+                            project={project}
                         />
                     ))
                     : <div/>
@@ -85,6 +86,7 @@ class TeamPage extends React.Component {
 
                 <CreateStudentTeamModal
                     projectId={project._id}
+                    project={project}
                 />
             </div>
         );

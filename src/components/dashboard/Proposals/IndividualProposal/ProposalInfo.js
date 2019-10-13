@@ -70,7 +70,7 @@ class ProposalInfo extends React.Component {
                 </Typography>
                 <Grid
                     container
-                    spacing={8}
+                    spacing={3}
                     style={{padding: 10, alignItems: "center"}}
                 >
                     <Grid item md={4} xs={12}>
@@ -97,7 +97,10 @@ class ProposalInfo extends React.Component {
                         <div className={classes.infoHeader}>Client</div>
                     </Grid>
                     <Grid item md={8} xs={12}>
-                        <ClientPageModal client={proposal.client}/>
+                        <ClientPageModal 
+                            client={proposal.client}
+                            objType={"proposal"}
+                            objID={proposal._id}/>
                     </Grid>
 
                     <br/>
@@ -129,12 +132,16 @@ class ProposalInfo extends React.Component {
                     <Grid item xs={12}>
                         <div className={classes.infoHeader}>Change Status</div>
                     </Grid>
+
+                    <Grid item xs={12}>
+                        <StatusChangeModal
+                            id={proposal._id}
+                            subjects={subjects}
+                        />
+                    </Grid>
+
                 </Grid>
 
-                <StatusChangeModal
-                    id={proposal._id}
-                    subjects={subjects}
-                />
             </div>
         );
     }

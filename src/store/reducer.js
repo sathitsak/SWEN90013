@@ -10,7 +10,11 @@ import {
     CREATE_NEW_PRODUCT,
     UPDATE_CLIENT,
     ADD_NOTE,
-    CHANGE_PROPOSAL_STATUS
+    CHANGE_PROPOSAL_STATUS,
+    GET_CLIENT_BY_ID,
+    UPDATE_PROPOSAL,
+    GET_ALL_CLIENTS,
+    GET_ALL_PRODUCTS
 } from "./actionTypes";
 import {
     updateProject,
@@ -18,7 +22,8 @@ import {
     postNewProduct,
     updateClient,
     addNote,
-    changeProposalStatus
+    changeProposalStatus,
+    updateProposal
 } from "../api";
 
 const defaultState = {
@@ -29,6 +34,7 @@ const defaultState = {
     proposal: {},
     page_title: "",
     client: {},
+    clients: [],
     subjects: [],
 };
 
@@ -79,6 +85,22 @@ export default (state = defaultState, action) => {
 
     if (action.type === CHANGE_PROPOSAL_STATUS) {
         return changeProposalStatusByType(state, action);
+    }
+
+    if (action.type === GET_CLIENT_BY_ID) {
+        return getClientById(state, action);
+    }
+
+    if (action.type === UPDATE_PROPOSAL) {
+        return updateProposalById(state, action);
+    }
+
+    if (action.type === GET_ALL_CLIENTS) {
+        return getAllClients(state, action);
+    }
+
+    if (action.type === GET_ALL_PRODUCTS) {
+        return getAllProducts(state, action);
     }
 
     return state;
@@ -158,5 +180,31 @@ function addNoteByType(state, action) {
 function changeProposalStatusByType(state, action) {
     const newState = JSON.parse(JSON.stringify(state));
     changeProposalStatus(action.id, action.option, action.object);
+    return newState;
+}
+
+function getClientById(state, action) {
+    const newState = JSON.parse(JSON.stringify(state));
+    newState.client = action.client;
+    return newState;
+}
+
+function updateProposalById(state, action) {
+    const newState = JSON.parse(JSON.stringify(state));
+    newState.proposal = action.proposal;
+    updateProposal(action.id, action.proposal);
+    return newState;
+}
+
+function getAllClients(state, action) {
+    const newState = JSON.parse(JSON.stringify(state));
+    newState.clients = action.clients;
+    newState.page_title = action.page_title;
+    return newState;
+}
+
+function getAllProducts(state, action) {
+    const newState = JSON.parse(JSON.stringify(state));
+    newState.page_title = action.page_title;
     return newState;
 }

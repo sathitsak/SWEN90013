@@ -11,10 +11,11 @@ import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import store from "../../../../store";
 import {withStyles} from "@material-ui/core/styles";
-import {getAllSubjects} from "../../../../api";
+import {getAllSubjects, getProposalById,} from "../../../../api";
 import {
     getAllSubjectsAction,
-    changeProposalStatusAction
+    changeProposalStatusAction,
+    getProposalByIdAction,
 } from "../../../../store/actionCreators";
 
 const styles = theme => ({
@@ -67,6 +68,12 @@ class StatusChangeModal extends React.Component {
         store.dispatch(subjectsAction);
     }
 
+    async _updateProposalState() {
+        const proposalResult = await getProposalById(this.props.id);
+        const proposalAction = getProposalByIdAction(proposalResult);
+        store.dispatch(proposalAction);
+    }
+
     componentDidMount() {
         this._reqTodoList();
     }
@@ -76,7 +83,7 @@ class StatusChangeModal extends React.Component {
 
         return (
             <div>
-                <Grid container spacing={24}>
+                <Grid container spacing={3}>
                     <Grid item xs={6} style={{paddingLeft: 22}}>
                         <Button
                             variant="contained"
@@ -107,7 +114,7 @@ class StatusChangeModal extends React.Component {
                             <DialogTitle id="alert-dialog-title">
                                 Accept Proposal
                             </DialogTitle>
-                            <Grid container spacing={24}>
+                            <Grid container spacing={3}>
                                 <Grid item xs={6} style={{padding: 50}}>
                                     <h6 style={{color: grey[800]}}>
                                         Please state your reasoning:
@@ -138,7 +145,7 @@ class StatusChangeModal extends React.Component {
                                             >
                                                 {this.props.subjects ? (
                                                     this.props.subjects.map(s => (
-                                                        <MenuItem
+                                                        <MenuItem key={s._id}
                                                             value={s._id}>{s.name}</MenuItem>
                                                     ))
                                                 ) : (
@@ -178,7 +185,7 @@ class StatusChangeModal extends React.Component {
                             <DialogTitle id="alert-dialog-title">
                                 Reject Proposal
                             </DialogTitle>
-                            <Grid container spacing={24}>
+                            <Grid container spacing={3}>
                                 <Grid item xs={12} style={{padding: 50}}>
                                     <h6 style={{color: grey[800]}}>
                                         Please state your reasoning:
@@ -255,7 +262,7 @@ class StatusChangeModal extends React.Component {
                 this.setState({openAccept: false});
                 const object = {
                     subjectId: subjectId,
-                    acceptReason: responseText
+                    acceptReason: "Accepted: " + responseText
                 };
                 const changeProposalStatusAct = changeProposalStatusAction(id, option, object);
                 store.dispatch(changeProposalStatusAct);
@@ -266,12 +273,15 @@ class StatusChangeModal extends React.Component {
             } else {
                 this.setState({openReject: false});
                 const object = {
-                    rejectReason: responseText
+                    rejectReason: "Rejected: " + responseText
                 };
                 const changeProposalStatusAct = changeProposalStatusAction(id, option, object);
                 store.dispatch(changeProposalStatusAct);
             }
         }
+
+        // update Proposal data 
+        this._updateProposalState();
     };
 
 }

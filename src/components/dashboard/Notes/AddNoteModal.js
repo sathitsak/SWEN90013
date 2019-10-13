@@ -37,8 +37,8 @@ const styles = theme => ({
     paper: {
         backgroundColor: theme.palette.background.paper,
         boxShadow: theme.shadows[5],
-        padding: theme.spacing.unit * 4,
-        paddingLeft: theme.spacing.unit * 4,
+        padding: theme.spacing(4),
+        paddingLeft: theme.spacing(4),
         outline: "none"
     },
     formControl: {
@@ -51,8 +51,8 @@ const styles = theme => ({
     },
     closeButton: {
         position: "absolute",
-        right: theme.spacing.unit,
-        top: theme.spacing.unit,
+        right: theme.spacing(),
+        top: theme.spacing(),
         color: theme.palette.grey[500]
     },
     fab: {
@@ -136,6 +136,7 @@ class AddNoteModal extends React.Component {
 
             // Send PUT request
             const addNoteAct = addNoteAction(objectType, object._id, object);
+            console.log(addNoteAct);
             store.dispatch(addNoteAct);
 
             // Close window

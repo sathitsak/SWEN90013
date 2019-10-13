@@ -18,7 +18,7 @@ const styles = theme => ({
         flexGrow: 1
     },
     paper: {
-        padding: theme.spacing.unit * 2,
+        padding: theme.spacing(2),
         color: theme.palette.text.secondary,
         height: "400px"
     }
@@ -54,7 +54,7 @@ class ProposalById extends React.Component {
 
         return (
             <div className={classes.root}>
-                <Grid container spacing={24}>
+                <Grid container spacing={3}>
                     <Grid item xs={12} sm={8}>
                         {
                             <ProposalResponses
@@ -63,6 +63,7 @@ class ProposalById extends React.Component {
                                 q3={this.state.proposal.endProductBenefits}
                                 q4={this.state.proposal.originality}
                                 q5={this.state.proposal.endProductUse}
+                                proposal={this.state.proposal}
                             />
                         }
                     </Grid>
@@ -70,7 +71,7 @@ class ProposalById extends React.Component {
                     {this.state.proposal.client ? (
                         <Grid item xs={12} sm={4}>
                             <Paper className={classes.paper}
-                                   style={{marginTop: "20px"}}>
+                                   style={{marginTop: "20px", height: "fit-content"}}>
                                 <ProposalInfo/>
                             </Paper>
                         </Grid>

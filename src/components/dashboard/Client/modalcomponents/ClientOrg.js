@@ -12,6 +12,7 @@ const styles = theme => ({
   },
   orgInfo: {
     marginBottom: 10,
+    padding: 0,
     color: "#000000",
     textAlign: "justify"
   },
@@ -29,42 +30,42 @@ class ClientOrg extends React.Component {
     const { classes } = this.props;
 
     return (
-      <Grid container spacing={24}>
+      <Grid container spacing={3}>
         <Grid item xs={12}>
           <h5 className={classes.title}>ORGANISATION</h5>
 
-          <Grid container spacing={8}>
+          <Grid container spacing={3}>
             <Grid item md={2} xs={4}>
               <div className={classes.orgHeader}>Name</div>
             </Grid>
-            <Grid item md={6} xs={4}>
+            <Grid item md={8} xs={8}>
               <div className={classes.orgInfo}>{this.props.orgName}</div>
             </Grid>
           </Grid>
 
-          <Grid container spacing={8}>
+          <Grid container spacing={3}>
             <Grid item md={2} xs={4}>
               <div className={classes.orgHeader}>Size</div>
             </Grid>
-            <Grid item md={6} xs={4}>
+            <Grid item md={8} xs={8}>
               <div className={classes.orgInfo}>{this.props.orgSize}</div>
             </Grid>
           </Grid>
 
-          <Grid container spacing={8}>
+          <Grid container spacing={3}>
             <Grid item md={2} xs={4}>
               <div className={classes.orgHeader}>Industry</div>
             </Grid>
-            <Grid item md={6} xs={4}>
+            <Grid item md={8} xs={8}>
               <div className={classes.orgInfo}>{this.props.industry ? this.props.industry : " "}</div>
             </Grid>
           </Grid>
 
-          <Grid container spacing={8}>
-            <Grid item xs={12}>
-              <div className={classes.orgHeader} style={{marginBottom: 5}}>Description</div>
+          <Grid container spacing={3}>
+            <Grid item md={2} xs={4}>
+              <div className={classes.orgHeader}>Description</div>
             </Grid>
-            <Grid item xs={12} className={classes.orgInfo}>
+            <Grid item md={8} xs={8} className={classes.orgInfo}>
               {this.props.description}
             </Grid>
           </Grid>
