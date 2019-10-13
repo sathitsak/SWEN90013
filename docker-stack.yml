@@ -1,0 +1,16 @@
+version: "3"
+services:
+  app:
+    image: abbyyuan/frontend
+    ports:
+      - "80:80"
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+    networks: # Networks to join (Services on the same network can communicate with each other using their name)
+      - webnet
+
+networks:
+  webnet:
+    driver: overlay
