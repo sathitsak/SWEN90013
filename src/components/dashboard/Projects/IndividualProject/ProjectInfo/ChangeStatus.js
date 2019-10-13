@@ -22,7 +22,7 @@ class ChangeStatus extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            selectedStatus: "new",
+            selectedStatus: this.props.project.status,
             open: false
         };
     }
@@ -64,6 +64,7 @@ class ChangeStatus extends React.Component {
                                     htmlFor="sp-native-simple">Status</InputLabel>
                                 <Select
                                     native
+                                    defaultValue={this.state.selectedStatus}
                                     onChange={e => this._handleSelect(e)}
                                     input={<Input id="sp-native-simple"/>}
                                 >
@@ -105,10 +106,35 @@ class ChangeStatus extends React.Component {
         this.setState({selectedStatus: e.target.value});
     };
 
+    _formatProjectStatus(status) {
+        if (status === "new") {
+            return "New";
+        } else if (status === "inProgress") {
+            return "In Progress";
+        } else if (status === "completed") {
+            return "Completed";
+        }
+    }
+
     _handleOK = () => {
         const {selectedStatus} = this.state;
         const {project} = this.props;
         project.status = selectedStatus;
+
+        // Add note to project
+        var newNote = {
+            text: "Status of has been updated to " + this._formatProjectStatus(project.status) + ".",
+            date: Date.now().toString(),    // Date is represented as an integer, stored as a string
+        };
+        var notes = project.notes;
+        if (notes) {
+            notes.push(newNote);
+        } else {
+            notes = [newNote];
+        }
+        project.notes = notes;
+
+        // Update project in DB
         const updateProjAction = updateProjectAction(project._id, project);
         store.dispatch(updateProjAction);
         this.setState({open: false});

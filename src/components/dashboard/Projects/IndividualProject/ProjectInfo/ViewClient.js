@@ -12,7 +12,7 @@ const styles = {};
 class ViewClient extends React.Component {
 
     render() {
-        const {client} = this.props;
+        const {client, objType, objID} = this.props;
 
         return (
             <div>
@@ -24,7 +24,11 @@ class ViewClient extends React.Component {
                         </Typography>
                     </Grid>
                     <Grid item style={{marginTop: 10}} align="center">
-                        <ClientPageModal client={client}/>
+                        <ClientPageModal 
+                            client={client}
+                            objType={objType}
+                            objID={objID}
+                        />
                     </Grid>
                 </Grid>
             </div>

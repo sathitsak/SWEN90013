@@ -21,7 +21,7 @@ const styles = theme => ({
         height: 140
     },
     paper: {
-        padding: theme.spacing.unit * 2,
+        padding: theme.spacing(2),
         color: theme.palette.text.secondary,
         backgroundColor: grey[50]
     },
@@ -61,7 +61,7 @@ class ProjectById extends React.Component {
         return (
             <Grid
                 container
-                spacing={16}
+                spacing={3}
                 justify="flex-end"
                 direction="row"
             >

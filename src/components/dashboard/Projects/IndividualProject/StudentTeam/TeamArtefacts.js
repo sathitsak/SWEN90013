@@ -68,7 +68,7 @@ class TeamArtefacts extends React.Component {
                                     {productLinks ?
                                         <List dense={true}>
                                             {productLinks.map(link => (
-                                                <ListItem>
+                                                <ListItem key={link}>
                                                     <ListItemText
                                                         primary={link}/>
                                                 </ListItem>
@@ -84,7 +84,7 @@ class TeamArtefacts extends React.Component {
                                     {technologies ?
                                         <List dense={true}>
                                             {technologies.map(tech => (
-                                                <ListItem>
+                                                <ListItem key={tech}>
                                                     <ListItemText
                                                         primary={tech}/>
                                                 </ListItem>

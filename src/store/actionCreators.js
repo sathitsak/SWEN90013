@@ -10,7 +10,11 @@ import {
     CREATE_NEW_PRODUCT,
     UPDATE_CLIENT,
     ADD_NOTE,
-    CHANGE_PROPOSAL_STATUS
+    CHANGE_PROPOSAL_STATUS,
+    GET_CLIENT_BY_ID,
+    UPDATE_PROPOSAL,
+    GET_ALL_CLIENTS,
+    GET_ALL_PRODUCTS
 } from "./actionTypes";
 
 export const getAllProjectAction = projects => ({
@@ -83,4 +87,27 @@ export const changeProposalStatusAction = (id, option, object) => ({
     id: id,
     option: option,
     object: object
+});
+
+export const getClientByIdAction = client => ({
+    type: GET_CLIENT_BY_ID,
+    client: client,
+});
+
+export const updateProposalAction = (id, proposal) => ({
+    type: UPDATE_PROPOSAL,
+    id: id,
+    proposal: proposal,
+    page_title: proposal.name
+});
+
+export const getAllClientsAction = clients => ({
+    type: GET_ALL_CLIENTS,
+    clients: clients,
+    page_title: "View Clients"
+});
+
+export const getAllProductsAction = () => ({
+    type: GET_ALL_PRODUCTS,
+    page_title: "View Student Teams"
 });
