@@ -7,8 +7,9 @@ import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import Grid from "@material-ui/core/Grid";
+import { LoginContext } from "../../admin/LoginProvider";
 
-const SUMMARY_LENGTH = 10;
+const SUMMARY_LENGTH = 40;
 
 const styles = theme => ({
     expansionPanel: {
@@ -36,6 +37,9 @@ class SingleNote extends React.Component {
         }
     }
 
+    static contextType = LoginContext;
+    valueOfContext = this.context;
+
     // Convert dates from integers to string
     _convertDate(dateInt) {
         // Dates are sent as integer representations of dates e.g. '1568340623387'
@@ -51,14 +55,14 @@ class SingleNote extends React.Component {
 
     // Shortens the given note into a set length to display 
     _shortenText(text) {
-        let output = text.split(" ");
+        let output = text.split("");
 
         // If text exceeds SUMMARY_LENGTH, take the first SUMMARY_LENGTH bits 
         if (output.length > SUMMARY_LENGTH) {
             output = output.slice(0, SUMMARY_LENGTH);
             output.push("...");
         }
-        output = output.join(" ");
+        output = output.join("");
         
         return output
     }

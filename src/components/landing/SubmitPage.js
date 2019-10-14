@@ -276,16 +276,16 @@ class SubmitPage extends React.Component {
                 <div className="styled-select" style={{ marginBottom: "3%" }}>
                   <select id="size">
                     <option value="-1">Please select</option>
-                    <option value="more than 250 employees">
+                    <option value="More than 250 employees">
                       More than 250 employees
                     </option>
-                    <option value="between 50–249 employees">
+                    <option value="Between 50 - 249 employees">
                       Between 50 – 249 employees
                     </option>
-                    <option value="between 10–49 employees">
+                    <option value="Between 10 - 49 employees">
                       Between 10 – 49 employees
                     </option>
-                    <option value="less than 10 employees">
+                    <option value="Less than 10 employees">
                       Less than 10 employees
                     </option>
                   </select>

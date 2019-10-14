@@ -89,7 +89,7 @@ class AllProposals extends PureComponent {
         
         return (
             <MaterialTable
-                title="All Projects"
+                title="All Proposals"
                 columns={[
                     { title: 'Year', field: 'year', filterCellStyle:{maxWidth:50} },
                     { title: 'Proposal Name', field: 'name' },

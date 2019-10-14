@@ -31,7 +31,9 @@ class ProposalResponses extends React.Component {
                             </Typography>
                         </Grid>
                         <Grid item xs={1} justify="flex-end">
-                            <EditProposalModal proposal={this.props.proposal}/>
+                            <EditProposalModal 
+                                proposal={this.props.proposal} 
+                            />
                         </Grid>
                     </Grid>
                     

@@ -59,7 +59,9 @@ class ClientDetails extends React.Component {
                         <Grid item xs={6} className={classes.infoRow}>
                             <PhoneIcon className={classes.icon}/>{this.props.contactNumber}
                         </Grid>
-
+                        <Grid item xs={6} className={classes.infoRow}>
+                            <BusinessIcon className={classes.icon}/>{this.props.orgNumber}
+                        </Grid>
                         <h5 className={classes.infoHeading}>Technical Ability</h5>
                         <Grid item xs={6} className={classes.infoRow}>
                             <MobileStepper

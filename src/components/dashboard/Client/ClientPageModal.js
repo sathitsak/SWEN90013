@@ -35,11 +35,8 @@ const styles = theme => ({
         color: "#094183",
     },
     closeButton: {
-        backgroundColor: "#094183",
-        color: "#FFFFFF",
-        '&:hover': {
-            backgroundColor: "#4074B2",
-        },
+        marginTop: 0,
+        color: "#094183",  
     },
     iconFalse: {
         marginLeft: 20,
@@ -190,6 +187,7 @@ class ClientPageModal extends React.Component {
                                         email={client.email}
                                         technicalAbility={client.technicalAbility}
                                         contactNumber={client.contactNumber}
+                                        orgNumber={client.organisation.number}
                                         secondaryContactName={this._concatenateNames(client.secondaryContactFirstName, client.secondaryContactLastName)}
                                         secondaryContactEmail={client.secondaryContactEmail}
                                         secondaryContactNumber={client.secondaryContactNumber}
@@ -221,14 +219,15 @@ class ClientPageModal extends React.Component {
                         </Grid>
                     </DialogContent>
                     <DialogActions>
+                        <EditClientModal 
+                            client={client}
+                            objType={objType}
+                            objID={objID} 
+                        />
                         <Button onClick={this._handleClose}
                                 className={classes.closeButton}>
                             Close
                         </Button>
-                        <EditClientModal 
-                            client={client}
-                            objType={objType}
-                            objID={objID} />
                     </DialogActions>
                 </Dialog>
             </div>

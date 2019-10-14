@@ -1,21 +1,21 @@
 /**
- * This component contains all products. It is entered via a "View Products" link on the app container drawer.
+ * This component contains all products. It is entered via a "View Student Teams" link on the app container drawer.
  * Author: Reyna Tan
  * Date: 09/10/2019
  */
 
 import React, { PureComponent } from 'react';
-import store from "../../../store";
-import {getAllSubjects, getProjectList, getSupervisors, getAllProducts} from "../../../api";
+import store from "../../../../../store";
+import {getAllSubjects, getProjectList, getSupervisors, getAllProducts} from "../../../../../api";
 import {
     getAllProjectAction,
     getSupervisorsAction,
     getAllSubjectsAction,
-    getAllProductsAction
-} from "../../../store/actionCreators";
+    updatePageTitleAction,
+} from "../../../../../store/actionCreators";
 import MaterialTable from 'material-table';
 
-class AllProducts extends PureComponent {
+class AllStudentTeams extends PureComponent {
 
     constructor(props) {
         super(props);
@@ -43,9 +43,8 @@ class AllProducts extends PureComponent {
         const getAllSubjectsAct = getAllSubjectsAction(subjects);
         store.dispatch(getAllSubjectsAct);
 
-        // const products = await getAllProducts();
-        const getAllProductsAct = getAllProductsAction();
-        store.dispatch(getAllProductsAct);
+        const updatePageTitleAct = updatePageTitleAction("All Student Teams");
+        store.dispatch(updatePageTitleAct);
     }
 
     componentDidMount() {
@@ -184,4 +183,4 @@ class AllProducts extends PureComponent {
     }
 }
 
-export default (AllProducts);
+export default (AllStudentTeams);

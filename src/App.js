@@ -20,7 +20,7 @@ import ProjectById from "./components/dashboard/Projects/IndividualProject/Proje
 
 import AllProposals from "./components/dashboard/Proposals/AllProposals/AllProposals";
 import AllProjects from "./components/dashboard/Projects/AllProjects/AllProjects";
-import AllProducts from "./components/dashboard/Products/AllProducts";
+import AllStudentTeams from "./components/dashboard/Projects/IndividualProject/StudentTeam/AllStudentTeams";
 import AllClients from "./components/dashboard/Client/AllClients";
 
 
@@ -120,7 +120,7 @@ class App extends React.Component {
                   />
                   <AuthenticatedUserRoute
                     path={`${path}/teams`}
-                    component={AllProducts}
+                    component={AllStudentTeams}
                   />
                   <AuthenticatedUserRoute
                     path={`${path}/clients`}

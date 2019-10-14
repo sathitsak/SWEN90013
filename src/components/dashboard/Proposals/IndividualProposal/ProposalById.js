@@ -53,7 +53,7 @@ class ProposalById extends React.Component {
         const {classes} = this.props;
 
         return (
-            <div className={classes.root}>
+            <div className={classes.root} style={{flex:1}}>
                 <Grid container spacing={3}>
                     <Grid item xs={12} sm={8}>
                         {
@@ -64,6 +64,7 @@ class ProposalById extends React.Component {
                                 q4={this.state.proposal.originality}
                                 q5={this.state.proposal.endProductUse}
                                 proposal={this.state.proposal}
+                                subjects={this.state.subjects}
                             />
                         }
                     </Grid>
