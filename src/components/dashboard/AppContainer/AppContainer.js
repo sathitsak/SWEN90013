@@ -67,10 +67,7 @@ class AppContainer extends React.Component {
     this.setState({ page_title: store.getState().page_title });
   };
 
-  componentWillUnmount() {
-    const unsubscribe = store.subscribe(this._handleChange);
-    unsubscribe()
-  }
+  unsubscribe = store.subscribe(this._handleChange);
 
   render() {
     const { classes, theme } = this.props;
