@@ -10,6 +10,14 @@ export function nameValidator(name){
   }
 }
 
+export function addTemplate(id, title, message) {
+  axios.post(baseURL+'/template/' + id, {
+    title: title,
+    message: message
+  })
+}
+
+
 export function deleteSupervisorMethod(id) {
   axios.delete('http://35.244.89.250/supervisor/'+id)
   .then(response => {

@@ -57,6 +57,7 @@ class AddCoordinatorForm extends React.Component {
     this._handleChange = this._handleChange.bind(this);
     this._handleSubmit = this._handleSubmit.bind(this);
   }
+  
   componentDidMount() {
 
     //return false is what you check is true 

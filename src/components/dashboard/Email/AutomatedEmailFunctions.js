@@ -40,22 +40,21 @@ export function proposalSentConfirmation(
     });
 }
 
+
+
 export function proposalOutcome(
-  client,
-  secondaryClient,
-  outcome,
-  responseText
+  outcome, responseText, clientName, secondaryClientName, clientEmail, secondaryClientEmail
 ) {
   if (outcome == "reject") {
     axios
       .post(`http://35.197.167.244/message`, {
         from: "CIS Project Management",
-        to: client,
+        to: clientEmail,
         subject: "Proposal Outcome",
         html:
-        constructProposalRejectEmail(client, secondaryClient, responseText),
+        constructProposalRejectEmail(clientName, secondaryClientName, responseText),
         projectType: "Proposal",
-        cc: secondaryClient
+        cc: secondaryClientEmail
       })
       .then(function(response) {
         console.log(response);
@@ -67,12 +66,12 @@ export function proposalOutcome(
     axios
       .post(`http://35.197.167.244/message`, {
         from: "CIS Project Management",
-        to: client,
+        to: clientEmail,
         subject: "Proposal Outcome",
         html:
-        constructProposalAcceptEmail(client, secondaryClient, responseText),
+        constructProposalAcceptEmail(clientName, secondaryClientName, responseText),
         projectType: "Proposal",
-        cc: secondaryClient
+        cc: secondaryClientEmail
       })
       .then(function(response) {
         console.log(response);
