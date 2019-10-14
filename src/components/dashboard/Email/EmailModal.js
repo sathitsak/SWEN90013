@@ -114,19 +114,6 @@ const MenuProps = {
   dense: "true"
 };
 
-const names = [
-  "Oliver Hansen",
-  "Van Henry",
-  "April Tucker",
-  "Ralph Hubbard",
-  "Omar Alexander",
-  "Carlos Abbott",
-  "Miriam Wagner",
-  "Bradley Wilkerson",
-  "Virginia Andrews",
-  "Kelly Snyder"
-];
-
 const templatesMap = new Map();
 const templatesNewArray = [];
 const tempCoordinatorNameArray = [];
@@ -162,6 +149,26 @@ class EmailModal extends React.Component {
     this.handleClickOpen = this.handleClickOpen.bind(this);
   }
 
+  componentDidMount() {
+    axios
+    .get(`http://172.26.88.142:3000/api/template`)
+    .then(function(response) {
+      console.log(response.data);
+      var templates = response.data;
+
+      Object.keys(templates).forEach(function(key) {
+        console.log(key, templates[key].title);
+        templatesNewArray.push(templates[key].title);
+        templatesMap.set(templates[key].title, templates[key].message);
+      });
+    })
+    .catch(function(error) {
+      console.log(error);
+    });
+
+  console.log(this.state.templates);
+  }
+
   handleClickOpen = () => {
     this.setState({ open: true });
 
@@ -179,26 +186,6 @@ class EmailModal extends React.Component {
         this.state.available_recipients.push(fullNameRole); 
       }
     })
-
-    //get the templates
-
-    axios
-      .get(`http://172.26.88.142:3000/api/template`)
-      .then(function(response) {
-        console.log(response.data);
-        var templates = response.data;
-
-        Object.keys(templates).forEach(function(key) {
-          console.log(key, templates[key].title);
-          templatesNewArray.push(templates[key].title);
-          templatesMap.set(templates[key].title, templates[key].message);
-        });
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
-
-    console.log(this.state.templates);
 
     //check the URL to determine the context of the email
     var url = window.location.href;
@@ -458,7 +445,7 @@ class EmailModal extends React.Component {
                   )}
                   MenuProps={MenuProps}
                 >
-                  {names.map(name => (
+                   {this.state.available_recipients.map(name => (
                     <MenuItem key={name} value={name} style={{ width: "100%" }}>
                       {name}
                     </MenuItem>
