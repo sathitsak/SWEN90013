@@ -167,20 +167,18 @@ class EmailModal extends React.Component {
 
     //get all coordinators
 
-    console.log(store.getState().subjects);
+  
     var subjects = store.getState().subjects;
-    var coordinators = [];
 
-    subjects.map(indCoor => coordinators.push(indCoor.coordinator.firstName));
-    console.log("new here");
-    console.log(coordinators);
 
-    for (var x = 0; x < coordinators.length; x++) {
-      var fullName = coordinators[x].firstName + " " + coordinators[x].lastName;
-      var fullNameRole = fullName + " (Coordinator)";
-      nameEmailMap.set(fullNameRole, coordinators[x].email);
-      this.state.available_recipients.push(fullNameRole);
-    }
+
+    subjects.forEach(s => {
+      if('coordinator' in s) {
+        var fullNameRole = s.coordinator.firstName + " " + s.coordinator.lastName+ " (Coordinator)";
+        nameEmailMap.set(fullNameRole, s.coordinator.email);
+        this.state.available_recipients.push(fullNameRole); 
+      }
+    })
 
     //get the templates
 
@@ -337,7 +335,7 @@ class EmailModal extends React.Component {
         console.log(error);
       });
 
-    alert("sending email");
+   
     this.setState({ email_recipients: [] });
     this.setState({ available_recipients: [] });
     nameEmailMap.clear();

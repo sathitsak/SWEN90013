@@ -144,7 +144,7 @@ class AddCoordinatorForm extends React.Component {
        <AccountCircle />
      </ListItemIcon>
      <ListItemText
-       primary={coordinator.firstName + " " + coordinator.lastName + " (" +coordinator.subjectId+")"}
+       primary={coordinator.firstName + " " + coordinator.lastName}
       
        
      />
