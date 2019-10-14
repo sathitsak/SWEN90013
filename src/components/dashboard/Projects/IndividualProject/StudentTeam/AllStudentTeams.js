@@ -55,6 +55,11 @@ class AllStudentTeams extends PureComponent {
         console.log(nextProps.currentPage);
     }
 
+    componentWillUnmount() {
+        const unsubscribe = store.subscribe(this._handleStoreChange)
+        unsubscribe()
+    }
+
     _extractYear(str) {
         // Format in which the date is stored in the DB: 2019-10-07T03:34:16.921Z
         // Slice the string using "-" and extract only the first element
@@ -127,24 +132,24 @@ class AllStudentTeams extends PureComponent {
         return supervisorList;
     }
 
+    _showSubjectCode = (subjectId) => {
+        const {subjects} = this.state;
+        let subjectCode = " ";
+        subjects.forEach(s => {
+            if (s._id === subjectId) {
+                subjectCode = s.code;
+            }
+        });
+        return subjectCode;
+    };
+
     _getSubjectFilterLookup() {
-        const {projects} = this.state;
+        const {subjects} = this.state;
 
         let subjectList = {};
 
-        projects.forEach(p => {
-
-            // First check if valid
-            if ('proposal' in p) {
-                if ('client' in p.proposal) {
-                    if ('organisation' in p.proposal.client) {
-                        if (! (p.subjectId in subjectList)) {
-                            subjectList[p.subjectId] = p.subjectId;
-                        }
-                    }
-                }
-            }
-            
+        subjects.forEach(s => {
+            subjectList[s._id] = this._showSubjectCode(s._id);
         })
 
         return subjectList;

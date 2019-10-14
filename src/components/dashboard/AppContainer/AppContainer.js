@@ -47,10 +47,6 @@ class AppContainer extends React.Component {
     open: false,
   };
 
-  componentWillReceiveProps(nextProps) {
-    //console.log(nextProps.currentPage);
-  }
-
   _handleDrawerToggle = () => {
     this.setState(state => ({ mobileOpen: !state.mobileOpen }));
   };
@@ -71,7 +67,10 @@ class AppContainer extends React.Component {
     this.setState({ page_title: store.getState().page_title });
   };
 
-  unsubscribe = store.subscribe(this._handleChange);
+  componentWillUnmount() {
+    const unsubscribe = store.subscribe(this._handleChange);
+    unsubscribe()
+  }
 
   render() {
     const { classes, theme } = this.props;

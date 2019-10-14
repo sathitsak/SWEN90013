@@ -86,6 +86,10 @@ class Proposals extends React.Component {
       
     }
 
+    componentWillUnmount() {
+        const unsubscribe = store.subscribe(this._handleStoreChange);
+        unsubscribe();
+    }
 
     _filterProposalsByStatus = status => {
         //TODO: filter by user

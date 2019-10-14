@@ -49,31 +49,44 @@ class AllProposals extends PureComponent {
         let proposalList = [];
 
         proposals.forEach(p => {
-            let nextProposal = {
-                year: this._extractYear(p.date),
-                name: p.name,
-                client: p.client.firstName + " " + p.client.lastName,
-                outlineOfProject: p.outlineOfProject,
-                status: p.status,
-                subjectId: p.subjectId,
-                _id: p._id
-            }
+            if ('client' in p) {
+                if ('organisation' in p.client) {
+                    let nextProposal = {
+                        year: this._extractYear(p.date),
+                        name: p.name,
+                        client: p.client.firstName + " " + p.client.lastName,
+                        outlineOfProject: p.outlineOfProject,
+                        status: p.status,
+                        subjectId: p.subjectId,
+                        _id: p._id
+                    }
 
-            proposalList.push(nextProposal);
+                    proposalList.push(nextProposal);
+                }
+            }
         })
 
         return proposalList;
     }
 
+    _showSubjectCode = (subjectId) => {
+        const {subjects} = this.state;
+        let subjectCode = " ";
+        subjects.forEach(s => {
+            if (s._id === subjectId) {
+                subjectCode = s.code;
+            }
+        });
+        return subjectCode;
+    };
+
     _getSubjectFilterLookup() {
-        const {proposals} = this.state;
+        const {subjects} = this.state;
 
         let subjectList = {};
 
-        proposals.forEach(p => {
-            if (! (p.subjectId in subjectList)) {
-                subjectList[p.subjectId] = p.subjectId;
-            }
+        subjects.forEach(s => {
+            subjectList[s._id] = this._showSubjectCode(s._id);
         })
 
         return subjectList;
