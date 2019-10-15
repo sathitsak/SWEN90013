@@ -34,11 +34,9 @@ import Nav from "react-bootstrap/Nav";
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import PropTypes from "prop-types";
-import {getProjectById} from "../../../../../api";
 import {
     updateProductAction,
     updateProjectAction,
-    getProjectByIdAction
 } from "../../../../../store/actionCreators";
 import { LoginContext } from "../../../../admin/LoginProvider";
 

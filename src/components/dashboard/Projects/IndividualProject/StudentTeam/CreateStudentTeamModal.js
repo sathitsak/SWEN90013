@@ -29,8 +29,8 @@ import store from "../../../../../store";
 import PropTypes from "prop-types";
 import {
     createNewProductAction,
-    getProjectByIdAction,
-    addNoteAction
+    updateProjectAction,
+    getProjectByIdAction
 } from "../../../../../store/actionCreators";
 import {getProjectById} from "../../../../../api";
 import {LoginContext} from "../../../../admin/LoginProvider";
@@ -157,7 +157,7 @@ class CreateStudentTeamModal extends React.Component {
     };
 
     _handleCreateStudentTeam = () => {
-        const {projectId} = this.props;
+        const {projectId, project} = this.props;
 
         const studentList = [];
         for (var i = 0; i < this.state.numStudents; i++) {
@@ -188,27 +188,29 @@ class CreateStudentTeamModal extends React.Component {
             date: Date.now().toString(),    // Date is represented as an integer, stored as a string
             userName: userName.state.userName
         };
-        var notes = this.props.project.notes;
+        var notes = project.notes;
         if (notes) {
             notes.push(newNote);
         } else {
             notes = [newNote];
         }
-        this.props.project.notes = notes;
-
-        // Send PUT request
-        const addNoteAct = addNoteAction("project", this.props.projectId, this.props.project);
-        console.log(addNoteAct);
-        store.dispatch(addNoteAct);
+        project.notes = notes;
 
         // Update state
+        this._updateProjectState();
+
+        // Send PUT request
+        const updateProjectAct = updateProjectAction(project._id, project);
+        store.dispatch(updateProjectAct);
+
+        // Update state again 
         this._updateProjectState();
 
         // Close window
         this._handleClose();
     };
 
-    async _updateProjectState() {
+    async _updateProjectState()  {
         const {projectId} = this.props;
         const project = await getProjectById(projectId);
         const getProAction = getProjectByIdAction(project);
