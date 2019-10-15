@@ -55,7 +55,7 @@ class ProjectCard extends React.Component {
                             </Avatar>
                         }
                         title={project.name}
-                        subheader={project.industryType ? project.industryType : " "}
+                        subheader={project.proposal.client.organisation.name}
                         component="div"
                         className={classes.cardHeader}
                     />
