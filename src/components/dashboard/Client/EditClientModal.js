@@ -115,14 +115,24 @@ class EditClientModal extends React.Component {
 
     componentDidMount() {
         userName = this.context;
+        this._reqTodoList()
     }
 
     _handleOpen = () => {
         this.setState({ open: true });
     };
 
+    async _reqTodoList() {
+        const clients = await getAllClients();
+        const getAllClientsAct = getAllClientsAction(clients);
+        store.dispatch(getAllClientsAct);
+    }
+
     _handleDiscard = () => {
         this.setState({ open: false });
+        
+        this._reqTodoList();
+
     };
 
     _handleFormSelectUpdate = (e, attribute) => {
@@ -271,6 +281,9 @@ class EditClientModal extends React.Component {
 
          // Close window
          this._handleDiscard();
+
+        
+
         }
     };
 
