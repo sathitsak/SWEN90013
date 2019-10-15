@@ -24,6 +24,7 @@ import axios from "axios";
 import { ENETUNREACH } from "constants";
 import {constructNormalEmail} from "./EmailHeaderFooter"; 
 import { LoginContext } from "../../admin/LoginProvider";
+import {sendProjectDetails} from "./AutomatedEmailFunctions"; 
 
 function rand() {
   return Math.round(Math.random() * 20) - 10;
@@ -124,6 +125,8 @@ const coordinatorMap = new Map();
 
 //test username context 
 var valueOfContext;
+var context; 
+var sendProjectDetailsButton; 
 
 const templates = [
   { title: "Template A", message: "template content a" },
@@ -154,6 +157,8 @@ class EmailModal extends React.Component {
     };
     this.handleSendEmail = this.handleSendEmail.bind(this);
     this.handleClickOpen = this.handleClickOpen.bind(this);
+    this.handleClose = this.handleClose.bind(this);  
+    this._getStudents = this._getStudents.bind(this); 
   }
 
   componentDidMount() {
@@ -163,7 +168,8 @@ class EmailModal extends React.Component {
     console.log(valueOfContext); 
     console.log(valueOfContext.state.userName);
    
-
+    //get students 
+    
     axios
     .get(`http://172.26.88.142:3000/api/template`)
     .then(function(response) {
@@ -181,6 +187,9 @@ class EmailModal extends React.Component {
     });
 
   console.log(this.state.templates);
+
+
+
   }
 
   handleClickOpen = () => {
@@ -205,7 +214,7 @@ class EmailModal extends React.Component {
     //check the URL to determine the context of the email
     var url = window.location.href;
     var split = url.split("/");
-    var context = split[4];
+    context = split[4];
     console.log(split[4]);
 
     var clientName =
@@ -349,6 +358,25 @@ class EmailModal extends React.Component {
   _handleEmailContentChange(e) {
     const email_message = e.target.value;
     this.setState({ email_message: email_message });
+  }
+
+  _getStudents() {
+    var teams = store.getState().project.products;
+    var students = [];
+
+    teams.map(individualTeam => students.push(individualTeam.students));
+
+    var studentsFlattened = students.flat();
+
+    studentsFlattened.map(student => {
+      students.push(student.email);
+
+    });
+
+
+
+    sendProjectDetails(students, store.getState().project.name, store.getState().project.proposal.outlineOfProject, store.getState().project.proposal.client.organisation.name, store.getState().project.proposal.client.firstName, store.getState().project.proposal.client.lastName); 
+    this.handleClose(); 
   }
 
   render() {
@@ -532,6 +560,9 @@ class EmailModal extends React.Component {
             >
               Discard
             </Button>
+            {console.log(context)}
+            {context == "projects" ? <Button onClick={this._getStudents} color="primary" > Send Project Details </Button> : null}; 
+   
           </DialogActions>
         </Dialog>
       </div>
