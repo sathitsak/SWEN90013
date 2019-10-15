@@ -17,6 +17,7 @@ import {
     updateClientAction,
     getAllClientsAction
 } from "../../../store/actionCreators";
+import { LoginContext } from "../../admin/LoginProvider";
 
 const styles = theme => ({
     root: {
@@ -95,7 +96,11 @@ const MenuProps = {
     dense: "true"
 };
 
+var userName;
+
 class EditClientModal extends React.Component {
+    static contextType = LoginContext;
+    
     constructor(props) {
         super(props);
         this.state = {
@@ -106,6 +111,10 @@ class EditClientModal extends React.Component {
             size: this.props.client.organisation.size,
             industryType: this.props.client.organisation.industryType
         };
+    }
+
+    componentDidMount() {
+        userName = this.context;
     }
 
     _handleOpen = () => {
@@ -173,8 +182,9 @@ class EditClientModal extends React.Component {
 
     _addEditNote = (client) => {
         var newNote = {
-            text: "Client profile has been updated.",
+            text: "updated the client profile.",
             date: Date.now().toString(),    // Date is represented as an integer, stored as a string
+            userName: userName.state.userName,
         };
         var notes = client.notes;
         if (notes) {

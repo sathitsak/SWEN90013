@@ -30,7 +30,7 @@ class ProposalResponses extends React.Component {
                                 Project outline
                             </Typography>
                         </Grid>
-                        <Grid item xs={1} justify="flex-end">
+                        <Grid item xs={1}>
                             <EditProposalModal 
                                 proposal={this.props.proposal} 
                             />

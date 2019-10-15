@@ -11,6 +11,7 @@ import DialogActions from "@material-ui/core/DialogActions";
 import store from "../../../../store";
 import {updateProposalAction} from "../../../../store/actionCreators";
 import {grey} from "@material-ui/core/colors";
+import { LoginContext } from "../../../admin/LoginProvider";
 
 const styles = theme => ({
     showSup: {
@@ -45,7 +46,11 @@ const styles = theme => ({
     },
 });
 
+var userName;
+
 class AssignToSubject extends React.Component {
+    static contextType = LoginContext;
+
     constructor(props) {
         super(props);
 
@@ -115,6 +120,10 @@ class AssignToSubject extends React.Component {
         );
     }
 
+    componentDidMount() {
+        userName = this.context;
+    }
+
     _handleClickOpen = () => {
         this.setState({open: true});
     };
@@ -143,22 +152,26 @@ class AssignToSubject extends React.Component {
         const {proposal} = this.props;
         proposal.subjectId = selectedSubjectId;
 
-        // Add note to proposal
-        var newNote = {
-            text: "Proposal has been assigned to " + this._showSubject(proposal.subjectId) + ".",
-            date: Date.now().toString(),    // Date is represented as an integer, stored as a string
-        };
-        var notes = proposal.notes;
-        if (notes) {
-            notes.push(newNote);
-        } else {
-            notes = [newNote];
-        }
-        proposal.notes = notes;
+        if (selectedSubjectId !== "") {
+            // Add note to proposal
+            var newNote = {
+                text: "assigned the proposal to " + this._showSubject(proposal.subjectId) + ".",
+                date: Date.now().toString(),    // Date is represented as an integer, stored as a string
+                userName: userName.state.userName,
+            };
+            var notes = proposal.notes;
+            if (notes) {
+                notes.push(newNote);
+            } else {
+                notes = [newNote];
+            }
+            proposal.notes = notes;
 
-       // Send PUT request
-       const updateProposalAct = updateProposalAction(proposal._id, proposal);
-       store.dispatch(updateProposalAct);
+            // Send PUT request
+            const updateProposalAct = updateProposalAction(proposal._id, proposal);
+            store.dispatch(updateProposalAct);
+        };
+
         this.setState({
             selectedSupervisorId: "",
             open: false
