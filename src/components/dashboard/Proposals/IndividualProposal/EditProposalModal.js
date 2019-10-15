@@ -103,7 +103,11 @@ const MenuProps = {
     dense: "true"
 };
 
+var userName;
+
 class EditProposalModal extends React.Component {
+    static contextType = LoginContext;
+
     constructor(props) {
         super(props);
         this.state = {
@@ -113,8 +117,9 @@ class EditProposalModal extends React.Component {
         };
     }
 
-    static contextType = LoginContext;
-    valueOfContext = this.context;
+    componentDidMount() {
+        userName = this.context;
+    }
 
     _handleOpen = () => {
         this.setState({ open: true });
@@ -131,9 +136,9 @@ class EditProposalModal extends React.Component {
     _addEditNote = (proposal) => {
 
         var newNote = {
-            text: "Proposal has been updated.",
+            text: "updated the proposal.",
             date: Date.now().toString(),    // Date is represented as an integer, stored as a string
-            // userName: userName,
+            userName: userName.state.userName,
         };
         var notes = proposal.notes;
         if (notes) {

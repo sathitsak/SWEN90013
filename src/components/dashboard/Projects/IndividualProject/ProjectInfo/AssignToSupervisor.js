@@ -15,6 +15,7 @@ import Grid from "@material-ui/core/Grid";
 import store from "../../../../../store";
 import {updateProjectAction} from "../../../../../store/actionCreators";
 import {grey} from "@material-ui/core/colors";
+import { LoginContext } from "../../../../admin/LoginProvider";
 
 const styles = theme => ({
     showSup: {
@@ -49,7 +50,11 @@ const styles = theme => ({
     },
 });
 
+var userName;
+
 class AssignToSupervisor extends React.Component {
+    static contextType = LoginContext;
+
     constructor(props) {
         super(props);
 
@@ -104,6 +109,7 @@ class AssignToSupervisor extends React.Component {
                                     native
                                     onChange={e => this._handleSelect(e)}
                                     input={<Input id="sp-native-simple"/>}
+                                    defaultValue={project.supervisorId}
                                 >
                                     <option value="">None</option>
                                     {supervisors.map((sp, index) => (
@@ -131,6 +137,9 @@ class AssignToSupervisor extends React.Component {
         );
     }
 
+    componentDidMount() {
+        userName = this.context;
+    }
     _showSupervisor = (supervisorId) => {
         const {supervisors} = this.props;
         let supervisorName = "NO SUPERVISOR ASSIGNED";
@@ -158,11 +167,19 @@ class AssignToSupervisor extends React.Component {
         const {selectedSupervisorId} = this.state;
         const {project, supervisors} = this.props;
         project.supervisorId = selectedSupervisorId;
+        var text;
+
+        if (selectedSupervisorId === "") {
+            text = "removed the supervisor assigned to the project."
+        } else {
+            text = "assigned the project to " + this._showSupervisor(project.supervisorId) + "."
+        };
 
         // Add note to project
         var newNote = {
-            text: "Project has been assigned to " + this._showSupervisor(project.supervisorId) + ".",
+            text: text,
             date: Date.now().toString(),    // Date is represented as an integer, stored as a string
+            userName: userName.state.userName
         };
         var notes = project.notes;
         if (notes) {

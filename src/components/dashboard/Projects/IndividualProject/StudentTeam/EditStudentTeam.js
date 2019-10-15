@@ -40,6 +40,7 @@ import {
     addNoteAction,
     getProjectByIdAction
 } from "../../../../../store/actionCreators";
+import { LoginContext } from "../../../../admin/LoginProvider";
 
 const styles = theme => ({
         root: {
@@ -120,7 +121,11 @@ const MenuProps = {
     dense: "true"
 };
 
+var userName;
+
 class EditStudentTeam extends React.Component {
+    static contextType = LoginContext;
+
     constructor(props) {
         super(props);
 
@@ -135,6 +140,10 @@ class EditStudentTeam extends React.Component {
             deployed: props.product.deployed ? props.product.deployed : false,
         };
 
+    }
+
+    componentDidMount() {
+        userName = this.context;
     }
 
     _handleClickOpen = () => {
@@ -228,8 +237,9 @@ class EditStudentTeam extends React.Component {
 
         // Add note to project
         var newNote = {
-            text: product.name + " has been updated.",
+            text: "updated " + product.name + ".",
             date: Date.now().toString(),    // Date is represented as an integer, stored as a string
+            userName: userName.state.userName,
         };
         var notes = this.props.project.notes;
         if (notes) {

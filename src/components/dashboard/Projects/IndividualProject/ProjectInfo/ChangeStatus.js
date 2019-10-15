@@ -15,10 +15,14 @@ import InputLabel from "@material-ui/core/InputLabel";
 import {projectStatus} from "../../Constants/Constants";
 import store from "../../../../../store";
 import {updateProjectAction} from "../../../../../store/actionCreators";
+import { LoginContext } from "../../../../admin/LoginProvider";
 
 const styles = {};
+var userName;
 
 class ChangeStatus extends React.Component {
+    static contextType = LoginContext;
+
     constructor(props) {
         super(props);
         this.state = {
@@ -94,6 +98,10 @@ class ChangeStatus extends React.Component {
         );
     }
 
+    componentDidMount() {
+        userName = this.context;
+    }
+
     _handleClickOpen = () => {
         this.setState({open: true});
     };
@@ -123,8 +131,9 @@ class ChangeStatus extends React.Component {
 
         // Add note to project
         var newNote = {
-            text: "Status of has been updated to " + this._formatProjectStatus(project.status) + ".",
+            text: "updated the project status to " + this._formatProjectStatus(project.status) + ".",
             date: Date.now().toString(),    // Date is represented as an integer, stored as a string
+            userName: userName.state.userName,
         };
         var notes = project.notes;
         if (notes) {

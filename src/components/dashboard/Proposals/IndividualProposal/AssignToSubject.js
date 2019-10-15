@@ -151,26 +151,31 @@ class AssignToSubject extends React.Component {
         const {selectedSubjectId} = this.state;
         const {proposal} = this.props;
         proposal.subjectId = selectedSubjectId;
+        var text = "";
 
-        if (selectedSubjectId !== "") {
-            // Add note to proposal
-            var newNote = {
-                text: "assigned the proposal to " + this._showSubject(proposal.subjectId) + ".",
-                date: Date.now().toString(),    // Date is represented as an integer, stored as a string
-                userName: userName.state.userName,
-            };
-            var notes = proposal.notes;
-            if (notes) {
-                notes.push(newNote);
-            } else {
-                notes = [newNote];
-            }
-            proposal.notes = notes;
-
-            // Send PUT request
-            const updateProposalAct = updateProposalAction(proposal._id, proposal);
-            store.dispatch(updateProposalAct);
+        if (selectedSubjectId === "") {
+            text = "removed the subject assigned to the proposal."
+        } else {
+            text = "assigned the proposal to " + this._showSubject(proposal.subjectId) + "."
+        }
+        
+        // Add note to proposal
+        var newNote = {
+            text: text,
+            date: Date.now().toString(),    // Date is represented as an integer, stored as a string
+            userName: userName.state.userName,
         };
+        var notes = proposal.notes;
+        if (notes) {
+            notes.push(newNote);
+        } else {
+            notes = [newNote];
+        }
+        proposal.notes = notes;
+
+        // Send PUT request
+        const updateProposalAct = updateProposalAction(proposal._id, proposal);
+        store.dispatch(updateProposalAct);
 
         this.setState({
             selectedSupervisorId: "",
