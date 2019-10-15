@@ -48,28 +48,6 @@ const styles = theme => ({
 });
 
 class ProposalInfo extends React.Component {
-    // is_Mounted = false;
-
-    // constructor(props) {
-    //     super(props);
-
-    //     this.state = store.getState();
-
-    //     this._handleStoreChange = this._handleStoreChange.bind(this);
-    //     store.subscribe(this._handleStoreChange);
-    // }
-
-    // componentDidMount() {
-    //     this._isMounted = true;
-    // }
-
-    // componentWillUnmount() {
-    //     this._isMounted = false;
-    // }
-
-    // _handleStoreChange() {
-    //     this.setState(store.getState());
-    // }
 
     render() {
         const {classes} = this.props;

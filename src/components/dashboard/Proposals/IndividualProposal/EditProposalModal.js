@@ -182,6 +182,7 @@ class EditProposalModal extends React.Component {
          store.dispatch(updateProposalAct);
 
          // Update project/proposal state
+         this._updateProposalState(this.props.proposal._id);
          const updatePageTitleAct = updatePageTitleAction(name);
          store.dispatch(updatePageTitleAct);
 
