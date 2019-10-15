@@ -14,7 +14,7 @@ import {withStyles} from "@material-ui/core/styles";
 import {getAllSubjects, getProposalById,} from "../../../../api";
 import {
     getAllSubjectsAction,
-    changeProposalStatusAction,
+    updateProposalAction,
     getProposalByIdAction,
 } from "../../../../store/actionCreators";
 import { LoginContext } from "../../../admin/LoginProvider";
@@ -71,12 +71,6 @@ class StatusChangeModal extends React.Component {
         const subjectsResult = await getAllSubjects();
         const subjectsAction = getAllSubjectsAction(subjectsResult);
         store.dispatch(subjectsAction);
-    }
-
-    async _updateProposalState() {
-        const proposalResult = await getProposalById(this.props.id);
-        const proposalAction = getProposalByIdAction(proposalResult);
-        store.dispatch(proposalAction);
     }
 
     componentDidMount() {
@@ -258,38 +252,47 @@ class StatusChangeModal extends React.Component {
     _handleUpdate = () => {
         let responseText = document.getElementById("reason").value;
         const {subjectId, option} = this.state;
-        const {id} = this.props;
+        const {proposal} = this.props;
+        var noteMsg;
+
         if (option === "accept") {
             if (responseText === "") {
-                alert("Please enter the reason to accept")
+                alert("Please enter the reason why you have accepted this proposal")
             } else if (subjectId === "") {
-                alert("Please select one subject for it")
+                alert("Please assign this proposal to a subject")
             } else {
                 this.setState({openAccept: false});
-                const object = {
-                    subjectId: subjectId,
-                    acceptReason: "Accepted: " + responseText,
-                    userName: userName.state.userName,
-                };
-                const changeProposalStatusAct = changeProposalStatusAction(id, option, object);
-                store.dispatch(changeProposalStatusAct);
+                proposal.status = "approved";
+                noteMsg = "accepted the proposal. Reason: " + responseText;
+                proposal.subjectId = subjectId;
             }
         } else if (option === "reject") {
             if (responseText === "") {
-                alert("Please enter the reason to reject")
+                alert("Please enter the reason why you have rejected this proposal")
             } else {
                 this.setState({openReject: false});
-                const object = {
-                    rejectReason: "Rejected: " + responseText,
-                    userName: userName.state.userName
-                };
-                const changeProposalStatusAct = changeProposalStatusAction(id, option, object);
-                store.dispatch(changeProposalStatusAct);
+                proposal.status = "reject";
+                noteMsg = "rejected the proposal. Reason: " + responseText;
             }
         }
 
-        // update Proposal data 
-        this._updateProposalState();
+        // Add note to proposal
+        var newNote = {
+            text: noteMsg,
+            date: Date.now().toString(),    // Date is represented as an integer, stored as a string
+            userName: userName.state.userName,
+        };
+        var notes = proposal.notes;
+        if (notes) {
+            notes.push(newNote);
+        } else {
+            notes = [newNote];
+        }
+        proposal.notes = notes;
+
+        // Send PUT request
+        const updateProposalAct = updateProposalAction(proposal._id, proposal);
+        store.dispatch(updateProposalAct);
     };
 
 }

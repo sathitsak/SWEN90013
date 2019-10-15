@@ -48,22 +48,32 @@ const styles = theme => ({
 });
 
 class ProposalInfo extends React.Component {
-    constructor(props) {
-        super(props);
+    // is_Mounted = false;
 
-        this.state = store.getState();
+    // constructor(props) {
+    //     super(props);
 
-        this._handleStoreChange = this._handleStoreChange.bind(this);
-        store.subscribe(this._handleStoreChange);
-    }
+    //     this.state = store.getState();
 
-    _handleStoreChange() {
-        this.setState(store.getState());
-    }
+    //     this._handleStoreChange = this._handleStoreChange.bind(this);
+    //     store.subscribe(this._handleStoreChange);
+    // }
+
+    // componentDidMount() {
+    //     this._isMounted = true;
+    // }
+
+    // componentWillUnmount() {
+    //     this._isMounted = false;
+    // }
+
+    // _handleStoreChange() {
+    //     this.setState(store.getState());
+    // }
 
     render() {
         const {classes} = this.props;
-        const {proposal, subjects} = this.state;
+        const {proposal, subjects} = this.props;
 
         return (
             <div>
@@ -144,7 +154,7 @@ class ProposalInfo extends React.Component {
 
                     <Grid item xs={12}>
                         <StatusChangeModal
-                            id={proposal._id}
+                            proposal={proposal}
                             subjects={subjects}
                         />
                     </Grid>
@@ -156,7 +166,7 @@ class ProposalInfo extends React.Component {
     }
 
     _showSubject = (subjectId) => {
-        const {subjects} = this.state;
+        const {subjects} = this.props;
         let subjectName = "NO RELATED SUBJECT";
         subjects.forEach(sb => {
             if (sb._id === subjectId)

@@ -55,7 +55,7 @@ class AssignToSubject extends React.Component {
         super(props);
 
         this.state = {
-            selectedSubjectId: "",
+            selectedSubjectId: this.props.proposal.subjectId,
             open: false
         };
     }

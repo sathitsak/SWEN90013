@@ -73,7 +73,10 @@ class ProposalById extends React.Component {
                         <Grid item xs={12} sm={4}>
                             <Paper className={classes.paper}
                                    style={{marginTop: "20px", height: "fit-content"}}>
-                                <ProposalInfo/>
+                                <ProposalInfo
+                                    proposal={this.state.proposal}
+                                    subjects={this.state.subjects}
+                                />
                             </Paper>
                         </Grid>
                     ) : (
