@@ -23,6 +23,7 @@ import store from "../../../store";
 import axios from "axios";
 import { ENETUNREACH } from "constants";
 import {constructNormalEmail} from "./EmailHeaderFooter"; 
+import { LoginContext } from "../../admin/LoginProvider";
 
 function rand() {
   return Math.round(Math.random() * 20) - 10;
@@ -121,6 +122,9 @@ const tempCoordinatorNameArray = [];
 const nameEmailMap = new Map();
 const coordinatorMap = new Map();
 
+//test username context 
+var valueOfContext;
+
 const templates = [
   { title: "Template A", message: "template content a" },
   { title: "Template B", message: "template content b" },
@@ -129,6 +133,9 @@ const templates = [
 ];
 
 class EmailModal extends React.Component {
+  static contextType = LoginContext;
+  //valueOfContext = this.context; 
+
   constructor(props) {
     super(props);
     this.state = {
@@ -150,6 +157,13 @@ class EmailModal extends React.Component {
   }
 
   componentDidMount() {
+    //testing context
+    valueOfContext = this.context;
+    console.log("another way ");
+    console.log(valueOfContext); 
+    console.log(valueOfContext.state.userName);
+   
+
     axios
     .get(`http://172.26.88.142:3000/api/template`)
     .then(function(response) {
@@ -171,6 +185,7 @@ class EmailModal extends React.Component {
 
   handleClickOpen = () => {
     this.setState({ open: true });
+  
 
     //get all coordinators
 

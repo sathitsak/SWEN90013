@@ -18,8 +18,9 @@ export function addTemplate(id, title, message) {
 }
 
 
+
 export function deleteSupervisorMethod(id) {
-  axios.delete('http://35.244.89.250/supervisor/'+id)
+  axios.delete(baseURL+'/supervisor/'+id)
   .then(response => {
   })
   .catch(function (error) {
@@ -28,7 +29,7 @@ export function deleteSupervisorMethod(id) {
 }
 
 export function deleteCoordinatorMethod(id) {
-  axios.delete('http://35.244.89.250/coordinator/'+id)
+  axios.delete(baseURL+'/coordinator/'+id)
   .then(response => {
   })
   .catch(function (error) {
@@ -37,7 +38,7 @@ export function deleteCoordinatorMethod(id) {
 }
 
 export function deleteSubjectMethod(id) {
-  axios.delete('http://35.244.89.250/subject/'+id, {
+  axios.delete(baseURL+'/subject/'+id, {
     data: {
       soft: "1"
     }
