@@ -17,7 +17,11 @@ import {
     updateProposalAction,
     getProposalByIdAction,
 } from "../../../../store/actionCreators";
+
 import { LoginContext } from "../../../admin/LoginProvider";
+
+import {proposalOutcome} from "../../Email/AutomatedEmailFunctions"
+
 
 const styles = theme => ({
     acceptButton: {
@@ -239,6 +243,8 @@ class StatusChangeModal extends React.Component {
         } else if (status === 'reject') {
             this.setState({openReject: true, option: status});
         }
+
+        
     };
 
     _handleClose = (status) => {
@@ -265,6 +271,8 @@ class StatusChangeModal extends React.Component {
                 proposal.status = "approved";
                 noteMsg = "accepted the proposal. Reason: " + responseText;
                 proposal.subjectId = subjectId;
+                proposalOutcome("accept", responseText, proposal.client.firstName, proposal.client.secondaryContactFirstName, proposal.client.email, proposal.client.secondaryContactEmail);
+
             }
         } else if (option === "reject") {
             if (responseText === "") {
@@ -273,6 +281,8 @@ class StatusChangeModal extends React.Component {
                 this.setState({openReject: false});
                 proposal.status = "reject";
                 noteMsg = "rejected the proposal. Reason: " + responseText;
+                proposalOutcome("reject", responseText, proposal.client.firstName, proposal.client.secondaryContactFirstName, proposal.client.email, proposal.client.secondaryContactEmail);
+
             }
         }
 

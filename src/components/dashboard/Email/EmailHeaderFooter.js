@@ -433,5 +433,5 @@ var message = '<!DOCTYPE html>'+
 '  </body>'+
 '</html>';
 	
-return MessageChannel;
+return message;
 }

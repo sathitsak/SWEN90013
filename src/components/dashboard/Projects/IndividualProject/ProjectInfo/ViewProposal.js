@@ -4,6 +4,7 @@ import {withStyles} from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
+import {Link} from "react-router-dom"
 
 const styles = {
     viewProposalButton: {
@@ -30,14 +31,18 @@ class ViewProposal extends React.Component {
                         </Typography>
                     </Grid>
                     <Grid item style={{marginTop: 10}} align="center">
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            href={`/dashboard/proposals/${proposalID}`}
-                            className={classes.viewProposalButton}
+                        <Link
+                           
+                            to={`/dashboard/proposals/${proposalID}`}
+                           
+                           
                         >
-                            View Proposal
-                        </Button>
+                            <Button variant="contained"
+                            color="primary"  className={classes.viewProposalButton}>
+                                View proposal
+                            </Button>
+                        
+                        </Link>
                     </Grid>
                 </Grid>
             </div>
