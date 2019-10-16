@@ -5,6 +5,7 @@ import StatusChangeModal from "./StatusChangeModal";
 import {green, amber, red, grey} from "@material-ui/core/colors";
 import {withStyles} from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
+import AssignToSubject from "../IndividualProposal/AssignToSubject";
 import store from "../../../../store";
 
 const styles = theme => ({
@@ -20,6 +21,7 @@ const styles = theme => ({
         verticalAlign: "middle",
         position: "relative",
         color: grey[700],
+        marginBottom: "5%"
     },
     infoContent: {
         fontSize: 16,
@@ -117,8 +119,15 @@ class ProposalInfo extends React.Component {
                     <br />
                     
                     <Grid item xs={12} style={{marginBottom: "3%"}}>
-                        <div className={classes.infoHeader}>Subject</div>
-                        <div className={classes.infoContent}>
+                        <Grid container spacing={3}  direction="row">
+                            <Grid item md={4} xs={12}>
+                                <div className={classes.infoHeader}>Subject</div>
+                            </Grid>
+                            <Grid item md={8} xs={12}>
+                                <AssignToSubject proposal={proposal} subjects={subjects}/>
+                            </Grid>
+                        </Grid>
+                        <div className={classes.infoContent} style={{ paddingTop: "3%" }}>
                             {proposal.subjectId ?
                                 this._showSubject(proposal.subjectId)
                                 : "NO RELATED SUBJECT"
@@ -130,7 +139,7 @@ class ProposalInfo extends React.Component {
                     <br/>
 
                     <Grid item xs={12}>
-                        <div className={classes.infoHeader}>Change Status</div>
+                        <div className={classes.infoHeader} style={{ marginBottom: 0 }}>Change Status</div>
                     </Grid>
 
                     <Grid item xs={12}>
@@ -151,7 +160,7 @@ class ProposalInfo extends React.Component {
         let subjectName = "NO RELATED SUBJECT";
         subjects.forEach(sb => {
             if (sb._id === subjectId)
-                subjectName = sb.name;
+                subjectName = sb.code + " " + sb.name;
         });
         return subjectName;
     };

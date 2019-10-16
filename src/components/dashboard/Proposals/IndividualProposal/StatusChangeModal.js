@@ -17,7 +17,11 @@ import {
     changeProposalStatusAction,
     getProposalByIdAction,
 } from "../../../../store/actionCreators";
+
+import { LoginContext } from "../../../admin/LoginProvider";
+
 import {proposalOutcome} from "../../Email/AutomatedEmailFunctions"
+
 
 const styles = theme => ({
     acceptButton: {
@@ -48,7 +52,11 @@ const styles = theme => ({
     },
 });
 
+var userName;
+
 class StatusChangeModal extends React.Component {
+    static contextType = LoginContext;
+
     constructor(props) {
         super(props);
         this.state = {
@@ -77,6 +85,7 @@ class StatusChangeModal extends React.Component {
 
     componentDidMount() {
         this._reqTodoList();
+        userName = this.context;
     }
 
     render() {
@@ -265,7 +274,8 @@ class StatusChangeModal extends React.Component {
                 this.setState({openAccept: false});
                 const object = {
                     subjectId: subjectId,
-                    acceptReason: "Accepted: " + responseText
+                    acceptReason: "Accepted: " + responseText,
+                    userName: userName.state.userName,
                 };
                 const changeProposalStatusAct = changeProposalStatusAction(id, option, object);
                 store.dispatch(changeProposalStatusAct);
@@ -277,7 +287,8 @@ class StatusChangeModal extends React.Component {
             } else {
                 this.setState({openReject: false});
                 const object = {
-                    rejectReason: "Rejected: " + responseText
+                    rejectReason: "Rejected: " + responseText,
+                    userName: userName.state.userName
                 };
                 const changeProposalStatusAct = changeProposalStatusAction(id, option, object);
                 store.dispatch(changeProposalStatusAct);

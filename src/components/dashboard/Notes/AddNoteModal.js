@@ -12,6 +12,7 @@ import InputBase from "@material-ui/core/InputBase";
 import {Divider} from "@material-ui/core";
 import store from "../../../store";
 import {addNoteAction} from "../../../store/actionCreators";
+import { LoginContext } from "../../admin/LoginProvider";
 
 function rand() {
     return Math.round(Math.random() * 20) - 10;
@@ -99,7 +100,11 @@ const MenuProps = {
     dense: "true"
 };
 
+var userName;
+
 class AddNoteModal extends React.Component {
+    static contextType = LoginContext;
+
     constructor(props) {
         super(props);
         this.state = {
@@ -107,6 +112,10 @@ class AddNoteModal extends React.Component {
             fullWidth: true
         };
     }
+
+    componentDidMount() {
+        userName = this.context;
+    };
 
     _handleClickOpen = () => {
         this.setState({open: true});
@@ -123,8 +132,9 @@ class AddNoteModal extends React.Component {
 
         if (noteMsg) {
             var newNote = {
-                text: noteMsg,
+                text: "added a note: " + noteMsg,
                 date: Date.now().toString(),    // Date is represented as an integer, stored as a string
+                userName: userName.state.userName
             };
             var notes = object.notes;
             if (notes) {
@@ -144,8 +154,6 @@ class AddNoteModal extends React.Component {
         } else {
             alert("Please provide a valid note.");
         }
-        
-        
     };
 
     render() {

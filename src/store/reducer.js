@@ -14,7 +14,8 @@ import {
     GET_CLIENT_BY_ID,
     UPDATE_PROPOSAL,
     GET_ALL_CLIENTS,
-    GET_ALL_PRODUCTS
+    GET_ALL_PRODUCTS,
+    UPDATE_PAGE_TITLE,
 } from "./actionTypes";
 import {
     updateProject,
@@ -101,6 +102,10 @@ export default (state = defaultState, action) => {
 
     if (action.type === GET_ALL_PRODUCTS) {
         return getAllProducts(state, action);
+    }
+
+    if (action.type === UPDATE_PAGE_TITLE) {
+        return updatePageTitle(state, action);
     }
 
     return state;
@@ -204,6 +209,12 @@ function getAllClients(state, action) {
 }
 
 function getAllProducts(state, action) {
+    const newState = JSON.parse(JSON.stringify(state));
+    newState.page_title = action.page_title;
+    return newState;
+}
+
+function updatePageTitle(state, action) {
     const newState = JSON.parse(JSON.stringify(state));
     newState.page_title = action.page_title;
     return newState;

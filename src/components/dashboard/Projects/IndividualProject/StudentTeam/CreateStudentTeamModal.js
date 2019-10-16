@@ -33,6 +33,7 @@ import {
     addNoteAction
 } from "../../../../../store/actionCreators";
 import {getProjectById} from "../../../../../api";
+import {LoginContext} from "../../../../admin/LoginProvider";
 
 const styles = theme => ({
     root: {
@@ -109,7 +110,11 @@ const MenuProps = {
 const TEAM_SIZE = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
 const INITIAL_NUM_STUDENTS = 4;
 
+var userName;
+
 class CreateStudentTeamModal extends React.Component {
+    static contextType = LoginContext;
+
     constructor(props) {
         super(props);
 
@@ -119,6 +124,10 @@ class CreateStudentTeamModal extends React.Component {
             maxWidth: "lg",
             numStudents: INITIAL_NUM_STUDENTS,
         };
+    }
+
+    componentDidMount() {
+        userName = this.context;
     }
 
     _handleClickOpen = () => {
@@ -175,8 +184,9 @@ class CreateStudentTeamModal extends React.Component {
 
         // Add note to project
         var newNote = {
-            text: teamName + " has been created.",
+            text: "created " + teamName + ".",
             date: Date.now().toString(),    // Date is represented as an integer, stored as a string
+            userName: userName.state.userName
         };
         var notes = this.props.project.notes;
         if (notes) {
