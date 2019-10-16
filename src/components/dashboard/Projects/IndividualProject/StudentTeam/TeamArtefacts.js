@@ -102,10 +102,4 @@ class TeamArtefacts extends React.Component {
     }
 }
 
-TeamArtefacts.propTypes = {
-    students: PropTypes.array.isRequired,
-    productLinks: PropTypes.array.isRequired,
-    technologies: PropTypes.array.isRequired,
-};
-
 export default TeamArtefacts;

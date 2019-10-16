@@ -29,10 +29,8 @@ import store from "../../../../../store";
 import PropTypes from "prop-types";
 import {
     createNewProductAction,
-    getProjectByIdAction,
-    addNoteAction
+    updateProjectAction,
 } from "../../../../../store/actionCreators";
-import {getProjectById} from "../../../../../api";
 import {LoginContext} from "../../../../admin/LoginProvider";
 
 const styles = theme => ({
@@ -109,6 +107,7 @@ const MenuProps = {
 
 const TEAM_SIZE = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
 const INITIAL_NUM_STUDENTS = 4;
+const MINIMUM_TEAM_NAME_LENGTH = 2;
 
 var userName;
 
@@ -156,8 +155,61 @@ class CreateStudentTeamModal extends React.Component {
         return (firstName + " " + lastName);
     };
 
+    _validateTeamName = teamName => {
+        // teamName will always start with "Team "; the length should be > 2
+        let teamNameList = teamName.split(" ");
+        if ((teamNameList.length < MINIMUM_TEAM_NAME_LENGTH) || (teamNameList[1] === "")){
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    _validateEmail = email => {
+        if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+          return true;
+        } else {
+          return false;
+        }
+    };
+
+    _validateStudentDetails = student => {
+        let nameList = student.name.split(" ");
+        console.log(nameList);
+        var i;
+        if (!this._validateEmail(student.email)){
+            return false;
+        } else {
+            for (i = 0; i < nameList.length; i++) {
+                if (nameList[i] === "") {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+
+    }
+
+    _checkStudentTeamDetails(teamName, studentList) {
+        var i;
+
+        if (!this._validateTeamName(teamName)) {
+           alert("Please enter a valid student team name."); 
+           return false;
+        } else {
+            for (i = 0; i < studentList.length; i++) {
+               if (!this._validateStudentDetails(studentList[i])) {
+                   alert("Please enter valid student details.");
+                   return false;
+               }
+            }
+        }
+        return true;
+    }
+
     _handleCreateStudentTeam = () => {
-        const {projectId} = this.props;
+        const {projectId, project} = this.props;
 
         const studentList = [];
         for (var i = 0; i < this.state.numStudents; i++) {
@@ -172,48 +224,49 @@ class CreateStudentTeamModal extends React.Component {
         }
 
         const teamName = document.getElementById("teamName").value;
-        const newProduct = {
-            name: teamName,
-            projectId: projectId,
-            students: studentList
-        };
 
-        // Send POST request
-        const createNewProdAction = createNewProductAction(newProduct);
-        store.dispatch(createNewProdAction);
+        if (this._checkStudentTeamDetails(teamName, studentList)) {   
+            const newProduct = {
+                name: teamName,
+                projectId: projectId,
+                students: studentList
+            };
 
-        // Add note to project
-        var newNote = {
-            text: "created " + teamName + ".",
-            date: Date.now().toString(),    // Date is represented as an integer, stored as a string
-            userName: userName.state.userName
-        };
-        var notes = this.props.project.notes;
-        if (notes) {
-            notes.push(newNote);
-        } else {
-            notes = [newNote];
+            // Send POST request
+            const createNewProdAction = createNewProductAction(newProduct);
+            store.dispatch(createNewProdAction);
+
+            // Add note to project
+            var newNote = {
+                text: "created " + teamName + ".",
+                date: Date.now().toString(),    // Date is represented as an integer, stored as a string
+                userName: userName.state.userName
+            };
+            var notes = project.notes;
+            if (notes) {
+                notes.push(newNote);
+            } else {
+                notes = [newNote];
+            }
+            project.notes = notes;
+
+            // Add product to project (to display in state)
+            var products = project.products
+            if (products) {
+                products.push(newProduct);
+            } else {
+                products = [newProduct];
+            }
+            project.products = products;
+
+            // Send PUT request
+            const updateProjectAct = updateProjectAction(project._id, project);
+            store.dispatch(updateProjectAct);
+        
+            // Close window
+            this._handleClose();
         }
-        this.props.project.notes = notes;
-
-        // Send PUT request
-        const addNoteAct = addNoteAction("project", this.props.projectId, this.props.project);
-        console.log(addNoteAct);
-        store.dispatch(addNoteAct);
-
-        // Update state
-        this._updateProjectState();
-
-        // Close window
-        this._handleClose();
     };
-
-    async _updateProjectState() {
-        const {projectId} = this.props;
-        const project = await getProjectById(projectId);
-        const getProAction = getProjectByIdAction(project);
-        store.dispatch(getProAction);
-    }
 
     render() {
         const {classes} = this.props;

@@ -8,7 +8,6 @@ import Notes from "../../Notes/Notes";
 import {getProposalById, getAllSubjects} from "../../../../api";
 import {
     getProposalByIdAction,
-    getAllSubjectsAction
 } from "../../../../store/actionCreators";
 import store from "../../../../store";
 import Paper from "@material-ui/core/Paper";
@@ -58,11 +57,6 @@ class ProposalById extends React.Component {
                     <Grid item xs={12} sm={8}>
                         {
                             <ProposalResponses
-                                q1={this.state.proposal.outlineOfProject}
-                                q2={this.state.proposal.beneficiaries}
-                                q3={this.state.proposal.endProductBenefits}
-                                q4={this.state.proposal.originality}
-                                q5={this.state.proposal.endProductUse}
                                 proposal={this.state.proposal}
                                 subjects={this.state.subjects}
                             />
@@ -73,7 +67,10 @@ class ProposalById extends React.Component {
                         <Grid item xs={12} sm={4}>
                             <Paper className={classes.paper}
                                    style={{marginTop: "20px", height: "fit-content"}}>
-                                <ProposalInfo/>
+                                <ProposalInfo
+                                    proposal={this.state.proposal}
+                                    subjects={this.state.subjects}
+                                />
                             </Paper>
                         </Grid>
                     ) : (

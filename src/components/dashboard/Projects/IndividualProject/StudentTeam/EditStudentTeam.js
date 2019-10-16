@@ -34,11 +34,9 @@ import Nav from "react-bootstrap/Nav";
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import PropTypes from "prop-types";
-import {getProjectById} from "../../../../../api";
 import {
     updateProductAction,
-    addNoteAction,
-    getProjectByIdAction
+    updateProjectAction,
 } from "../../../../../store/actionCreators";
 import { LoginContext } from "../../../../admin/LoginProvider";
 
@@ -169,6 +167,7 @@ class EditStudentTeam extends React.Component {
     _handleMetricChange = (metricName) => event => {
         this.setState({[metricName]: event.target.checked});
     };
+
     _createRows = (tableName) => {
         var number;
         if (tableName === "numStudents") {
@@ -196,7 +195,7 @@ class EditStudentTeam extends React.Component {
             deployed,
             activelyUsed
         } = this.state;
-        const {product} = this.props;
+        const {product, project} = this.props;
 
         // Compile student list
         const studentList = [];
@@ -241,32 +240,21 @@ class EditStudentTeam extends React.Component {
             date: Date.now().toString(),    // Date is represented as an integer, stored as a string
             userName: userName.state.userName,
         };
-        var notes = this.props.project.notes;
+        var notes = project.notes;
         if (notes) {
             notes.push(newNote);
         } else {
             notes = [newNote];
         }
-        this.props.project.notes = notes;
+        project.notes = notes;
 
         // Send PUT request
-        const addNoteAct = addNoteAction("project", this.props.project._id, this.props.project);
-        console.log(addNoteAct);
-        store.dispatch(addNoteAct);
-
-        // Update state
-        this._updateProjectState();
+        const updateProjectAct = updateProjectAction(project._id, project);
+        store.dispatch(updateProjectAct);
 
         // Close window
         this._handleClose();
     };
-
-    async _updateProjectState() {
-        const {project} = this.props;
-        const projectObj = await getProjectById(project._id);
-        const getProAction = getProjectByIdAction(projectObj);
-        store.dispatch(getProAction);
-    }
 
     render() {
         const {classes, product} = this.props;

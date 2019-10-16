@@ -82,27 +82,6 @@ const styles = theme => ({
     },
 });
 
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-const MenuProps = {
-    PaperProps: {
-        style: {
-            maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-            width: "87%"
-        }
-    },
-    anchorOrigin: {
-        vertical: "bottom",
-        horizontal: "left"
-    },
-    transformOrigin: {
-        vertical: "top",
-        horizontal: "left"
-    },
-    getContentAnchorEl: null,
-    dense: "true"
-};
-
 var userName;
 
 class EditProposalModal extends React.Component {
@@ -158,7 +137,6 @@ class EditProposalModal extends React.Component {
         var endProductUse = document.getElementById("endProductUse").value;
         var beneficiaries = document.getElementById("beneficiaries").value;
         var originality = document.getElementById("originality").value;
-        // var subjectId = document.getElementById("subjectId").value;
 
         // Create new proposal object
         let proposal = {
@@ -174,6 +152,7 @@ class EditProposalModal extends React.Component {
             clientId: this.props.proposal.clientId,
             subjectId: this.props.proposal.subjectId,
             date: this.props.proposal.date,
+            client: this.props.proposal.client,
             __v: this.props.proposal.__v,
         }
 
@@ -187,12 +166,6 @@ class EditProposalModal extends React.Component {
 
          // Close window
          this._handleDiscard();
-    };
-
-    async _updateProposalState(proposalID) {
-        const proposal = await getProposalById(proposalID);
-        const getProposalAction = getProposalByIdAction(proposal);
-        store.dispatch(getProposalAction);    
     };
 
     render() {
@@ -229,30 +202,6 @@ class EditProposalModal extends React.Component {
                                 className={classes.nameTextField}
                                 margin="normal"
                             />
-                            {/* <TextField
-                                id="subjectId"
-                                select
-                                label="Subject assigned to"
-                                defaultValue={this.props.subjectId}
-                                value={this.state.subjectId}
-                                className={classes.textField}
-                                onChange={e => this._handleSelectUpdate(e)}
-                                SelectProps={{
-                                    MenuProps: {
-                                        className: classes.menu,
-                                    },
-                                }}
-                                margin="normal"
-                            >
-                                {this.props.subjects ? (
-                                    this.props.subjects.map(s => (
-                                        <MenuItem key={s._id}
-                                            value={s._id}>{s.code} {s.name}</MenuItem>
-                                    ))
-                                ) : (
-                                    <div/>
-                                )}
-                            </TextField> */}
                             <TextField
                                 id="outlineOfProject"
                                 label="Project outline"

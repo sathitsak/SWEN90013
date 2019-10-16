@@ -55,7 +55,7 @@ class Subject extends React.Component {
         let subjectName = "NO RELATED SUBJECT";
         subjects.forEach(sb => {
             if (sb._id === subjectId)
-                subjectName = sb.name;
+                subjectName = sb.code + " " + sb.name;
         });
         return subjectName;
     };

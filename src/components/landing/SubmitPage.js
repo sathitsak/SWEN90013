@@ -117,7 +117,7 @@ class SubmitPage extends React.Component {
         technical
       })
     ) {
-      alert("Please fill valid information for the client");
+      alert("Please fill valid information for the client.");
     } else if (
       !this.checkSecondaryContact({
         ci2firstname,
@@ -126,7 +126,7 @@ class SubmitPage extends React.Component {
         ci2number
       })
     ) {
-      alert("Please fill valid information for the secondary contact");
+      alert("Please fill valid information for the secondary contact.");
     } else if (
       !this.checkProposalInfo({
         outline,
@@ -136,7 +136,7 @@ class SubmitPage extends React.Component {
         projectName
       })
     ) {
-      alert("Please fill valid information for the proposal");
+      alert("Please fill valid information for the proposal.");
     } else if (
       !this.checkOrganisationInfo(
         organisationName,
