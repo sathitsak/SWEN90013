@@ -226,7 +226,7 @@ class EditClientModal extends React.Component {
             officeNumber
         })
         ) {
-        alert("Please fill valid information for the client");
+        alert("Please provide valid information for the client");
         } else if (
         !this.checkSecondaryContact({
             ci2firstname,
@@ -235,7 +235,7 @@ class EditClientModal extends React.Component {
             ci2number
         })
         ) {
-        alert("Please fill valid information for the secondary contact");
+        alert("Please provide valid information for the secondary contact");
         } else {
         
         // Create new client object
@@ -267,14 +267,14 @@ class EditClientModal extends React.Component {
          store.dispatch(updateClientAct);
 
          // Update project/proposal state
-         this._updateObjectState();
+         this._updateObjectState(client);
 
          // Close window
          this._handleDiscard();
         }
     };
 
-    async _updateObjectState() {
+    async _updateObjectState(client) {
         let objType = this.props.objType;
         let objId = this.props.objID;
 
@@ -287,8 +287,17 @@ class EditClientModal extends React.Component {
             const getProjectAction = getProjectByIdAction(project);
             store.dispatch(getProjectAction);
         } else if (objType === "allClients") {
-            const clients = await getAllClients();
-            const getAllClientsAct = getAllClientsAction(clients);
+            var allClients = store.getState().clients;
+
+            // Replace the old client object with the new one
+            var i;
+            for (i = 0; i < allClients.length; i++) {
+                if (allClients[i]._id === client._id) {
+                    allClients[i] = client;
+                    break;
+                }
+            }
+            const getAllClientsAct = getAllClientsAction(allClients);
             store.dispatch(getAllClientsAct);
         }
     }

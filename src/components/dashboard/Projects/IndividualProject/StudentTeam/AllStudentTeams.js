@@ -6,7 +6,7 @@
 
 import React, { PureComponent } from 'react';
 import store from "../../../../../store";
-import {getAllSubjects, getProjectList, getSupervisors, getAllProducts} from "../../../../../api";
+import {getAllSubjects, getProjectList, getSupervisors} from "../../../../../api";
 import {
     getAllProjectAction,
     getSupervisorsAction,
