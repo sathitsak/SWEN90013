@@ -24,7 +24,9 @@ import axios from "axios";
 import { ENETUNREACH } from "constants";
 import {constructNormalEmail} from "./EmailHeaderFooter"; 
 import { LoginContext } from "../../admin/LoginProvider";
-import {sendProjectDetails} from "./AutomatedEmailFunctions"; 
+import {sendProjectDetails} from "./AutomatedEmailFunctions";  
+import {addNoteAction} from "../../../store/actionCreators";
+
 
 function rand() {
   return Math.round(Math.random() * 20) - 10;
@@ -351,7 +353,33 @@ class EmailModal extends React.Component {
     this.setState({ available_recipients: [] });
     nameEmailMap.clear();
     this.setState({ open: false });
+    
+    this._sendNote(); 
+    
+
   }
+
+  _sendNote() {
+    const {objectType, object} = this.props;
+    var newNote = {
+      text: 'EMAIL to ' + this.state.email_recipients + ' from ' + valueOfContext.state.userName + ': ' + this.state.email_message,
+      date: Date.now().toString(),    
+    };
+  var notes = object.notes;
+  if (notes) {
+      notes.push(newNote);
+  } else {
+      notes = [newNote];
+  }
+  object.notes = notes;
+
+  // Send PUT request
+  const addNoteAct = addNoteAction(objectType, object._id, object);
+  console.log(addNoteAct);
+  store.dispatch(addNoteAct);
+  }
+
+
 
   unsubscribe = store.subscribe(this.handleChange);
 
