@@ -96,6 +96,7 @@ class Proposals extends React.Component {
             // First check if valid before sending through
             if ('client' in p) {
                 if ('organisation' in p.client) {
+                
                     if (p.status === status) {
                         targetProposals.push(p);
                     }

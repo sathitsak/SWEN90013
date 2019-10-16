@@ -55,7 +55,7 @@ class Notes extends React.Component {
                                       objectType={this.props.objectType}/>
                     </Grid>
                     <Grid item xs={1} align="right">
-                        <EmailModal/>
+                        <EmailModal object={this.props.object} objectType={this.props.objectType}/>
                     </Grid>
                 </Grid>
             </div>

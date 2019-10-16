@@ -67,16 +67,19 @@ class AddSupervisorForm extends React.Component {
     //return false is what you check is true 
     ValidatorForm.addValidationRule("nameValidator", value => {
       var regex = new RegExp("[0-9]+"); 
-      if(regex.test(value)) {
-        return false;
-      } else {
-        return true; 
+      if(value != null) {
+        if(!regex.test(value)) {
+          return false;
+        } else {
+          return true; 
+        }
       }
+     
     })
 
     ValidatorForm.addValidationRule("numberValidator", value => {
       var regex = new RegExp("[0-9]+"); 
-      if(!regex.test(value) && value.length != 0) {
+      if(!regex.test(value)) {
         return false;
       } else {
         return true; 

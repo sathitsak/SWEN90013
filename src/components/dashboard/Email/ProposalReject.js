@@ -401,7 +401,7 @@ var message = '<!DOCTYPE html>'+
 '                  <table role="presentation" border="0" cellpadding="0" cellspacing="0">'+
 '                    <tr>'+
 '                      <td>'+
-'                        <p>Hi ' +clientFirstName+ "and " +secondaryClientFirstName+ ",</p>" +
+'                        <p>Hi ' +clientFirstName+ " and " +secondaryClientFirstName+ ",</p>" +
 '                        <p>Your proposal has been rejected on account of the following reasons:</p>'+
 '                        <p>' +responseText+ '</p>'+
 '                        <p>If you wish to follow up, please contact the CIS Department</p>'+
