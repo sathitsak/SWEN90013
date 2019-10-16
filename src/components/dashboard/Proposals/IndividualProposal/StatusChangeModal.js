@@ -17,7 +17,11 @@ import {
     changeProposalStatusAction,
     getProposalByIdAction,
 } from "../../../../store/actionCreators";
+
 import { LoginContext } from "../../../admin/LoginProvider";
+
+import {proposalOutcome} from "../../Email/AutomatedEmailFunctions"
+
 
 const styles = theme => ({
     acceptButton: {
@@ -245,6 +249,8 @@ class StatusChangeModal extends React.Component {
         } else if (status === 'reject') {
             this.setState({openReject: true, option: status});
         }
+
+        
     };
 
     _handleClose = (status) => {
@@ -273,6 +279,7 @@ class StatusChangeModal extends React.Component {
                 };
                 const changeProposalStatusAct = changeProposalStatusAction(id, option, object);
                 store.dispatch(changeProposalStatusAct);
+                proposalOutcome("accept", responseText, store.getState().proposal.client.firstName, store.getState().proposal.client.secondaryContactFirstName, store.getState().proposal.client.email, store.getState().proposal.client.secondaryContactEmail);
             }
         } else if (option === "reject") {
             if (responseText === "") {
@@ -285,6 +292,7 @@ class StatusChangeModal extends React.Component {
                 };
                 const changeProposalStatusAct = changeProposalStatusAction(id, option, object);
                 store.dispatch(changeProposalStatusAct);
+                proposalOutcome("reject", responseText, store.getState().proposal.client.firstName, store.getState().proposal.client.secondaryContactFirstName, store.getState().proposal.client.email, store.getState().proposal.client.secondaryContactEmail);
             }
         }
 
