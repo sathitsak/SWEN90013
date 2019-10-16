@@ -44,6 +44,16 @@ const styles = theme => ({
             color: "#ffffff",
         }
     },
+    confirmButton: {
+        backgroundColor: "#094183",
+        color: "#FFFFFF",
+        "&:hover": {
+            backgroundColor: "#4074B2"
+        }
+    },
+    discardButton: {
+        color: "#094183"
+    },
 });
 
 var userName;
@@ -108,11 +118,11 @@ class AssignToSubject extends React.Component {
                         </form>
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={this._handleClose} color="primary">
-                            Cancel
-                        </Button>
-                        <Button onClick={this._handleOK} color="primary">
+                        <Button className={classes.confirmButton} onClick={this._handleOK} color="primary">
                             Ok
+                        </Button>
+                        <Button className={classes.discardButton} onClick={this._handleClose} color="primary">
+                            Cancel
                         </Button>
                     </DialogActions>
                 </Dialog>
