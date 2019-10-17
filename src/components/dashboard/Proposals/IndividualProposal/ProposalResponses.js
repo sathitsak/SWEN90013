@@ -30,12 +30,14 @@ class ProposalResponses extends React.Component {
                                 Project outline
                             </Typography>
                         </Grid>
-                        <Grid item xs={1} justify="flex-end">
-                            <EditProposalModal proposal={this.props.proposal}/>
+                        <Grid item xs={1}>
+                            <EditProposalModal 
+                                proposal={this.props.proposal} 
+                            />
                         </Grid>
                     </Grid>
                     
-                    <Typography component="p" align='justify' style={{paddingTop: 0}}>{this.props.q1}</Typography>
+                    <Typography component="p" align='justify' style={{paddingTop: 0}}>{this.props.proposal.outlineOfProject}</Typography>
                 </Paper>
                 <Paper
                     className={classes.root}
@@ -44,7 +46,7 @@ class ProposalResponses extends React.Component {
                     <Typography variant="h6" component="h3">
                         Use of the end-product
                     </Typography>
-                    <Typography component="p" align='justify'>{this.props.q5}</Typography>
+                    <Typography component="p" align='justify'>{this.props.proposal.endProductUse}</Typography>
                 </Paper>
                 <Paper
                     className={classes.root}
@@ -53,7 +55,7 @@ class ProposalResponses extends React.Component {
                     <Typography variant="h6" component="h3">
                         Benefits of end product
                     </Typography>
-                    <Typography component="p" align='justify'>{this.props.q3}</Typography>
+                    <Typography component="p" align='justify'>{this.props.proposal.endProductBenefits}</Typography>
                 </Paper>
                 
                 <Paper
@@ -63,7 +65,7 @@ class ProposalResponses extends React.Component {
                     <Typography variant="h6" component="h3">
                         Beneficiaries of end-product
                     </Typography>
-                    <Typography component="p" align='justify'>{this.props.q2}</Typography>
+                    <Typography component="p" align='justify'>{this.props.proposal.beneficiaries}</Typography>
                 </Paper>
                 <Paper
                     className={classes.root}
@@ -72,7 +74,7 @@ class ProposalResponses extends React.Component {
                     <Typography variant="h6" component="h3">
                         Originality of the idea
                     </Typography>
-                    <Typography component="p" align='justify'>{this.props.q4}</Typography>
+                    <Typography component="p" align='justify'>{this.props.proposal.originality}</Typography>
                 </Paper>
             </div>
         );

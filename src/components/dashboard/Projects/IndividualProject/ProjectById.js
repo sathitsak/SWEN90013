@@ -3,10 +3,12 @@ import {withStyles} from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import ProjectInfo from "./ProjectInfo/ProjectInfo";
 import Notes from "../../Notes/Notes";
-import {getProjectById, getProposalById} from "../../../../api";
+import {getProjectById, getProposalById, getSupervisors, getAllSubjects} from "../../../../api";
 import {
     getProjectByIdAction,
-    getProposalByIdAction
+    getProposalByIdAction,
+    getAllSubjectsAction,
+    getSupervisorsAction
 } from "../../../../store/actionCreators";
 import store from "../../../../store";
 import {Paper} from "@material-ui/core";
@@ -48,6 +50,14 @@ class ProjectById extends React.Component {
         const proposal = await getProposalById(this.state.project.proposalId);
         const proposalAction = getProposalByIdAction(proposal);
         store.dispatch(proposalAction);
+
+        const supervisors = await getSupervisors();
+        const getSupervisorsAct = getSupervisorsAction(supervisors);
+        store.dispatch(getSupervisorsAct);
+
+        const subjects = await getAllSubjects();
+        const getAllSubjectsAct = getAllSubjectsAction(subjects);
+        store.dispatch(getAllSubjectsAct);
     }
 
     componentDidMount() {
@@ -57,6 +67,7 @@ class ProjectById extends React.Component {
 
     render() {
         const {classes} = this.props;
+        const {project, proposal, subjects, supervisors} = this.state;
 
         return (
             <Grid
@@ -67,14 +78,18 @@ class ProjectById extends React.Component {
             >
                 <Grid item xs={6}>
                     <Paper className={classes.paper} style={{height: "100%"}}>
-                        <ProjectInfo/>
+                        <ProjectInfo 
+                            project={project} 
+                            proposal={proposal}
+                            supervisors={supervisors}
+                            subjects={subjects}/>
                     </Paper>
                 </Grid>
                 <Grid item xs={6}>
                     <Paper className={classes.paper}
                            style={{position: "relative"}}>
                         <TeamPage
-                            products={this.state.project.products}
+                            products={project.products}
                         />
                     </Paper>
                 </Grid>
@@ -82,8 +97,8 @@ class ProjectById extends React.Component {
                     <Paper className={classes.paper}
                            style={{marginBottom: "20px"}}>
                         <Notes
-                            notes={this.state.project.notes}
-                            object={this.state.project}
+                            notes={project.notes}
+                            object={project}
                             objectType={"project"}
                         />
                     </Paper>

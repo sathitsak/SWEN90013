@@ -59,6 +59,8 @@ const status = {
 };
 
 class Proposals extends React.Component {
+    is_Mounted = false;
+    
     constructor(props) {
         super(props);
         this.state = store.getState();
@@ -83,9 +85,14 @@ class Proposals extends React.Component {
 
     componentDidMount() {
         this._reqTodoList();
-      
+        this._isMounted = true;
     }
 
+    componentWillUnmount() {
+        const unsubscribe = store.subscribe(this._handleStoreChange);
+        unsubscribe();
+        this._isMounted = false;
+    }
 
     _filterProposalsByStatus = status => {
         //TODO: filter by user
@@ -96,6 +103,7 @@ class Proposals extends React.Component {
             // First check if valid before sending through
             if ('client' in p) {
                 if ('organisation' in p.client) {
+                
                     if (p.status === status) {
                         targetProposals.push(p);
                     }

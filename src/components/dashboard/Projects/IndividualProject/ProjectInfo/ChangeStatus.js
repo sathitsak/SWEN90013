@@ -15,10 +15,25 @@ import InputLabel from "@material-ui/core/InputLabel";
 import {projectStatus} from "../../Constants/Constants";
 import store from "../../../../../store";
 import {updateProjectAction} from "../../../../../store/actionCreators";
+import { LoginContext } from "../../../../admin/LoginProvider";
 
-const styles = {};
+const styles = {
+    confirmButton: {
+        backgroundColor: "#094183",
+        color: "#FFFFFF",
+        "&:hover": {
+            backgroundColor: "#4074B2"
+        }
+    },
+    discardButton: {
+        color: "#094183"
+    },              
+};
+var userName;
 
 class ChangeStatus extends React.Component {
+    static contextType = LoginContext;
+
     constructor(props) {
         super(props);
         this.state = {
@@ -82,16 +97,20 @@ class ChangeStatus extends React.Component {
                         </form>
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={this._handleClose} color="primary">
-                            Cancel
-                        </Button>
-                        <Button onClick={this._handleOK} color="primary">
+                    <Button onClick={this._handleOK} color="primary" className={classes.confirmButton}>
                             Ok
+                        </Button>
+                        <Button onClick={this._handleClose} color="primary" className={classes.discardButton}>
+                            Cancel
                         </Button>
                     </DialogActions>
                 </Dialog>
             </div>
         );
+    }
+
+    componentDidMount() {
+        userName = this.context;
     }
 
     _handleClickOpen = () => {
@@ -123,8 +142,9 @@ class ChangeStatus extends React.Component {
 
         // Add note to project
         var newNote = {
-            text: "Status of has been updated to " + this._formatProjectStatus(project.status) + ".",
+            text: "updated the project status to " + this._formatProjectStatus(project.status) + ".",
             date: Date.now().toString(),    // Date is represented as an integer, stored as a string
+            userName: userName.state.userName,
         };
         var notes = project.notes;
         if (notes) {

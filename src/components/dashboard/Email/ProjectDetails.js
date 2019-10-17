@@ -1,8 +1,5 @@
 
-        export function constructProposalRejectEmail(clientFirstName,
-            secondaryClientFirstName, responseText) {
-          
-            
+  export function constructProjectDetailsEmail(projectName, outlineOfProject, organisation, clientFirstName, clientLastName) {
 var message = '<!DOCTYPE html>'+
 '<html>'+
 '  <head>'+
@@ -401,10 +398,13 @@ var message = '<!DOCTYPE html>'+
 '                  <table role="presentation" border="0" cellpadding="0" cellspacing="0">'+
 '                    <tr>'+
 '                      <td>'+
-'                        <p>Hi ' +clientFirstName+ " and " +secondaryClientFirstName+ ",</p>" +
-'                        <p>We are sorry to inform you that your proposal has been rejected. </p>'+
-'                        <p>If you wish to follow up, please contact the CIS Department</p>'+
-'                        <p>Regards,</p>'+
+'                        <p>Hi Students' + ',</p>'+
+'                        <p>You have been assigned to the following project: ' + projectName+ '</p>'+
+'                        <p>Below is a short description of the project. Please familiarise yourself with the project and await further instructions.</p>'+
+'                        <p>Client : ' + clientFirstName + ' ' + clientLastName+ '</p>'+
+'                          <p>Outline : ' + outlineOfProject + '</p>'+
+'                        <p>Organisation: ' + organisation + '</p>'+
+'                          <p>Regards,</p>' +
 '                        <p>CIS Project Management Team</p>'+
 '                      </td>'+
 '                    </tr>'+
@@ -439,9 +439,5 @@ var message = '<!DOCTYPE html>'+
 '    </table>'+
 '  </body>'+
 '</html>';
-	
-
-          
-            return message;
-          }
-          
+    return message;
+    }

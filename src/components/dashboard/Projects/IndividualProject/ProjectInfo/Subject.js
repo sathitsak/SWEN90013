@@ -2,7 +2,9 @@ import React from "react";
 import PropTypes from "prop-types";
 import {withStyles} from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
+import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
+import AssignToSubject from "../../../Proposals/IndividualProposal/AssignToSubject";
 
 const styles = theme => ({
     subject: {
@@ -23,15 +25,25 @@ const styles = theme => ({
 
 class Subject extends React.Component {
     render() {
-        const {classes, proposal} = this.props;
+        const {classes, proposal, project, subjects} = this.props;
 
         return (
             <div>
-                <Typography align="left" color="textSecondary" variant="h6"
-                            style={{fontWeight: "bold"}}>
-                    Subject:
-                </Typography>
-                <Paper className={classes.subject}>
+                <Grid container>
+                    <Grid item style={{marginTop: 10, marginRight: 60}}>
+                        <Typography align="left" color="textSecondary"
+                                    variant="h6" style={{fontWeight: "bold"}}>
+                            Subject:
+                        </Typography>
+                    </Grid>
+                    <Grid item style={{marginTop: 10}} align="center">
+                        <AssignToSubject 
+                            proposal={proposal}
+                            project={project} 
+                            subjects={subjects}/>
+                    </Grid>
+                </Grid>
+                <Paper className={classes.subject} style={{marginTop: "2%"}}>
                     {proposal.subjectId ?
                         this._showSubject(proposal.subjectId)
                         : "NO RELATED SUBJECT"
@@ -46,7 +58,7 @@ class Subject extends React.Component {
         let subjectName = "NO RELATED SUBJECT";
         subjects.forEach(sb => {
             if (sb._id === subjectId)
-                subjectName = sb.name;
+                subjectName = sb.code + " " + sb.name;
         });
         return subjectName;
     };

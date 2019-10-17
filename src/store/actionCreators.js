@@ -14,7 +14,8 @@ import {
     GET_CLIENT_BY_ID,
     UPDATE_PROPOSAL,
     GET_ALL_CLIENTS,
-    GET_ALL_PRODUCTS
+    GET_ALL_PRODUCTS,
+    UPDATE_PAGE_TITLE,
 } from "./actionTypes";
 
 export const getAllProjectAction = projects => ({
@@ -111,3 +112,8 @@ export const getAllProductsAction = () => ({
     type: GET_ALL_PRODUCTS,
     page_title: "View Student Teams"
 });
+
+export const updatePageTitleAction = (page_title) => ({
+    type: UPDATE_PAGE_TITLE,
+    page_title: page_title
+})

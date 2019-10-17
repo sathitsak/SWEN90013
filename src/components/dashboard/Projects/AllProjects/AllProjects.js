@@ -116,30 +116,30 @@ class AllProjects extends PureComponent {
         return supervisorList;
     }
 
+    _showSubjectCode = (subjectId) => {
+        const {subjects} = this.state;
+        let subjectCode = " ";
+        subjects.forEach(s => {
+            if (s._id === subjectId) {
+                subjectCode = s.code;
+            }
+        });
+        return subjectCode;
+    };
+
     _getSubjectFilterLookup() {
-        const {projects} = this.state;
+        const {subjects} = this.state;
 
         let subjectList = {};
 
-        projects.forEach(p => {
-
-            // First check if valid
-            if ('proposal' in p) {
-                if ('client' in p.proposal) {
-                    if ('organisation' in p.proposal.client) {
-                        if (! (p.subjectId in subjectList)) {
-                            subjectList[p.subjectId] = p.subjectId;
-                        }
-                    }
-                }
-            }
-            
+        subjects.forEach(s => {
+            subjectList[s._id] = this._showSubjectCode(s._id);
         })
 
         return subjectList;
     }
 
-    // Rediret to ProjectById page
+    // Redirect to ProjectById page
     _handleClick(_id) {
         const { history } = this.props;
         history.push(`/dashboard/projects/${_id}`);

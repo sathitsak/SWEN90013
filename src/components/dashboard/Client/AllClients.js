@@ -59,9 +59,7 @@ class AllClients extends PureComponent {
         console.log(nextProps.currentPage);
     }
 
-    _formatDataIntoTableList() {
-        const {clients} = this.state;
-
+    _formatDataIntoTableList(clients) {
         let clientList = [];
 
         clients.forEach(c => {
@@ -92,16 +90,6 @@ class AllClients extends PureComponent {
         )
     }
 
-    // Render clientPageModal
-    _handleClick(client) {
-       return (
-            <ClientPageModal 
-                client={client}
-                objType={"allClients"}
-            />
-        )
-    }
-
     // Render correct flagIcon
     _getClientFlagIcon(flag){
         if (flag) {
@@ -117,7 +105,8 @@ class AllClients extends PureComponent {
     }
 
     render() {
-        
+        const { clients } = this.state;
+
         return (
             <MaterialTable
                 title="All Clients"
@@ -140,7 +129,7 @@ class AllClients extends PureComponent {
                      },
                     { title: 'View', field: 'client', filtering: false, export: false }
                 ]}
-                data={this._formatDataIntoTableList()}
+                data={this._formatDataIntoTableList(clients)}
                 options={{
                     filtering: true,
                     exportButton: true,

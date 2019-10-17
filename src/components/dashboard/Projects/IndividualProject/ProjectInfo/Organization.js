@@ -13,6 +13,7 @@ const styles = theme => ({
     paddingBottom: 5,
     height: 35,
     marginRight: 10,
+    marginTop: "2%",
     marginBottom: "1%",
     color: "#000000",
     [theme.breakpoints.down("sm")]: {

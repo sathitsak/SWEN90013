@@ -17,6 +17,7 @@ import {
     updateClientAction,
     getAllClientsAction
 } from "../../../store/actionCreators";
+import { LoginContext } from "../../admin/LoginProvider";
 
 const styles = theme => ({
     root: {
@@ -56,8 +57,11 @@ const styles = theme => ({
         color: "#094183"
     },
     editButton: {
-        marginTop: 0,
-        color: "#094183",
+        backgroundColor: "#094183",
+        color: "#FFFFFF",
+        '&:hover': {
+            backgroundColor: "#4074B2",
+        },
     },
     textField: {
         marginLeft: 0,
@@ -92,7 +96,11 @@ const MenuProps = {
     dense: "true"
 };
 
+var userName;
+
 class EditClientModal extends React.Component {
+    static contextType = LoginContext;
+    
     constructor(props) {
         super(props);
         this.state = {
@@ -105,6 +113,10 @@ class EditClientModal extends React.Component {
         };
     }
 
+    componentDidMount() {
+        userName = this.context;
+    }
+
     _handleOpen = () => {
         this.setState({ open: true });
     };
@@ -113,7 +125,7 @@ class EditClientModal extends React.Component {
         this.setState({ open: false });
     };
 
-    _handleTechnicalAbilityUpdate = (e, attribute) => {
+    _handleFormSelectUpdate = (e, attribute) => {
         if (attribute === "technicalAbility") {
             this.setState({ technicalAbility: e.target.value });
         } else if (attribute === "size") {
@@ -170,8 +182,9 @@ class EditClientModal extends React.Component {
 
     _addEditNote = (client) => {
         var newNote = {
-            text: "Client profile has been updated.",
+            text: "updated the client profile.",
             date: Date.now().toString(),    // Date is represented as an integer, stored as a string
+            userName: userName.state.userName,
         };
         var notes = client.notes;
         if (notes) {
@@ -191,6 +204,7 @@ class EditClientModal extends React.Component {
         var email = document.getElementById("email").value;
         var number = document.getElementById("contactNumber").value;
         var technicalAbility = document.getElementById("technicalAbility").value;
+        var officeNumber = document.getElementById("officeNumber").value;
         //SecondaryContact
         var ci2firstname = document.getElementById("secondaryContactFirstName").value;
         var ci2lastname = document.getElementById("secondaryContactLastName").value;
@@ -208,10 +222,11 @@ class EditClientModal extends React.Component {
             lastname,
             email,
             number,
-            technicalAbility
+            technicalAbility,
+            officeNumber
         })
         ) {
-        alert("Please fill valid information for the client");
+        alert("Please provide valid information for the client");
         } else if (
         !this.checkSecondaryContact({
             ci2firstname,
@@ -220,7 +235,7 @@ class EditClientModal extends React.Component {
             ci2number
         })
         ) {
-        alert("Please fill valid information for the secondary contact");
+        alert("Please provide valid information for the secondary contact");
         } else {
         
         // Create new client object
@@ -239,6 +254,7 @@ class EditClientModal extends React.Component {
                 size: size,
                 industryType: industryType,
                 description: description,
+                number: officeNumber
             },
             _id: this.props.client._id,
             notes: this._addEditNote(this.props.client),
@@ -251,14 +267,14 @@ class EditClientModal extends React.Component {
          store.dispatch(updateClientAct);
 
          // Update project/proposal state
-         this._updateObjectState();
+         this._updateObjectState(client);
 
          // Close window
          this._handleDiscard();
         }
     };
 
-    async _updateObjectState() {
+    async _updateObjectState(client) {
         let objType = this.props.objType;
         let objId = this.props.objID;
 
@@ -271,8 +287,17 @@ class EditClientModal extends React.Component {
             const getProjectAction = getProjectByIdAction(project);
             store.dispatch(getProjectAction);
         } else if (objType === "allClients") {
-            const clients = await getAllClients();
-            const getAllClientsAct = getAllClientsAction(clients);
+            var allClients = store.getState().clients;
+
+            // Replace the old client object with the new one
+            var i;
+            for (i = 0; i < allClients.length; i++) {
+                if (allClients[i]._id === client._id) {
+                    allClients[i] = client;
+                    break;
+                }
+            }
+            const getAllClientsAct = getAllClientsAction(allClients);
             store.dispatch(getAllClientsAct);
         }
     }
@@ -332,13 +357,20 @@ class EditClientModal extends React.Component {
                                         margin="normal"
                                     />
                                     <TextField
+                                        id="officeNumber"
+                                        label="Office Number"
+                                        defaultValue={client.organisation.number}
+                                        className={classes.textField}
+                                        margin="normal"
+                                    />
+                                    <TextField
                                         id="technicalAbility"
                                         select
                                         label="Technical Ability"
                                         className={classes.textField}
                                         defaultValue={this.state.technicalAbility}
                                         value={this.state.technicalAbility}
-                                        onChange={e => this._handleTechnicalAbilityUpdate(e, "technicalAbility")}
+                                        onChange={e => this._handleFormSelectUpdate(e, "technicalAbility")}
                                         SelectProps={{
                                             MenuProps: {
                                                 className: classes.menu,
@@ -408,7 +440,7 @@ class EditClientModal extends React.Component {
                                         className={classes.textField}
                                         defaultValue={this.state.size}
                                         value={this.state.size}
-                                        onChange={e => this._handleTechnicalAbilityUpdate(e, "size")}
+                                        onChange={e => this._handleFormSelectUpdate(e, "size")}
                                         SelectProps={{
                                             MenuProps: {
                                                 className: classes.menu,
@@ -428,7 +460,7 @@ class EditClientModal extends React.Component {
                                         className={classes.emailTextField}
                                         defaultValue={this.state.industryType}
                                         value={this.state.industryType}
-                                        onChange={e => this._handleTechnicalAbilityUpdate(e, "industryType")}
+                                        onChange={e => this._handleFormSelectUpdate(e, "industryType")}
                                         SelectProps={{
                                             MenuProps: {
                                                 className: classes.menu,

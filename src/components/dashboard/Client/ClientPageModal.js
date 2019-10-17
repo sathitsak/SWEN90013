@@ -19,6 +19,7 @@ import {updateClientAction} from "../../../store/actionCreators";
 import EditClientModal from "./EditClientModal";
 import Fab from "@material-ui/core/Fab";
 import EditIcon from "@material-ui/icons/Edit";
+import { LoginContext } from "../../admin/LoginProvider";
 
 const styles = theme => ({
     root: {
@@ -35,11 +36,8 @@ const styles = theme => ({
         color: "#094183",
     },
     closeButton: {
-        backgroundColor: "#094183",
-        color: "#FFFFFF",
-        '&:hover': {
-            backgroundColor: "#4074B2",
-        },
+        marginTop: 0,
+        color: "#094183",  
     },
     iconFalse: {
         marginLeft: 20,
@@ -75,7 +73,11 @@ const styles = theme => ({
     }
 });
 
+var userName;
+
 class ClientPageModal extends React.Component {
+    static contextType = LoginContext;
+
     state = {
         open: false,
         fullWidth: true,
@@ -83,6 +85,10 @@ class ClientPageModal extends React.Component {
         client: "",
         clientFlag: this.props.client.flag
     };
+
+    componentDidMount() {
+        userName = this.context;
+    }
 
     _handleClickOpen = () => {
         this.setState({open: true});
@@ -105,13 +111,14 @@ class ClientPageModal extends React.Component {
         client.flag = currentFlag;
 
         // Add note to client
-        let noteMsg = "false";
+        let noteMsg = "removed the client red flag.";
         if (currentFlag) {
-            noteMsg = "true";
+            noteMsg = "added a client red flag.";
         } 
         var newNote = {
-            text: "Client flag has been updated to " + noteMsg + ".",
+            text: noteMsg,
             date: Date.now().toString(),    // Date is represented as an integer, stored as a string
+            userName: userName.state.userName,            
         };
         var notes = client.notes;
         if (notes) {
@@ -190,6 +197,7 @@ class ClientPageModal extends React.Component {
                                         email={client.email}
                                         technicalAbility={client.technicalAbility}
                                         contactNumber={client.contactNumber}
+                                        orgNumber={client.organisation.number}
                                         secondaryContactName={this._concatenateNames(client.secondaryContactFirstName, client.secondaryContactLastName)}
                                         secondaryContactEmail={client.secondaryContactEmail}
                                         secondaryContactNumber={client.secondaryContactNumber}
@@ -208,27 +216,29 @@ class ClientPageModal extends React.Component {
                                         />
                                     </Paper>
                                 </Grid>
-                                <Grid>
-                                    <Paper className={classes.paper}>
-                                        <Notes
-                                            notes={client.notes}
-                                            object={client}
-                                            objectType={"client"}
-                                        />
-                                    </Paper>
-                                </Grid>
+                            </Grid>
+
+                            <Grid item xs={12}>
+                                <Paper className={classes.paper}>
+                                    <Notes
+                                        notes={client.notes}
+                                        object={client}
+                                        objectType={"client"}
+                                    />
+                                </Paper>
                             </Grid>
                         </Grid>
                     </DialogContent>
                     <DialogActions>
+                        <EditClientModal 
+                            client={client}
+                            objType={objType}
+                            objID={objID} 
+                        />
                         <Button onClick={this._handleClose}
                                 className={classes.closeButton}>
                             Close
                         </Button>
-                        <EditClientModal 
-                            client={client}
-                            objType={objType}
-                            objID={objID} />
                     </DialogActions>
                 </Dialog>
             </div>

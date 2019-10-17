@@ -43,14 +43,14 @@ class ProjectInfo extends React.Component {
 
     render() {
         const {classes} = this.props;
-        const {project, proposal, supervisors, subjects} = this.state;
+        const {project, proposal, subjects, supervisors} = this.props;
 
         return (
             <div>
                 <Typography variant="h5" className={classes.infoTitle}>
                     PROJECT OUTLINE
                 </Typography>
-                <Grid container direction='column'>
+                <Grid container direction='column' spacing={1}>
                     <Grid item className={classes.basic}>
                         {project.status ?
                             <ChangeStatus project={project}/>
@@ -77,8 +77,8 @@ class ProjectInfo extends React.Component {
                         {proposal.client ?
                             <ViewClient 
                                 client={proposal.client} 
-                                objType={"project"} 
-                                objID={project._id}
+                                objType={"proposal"} 
+                                objID={proposal._id}
                             />
                             : <div/>
                         }
@@ -95,6 +95,7 @@ class ProjectInfo extends React.Component {
                     <Grid item className={classes.basic}>
                         <Subject
                             proposal={proposal}
+                            project={project}
                             subjects={subjects}
                         />
                     </Grid>

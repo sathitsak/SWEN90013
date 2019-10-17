@@ -10,12 +10,15 @@ import EditIcon from "@material-ui/icons/Edit";
 import TextField from "@material-ui/core/TextField";
 import { Divider } from "@material-ui/core";
 import store from "../../../../store";
-import grey from '@material-ui/core/colors/grey';
+import grey from '@material-ui/core/colors/grey'
+
 import {getProposalById} from "../../../../api";
 import {
+    updatePageTitleAction,
     getProposalByIdAction,
     updateProposalAction,
 } from "../../../../store/actionCreators";
+import { LoginContext } from "../../../admin/LoginProvider";
 
 const styles = theme => ({
     root: {
@@ -63,6 +66,11 @@ const styles = theme => ({
         marginRight: "5%",
         width: "45%"
     },
+    nameTextField: {
+        marginLeft: 0,
+        marginRight: "5%",
+        width: "95%"
+    },
     fab: {
         backgroundColor: "#FFFFFF",
         color: grey[700],
@@ -74,28 +82,11 @@ const styles = theme => ({
     },
 });
 
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-const MenuProps = {
-    PaperProps: {
-        style: {
-            maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-            width: "87%"
-        }
-    },
-    anchorOrigin: {
-        vertical: "bottom",
-        horizontal: "left"
-    },
-    transformOrigin: {
-        vertical: "top",
-        horizontal: "left"
-    },
-    getContentAnchorEl: null,
-    dense: "true"
-};
+var userName;
 
 class EditProposalModal extends React.Component {
+    static contextType = LoginContext;
+
     constructor(props) {
         super(props);
         this.state = {
@@ -103,6 +94,10 @@ class EditProposalModal extends React.Component {
             fullWidth: true,
             maxWidth: "lg",
         };
+    }
+
+    componentDidMount() {
+        userName = this.context;
     }
 
     _handleOpen = () => {
@@ -113,10 +108,16 @@ class EditProposalModal extends React.Component {
         this.setState({ open: false });
     };
 
+    _handleSelectUpdate = (e) => {
+        this.setState({ subjectId: e.target.value });
+    }
+
     _addEditNote = (proposal) => {
+
         var newNote = {
-            text: "Proposal has been updated.",
+            text: "updated the proposal.",
             date: Date.now().toString(),    // Date is represented as an integer, stored as a string
+            userName: userName.state.userName,
         };
         var notes = proposal.notes;
         if (notes) {
@@ -136,7 +137,6 @@ class EditProposalModal extends React.Component {
         var endProductUse = document.getElementById("endProductUse").value;
         var beneficiaries = document.getElementById("beneficiaries").value;
         var originality = document.getElementById("originality").value;
-        var subjectId = document.getElementById("subjectId").value;
 
         // Create new proposal object
         let proposal = {
@@ -150,8 +150,9 @@ class EditProposalModal extends React.Component {
             beneficiaries: beneficiaries,
             originality: originality,
             clientId: this.props.proposal.clientId,
-            subjectId: subjectId,
+            subjectId: this.props.proposal.subjectId,
             date: this.props.proposal.date,
+            client: this.props.proposal.client,
             __v: this.props.proposal.__v,
         }
 
@@ -160,16 +161,11 @@ class EditProposalModal extends React.Component {
          store.dispatch(updateProposalAct);
 
          // Update project/proposal state
-         this._updateProposalState(this.props.proposal._id);
+         const updatePageTitleAct = updatePageTitleAction(name);
+         store.dispatch(updatePageTitleAct);
 
          // Close window
          this._handleDiscard();
-    };
-
-    async _updateProposalState(proposalID) {
-        const proposal = await getProposalById(proposalID);
-        const getProposalAction = getProposalByIdAction(proposal);
-        store.dispatch(getProposalAction);    
     };
 
     render() {
@@ -203,14 +199,7 @@ class EditProposalModal extends React.Component {
                                 id="name"
                                 label="Proposal name"
                                 defaultValue={proposal.name}
-                                className={classes.textField}
-                                margin="normal"
-                            />
-                            <TextField
-                                id="subjectId"
-                                label="Subject assigned to"
-                                defaultValue={proposal.subjectId}
-                                className={classes.textField}
+                                className={classes.nameTextField}
                                 margin="normal"
                             />
                             <TextField
@@ -219,7 +208,7 @@ class EditProposalModal extends React.Component {
                                 defaultValue={proposal.outlineOfProject}
                                 className={classes.textField}
                                 margin="normal"
-                                multiline="true"
+                                multiline
                                 rows="5"
                                 variant="outlined"
                             />
@@ -229,7 +218,7 @@ class EditProposalModal extends React.Component {
                                 defaultValue={proposal.endProductUse}
                                 className={classes.textField}
                                 margin="normal"
-                                multiline="true"
+                                multiline
                                 rows="5"
                                 variant="outlined"
                             />
@@ -239,7 +228,7 @@ class EditProposalModal extends React.Component {
                                 defaultValue={proposal.endProductBenefits}
                                 className={classes.textField}
                                 margin="normal"
-                                multiline="true"
+                                multiline
                                 rows="5"
                                 variant="outlined"
                             />
@@ -249,7 +238,7 @@ class EditProposalModal extends React.Component {
                                 defaultValue={proposal.beneficiaries}
                                 className={classes.textField}
                                 margin="normal"
-                                multiline="true"
+                                multiline
                                 rows="5"
                                 variant="outlined"
                             />
@@ -259,7 +248,7 @@ class EditProposalModal extends React.Component {
                                 defaultValue={proposal.originality}
                                 className={classes.textField}
                                 margin="normal"
-                                multiline="true"
+                                multiline
                                 rows="5"
                                 variant="outlined"
                             />
@@ -275,14 +264,14 @@ class EditProposalModal extends React.Component {
                             className={classes.sendButton}
                         >
                             Update
-                </Button>
+                        </Button>
                         <Button
                             onClick={this._handleDiscard}
                             color="primary"
                             className={classes.discardButton}
                         >
                             Discard
-                </Button>
+                        </Button>
                     </DialogActions>
                 </Dialog>
             </div>

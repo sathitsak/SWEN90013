@@ -14,9 +14,15 @@ import {withStyles} from "@material-ui/core/styles";
 import {getAllSubjects, getProposalById,} from "../../../../api";
 import {
     getAllSubjectsAction,
-    changeProposalStatusAction,
+    updateProposalAction,
     getProposalByIdAction,
+    changeProposalStatusAction
 } from "../../../../store/actionCreators";
+
+import { LoginContext } from "../../../admin/LoginProvider";
+
+import {proposalOutcome} from "../../Email/AutomatedEmailFunctions"
+
 
 const styles = theme => ({
     acceptButton: {
@@ -47,7 +53,11 @@ const styles = theme => ({
     },
 });
 
+var userName;
+
 class StatusChangeModal extends React.Component {
+    static contextType = LoginContext;
+
     constructor(props) {
         super(props);
         this.state = {
@@ -68,14 +78,9 @@ class StatusChangeModal extends React.Component {
         store.dispatch(subjectsAction);
     }
 
-    async _updateProposalState() {
-        const proposalResult = await getProposalById(this.props.id);
-        const proposalAction = getProposalByIdAction(proposalResult);
-        store.dispatch(proposalAction);
-    }
-
     componentDidMount() {
         this._reqTodoList();
+        userName = this.context;
     }
 
     render() {
@@ -146,7 +151,7 @@ class StatusChangeModal extends React.Component {
                                                 {this.props.subjects ? (
                                                     this.props.subjects.map(s => (
                                                         <MenuItem key={s._id}
-                                                            value={s._id}>{s.name}</MenuItem>
+                                                            value={s._id}>{s.code} {s.name}</MenuItem>
                                                     ))
                                                 ) : (
                                                     <div/>
@@ -233,12 +238,20 @@ class StatusChangeModal extends React.Component {
         });
     };
 
+    async _updateProposalState(proposalId) {
+        const proposalResult = await getProposalById(proposalId);
+        const proposalAction = getProposalByIdAction(proposalResult);
+        store.dispatch(proposalAction);
+    }
+
     _handleClickOpen = (status) => {
         if (status === 'accept') {
             this.setState({openAccept: true, option: status});
         } else if (status === 'reject') {
             this.setState({openReject: true, option: status});
         }
+
+        
     };
 
     _handleClose = (status) => {
@@ -252,36 +265,67 @@ class StatusChangeModal extends React.Component {
     _handleUpdate = () => {
         let responseText = document.getElementById("reason").value;
         const {subjectId, option} = this.state;
-        const {id} = this.props;
+        const {proposal} = this.props;
+        var noteMsg;
+
         if (option === "accept") {
             if (responseText === "") {
-                alert("Please enter the reason to accept")
+                alert("Please enter the reason why you have accepted this proposal")
             } else if (subjectId === "") {
-                alert("Please select one subject for it")
+                alert("Please assign this proposal to a subject")
             } else {
                 this.setState({openAccept: false});
+                // proposal.status = "approved";
+                noteMsg = "accepted the proposal. Reason: " + responseText;
+                // proposal.subjectId = subjectId;
+                proposalOutcome("accept", responseText, proposal.client.firstName, proposal.client.secondaryContactFirstName, proposal.client.email, proposal.client.secondaryContactEmail);
+
+                // Send accept API call
                 const object = {
                     subjectId: subjectId,
-                    acceptReason: "Accepted: " + responseText
-                };
-                const changeProposalStatusAct = changeProposalStatusAction(id, option, object);
+                    acceptReason: noteMsg,
+                    userName: userName.state.userName
+                }
+                const changeProposalStatusAct = changeProposalStatusAction(proposal._id, option, object);
                 store.dispatch(changeProposalStatusAct);
             }
         } else if (option === "reject") {
             if (responseText === "") {
-                alert("Please enter the reason to reject")
+                alert("Please enter the reason why you have rejected this proposal")
             } else {
                 this.setState({openReject: false});
+                // proposal.status = "reject";
+                noteMsg = "rejected the proposal. Reason: " + responseText;
+                proposalOutcome("reject", responseText, proposal.client.firstName, proposal.client.secondaryContactFirstName, proposal.client.email, proposal.client.secondaryContactEmail);
+
+                // Send accept API call
                 const object = {
-                    rejectReason: "Rejected: " + responseText
-                };
-                const changeProposalStatusAct = changeProposalStatusAction(id, option, object);
+                    rejectReason: noteMsg,
+                    userName: userName.state.userName
+                }
+                const changeProposalStatusAct = changeProposalStatusAction(proposal._id, option, object);
                 store.dispatch(changeProposalStatusAct);
             }
         }
 
-        // update Proposal data 
-        this._updateProposalState();
+        // // Add note to proposal
+        // var newNote = {
+        //     text: noteMsg,
+        //     date: Date.now().toString(),    // Date is represented as an integer, stored as a string
+        //     userName: userName.state.userName,
+        // };
+        // var notes = proposal.notes;
+        // if (notes) {
+        //     notes.push(newNote);
+        // } else {
+        //     notes = [newNote];
+        // }
+        // proposal.notes = notes;
+
+        // // Send PUT request
+        // const updateProposalAct = updateProposalAction(proposal._id, proposal);
+        // store.dispatch(updateProposalAct);
+        this._updateProposalState(proposal._id);
     };
 
 }

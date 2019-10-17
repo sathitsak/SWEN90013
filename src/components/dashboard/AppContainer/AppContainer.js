@@ -47,10 +47,6 @@ class AppContainer extends React.Component {
     open: false,
   };
 
-  componentWillReceiveProps(nextProps) {
-    //console.log(nextProps.currentPage);
-  }
-
   _handleDrawerToggle = () => {
     this.setState(state => ({ mobileOpen: !state.mobileOpen }));
   };
@@ -208,7 +204,7 @@ class AppContainer extends React.Component {
           </DialogTitle>
           <DialogContent />
           <DialogActions>
-            <Link to="/" className={classes.link}>
+            <Link to="/" className={classes.link} style={{textDecoration: "none"}}>
               <Button onClick={this._handleLogOut} color="primary">
                 Yes
               </Button>

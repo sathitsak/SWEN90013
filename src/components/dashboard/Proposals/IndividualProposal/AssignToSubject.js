@@ -1,7 +1,5 @@
 import React from "react";
-import PropTypes from "prop-types";
 import {withStyles} from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogTitle from "@material-ui/core/DialogTitle";
@@ -10,12 +8,10 @@ import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import Input from "@material-ui/core/Input";
 import DialogActions from "@material-ui/core/DialogActions";
-import Paper from "@material-ui/core/Paper";
-import Grid from "@material-ui/core/Grid";
-import store from "../../../../../store";
-import {updateProjectAction} from "../../../../../store/actionCreators";
+import store from "../../../../store";
+import {updateProposalAction, updateProjectAction} from "../../../../store/actionCreators";
 import {grey} from "@material-ui/core/colors";
-import { LoginContext } from "../../../../admin/LoginProvider";
+import { LoginContext } from "../../../admin/LoginProvider";
 
 const styles = theme => ({
     showSup: {
@@ -62,44 +58,31 @@ const styles = theme => ({
 
 var userName;
 
-class AssignToSupervisor extends React.Component {
+class AssignToSubject extends React.Component {
     static contextType = LoginContext;
 
     constructor(props) {
         super(props);
 
         this.state = {
-            selectedSupervisorId: "",
+            selectedSubjectId: this.props.proposal.subjectId,
             open: false
         };
     }
 
     render() {
-        const {classes, project, supervisors} = this.props;
+        const {classes, proposal, subjects} = this.props;
         const {open} = this.state;
 
         return (
             <div>
-                <Grid container>
-                    <Grid item style={{marginTop: 10, marginRight: 30}}>
-                        <Typography align="left" color="textSecondary"
-                                    variant="h6" style={{fontWeight: "bold"}}>
-                            Supervisor:
-                        </Typography>
-                    </Grid>
-                    <Grid item style={{marginTop: 10}} align="center">
-                        <Button
-                            onClick={this._handleClickOpen}
-                            className={classes.assignButton}
-                            variant="contained"
-                        >
-                            (Re) Assign
-                        </Button>
-                    </Grid>
-                </Grid>
-                <Paper className={classes.showSup}>
-                    {this._showSupervisor(project.supervisorId)}
-                </Paper>
+                <Button
+                    onClick={this._handleClickOpen}
+                    className={classes.assignButton}
+                    variant="contained"
+                >
+                    (Re) Assign
+                </Button>
                 <Dialog
                     disableBackdropClick
                     disableEscapeKeyDown
@@ -107,27 +90,27 @@ class AssignToSupervisor extends React.Component {
                     onClose={this._handleClose}
                 >
                     <DialogTitle>
-                        Choose one supervisor to assign to
+                        Choose a subject to assign this proposal to
                     </DialogTitle>
                     <DialogContent>
                         <form className={classes.container}>
                             <FormControl className={classes.formControl}>
                                 <h6 style={{color: grey[800]}}>
-                                    Supervisors
+                                    Subjects
                                 </h6>
                                 <Select
                                     native
                                     onChange={e => this._handleSelect(e)}
                                     input={<Input id="sp-native-simple"/>}
-                                    defaultValue={project.supervisorId}
+                                    defaultValue={proposal.subjectId}
                                 >
                                     <option value="">None</option>
-                                    {supervisors.map((sp, index) => (
+                                    {subjects.map((s, index) => (
                                         <option
                                             key={index}
-                                            value={sp._id}
+                                            value={s._id}
                                         >
-                                            {sp.firstName + " " + sp.lastName}
+                                            {s.code + " " + s.name}
                                         </option>
                                     ))}
                                 </Select>
@@ -135,10 +118,10 @@ class AssignToSupervisor extends React.Component {
                         </form>
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={this._handleOK} color="primary" className={classes.confirmButton}>
+                        <Button className={classes.confirmButton} onClick={this._handleOK} color="primary">
                             Ok
                         </Button>
-                        <Button onClick={this._handleClose} color="primary" className={classes.discardButton}>
+                        <Button className={classes.discardButton} onClick={this._handleClose} color="primary">
                             Cancel
                         </Button>
                     </DialogActions>
@@ -150,16 +133,6 @@ class AssignToSupervisor extends React.Component {
     componentDidMount() {
         userName = this.context;
     }
-    _showSupervisor = (supervisorId) => {
-        const {supervisors} = this.props;
-        let supervisorName = "NO SUPERVISOR ASSIGNED";
-        supervisors.forEach(sp => {
-            if (sp._id === supervisorId) {
-                supervisorName = sp.firstName + " " + sp.lastName;
-            }
-        });
-        return supervisorName;
-    };
 
     _handleClickOpen = () => {
         this.setState({open: true});
@@ -170,38 +143,71 @@ class AssignToSupervisor extends React.Component {
     };
 
     _handleSelect = e => {
-        this.setState({selectedSupervisorId: e.target.value});
+        this.setState({selectedSubjectId: e.target.value});
+    };
+
+    _showSubject = (subjectId) => {
+        const {subjects} = this.props;
+        let subjectName = "None";
+        subjects.forEach(s => {
+            if (s._id === subjectId) {
+                subjectName = s.code + " " + s.name;
+            }
+        });
+        return subjectName;
     };
 
     _handleOK = () => {
-        const {selectedSupervisorId} = this.state;
-        const {project, supervisors} = this.props;
-        project.supervisorId = selectedSupervisorId;
-        var text;
+        const {selectedSubjectId} = this.state;
+        const {proposal} = this.props;
+        proposal.subjectId = selectedSubjectId;
+        var text = "";
 
-        if (selectedSupervisorId === "") {
-            text = "removed the supervisor assigned to the project."
+        if (selectedSubjectId === "") {
+            text = "removed the subject assigned to the proposal."
         } else {
-            text = "assigned the project to " + this._showSupervisor(project.supervisorId) + "."
-        };
-
-        // Add note to project
+            text = "assigned the proposal to " + this._showSubject(proposal.subjectId) + "."
+        }
+        
+        // Add note to proposal
         var newNote = {
             text: text,
             date: Date.now().toString(),    // Date is represented as an integer, stored as a string
-            userName: userName.state.userName
+            userName: userName.state.userName,
         };
-        var notes = project.notes;
+        var notes = proposal.notes;
         if (notes) {
             notes.push(newNote);
         } else {
             notes = [newNote];
         }
-        project.notes = notes;
+        proposal.notes = notes;
 
-        // Update project to DB
-        const updateProjAction = updateProjectAction(project._id, project);
-        store.dispatch(updateProjAction);
+        // Send PUT request
+        const updateProposalAct = updateProposalAction(proposal._id, proposal);
+        store.dispatch(updateProposalAct);
+
+        if (this.props.project) {
+            // Add note to project
+            var newNote = {
+                text: text,
+                date: Date.now().toString(),    // Date is represented as an integer, stored as a string
+                userName: userName.state.userName,
+            };
+            var projectNotes = this.props.project.notes;
+            if (projectNotes) {
+                projectNotes.push(newNote);
+            } else {
+                projectNotes = [newNote];
+            }
+            this.props.project.notes = notes;
+            this.props.project.proposal = proposal;
+
+            // Send PUT request
+            const updateProjectAct = updateProjectAction(this.props.project._id, this.props.project);
+            store.dispatch(updateProjectAct);
+        }
+
         this.setState({
             selectedSupervisorId: "",
             open: false
@@ -210,10 +216,4 @@ class AssignToSupervisor extends React.Component {
 
 }
 
-AssignToSupervisor.propTypes = {
-    classes: PropTypes.object.isRequired,
-    project: PropTypes.object.isRequired,
-    supervisors: PropTypes.array.isRequired,
-};
-
-export default withStyles(styles)(AssignToSupervisor);
+export default withStyles(styles)(AssignToSubject);

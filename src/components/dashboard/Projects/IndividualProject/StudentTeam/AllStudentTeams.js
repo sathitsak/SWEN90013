@@ -1,21 +1,21 @@
 /**
- * This component contains all products. It is entered via a "View Products" link on the app container drawer.
+ * This component contains all products. It is entered via a "View Student Teams" link on the app container drawer.
  * Author: Reyna Tan
  * Date: 09/10/2019
  */
 
 import React, { PureComponent } from 'react';
-import store from "../../../store";
-import {getAllSubjects, getProjectList, getSupervisors, getAllProducts} from "../../../api";
+import store from "../../../../../store";
+import {getAllSubjects, getProjectList, getSupervisors} from "../../../../../api";
 import {
     getAllProjectAction,
     getSupervisorsAction,
     getAllSubjectsAction,
-    getAllProductsAction
-} from "../../../store/actionCreators";
+    updatePageTitleAction,
+} from "../../../../../store/actionCreators";
 import MaterialTable from 'material-table';
 
-class AllProducts extends PureComponent {
+class AllStudentTeams extends PureComponent {
 
     constructor(props) {
         super(props);
@@ -43,9 +43,8 @@ class AllProducts extends PureComponent {
         const getAllSubjectsAct = getAllSubjectsAction(subjects);
         store.dispatch(getAllSubjectsAct);
 
-        // const products = await getAllProducts();
-        const getAllProductsAct = getAllProductsAction();
-        store.dispatch(getAllProductsAct);
+        const updatePageTitleAct = updatePageTitleAction("All Student Teams");
+        store.dispatch(updatePageTitleAct);
     }
 
     componentDidMount() {
@@ -54,6 +53,11 @@ class AllProducts extends PureComponent {
 
     componentWillReceiveProps(nextProps) {
         console.log(nextProps.currentPage);
+    }
+
+    componentWillUnmount() {
+        const unsubscribe = store.subscribe(this._handleStoreChange)
+        unsubscribe()
     }
 
     _extractYear(str) {
@@ -128,24 +132,24 @@ class AllProducts extends PureComponent {
         return supervisorList;
     }
 
+    _showSubjectCode = (subjectId) => {
+        const {subjects} = this.state;
+        let subjectCode = " ";
+        subjects.forEach(s => {
+            if (s._id === subjectId) {
+                subjectCode = s.code;
+            }
+        });
+        return subjectCode;
+    };
+
     _getSubjectFilterLookup() {
-        const {projects} = this.state;
+        const {subjects} = this.state;
 
         let subjectList = {};
 
-        projects.forEach(p => {
-
-            // First check if valid
-            if ('proposal' in p) {
-                if ('client' in p.proposal) {
-                    if ('organisation' in p.proposal.client) {
-                        if (! (p.subjectId in subjectList)) {
-                            subjectList[p.subjectId] = p.subjectId;
-                        }
-                    }
-                }
-            }
-            
+        subjects.forEach(s => {
+            subjectList[s._id] = this._showSubjectCode(s._id);
         })
 
         return subjectList;
@@ -184,4 +188,4 @@ class AllProducts extends PureComponent {
     }
 }
 
-export default (AllProducts);
+export default (AllStudentTeams);
