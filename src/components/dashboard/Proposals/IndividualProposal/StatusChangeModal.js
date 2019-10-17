@@ -238,9 +238,9 @@ class StatusChangeModal extends React.Component {
         });
     };
 
-    async _updateProposalState(proposalId) {
-        const proposalResult = await getProposalById(proposalId);
-        const proposalAction = getProposalByIdAction(proposalResult);
+    async _updateProposalState(proposal) {
+        // const proposalResult = await getProposalById(proposalId);
+        const proposalAction = getProposalByIdAction(proposal);
         store.dispatch(proposalAction);
     }
 
@@ -275,9 +275,9 @@ class StatusChangeModal extends React.Component {
                 alert("Please assign this proposal to a subject")
             } else {
                 this.setState({openAccept: false});
-                // proposal.status = "approved";
+                proposal.status = "approved";
+                proposal.subjectId = subjectId;
                 noteMsg = "accepted the proposal. Reason: " + responseText;
-                // proposal.subjectId = subjectId;
                 proposalOutcome("accept", responseText, proposal.client.firstName, proposal.client.secondaryContactFirstName, proposal.client.email, proposal.client.secondaryContactEmail);
 
                 // Send accept API call
@@ -294,7 +294,7 @@ class StatusChangeModal extends React.Component {
                 alert("Please enter the reason why you have rejected this proposal")
             } else {
                 this.setState({openReject: false});
-                // proposal.status = "reject";
+                proposal.status = "reject";
                 noteMsg = "rejected the proposal. Reason: " + responseText;
                 proposalOutcome("reject", responseText, proposal.client.firstName, proposal.client.secondaryContactFirstName, proposal.client.email, proposal.client.secondaryContactEmail);
 
@@ -308,24 +308,21 @@ class StatusChangeModal extends React.Component {
             }
         }
 
-        // // Add note to proposal
-        // var newNote = {
-        //     text: noteMsg,
-        //     date: Date.now().toString(),    // Date is represented as an integer, stored as a string
-        //     userName: userName.state.userName,
-        // };
-        // var notes = proposal.notes;
-        // if (notes) {
-        //     notes.push(newNote);
-        // } else {
-        //     notes = [newNote];
-        // }
-        // proposal.notes = notes;
+        // Add note to proposal
+        var newNote = {
+            text: noteMsg,
+            date: Date.now().toString(),    // Date is represented as an integer, stored as a string
+            userName: userName.state.userName,
+        };
+        var notes = proposal.notes;
+        if (notes) {
+            notes.push(newNote);
+        } else {
+            notes = [newNote];
+        }
+        proposal.notes = notes;
 
-        // // Send PUT request
-        // const updateProposalAct = updateProposalAction(proposal._id, proposal);
-        // store.dispatch(updateProposalAct);
-        this._updateProposalState(proposal._id);
+        this._updateProposalState(proposal);
     };
 
 }

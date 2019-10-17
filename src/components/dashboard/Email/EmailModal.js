@@ -104,7 +104,7 @@ const MenuProps = {
   PaperProps: {
     style: {
       maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: "87%"
+      width: "70%"
     }
   },
   anchorOrigin: {
@@ -174,7 +174,7 @@ class EmailModal extends React.Component {
     //get students 
     
     axios
-    .get( baseURL + `/template`)
+    .get( 'http://35.197.167.244/template')
     .then(function(response) {
       console.log(response.data);
       var templates = response.data;
@@ -278,9 +278,11 @@ class EmailModal extends React.Component {
     this.setState({ available_recipients: [] });
     this.setState({ email_recipients: [] });
     this.setState({ email_cc: [] });
+    this.setState({ email_bcc: [] });
     nameEmailMap.clear();
     // templatesNewArray = [];
     // tempCoordinatorNameArray = [];
+    this.setState({email_message: ""}); 
     this.setState({ open: false });
   };
 
@@ -360,17 +362,19 @@ class EmailModal extends React.Component {
     this.setState({ email_recipients: [] });
     this.setState({ available_recipients: [] });
     nameEmailMap.clear();
+    this.setState({email_message: ""}); 
     this.setState({ open: false });
     
-    this._sendNote(); 
+    let noteMsg = 'sent an email to ' + this.state.email_recipients + ' about ' + this.state.email_subject + ': ' + this.state.email_message;
+    this._sendNote(noteMsg); 
     
 
   }
 
-  _sendNote() {
+  _sendNote(noteMsg) {
     const {objectType, object} = this.props;
     var newNote = {
-      text: 'sent an email to ' + this.state.email_recipients + 'about ' + this.state.email_subject + ': ' + this.state.email_message,
+      text: noteMsg,
       date: Date.now().toString(), 
       userName: valueOfContext.state.userName   
     };
@@ -410,7 +414,8 @@ class EmailModal extends React.Component {
 
     });
 
-
+    let text = 'sent an email with the project details to the student teams.';
+    this._sendNote(text);
 
     sendProjectDetails(students, store.getState().project.name, store.getState().project.proposal.outlineOfProject, store.getState().project.proposal.client.organisation.name, store.getState().project.proposal.client.firstName, store.getState().project.proposal.client.lastName); 
     this.handleClose(); 
@@ -539,8 +544,7 @@ class EmailModal extends React.Component {
                 placeholder=""
                 className={classes.textField}
                 margin="normal"
-                fullWidth
-                style={{ maxWidth: 300, minWidth: 120 }}
+                style={{ width: "90%", paddingLeft: 2 }}
                 onChange={e => this.handleChange("email_subject", e)}
               />
               <br />

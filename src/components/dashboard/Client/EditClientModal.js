@@ -279,11 +279,13 @@ class EditClientModal extends React.Component {
         let objId = this.props.objID;
 
         if (objType === "proposal") {
-            const proposal = await getProposalById(objId);
+            var proposal = store.getState().proposal;
+            proposal.client = client;
             const getProposalAction = getProposalByIdAction(proposal);
             store.dispatch(getProposalAction);    
         } else if (objType === "project") {
-            const project = await getProjectById(objId);
+            var project = store.getState().project;
+            project.proposal.client = client;
             const getProjectAction = getProjectByIdAction(project);
             store.dispatch(getProjectAction);
         } else if (objType === "allClients") {
