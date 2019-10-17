@@ -25,7 +25,7 @@ const styles = theme => ({
 
 class Subject extends React.Component {
     render() {
-        const {classes, proposal, subjects} = this.props;
+        const {classes, proposal, project, subjects} = this.props;
 
         return (
             <div>
@@ -37,7 +37,10 @@ class Subject extends React.Component {
                         </Typography>
                     </Grid>
                     <Grid item style={{marginTop: 10}} align="center">
-                        <AssignToSubject proposal={proposal} subjects={subjects}/>
+                        <AssignToSubject 
+                            proposal={proposal}
+                            project={project} 
+                            subjects={subjects}/>
                     </Grid>
                 </Grid>
                 <Paper className={classes.subject} style={{marginTop: "2%"}}>

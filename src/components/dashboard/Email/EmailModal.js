@@ -26,6 +26,7 @@ import {constructNormalEmail} from "./EmailHeaderFooter";
 import { LoginContext } from "../../admin/LoginProvider";
 import {sendProjectDetails} from "./AutomatedEmailFunctions";  
 import {addNoteAction} from "../../../store/actionCreators";
+import {baseURL} from "../../../api/index"; 
 
 
 function rand() {
@@ -119,8 +120,8 @@ const MenuProps = {
 };
 
 const templatesMap = new Map();
-const templatesNewArray = [];
-const tempCoordinatorNameArray = [];
+var templatesNewArray = [];
+var tempCoordinatorNameArray = [];
 
 const nameEmailMap = new Map();
 const coordinatorMap = new Map();
@@ -173,7 +174,7 @@ class EmailModal extends React.Component {
     //get students 
     
     axios
-    .get(`http://172.26.88.142:3000/api/template`)
+    .get( baseURL + `/template`)
     .then(function(response) {
       console.log(response.data);
       var templates = response.data;
@@ -268,11 +269,18 @@ class EmailModal extends React.Component {
     }
   };
 
+  componentWillUnmount() {
+    templatesNewArray = [];
+    tempCoordinatorNameArray = [];
+  }
+
   handleClose = () => {
     this.setState({ available_recipients: [] });
     this.setState({ email_recipients: [] });
     this.setState({ email_cc: [] });
     nameEmailMap.clear();
+    // templatesNewArray = [];
+    // tempCoordinatorNameArray = [];
     this.setState({ open: false });
   };
 
@@ -362,8 +370,9 @@ class EmailModal extends React.Component {
   _sendNote() {
     const {objectType, object} = this.props;
     var newNote = {
-      text: 'EMAIL to ' + this.state.email_recipients + ' from ' + valueOfContext.state.userName + ': ' + this.state.email_message,
-      date: Date.now().toString(),    
+      text: 'sent an email to ' + this.state.email_recipients + 'about ' + this.state.email_subject + ': ' + this.state.email_message,
+      date: Date.now().toString(), 
+      userName: valueOfContext.state.userName   
     };
   var notes = object.notes;
   if (notes) {
@@ -530,6 +539,7 @@ class EmailModal extends React.Component {
                 placeholder=""
                 className={classes.textField}
                 margin="normal"
+                fullWidth
                 style={{ maxWidth: 300, minWidth: 120 }}
                 onChange={e => this.handleChange("email_subject", e)}
               />
@@ -589,12 +599,12 @@ class EmailModal extends React.Component {
               Discard
             </Button>
             {console.log(context)}
-            {context == "projects" ? <Button onClick={this._getStudents} color="primary" > Send Project Details </Button> : null}; 
+            {context == "projects" ? <Button onClick={this._getStudents} color="primary" > Send Project Details </Button> : null}
    
           </DialogActions>
         </Dialog>
       </div>
-    );
+    )
   }
 }
 

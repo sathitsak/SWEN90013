@@ -9,7 +9,7 @@ import Select from "@material-ui/core/Select";
 import Input from "@material-ui/core/Input";
 import DialogActions from "@material-ui/core/DialogActions";
 import store from "../../../../store";
-import {updateProposalAction} from "../../../../store/actionCreators";
+import {updateProposalAction, updateProjectAction} from "../../../../store/actionCreators";
 import {grey} from "@material-ui/core/colors";
 import { LoginContext } from "../../../admin/LoginProvider";
 
@@ -186,6 +186,27 @@ class AssignToSubject extends React.Component {
         // Send PUT request
         const updateProposalAct = updateProposalAction(proposal._id, proposal);
         store.dispatch(updateProposalAct);
+
+        if (this.props.project) {
+            // Add note to project
+            var newNote = {
+                text: text,
+                date: Date.now().toString(),    // Date is represented as an integer, stored as a string
+                userName: userName.state.userName,
+            };
+            var projectNotes = this.props.project.notes;
+            if (projectNotes) {
+                projectNotes.push(newNote);
+            } else {
+                projectNotes = [newNote];
+            }
+            this.props.project.notes = notes;
+            this.props.project.proposal = proposal;
+
+            // Send PUT request
+            const updateProjectAct = updateProjectAction(this.props.project._id, this.props.project);
+            store.dispatch(updateProjectAct);
+        }
 
         this.setState({
             selectedSupervisorId: "",

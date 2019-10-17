@@ -16,6 +16,7 @@ import {
     getAllSubjectsAction,
     updateProposalAction,
     getProposalByIdAction,
+    changeProposalStatusAction
 } from "../../../../store/actionCreators";
 
 import { LoginContext } from "../../../admin/LoginProvider";
@@ -150,7 +151,7 @@ class StatusChangeModal extends React.Component {
                                                 {this.props.subjects ? (
                                                     this.props.subjects.map(s => (
                                                         <MenuItem key={s._id}
-                                                            value={s._id}>{s.name}</MenuItem>
+                                                            value={s._id}>{s.code} {s.name}</MenuItem>
                                                     ))
                                                 ) : (
                                                     <div/>
@@ -237,6 +238,12 @@ class StatusChangeModal extends React.Component {
         });
     };
 
+    async _updateProposalState(proposalId) {
+        const proposalResult = await getProposalById(proposalId);
+        const proposalAction = getProposalByIdAction(proposalResult);
+        store.dispatch(proposalAction);
+    }
+
     _handleClickOpen = (status) => {
         if (status === 'accept') {
             this.setState({openAccept: true, option: status});
@@ -268,41 +275,57 @@ class StatusChangeModal extends React.Component {
                 alert("Please assign this proposal to a subject")
             } else {
                 this.setState({openAccept: false});
-                proposal.status = "approved";
+                // proposal.status = "approved";
                 noteMsg = "accepted the proposal. Reason: " + responseText;
-                proposal.subjectId = subjectId;
+                // proposal.subjectId = subjectId;
                 proposalOutcome("accept", responseText, proposal.client.firstName, proposal.client.secondaryContactFirstName, proposal.client.email, proposal.client.secondaryContactEmail);
 
+                // Send accept API call
+                const object = {
+                    subjectId: subjectId,
+                    acceptReason: noteMsg,
+                    userName: userName.state.userName
+                }
+                const changeProposalStatusAct = changeProposalStatusAction(proposal._id, option, object);
+                store.dispatch(changeProposalStatusAct);
             }
         } else if (option === "reject") {
             if (responseText === "") {
                 alert("Please enter the reason why you have rejected this proposal")
             } else {
                 this.setState({openReject: false});
-                proposal.status = "reject";
+                // proposal.status = "reject";
                 noteMsg = "rejected the proposal. Reason: " + responseText;
                 proposalOutcome("reject", responseText, proposal.client.firstName, proposal.client.secondaryContactFirstName, proposal.client.email, proposal.client.secondaryContactEmail);
 
+                // Send accept API call
+                const object = {
+                    rejectReason: noteMsg,
+                    userName: userName.state.userName
+                }
+                const changeProposalStatusAct = changeProposalStatusAction(proposal._id, option, object);
+                store.dispatch(changeProposalStatusAct);
             }
         }
 
-        // Add note to proposal
-        var newNote = {
-            text: noteMsg,
-            date: Date.now().toString(),    // Date is represented as an integer, stored as a string
-            userName: userName.state.userName,
-        };
-        var notes = proposal.notes;
-        if (notes) {
-            notes.push(newNote);
-        } else {
-            notes = [newNote];
-        }
-        proposal.notes = notes;
+        // // Add note to proposal
+        // var newNote = {
+        //     text: noteMsg,
+        //     date: Date.now().toString(),    // Date is represented as an integer, stored as a string
+        //     userName: userName.state.userName,
+        // };
+        // var notes = proposal.notes;
+        // if (notes) {
+        //     notes.push(newNote);
+        // } else {
+        //     notes = [newNote];
+        // }
+        // proposal.notes = notes;
 
-        // Send PUT request
-        const updateProposalAct = updateProposalAction(proposal._id, proposal);
-        store.dispatch(updateProposalAct);
+        // // Send PUT request
+        // const updateProposalAct = updateProposalAction(proposal._id, proposal);
+        // store.dispatch(updateProposalAct);
+        this._updateProposalState(proposal._id);
     };
 
 }

@@ -400,9 +400,8 @@ var message = '<!DOCTYPE html>'+
 '                    <tr>'+
 '                      <td>'+
 '                        <p>Hi ' + clientFirstName + ' and ' + secondaryClientFirstName + ',</p>'+
-'                        <p>Your proposal has been accepted on account of the following reasons:</p>'+
-'                        <p>'+ responseText+ '</p>'+
-'                        <p>A member of the teaching staff will contact you shortly. Please await further instructions.</p>'+
+'                        <p>Your proposal has been accepted! </p>'+
+'                        <p>A member of the teaching staff will contact you shortly. We look forward to working with you.</p>'+
 '                        <p>Regards,</p>'+
 '                        <p>CIS Project Management Team</p>'+
 '                      </td>'+

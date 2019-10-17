@@ -229,7 +229,9 @@ class CreateStudentTeamModal extends React.Component {
             const newProduct = {
                 name: teamName,
                 projectId: projectId,
-                students: studentList
+                students: studentList,
+                productLinks: [],
+                technologies: []
             };
 
             // Send POST request

@@ -402,8 +402,7 @@ var message = '<!DOCTYPE html>'+
 '                    <tr>'+
 '                      <td>'+
 '                        <p>Hi ' +clientFirstName+ " and " +secondaryClientFirstName+ ",</p>" +
-'                        <p>Your proposal has been rejected on account of the following reasons:</p>'+
-'                        <p>' +responseText+ '</p>'+
+'                        <p>We are sorry to inform you that your proposal has been rejected. </p>'+
 '                        <p>If you wish to follow up, please contact the CIS Department</p>'+
 '                        <p>Regards,</p>'+
 '                        <p>CIS Project Management Team</p>'+

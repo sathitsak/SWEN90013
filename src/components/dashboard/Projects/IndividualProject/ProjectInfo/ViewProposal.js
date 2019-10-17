@@ -32,10 +32,8 @@ class ViewProposal extends React.Component {
                     </Grid>
                     <Grid item style={{marginTop: 10}} align="center">
                         <Link
-                           
                             to={`/dashboard/proposals/${proposalID}`}
-                           
-                           
+                            style={{textDecoration: "none"}}
                         >
                             <Button variant="contained"
                             color="primary"  className={classes.viewProposalButton}>

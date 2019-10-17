@@ -48,6 +48,16 @@ const styles = theme => ({
             color: "#ffffff",
         }
     },
+    confirmButton: {
+        backgroundColor: "#094183",
+        color: "#FFFFFF",
+        "&:hover": {
+            backgroundColor: "#4074B2"
+        }
+    },
+    discardButton: {
+        color: "#094183"
+    },
 });
 
 var userName;
@@ -125,11 +135,11 @@ class AssignToSupervisor extends React.Component {
                         </form>
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={this._handleClose} color="primary">
-                            Cancel
-                        </Button>
-                        <Button onClick={this._handleOK} color="primary">
+                        <Button onClick={this._handleOK} color="primary" className={classes.confirmButton}>
                             Ok
+                        </Button>
+                        <Button onClick={this._handleClose} color="primary" className={classes.discardButton}>
+                            Cancel
                         </Button>
                     </DialogActions>
                 </Dialog>
