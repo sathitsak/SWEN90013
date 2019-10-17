@@ -79,7 +79,7 @@ class ChangeStatus extends React.Component {
                                     htmlFor="sp-native-simple">Status</InputLabel>
                                 <Select
                                     native
-                                    defaultValue={this.state.selectedStatus}
+                                    defaultValue={project.status}
                                     onChange={e => this._handleSelect(e)}
                                     input={<Input id="sp-native-simple"/>}
                                 >

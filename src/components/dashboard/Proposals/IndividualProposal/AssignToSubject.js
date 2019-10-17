@@ -90,7 +90,7 @@ class AssignToSubject extends React.Component {
                     onClose={this._handleClose}
                 >
                     <DialogTitle>
-                        Choose a subject to assign this proposal to
+                        {this._getDialogTitle()}
                     </DialogTitle>
                     <DialogContent>
                         <form className={classes.container}>
@@ -157,21 +157,30 @@ class AssignToSubject extends React.Component {
         return subjectName;
     };
 
+    _getDialogTitle() {
+        if (this.props.project) {
+            return "Choose a subject to assign this project to";
+        } else {
+            return "Choose a subject to assign this proposal to";
+        }
+    }
+
+    _getNoteMsg = (selectedSubjectId, object) => {
+        if (selectedSubjectId === "") {
+            return ("removed the subject assigned to the " + object + ".")
+        } else {
+            return ("assigned the " + object + " to " + this._showSubject(selectedSubjectId) + ".");
+        }
+    }
+
     _handleOK = () => {
         const {selectedSubjectId} = this.state;
         const {proposal} = this.props;
         proposal.subjectId = selectedSubjectId;
-        var text = "";
 
-        if (selectedSubjectId === "") {
-            text = "removed the subject assigned to the proposal."
-        } else {
-            text = "assigned the proposal to " + this._showSubject(proposal.subjectId) + "."
-        }
-        
         // Add note to proposal
         var newNote = {
-            text: text,
+            text: this._getNoteMsg(selectedSubjectId, "proposal"),
             date: Date.now().toString(),    // Date is represented as an integer, stored as a string
             userName: userName.state.userName,
         };
@@ -190,7 +199,7 @@ class AssignToSubject extends React.Component {
         if (this.props.project) {
             // Add note to project
             var newNote = {
-                text: text,
+                text: this._getNoteMsg(selectedSubjectId, "project"),
                 date: Date.now().toString(),    // Date is represented as an integer, stored as a string
                 userName: userName.state.userName,
             };
@@ -200,7 +209,7 @@ class AssignToSubject extends React.Component {
             } else {
                 projectNotes = [newNote];
             }
-            this.props.project.notes = notes;
+            this.props.project.notes = projectNotes;
             this.props.project.proposal = proposal;
 
             // Send PUT request
