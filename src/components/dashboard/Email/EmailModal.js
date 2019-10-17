@@ -174,7 +174,7 @@ class EmailModal extends React.Component {
     //get students 
     
     axios
-    .get( baseURL + `/template`)
+    .get( 'http://35.197.167.244/template')
     .then(function(response) {
       console.log(response.data);
       var templates = response.data;
@@ -281,6 +281,7 @@ class EmailModal extends React.Component {
     nameEmailMap.clear();
     // templatesNewArray = [];
     // tempCoordinatorNameArray = [];
+    this.setState({email_message: ""}); 
     this.setState({ open: false });
   };
 
@@ -360,6 +361,7 @@ class EmailModal extends React.Component {
     this.setState({ email_recipients: [] });
     this.setState({ available_recipients: [] });
     nameEmailMap.clear();
+    this.setState({email_message: ""}); 
     this.setState({ open: false });
     
     this._sendNote(); 
@@ -370,7 +372,7 @@ class EmailModal extends React.Component {
   _sendNote() {
     const {objectType, object} = this.props;
     var newNote = {
-      text: 'sent an email to ' + this.state.email_recipients + 'about ' + this.state.email_subject + ': ' + this.state.email_message,
+      text: 'sent an email to ' + this.state.email_recipients + ' about ' + this.state.email_subject + ': ' + this.state.email_message,
       date: Date.now().toString(), 
       userName: valueOfContext.state.userName   
     };
