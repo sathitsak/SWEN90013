@@ -22,12 +22,11 @@ import Select from "@material-ui/core/Select";
 import store from "../../../store";
 import axios from "axios";
 import { ENETUNREACH } from "constants";
-import {constructNormalEmail} from "./EmailHeaderFooter"; 
+import { constructNormalEmail } from "./EmailHeaderFooter";
 import { LoginContext } from "../../admin/LoginProvider";
-import {sendProjectDetails} from "./AutomatedEmailFunctions";  
-import {addNoteAction} from "../../../store/actionCreators";
-import {baseURL} from "../../../api/index"; 
-
+import { sendProjectDetails } from "./AutomatedEmailFunctions";
+import { addNoteAction } from "../../../store/actionCreators";
+import { baseURL } from "../../../api/index";
 
 function rand() {
   return Math.round(Math.random() * 20) - 10;
@@ -126,10 +125,10 @@ var tempCoordinatorNameArray = [];
 const nameEmailMap = new Map();
 const coordinatorMap = new Map();
 
-//test username context 
+//test username context
 var valueOfContext;
-var context; 
-var sendProjectDetailsButton; 
+var context;
+var sendProjectDetailsButton;
 
 const templates = [
   { title: "Template A", message: "template content a" },
@@ -140,7 +139,7 @@ const templates = [
 
 class EmailModal extends React.Component {
   static contextType = LoginContext;
-  //valueOfContext = this.context; 
+  //valueOfContext = this.context;
 
   constructor(props) {
     super(props);
@@ -160,59 +159,56 @@ class EmailModal extends React.Component {
     };
     this.handleSendEmail = this.handleSendEmail.bind(this);
     this.handleClickOpen = this.handleClickOpen.bind(this);
-    this.handleClose = this.handleClose.bind(this);  
-    this._getStudents = this._getStudents.bind(this); 
+    this.handleClose = this.handleClose.bind(this);
+    this._getStudents = this._getStudents.bind(this);
   }
 
   componentDidMount() {
     //testing context
     valueOfContext = this.context;
     console.log("another way ");
-    console.log(valueOfContext); 
+    console.log(valueOfContext);
     console.log(valueOfContext.state.userName);
-   
-    //get students 
-    
+
+    //get students
+
     axios
-    .get( baseURL + `/template`)
-    .then(function(response) {
-      console.log(response.data);
-      var templates = response.data;
+      .get(baseURL + `/template`)
+      .then(function(response) {
+        console.log(response.data);
+        var templates = response.data;
 
-      Object.keys(templates).forEach(function(key) {
-        console.log(key, templates[key].title);
-        templatesNewArray.push(templates[key].title);
-        templatesMap.set(templates[key].title, templates[key].message);
+        Object.keys(templates).forEach(function(key) {
+          console.log(key, templates[key].title);
+          templatesNewArray.push(templates[key].title);
+          templatesMap.set(templates[key].title, templates[key].message);
+        });
+      })
+      .catch(function(error) {
+        console.log(error);
       });
-    })
-    .catch(function(error) {
-      console.log(error);
-    });
 
-  console.log(this.state.templates);
-
-
-
+    console.log(this.state.templates);
   }
 
   handleClickOpen = () => {
     this.setState({ open: true });
-  
 
     //get all coordinators
 
-  
     var subjects = store.getState().subjects;
 
-
-
     subjects.forEach(s => {
-      if('coordinator' in s) {
-        var fullNameRole = s.coordinator.firstName + " " + s.coordinator.lastName+ " (Coordinator)";
+      if ("coordinator" in s) {
+        var fullNameRole =
+          s.coordinator.firstName +
+          " " +
+          s.coordinator.lastName +
+          " (Coordinator)";
         nameEmailMap.set(fullNameRole, s.coordinator.email);
-        this.state.available_recipients.push(fullNameRole); 
+        this.state.available_recipients.push(fullNameRole);
       }
-    })
+    });
 
     //check the URL to determine the context of the email
     var url = window.location.href;
@@ -340,7 +336,7 @@ class EmailModal extends React.Component {
     //send multiple posts
 
     axios
-      .post(`http://35.197.167.244/message`, {
+      .post(`http:/172.26.88.142:8081`, {
         from: "CIS Project Management",
         to: emails,
         subject: this.state.email_subject,
@@ -356,39 +352,40 @@ class EmailModal extends React.Component {
         console.log(error);
       });
 
-   
     this.setState({ email_recipients: [] });
     this.setState({ available_recipients: [] });
     nameEmailMap.clear();
     this.setState({ open: false });
-    
-    this._sendNote(); 
-    
 
+    this._sendNote();
   }
 
   _sendNote() {
-    const {objectType, object} = this.props;
+    const { objectType, object } = this.props;
     var newNote = {
-      text: 'sent an email to ' + this.state.email_recipients + 'about ' + this.state.email_subject + ': ' + this.state.email_message,
-      date: Date.now().toString(), 
-      userName: valueOfContext.state.userName   
+      text:
+        "sent an email to " +
+        this.state.email_recipients +
+        "about " +
+        this.state.email_subject +
+        ": " +
+        this.state.email_message,
+      date: Date.now().toString(),
+      userName: valueOfContext.state.userName
     };
-  var notes = object.notes;
-  if (notes) {
+    var notes = object.notes;
+    if (notes) {
       notes.push(newNote);
-  } else {
+    } else {
       notes = [newNote];
+    }
+    object.notes = notes;
+
+    // Send PUT request
+    const addNoteAct = addNoteAction(objectType, object._id, object);
+    console.log(addNoteAct);
+    store.dispatch(addNoteAct);
   }
-  object.notes = notes;
-
-  // Send PUT request
-  const addNoteAct = addNoteAction(objectType, object._id, object);
-  console.log(addNoteAct);
-  store.dispatch(addNoteAct);
-  }
-
-
 
   unsubscribe = store.subscribe(this.handleChange);
 
@@ -407,13 +404,17 @@ class EmailModal extends React.Component {
 
     studentsFlattened.map(student => {
       students.push(student.email);
-
     });
 
-
-
-    sendProjectDetails(students, store.getState().project.name, store.getState().project.proposal.outlineOfProject, store.getState().project.proposal.client.organisation.name, store.getState().project.proposal.client.firstName, store.getState().project.proposal.client.lastName); 
-    this.handleClose(); 
+    sendProjectDetails(
+      students,
+      store.getState().project.name,
+      store.getState().project.proposal.outlineOfProject,
+      store.getState().project.proposal.client.organisation.name,
+      store.getState().project.proposal.client.firstName,
+      store.getState().project.proposal.client.lastName
+    );
+    this.handleClose();
   }
 
   render() {
@@ -525,7 +526,7 @@ class EmailModal extends React.Component {
                   )}
                   MenuProps={MenuProps}
                 >
-                   {this.state.available_recipients.map(name => (
+                  {this.state.available_recipients.map(name => (
                     <MenuItem key={name} value={name} style={{ width: "100%" }}>
                       {name}
                     </MenuItem>
@@ -599,12 +600,16 @@ class EmailModal extends React.Component {
               Discard
             </Button>
             {console.log(context)}
-            {context == "projects" ? <Button onClick={this._getStudents} color="primary" > Send Project Details </Button> : null}
-   
+            {context == "projects" ? (
+              <Button onClick={this._getStudents} color="primary">
+                {" "}
+                Send Project Details{" "}
+              </Button>
+            ) : null}
           </DialogActions>
         </Dialog>
       </div>
-    )
+    );
   }
 }
 

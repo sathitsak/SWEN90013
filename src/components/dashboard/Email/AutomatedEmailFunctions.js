@@ -1,17 +1,30 @@
 import axios from "axios";
 
-import {constructConfirmationEmail} from "./ProposalSubmissionEmail"
-import {constructProposalRejectEmail} from "./ProposalReject"
-import {constructProposalAcceptEmail} from "./ProposalAccept"
-import {constructProjectDetailsEmail} from "./ProjectDetails"
+import { constructConfirmationEmail } from "./ProposalSubmissionEmail";
+import { constructProposalRejectEmail } from "./ProposalReject";
+import { constructProposalAcceptEmail } from "./ProposalAccept";
+import { constructProjectDetailsEmail } from "./ProjectDetails";
 
-export function sendProjectDetails(students, projectName, outlineOfProject, organisation, clientFirstName, clientLastName) {
+export function sendProjectDetails(
+  students,
+  projectName,
+  outlineOfProject,
+  organisation,
+  clientFirstName,
+  clientLastName
+) {
   axios
-    .post(`http://35.197.167.244/message`, {
+    .post(`http://172.26.88.142:8081`, {
       from: "CIS Project Management",
       to: students,
       subject: "Project Information",
-      html: constructProjectDetailsEmail(projectName, outlineOfProject, organisation, clientFirstName, clientLastName), 
+      html: constructProjectDetailsEmail(
+        projectName,
+        outlineOfProject,
+        organisation,
+        clientFirstName,
+        clientLastName
+      ),
       projectType: "",
       cc: ""
     })
@@ -21,7 +34,6 @@ export function sendProjectDetails(students, projectName, outlineOfProject, orga
     .catch(function(error) {
       console.log(error);
     });
-
 }
 
 export function proposalSentConfirmation(
@@ -29,26 +41,28 @@ export function proposalSentConfirmation(
   secondaryClient,
   clientFirstName,
   secondaryClientFirstName,
-  title, 
-  outline, 
-  beneficiaries, 
+  title,
+  outline,
+  beneficiaries,
   benefits,
-  original, 
+  original,
   used
-
 ) {
-
   axios
-    .post(`http://35.197.167.244/message`, {
+    .post(`http://172.26.88.142:8081`, {
       from: "CIS Project Management",
       to: client,
       subject: "Proposal Submission Confirmation",
-      html: constructConfirmationEmail(clientFirstName, secondaryClientFirstName,title, 
-        outline, 
-        beneficiaries, 
+      html: constructConfirmationEmail(
+        clientFirstName,
+        secondaryClientFirstName,
+        title,
+        outline,
+        beneficiaries,
         benefits,
-        original, 
-        used),
+        original,
+        used
+      ),
       projectType: "Proposal",
       cc: secondaryClient
     })
@@ -60,19 +74,25 @@ export function proposalSentConfirmation(
     });
 }
 
-
-
 export function proposalOutcome(
-  outcome, responseText, clientName, secondaryClientName, clientEmail, secondaryClientEmail
+  outcome,
+  responseText,
+  clientName,
+  secondaryClientName,
+  clientEmail,
+  secondaryClientEmail
 ) {
   if (outcome == "reject") {
     axios
-      .post(`http://35.197.167.244/message`, {
+      .post(`http://172.26.88.142:8081`, {
         from: "CIS Project Management",
         to: clientEmail,
         subject: "Proposal Outcome",
-        html:
-        constructProposalRejectEmail(clientName, secondaryClientName, responseText),
+        html: constructProposalRejectEmail(
+          clientName,
+          secondaryClientName,
+          responseText
+        ),
         projectType: "Proposal",
         cc: secondaryClientEmail
       })
@@ -84,12 +104,15 @@ export function proposalOutcome(
       });
   } else if ((outcome = "accept")) {
     axios
-      .post(`http://35.197.167.244/message`, {
+      .post(`http://172.26.88.142:8081`, {
         from: "CIS Project Management",
         to: clientEmail,
         subject: "Proposal Outcome",
-        html:
-        constructProposalAcceptEmail(clientName, secondaryClientName, responseText),
+        html: constructProposalAcceptEmail(
+          clientName,
+          secondaryClientName,
+          responseText
+        ),
         projectType: "Proposal",
         cc: secondaryClientEmail
       })
