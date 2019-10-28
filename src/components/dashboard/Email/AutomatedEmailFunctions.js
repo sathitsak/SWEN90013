@@ -14,7 +14,7 @@ export function sendProjectDetails(
   clientLastName
 ) {
   axios
-    .post(`http://172.26.88.142:8081`, {
+    .post(`http://172.26.88.142:8081/message`, {
       from: "CIS Project Management",
       to: students,
       subject: "Project Information",
@@ -49,7 +49,7 @@ export function proposalSentConfirmation(
   used
 ) {
   axios
-    .post(`http://172.26.88.142:8081`, {
+    .post(`http://172.26.88.142:8081/message`, {
       from: "CIS Project Management",
       to: client,
       subject: "Proposal Submission Confirmation",
@@ -84,7 +84,7 @@ export function proposalOutcome(
 ) {
   if (outcome == "reject") {
     axios
-      .post(`http://172.26.88.142:8081`, {
+      .post(`http://172.26.88.142:8081/message`, {
         from: "CIS Project Management",
         to: clientEmail,
         subject: "Proposal Outcome",
@@ -104,7 +104,7 @@ export function proposalOutcome(
       });
   } else if ((outcome = "accept")) {
     axios
-      .post(`http://172.26.88.142:8081`, {
+      .post(`http://172.26.88.142:8081/message`, {
         from: "CIS Project Management",
         to: clientEmail,
         subject: "Proposal Outcome",
